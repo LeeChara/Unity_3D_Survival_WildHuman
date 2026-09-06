@@ -12,6 +12,9 @@ public class EnemyAI : MonoBehaviour
     private Rigidbody rb;
     public Transform player;
 
+    [SerializeField] private GameObject hitbox;
+    [SerializeField] private HitboxController hitboxController;
+
     public float detectionRange = 10f;
     public float chargeRange = 2f;
 
@@ -28,6 +31,7 @@ public class EnemyAI : MonoBehaviour
     private void Awake()
     {
         rb = GetComponent<Rigidbody>();
+        hitbox.SetActive(false);
     }
 
     private void Update()
@@ -49,6 +53,7 @@ public class EnemyAI : MonoBehaviour
 
             case State.Chase:
                 rb.linearVelocity = playerDir * moveSpeed;
+                transform.rotation = Quaternion.LookRotation(playerDir);
                 if (playerDistance <= chargeRange)
                 {
                     state = State.ReadyToCharge;
@@ -64,12 +69,16 @@ public class EnemyAI : MonoBehaviour
             case State.ReadyToCharge:
                 rb.linearVelocity = Vector3.zero;
                 stateTime += Time.deltaTime;
+                transform.rotation = Quaternion.LookRotation(playerDir);
                 if (stateTime >= readyToChargeDuration)
                 {
-                    // 돌진 방향은 여기서 고정
                     chargeDirection = playerDir;
+
                     state = State.Charge;
                     stateTime = 0f;
+
+                    hitboxController.ResetHitEnemies();
+                    hitbox.SetActive(true);
                 }
                 break;
 
@@ -80,6 +89,8 @@ public class EnemyAI : MonoBehaviour
                 {
                     state = State.Idle;
                     rb.linearVelocity = Vector3.zero;
+
+                    hitbox.SetActive(false);
                 }
                 break;
         }

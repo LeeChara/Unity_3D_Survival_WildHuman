@@ -5,7 +5,7 @@ public class PlayerAttack : MonoBehaviour
 {
     [SerializeField] private GameObject weapon;
     [SerializeField] private GameObject weaponHitbox;
-    [SerializeField] private WeaponHitboxController weaponHitboxController; // WeaponHitbox와 같은 오브젝트
+    [SerializeField] private HitboxController weaponHitboxController; // WeaponHitbox와 같은 오브젝트
 
     public float attackDuration = 0.3f;
     public float recoverDuration = 0.5f;

@@ -238,9 +238,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 391871e325623814ea371bd4f7e66189, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::WeaponHitbox
-  enemyLayer:
+  targetLayer:
     serializedVersion: 2
     m_Bits: 64
+  damage: 10
 --- !u!1 &5099088894547946492
 GameObject:
   m_ObjectHideFlags: 0
@@ -371,7 +372,8 @@ GameObject:
   - component: {fileID: 7627549030297510775}
   - component: {fileID: 417220485656671360}
   - component: {fileID: 3953439482503733540}
-  m_Layer: 0
+  - component: {fileID: 7512780019067246238}
+  m_Layer: 7
   m_Name: Player
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -500,7 +502,7 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 80
+  m_Constraints: 112
   m_CollisionDetection: 0
 --- !u!114 &7627549030297510775
 MonoBehaviour:
@@ -577,3 +579,16 @@ MonoBehaviour:
   weaponHitboxController: {fileID: 6168978076715218438}
   attackDuration: 0.3
   recoverDuration: 0.5
+--- !u!114 &7512780019067246238
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7184108975418807234}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 28392831faaed6b4bac8bd0e51c2c66c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Health
+  maxHealth: 100
