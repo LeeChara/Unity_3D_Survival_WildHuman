@@ -57,6 +57,7 @@ public class PlayerMovement : MonoBehaviour
         if (moveVec.sqrMagnitude > 0.01f)
         {
             lastDir = new Vector2(moveVec.x, moveVec.z).normalized;
+            transform.rotation = Quaternion.LookRotation(moveVec);
         }
     }
     void OnMove(InputValue value)
@@ -69,7 +70,6 @@ public class PlayerMovement : MonoBehaviour
     }
     void OnDodge(InputValue value)
     {
-        // TODO: 구르기 쿨다운 구현 필요
         if (isDodging) return;
 
         dodgeVec = new Vector3(lastDir.x, 0, lastDir.y) * dodgeSpeed;
