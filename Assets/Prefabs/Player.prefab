@@ -372,7 +372,7 @@ GameObject:
   - component: {fileID: 7627549030297510775}
   - component: {fileID: 417220485656671360}
   - component: {fileID: 3953439482503733540}
-  - component: {fileID: 7512780019067246238}
+  - component: {fileID: 3478587613417822361}
   m_Layer: 7
   m_Name: Player
   m_TagString: Untagged
@@ -579,7 +579,7 @@ MonoBehaviour:
   weaponHitboxController: {fileID: 6168978076715218438}
   attackDuration: 0.3
   recoverDuration: 0.5
---- !u!114 &7512780019067246238
+--- !u!114 &3478587613417822361
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -588,7 +588,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 7184108975418807234}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 28392831faaed6b4bac8bd0e51c2c66c, type: 3}
+  m_Script: {fileID: 11500000, guid: 594abce375721fe4ea2b8c0828c70365, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Health
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerHealth
   maxHealth: 100

@@ -455,7 +455,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::HealthUIController
   healthSlider: {fileID: 2666219736265980349}
-  targetHealth: {fileID: 2616041290714691572}
+  targetHealth: {fileID: 1829696272401634212}
 --- !u!1 &6951313163465799149
 GameObject:
   m_ObjectHideFlags: 0
@@ -696,7 +696,7 @@ GameObject:
   - component: {fileID: 7716259379759396051}
   - component: {fileID: 5257025773697987575}
   - component: {fileID: 1566463798899865679}
-  - component: {fileID: 2616041290714691572}
+  - component: {fileID: 1829696272401634212}
   m_Layer: 6
   m_Name: Enemy
   m_TagString: Untagged
@@ -850,7 +850,7 @@ MonoBehaviour:
   chargeSpeed: 20
   readyToChargeDuration: 1.5
   chargeDuration: 1
---- !u!114 &2616041290714691572
+--- !u!114 &1829696272401634212
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -859,7 +859,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 7460616830878032488}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 28392831faaed6b4bac8bd0e51c2c66c, type: 3}
+  m_Script: {fileID: 11500000, guid: e19280a688887564aaac217bf3e9c98f, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Health
-  maxHealth: 100
+  m_EditorClassIdentifier: Assembly-CSharp::EnemyHealth
+  maxHealth: 30

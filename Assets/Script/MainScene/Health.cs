@@ -24,9 +24,8 @@ public class Health : MonoBehaviour
         }
     }
 
-    private void Die()
+    protected virtual void Die()
     {
-        // TODO: 사망 로직 작성
         Debug.Log($"{gameObject.name} has died.");
     }
 }
