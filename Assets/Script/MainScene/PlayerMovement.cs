@@ -31,11 +31,6 @@ public class PlayerMovement : MonoBehaviour
     {
         // Normal일 때만 실행 (다른 클래스와 배타적)
         if (playerState.CurrentState != PlayerActionState.Normal) return;
-        if (!playerState.CanAct)
-        {
-            Debug.Log("Movement skipped - CanAct false");
-            return;
-        }
 
         // 입력 벡터는 Input Action에서 이미 정규화
         Vector3 moveVec = new Vector3(inputVec.x, 0, inputVec.y);
