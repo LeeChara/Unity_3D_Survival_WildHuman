@@ -8,7 +8,7 @@ public class PlayerDodge : MonoBehaviour
     [SerializeField] private Animator animator;
 
     public float dodgeDistance = 5f;
-    public float dodgeDuration = 0.75f;
+    public float dodgeDuration = 0.5f;
     public float dodgeCooldown = 1.5f;
 
     private float dodgeTime;

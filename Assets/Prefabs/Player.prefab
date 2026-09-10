@@ -320,8 +320,8 @@ MonoBehaviour:
   playerState: {fileID: 3330602398864973997}
   animator: {fileID: 1689757010358613412}
   dodgeDistance: 5
-  dodgeDuration: 0.75
-  dodgeCooldown: 1.5
+  dodgeDuration: 0.7
+  dodgeCooldown: 1.4
 --- !u!114 &8510803292639760883
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -340,8 +340,8 @@ MonoBehaviour:
   animator: {fileID: 1689757010358613412}
   windupDuration: 0.2
   attackDuration: 0.3
-  recoverDuration: 0.5
-  attackCooldown: 1.5
+  recoverDuration: 0.3
+  attackCooldown: 1
 --- !u!1 &2027391798678248913
 GameObject:
   m_ObjectHideFlags: 0
