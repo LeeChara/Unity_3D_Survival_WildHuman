@@ -6,7 +6,7 @@ public class EnemyAI : MonoBehaviour
     {
         Idle,
         Chase,
-        ReadyToCharge,
+        WindUp,
         Charge
     }
     private Rigidbody rb;
@@ -21,7 +21,7 @@ public class EnemyAI : MonoBehaviour
     public float moveSpeed = 3f;
     public float chargeSpeed = 6f;
 
-    public float readyToChargeDuration = 3f;
+    public float windUpDuration = 3f;
     public float chargeDuration = 1.5f;
 
     private State state = State.Idle;
@@ -56,7 +56,7 @@ public class EnemyAI : MonoBehaviour
                 transform.rotation = Quaternion.LookRotation(playerDir);
                 if (playerDistance <= chargeRange)
                 {
-                    state = State.ReadyToCharge;
+                    state = State.WindUp;
                     stateTime = 0f;
                 }
                 else if (playerDistance > detectionRange)
@@ -66,18 +66,18 @@ public class EnemyAI : MonoBehaviour
                 }
                 break;
 
-            case State.ReadyToCharge:
+            case State.WindUp:
                 rb.linearVelocity = Vector3.zero;
                 stateTime += Time.deltaTime;
                 transform.rotation = Quaternion.LookRotation(playerDir);
-                if (stateTime >= readyToChargeDuration)
+                if (stateTime >= windUpDuration)
                 {
                     chargeDirection = playerDir;
 
                     state = State.Charge;
                     stateTime = 0f;
 
-                    hitboxController.ResetHitEnemies();
+                    hitboxController.ResetHitTargets();
                     hitbox.SetActive(true);
                 }
                 break;

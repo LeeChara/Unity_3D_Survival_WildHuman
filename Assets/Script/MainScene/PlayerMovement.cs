@@ -4,43 +4,37 @@ using UnityEngine.InputSystem;
 public class PlayerMovement : MonoBehaviour
 {
     private Rigidbody rb;
+    [SerializeField] private Facing playerFacing;
+    [SerializeField] private PlayerState playerState;
+    [SerializeField] private Animator animator;
 
     public float moveSpeed = 5.0f;
     public float sprintMultiplier = 1.5f;
-    public float dodgeDistance = 5f;
-    public float dodgeDuration = 0.5f;
 
     private Vector2 inputVec;
     private bool isSprinting;
-    private bool isDodging;
-    private float dodgeTime;
-    private float dodgeSpeed;
-    private Vector3 dodgeVec;
-    private Vector2 lastDir; // 정지했을 때도 보고 있는 방향으로 구르도록 방향 저장
 
-    private float cameraYAngle = 45f;
+    [SerializeField] private float cameraYAngle = 45f; // PlayerBillboard의 값과 반드시 일치해야함
     private Quaternion cameraRotation;
-
+    private Vector3 cameraRight;
+    private Vector3 cameraForwardFlat;
     private void Awake()
     {
         rb = GetComponent<Rigidbody>();
-        cameraRotation = Quaternion.Euler(0, cameraYAngle, 0);
 
-        dodgeSpeed = dodgeDistance / dodgeDuration;
+        cameraRotation = Quaternion.Euler(0, cameraYAngle, 0);
+        cameraRight = cameraRotation * Vector3.right;
+        cameraForwardFlat = cameraRotation * Vector3.forward;
     }
 
     private void FixedUpdate()
     {
-        if (isDodging)
+        // Normal일 때만 실행 (다른 클래스와 배타적)
+        if (playerState.CurrentState != PlayerActionState.Normal) return;
+        if (!playerState.CanAct)
         {
-            dodgeTime += Time.fixedDeltaTime;
-            rb.linearVelocity = dodgeVec;
-
-            if (dodgeTime >= dodgeDuration)
-            {
-                isDodging = false;
-            }
-            return; // 구르기 중에는 일반 이동 무시
+            Debug.Log("Movement skipped - CanAct false");
+            return;
         }
 
         // 입력 벡터는 Input Action에서 이미 정규화
@@ -54,10 +48,19 @@ public class PlayerMovement : MonoBehaviour
 
         rb.linearVelocity = moveVec;
 
+        // 움직임이 거의 없으면 업데이트하지 않음
         if (moveVec.sqrMagnitude > 0.01f)
         {
-            lastDir = new Vector2(moveVec.x, moveVec.z).normalized;
-            transform.rotation = Quaternion.LookRotation(moveVec);
+            playerState.SetLastDir(new Vector2(moveVec.x, moveVec.z).normalized);
+            playerFacing.UpdateFacing(moveVec, cameraRight, cameraForwardFlat);
+
+            animator.SetBool("IsMoving", true);
+            animator.SetBool("IsSprinting", isSprinting);
+        }
+        else
+        {
+            animator.SetBool("IsMoving", false);
+            animator.SetBool("IsSprinting", false);
         }
     }
     void OnMove(InputValue value)
@@ -67,14 +70,5 @@ public class PlayerMovement : MonoBehaviour
     void OnSprint(InputValue value)
     {
         isSprinting = value.isPressed;
-    }
-    void OnDodge(InputValue value)
-    {
-        if (isDodging) return;
-
-        dodgeVec = new Vector3(lastDir.x, 0, lastDir.y) * dodgeSpeed;
-
-        isDodging = true;
-        dodgeTime = 0f;
     }
 }

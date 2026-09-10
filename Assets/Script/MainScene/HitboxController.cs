@@ -24,7 +24,7 @@ public class HitboxController : MonoBehaviour
     }
 
     // 새로운 공격을 시작할 때 초기화
-    public void ResetHitEnemies()
+    public void ResetHitTargets()
     {
         hitTargets.Clear();
     }
