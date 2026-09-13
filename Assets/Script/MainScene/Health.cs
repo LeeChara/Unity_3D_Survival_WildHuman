@@ -2,21 +2,26 @@ using UnityEngine;
 
 public class Health : MonoBehaviour
 {
-    [SerializeField] private int maxHealth = 100;
-    private int currentHealth;
+    [SerializeField] private float maxHealth = 100;
+    private float currentHealth;
 
     // 읽기 전용 프로퍼티
-    public int MaxHealth => maxHealth;
-    public int CurrentHealth => currentHealth;
+    public float MaxHealth => maxHealth;
+    public float CurrentHealth => currentHealth;
     public void Awake()
     {
         currentHealth = maxHealth;
     }
 
+    public void Init(float maxHealth)
+    {
+        this.maxHealth = maxHealth;
+        currentHealth = this.maxHealth;
+    }
+
     public void TakeDamage(int damage)
     {
-        currentHealth -= damage;
-        Debug.Log($"{gameObject.name} took {damage} damage. Current health: {currentHealth}/{maxHealth}");
+        currentHealth = Mathf.Max(0, currentHealth - damage);
 
         if (currentHealth <= 0)
         {

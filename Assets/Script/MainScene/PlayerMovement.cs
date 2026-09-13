@@ -14,7 +14,7 @@ public class PlayerMovement : MonoBehaviour
     private Vector2 inputVec;
     private bool isSprinting;
 
-    [SerializeField] private float cameraYAngle = 45f; // PlayerBillboard의 값과 반드시 일치해야함
+    [SerializeField] private float cameraYAngle = 45f; // Billboard의 값과 반드시 일치해야함
     private Quaternion cameraRotation;
     private Vector3 cameraRight;
     private Vector3 cameraForwardFlat;

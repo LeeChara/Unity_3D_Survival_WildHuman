@@ -20,6 +20,7 @@ public class HitboxController : MonoBehaviour
         if (other.TryGetComponent<Health>(out Health health))
         {
             health.TakeDamage(damage);
+            Debug.Log($"{other.name} 피격 - 현재 체력: {health.CurrentHealth} / {health.MaxHealth}");
         }
     }
 
