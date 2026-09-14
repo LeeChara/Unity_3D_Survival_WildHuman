@@ -167,6 +167,7 @@ public class MonsterAI : MonoBehaviour
         if (target != null)
         {
             state = State.Chase;
+            ResetTrigger();
             animator.SetTrigger("Chase");
             return;
         }
@@ -283,5 +284,6 @@ public class MonsterAI : MonoBehaviour
         animator.ResetTrigger("Windup");
         animator.ResetTrigger("Attack");
         animator.ResetTrigger("Recover");
+        animator.ResetTrigger("Reset");
     }
 }

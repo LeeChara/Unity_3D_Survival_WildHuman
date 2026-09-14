@@ -7,7 +7,7 @@ AnimatorState:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: ShieldboarRecover
+  m_Name: WingsquirrelRecover
   m_Speed: 1
   m_CycleOffset: 0
   m_Transitions:
@@ -21,7 +21,7 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: 7400000, guid: cb5904814637c4e41961aee6b7b82ebf, type: 2}
+  m_Motion: {fileID: 7400000, guid: 6691f692d7d83714194e657c42e40262, type: 2}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 
@@ -63,7 +63,7 @@ AnimatorStateMachine:
   m_ChildStates:
   - serializedVersion: 1
     m_State: {fileID: 210303346475736134}
-    m_Position: {x: 480, y: 10, z: 0}
+    m_Position: {x: 460, y: 10, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 5998032005221308156}
     m_Position: {x: 250, y: 250, z: 0}
@@ -75,7 +75,7 @@ AnimatorStateMachine:
     m_Position: {x: 250, y: 330, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 5109578333925913396}
-    m_Position: {x: 20, y: 10, z: 0}
+    m_Position: {x: 50, y: 10, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 6121611316243353982}
     m_Position: {x: 250, y: 170, z: 0}
@@ -145,7 +145,7 @@ AnimatorController:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Shieldboar
+  m_Name: Wingsquirrel
   serializedVersion: 5
   m_AnimatorParameters:
   - m_Name: IsFront
@@ -210,7 +210,7 @@ AnimatorState:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: ShieldboarIdle
+  m_Name: WingsquirrelIdle
   m_Speed: 1
   m_CycleOffset: 0
   m_Transitions:
@@ -225,7 +225,7 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: 7400000, guid: 8b811650c912f5a46a435b717893e55c, type: 2}
+  m_Motion: {fileID: 7400000, guid: 906313c5553fea44eaf55f1a0e3f2843, type: 2}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 
@@ -263,7 +263,7 @@ AnimatorState:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: ShieldboarChase
+  m_Name: WingsquirrelChase
   m_Speed: 1
   m_CycleOffset: 0
   m_Transitions:
@@ -278,7 +278,7 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: 7400000, guid: c2cbcda7970e94d4f80b1a8bd45bfb65, type: 2}
+  m_Motion: {fileID: 7400000, guid: 44589343b1403e94bbd489eee57492ea, type: 2}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 
@@ -341,7 +341,7 @@ AnimatorState:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: ShieldboarWander
+  m_Name: WingsquirrelWander
   m_Speed: 1
   m_CycleOffset: 0
   m_Transitions:
@@ -356,7 +356,7 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: 7400000, guid: d34a25af9672bc344a515bf9a40660df, type: 2}
+  m_Motion: {fileID: 7400000, guid: 802fa488aa3f490408ee5d28f9a75ce5, type: 2}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 
@@ -394,7 +394,7 @@ AnimatorState:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: ShieldboarAttack
+  m_Name: WingsquirrelAttack
   m_Speed: 1
   m_CycleOffset: 0
   m_Transitions:
@@ -408,7 +408,7 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: 7400000, guid: 8487071e3aa0c1747b363d0e1635d00c, type: 2}
+  m_Motion: {fileID: 7400000, guid: 15e49ac7beb4ef4429c34f6d0e9b0ac3, type: 2}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 
@@ -421,7 +421,7 @@ AnimatorState:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: ShieldboarWindup
+  m_Name: WingsquirrelWindup
   m_Speed: 1
   m_CycleOffset: 0
   m_Transitions:
@@ -436,7 +436,7 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: 7400000, guid: e2a2d56ab426c344fa125fb86e5536ed, type: 2}
+  m_Motion: {fileID: 7400000, guid: ff13e8790511c6c4f93f1a2d5003f410, type: 2}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 

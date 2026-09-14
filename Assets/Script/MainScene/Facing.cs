@@ -14,7 +14,7 @@ public class Facing : MonoBehaviour
         float frontDot = Vector3.Dot(moveDir, -cameraForwardFlat);
 
         bool isFront = frontDot > Mathf.Abs(sideDot);
-    
+        
         animator.SetBool("IsFront", isFront);
 
         if (!isFront)

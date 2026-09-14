@@ -10,20 +10,19 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 348caf76c9bdcd7418ae3d2a844ee212, type: 3}
-  m_Name: Shieldboar
+  m_Name: Wingsquirrel
   m_EditorClassIdentifier: Assembly-CSharp::MonsterData
-  monsterName: Shieldboar
-  hostileTargets:
-  - {fileID: 11400000, guid: ef0f350da93ecf941a6afe8a421b989a, type: 2}
-  maxHealth: 30
-  moveSpeed: 2
-  wanderRange: 7
-  wanderCooldown: 3
-  chaseSpeed: 3
-  chaseRange: 10
-  windupRange: 5
-  windupDuration: 1.5
-  attackSpeed: 15
-  attackDuration: 1.5
-  attackDamage: 10
-  recoverDuration: 2
+  monsterName: Wingsquirrel
+  hostileTargets: []
+  maxHealth: 20
+  moveSpeed: 5
+  wanderRange: 10
+  wanderCooldown: 5
+  chaseSpeed: 4
+  chaseRange: 15
+  windupRange: 4
+  windupDuration: 0.5
+  attackSpeed: 2
+  attackDuration: 3
+  attackDamage: 0
+  recoverDuration: 1

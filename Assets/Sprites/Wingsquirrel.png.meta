@@ -1,0 +1,441 @@
+fileFormatVersion: 2
+guid: 6da8c72ed300cda4f82b9fe7b88119c4
+TextureImporter:
+  internalIDToNameTable: []
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 0
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 0
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 0
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: Wingsquirrel_0
+      rect:
+        serializedVersion: 2
+        x: 2
+        y: 92
+        width: 75
+        height: 32
+      alignment: 9
+      pivot: {x: 0.41500056, y: 0.26283646}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 315606f2673b55b4b9eaaa35e361a3a1
+      internalID: -599146464
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wingsquirrel_1
+      rect:
+        serializedVersion: 2
+        x: 84
+        y: 107
+        width: 33
+        height: 15
+      alignment: 9
+      pivot: {x: 0.48620144, y: 0.20654958}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c4f4aa42fd0641a458b75a1fa62f7c76
+      internalID: 2004172240
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wingsquirrel_2
+      rect:
+        serializedVersion: 2
+        x: 121
+        y: 104
+        width: 39
+        height: 21
+      alignment: 9
+      pivot: {x: 0.18475498, y: 0.24702527}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9b4c8e6985eb06f44a4c4c5f12a494e5
+      internalID: -1644704712
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wingsquirrel_3
+      rect:
+        serializedVersion: 2
+        x: 166
+        y: 113
+        width: 13
+        height: 9
+      alignment: 9
+      pivot: {x: 0.69729847, y: 0.9055583}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8e4e30627c5fe9f4d83147a2be00982a
+      internalID: 443843997
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wingsquirrel_4
+      rect:
+        serializedVersion: 2
+        x: 184
+        y: 113
+        width: 11
+        height: 9
+      alignment: 9
+      pivot: {x: 0.43722257, y: 0.89459735}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2663f3a34e6389c4ea6be5fb811f3e19
+      internalID: -1859316720
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wingsquirrel_5
+      rect:
+        serializedVersion: 2
+        x: 201
+        y: 115
+        width: 7
+        height: 6
+      alignment: 9
+      pivot: {x: 0.35906765, y: 0.023192087}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8695eac046aa9d24a819a9fec108ab4f
+      internalID: 1778636578
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wingsquirrel_6
+      rect:
+        serializedVersion: 2
+        x: 212
+        y: 113
+        width: 9
+        height: 9
+      alignment: 9
+      pivot: {x: 0.33557975, y: 0.28488752}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: aa366f021f4111d48aca8b24b5de016d
+      internalID: 1025964872
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wingsquirrel_7
+      rect:
+        serializedVersion: 2
+        x: 230
+        y: 106
+        width: 20
+        height: 16
+      alignment: 9
+      pivot: {x: 0.9340576, y: 0.28420353}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0ecbc2ad78485d34e862dc838c8a8bf4
+      internalID: 2108772217
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wingsquirrel_8
+      rect:
+        serializedVersion: 2
+        x: 166
+        y: 101
+        width: 10
+        height: 7
+      alignment: 9
+      pivot: {x: 0.6669647, y: 0.8903035}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 344d15bb7016b41428797e68cb95e988
+      internalID: 452409798
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wingsquirrel_9
+      rect:
+        serializedVersion: 2
+        x: 178
+        y: 100
+        width: 14
+        height: 10
+      alignment: 9
+      pivot: {x: 0.23979732, y: 0.86428297}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ef79e1a7d73439541b319e3ec8eb5ec9
+      internalID: 920422298
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wingsquirrel_10
+      rect:
+        serializedVersion: 2
+        x: 202
+        y: 104
+        width: 4
+        height: 6
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5961a55391c0375469bfcf27b2f1bc7e
+      internalID: -1725029171
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wingsquirrel_11
+      rect:
+        serializedVersion: 2
+        x: 211
+        y: 103
+        width: 8
+        height: 8
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: eabe67c8c30115a4bb13c49532da900e
+      internalID: 1377982502
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wingsquirrel_12
+      rect:
+        serializedVersion: 2
+        x: 3
+        y: 59
+        width: 75
+        height: 31
+      alignment: 9
+      pivot: {x: 0.41904816, y: 0.23070428}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9546a84c2ab039142bad7dbe234e3291
+      internalID: 1900986887
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wingsquirrel_13
+      rect:
+        serializedVersion: 2
+        x: 92
+        y: 70
+        width: 44
+        height: 19
+      alignment: 9
+      pivot: {x: 0.5103489, y: 0.32424927}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 90e411e2080e8ce4aaa14a5cad1d9ae6
+      internalID: -638250939
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: afdc542ca1f8e1b4896ebabdbe705abd
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries:
+      - key: SpriteEditor.SliceSettings
+        value: '{"sliceOnImport":false,"gridCellCount":{"x":1.0,"y":1.0},"gridSpriteSize":{"x":64.0,"y":64.0},"gridSpriteOffset":{"x":0.0,"y":0.0},"gridSpritePadding":{"x":0.0,"y":0.0},"pivot":{"x":0.5,"y":0.5},"pivotPixels":{"x":0.0,"y":0.0},"autoSlicingMethod":0,"spriteAlignment":0,"pivotUnitMode":0,"slicingType":0,"keepEmptyRects":false,"isAlternate":false}'
+    nameFileIdTable:
+      Wingsquirrel_0: -599146464
+      Wingsquirrel_1: 2004172240
+      Wingsquirrel_10: -1725029171
+      Wingsquirrel_11: 1377982502
+      Wingsquirrel_12: 1900986887
+      Wingsquirrel_13: -638250939
+      Wingsquirrel_2: -1644704712
+      Wingsquirrel_3: 443843997
+      Wingsquirrel_4: -1859316720
+      Wingsquirrel_5: 1778636578
+      Wingsquirrel_6: 1025964872
+      Wingsquirrel_7: 2108772217
+      Wingsquirrel_8: 452409798
+      Wingsquirrel_9: 920422298
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
