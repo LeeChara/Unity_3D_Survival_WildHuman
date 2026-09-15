@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 1179077102245460135}
   - component: {fileID: 6134621087363996050}
   - component: {fileID: 6746420886992821520}
-  - component: {fileID: 5922153533255415556}
+  - component: {fileID: 5223719300316381313}
   - component: {fileID: -4888124917078114788}
   m_Layer: 6
   m_Name: Shieldboar
@@ -121,7 +121,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Health
   maxHealth: 30
---- !u!114 &5922153533255415556
+--- !u!114 &5223719300316381313
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -130,9 +130,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 3698754605101644}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe3aa6fbffd561b4b983f5ff72918677, type: 3}
+  m_Script: {fileID: 11500000, guid: 1440efd853f545647b9e661849f396fe, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::MonsterAI
+  m_EditorClassIdentifier: Assembly-CSharp::ShieldboarAI
   hitbox: {fileID: 3982942002569363710}
   hitboxController: {fileID: 5691352009576754014}
   playerLayer:
