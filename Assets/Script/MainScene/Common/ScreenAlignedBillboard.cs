@@ -4,8 +4,8 @@ public class ScreenAlignedBillboard : MonoBehaviour
 {
     private Transform mainCamera;
 
-    // Åõ¿µ¸é Á¤·Ä ºôº¸µå
-    // ¸ó½ºÅÍ Ã¼·Â¹Ù¿¡¼­ »ç¿ë Áß
+    // íˆ¬ì˜ë©´ ì •ë ¬ ë¹Œë³´ë“œ
+    // ëª¬ìŠ¤í„° ì²´ë ¥ë°”ì—ì„œ ì‚¬ìš© ì¤‘
     private void Awake()
     {
         mainCamera = Camera.main.transform;

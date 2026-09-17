@@ -4,7 +4,7 @@ using UnityEngine.InputSystem;
 public class PlayerAttack : MonoBehaviour
 {
     [SerializeField] private GameObject hitboxObject;
-    [SerializeField] private HitboxController hitboxController; // hitboxObject¿Í °°Àº ¿ÀºêÁ§Æ®
+    [SerializeField] private HitboxController hitboxController; // hitboxObjectì™€ ê°™ì€ ì˜¤ë¸Œì íŠ¸
 
     [SerializeField] private PlayerState playerState;
     [SerializeField] private Animator animator;
@@ -17,7 +17,7 @@ public class PlayerAttack : MonoBehaviour
     private enum AttackPhase { None, Windup, Attack, Recover }
     private AttackPhase attackPhase = AttackPhase.None;
     private float phaseTime;
-    private float lastAttackTime = -999f; // ½ÃÀÛ ½Ã ¹Ù·Î »ç¿ë °¡´ÉÇÏµµ·Ï ÃæºĞÈ÷ ÀÛÀº °ª
+    private float lastAttackTime = -999f; // ì‹œì‘ ì‹œ ë°”ë¡œ ì‚¬ìš© ê°€ëŠ¥í•˜ë„ë¡ ì¶©ë¶„íˆ ì‘ì€ ê°’
     private void Awake()
     {
         hitboxObject.SetActive(false);
@@ -25,7 +25,7 @@ public class PlayerAttack : MonoBehaviour
 
     private void Update()
     {
-        // AttackÀÏ ¶§¸¸ ½ÇÇà (´Ù¸¥ Å¬·¡½º¿Í ¹èÅ¸Àû)
+        // Attackì¼ ë•Œë§Œ ì‹¤í–‰ (ë‹¤ë¥¸ í´ë˜ìŠ¤ì™€ ë°°íƒ€ì )
         if (playerState.CurrentState != PlayerActionState.Attack) return;
 
         phaseTime += Time.deltaTime;
@@ -65,9 +65,9 @@ public class PlayerAttack : MonoBehaviour
 
     void OnAttack(InputValue value)
     {
-        // È¸ÇÇ ¶Ç´Â °ø°İ Áß¿¡´Â ÀÔ·Â ¹«½Ã
+        // íšŒí”¼ ë˜ëŠ” ê³µê²© ì¤‘ì—ëŠ” ì…ë ¥ ë¬´ì‹œ
         if (!playerState.CanAct) return;
-        // Äğ´Ù¿î Áß¿¡´Â ÀÔ·Â ¹«½Ã
+        // ì¿¨ë‹¤ìš´ ì¤‘ì—ëŠ” ì…ë ¥ ë¬´ì‹œ
         if (Time.time < lastAttackTime + attackCooldown) return;
 
         attackPhase = AttackPhase.Windup;

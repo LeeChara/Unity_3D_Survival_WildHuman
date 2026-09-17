@@ -16,15 +16,15 @@ public class PlayerInputHandler : MonoBehaviour
 
     private void OnEnable()
     {
-        // Move ¾×¼Ç
+        // Move ì•¡ì…˜
         actions.Player.Move.performed += OnMovePerformed;
         actions.Player.Move.canceled += OnMoveCanlceled;
 
-        // Sprint ¾×¼Ç
+        // Sprint ì•¡ì…˜
         actions.Player.Sprint.performed += OnSprintPerformed;
         actions.Player.Sprint.canceled += OnSprintCanceled;
 
-        // Dodge ¾×¼Ç
+        // Dodge ì•¡ì…˜
         actions.Player.Dodge.performed += OnDodgePerformed;
 
         actions.Player.Enable();
@@ -32,23 +32,23 @@ public class PlayerInputHandler : MonoBehaviour
 
     private void OnDisable()
     {
-        // ÀçÈ°¼ºÈ­ ½Ã Áßº¹ µî·ÏµÇÁö ¾Êµµ·Ï ÀÌº¥Æ® ±¸µ¶ ÇØÁ¦
-        // OnEnable¿¡¼­ ±¸µ¶ÇÑ °Í°ú Â¦À» ¸ÂÃç ÇØÁ¦
+        // ì¬í™œì„±í™” ì‹œ ì¤‘ë³µ ë“±ë¡ë˜ì§€ ì•Šë„ë¡ ì´ë²¤íŠ¸ êµ¬ë… í•´ì œ
+        // OnEnableì—ì„œ êµ¬ë…í•œ ê²ƒê³¼ ì§ì„ ë§ì¶° í•´ì œ
 
-        // Move ¾×¼Ç
+        // Move ì•¡ì…˜
         actions.Player.Move.performed -= OnMovePerformed;
         actions.Player.Move.canceled -= OnMoveCanlceled;
 
-        // Sprint ¾×¼Ç
+        // Sprint ì•¡ì…˜
         actions.Player.Sprint.performed -= OnSprintPerformed;
         actions.Player.Sprint.canceled -= OnSprintCanceled;
 
-        // Dodge ¾×¼Ç
+        // Dodge ì•¡ì…˜
         actions.Player.Dodge.performed -= OnDodgePerformed;
 
         actions.Player.Disable();
 
-        // ÀÌÀüÀÇ »óÅÂ°¡ ³²Áö ¾Êµµ·Ï ÃÊ±âÈ­
+        // ì´ì „ì˜ ìƒíƒœê°€ ë‚¨ì§€ ì•Šë„ë¡ ì´ˆê¸°í™”
         MoveInput = Vector2.zero;
         IsSprintPressed = false;
     }
@@ -59,7 +59,7 @@ public class PlayerInputHandler : MonoBehaviour
     }
     private void OnMoveCanlceled(InputAction.CallbackContext ctx)
     {
-        // ÀÌµ¿ÇÏÁö ¾ÊÀ» ¶§, ¹æÇâ°ªÀÌ ³²Áö ¾Êµµ·Ï ÃÊ±âÈ­
+        // ì´ë™í•˜ì§€ ì•Šì„ ë•Œ, ë°©í–¥ê°’ì´ ë‚¨ì§€ ì•Šë„ë¡ ì´ˆê¸°í™”
         MoveInput = Vector2.zero;
     }
     private void OnSprintPerformed(InputAction.CallbackContext ctx)
@@ -73,6 +73,6 @@ public class PlayerInputHandler : MonoBehaviour
     }
     private void OnDodgePerformed(InputAction.CallbackContext ctx)
     {
-        // TODO: ±¸¸£±â ·ÎÁ÷ ÀÛ¼º
+        // TODO: êµ¬ë¥´ê¸° ë¡œì§ ì‘ì„±
     }
 }

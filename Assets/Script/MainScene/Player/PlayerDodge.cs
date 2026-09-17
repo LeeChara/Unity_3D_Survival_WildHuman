@@ -14,7 +14,7 @@ public class PlayerDodge : MonoBehaviour
     private float dodgeTime;
     private float dodgeSpeed;
     private Vector3 dodgeVec;
-    private float lastDodgeTime = -999f; // ½ÃÀÛ ½Ã ¹Ù·Î »ç¿ë °¡´ÉÇÏµµ·Ï ÃæºĞÈ÷ ÀÛÀº °ª
+    private float lastDodgeTime = -999f; // ì‹œì‘ ì‹œ ë°”ë¡œ ì‚¬ìš© ê°€ëŠ¥í•˜ë„ë¡ ì¶©ë¶„íˆ ì‘ì€ ê°’
 
     private void Awake()
     {
@@ -25,7 +25,7 @@ public class PlayerDodge : MonoBehaviour
 
     private void FixedUpdate()
     {
-        // DodgeÀÏ ¶§¸¸ ½ÇÇà (´Ù¸¥ Å¬·¡½º¿Í ¹èÅ¸Àû)
+        // Dodgeì¼ ë•Œë§Œ ì‹¤í–‰ (ë‹¤ë¥¸ í´ë˜ìŠ¤ì™€ ë°°íƒ€ì )
         if (playerState.CurrentState != PlayerActionState.Dodge) return;
 
         dodgeTime += Time.fixedDeltaTime;
@@ -38,9 +38,9 @@ public class PlayerDodge : MonoBehaviour
     }
     void OnDodge(InputValue value)
     {
-        // È¸ÇÇ ¶Ç´Â °ø°İ Áß¿¡´Â ÀÔ·Â ¹«½Ã
+        // íšŒí”¼ ë˜ëŠ” ê³µê²© ì¤‘ì—ëŠ” ì…ë ¥ ë¬´ì‹œ
         if (!playerState.CanAct) return;
-        // Äğ´Ù¿î Áß¿¡´Â ÀÔ·Â ¹«½Ã
+        // ì¿¨ë‹¤ìš´ ì¤‘ì—ëŠ” ì…ë ¥ ë¬´ì‹œ
         if (Time.time < lastDodgeTime + dodgeCooldown) return;
 
         Vector2 lastDir = playerState.LastDir;

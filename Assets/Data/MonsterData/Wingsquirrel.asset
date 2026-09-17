@@ -22,7 +22,7 @@ MonoBehaviour:
   chaseRange: 15
   windupRange: 4
   windupDuration: 0.5
-  attackSpeed: 2
+  attackSpeed: 5
   attackDuration: 3
   attackDamage: 0
   recoverDuration: 1

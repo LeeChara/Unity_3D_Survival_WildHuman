@@ -5,7 +5,7 @@ public class Health : MonoBehaviour
     [SerializeField] private float maxHealth = 100;
     private float currentHealth;
 
-    // ÀÐ±â Àü¿ë ÇÁ·ÎÆÛÆ¼
+    // ì½ê¸° ì „ìš© í”„ë¡œí¼í‹°
     public float MaxHealth => maxHealth;
     public float CurrentHealth => currentHealth;
     public void Awake()

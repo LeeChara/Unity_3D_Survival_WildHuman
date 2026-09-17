@@ -5,10 +5,10 @@ public class MonsterData : ScriptableObject
 {
     public string monsterName;
 
-    [Header("Àû´ë ´ë»ó")]
+    [Header("ì ëŒ€ ëŒ€ìƒ")]
     public MonsterData[] hostileTargets;
 
-    [Header("±âº» ´É·ÂÄ¡")]
+    [Header("ê¸°ë³¸ ëŠ¥ë ¥ì¹˜")]
     public float maxHealth;
 
     [Header("Idle")]

@@ -9,9 +9,9 @@ public class ButtonController : MonoBehaviour
     public void QuitGame()
     {
         #if UNITY_EDITOR
-            UnityEditor.EditorApplication.isPlaying = false; // ¿¡µğÅÍ¿¡¼­´Â Play ¸ğµå Á¾·á
+            UnityEditor.EditorApplication.isPlaying = false; // ì—ë””í„°ì—ì„œëŠ” Play ëª¨ë“œ ì¢…ë£Œ
         #else
-            Application.Quit(); // ºôµåµÈ °ÔÀÓ¿¡¼­´Â ¾ÖÇÃ¸®ÄÉÀÌ¼Ç ÀÚÃ¼¸¦ Á¾·á
+            Application.Quit(); // ë¹Œë“œëœ ê²Œì„ì—ì„œëŠ” ì• í”Œë¦¬ì¼€ì´ì…˜ ìì²´ë¥¼ ì¢…ë£Œ
         #endif
     }
 }

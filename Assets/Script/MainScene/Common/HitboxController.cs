@@ -3,15 +3,15 @@ using UnityEngine;
 
 public class HitboxController : MonoBehaviour
 {
-    [SerializeField] private LayerMask targetLayer; // °ø°İ ´ë»ó ·¹ÀÌ¾î
+    [SerializeField] private LayerMask targetLayer; // ê³µê²© ëŒ€ìƒ ë ˆì´ì–´
     [SerializeField] private int damage = 10;
 
-    // ÇÑ ¹øÀÇ °ø°İµ¿¾È °°Àº ÀûÀ» Áßº¹À¸·Î °ø°İÇÏÁö ¾Êµµ·Ï ÃßÀû
+    // í•œ ë²ˆì˜ ê³µê²©ë™ì•ˆ ê°™ì€ ì ì„ ì¤‘ë³µìœ¼ë¡œ ê³µê²©í•˜ì§€ ì•Šë„ë¡ ì¶”ì 
     private HashSet<Collider> hitTargets = new HashSet<Collider>();
 
     private void OnTriggerEnter(Collider other)
     {
-        // targetLayer¿¡ ÇØ´çÇÏ´Â ·¹ÀÌ¾î°¡ ¾Æ´Ñ °æ¿ì ¸®ÅÏ
+        // targetLayerì— í•´ë‹¹í•˜ëŠ” ë ˆì´ì–´ê°€ ì•„ë‹Œ ê²½ìš° ë¦¬í„´
         if ((targetLayer.value & (1 << other.gameObject.layer)) == 0) return;
         if (hitTargets.Contains(other)) return;
 
@@ -20,11 +20,11 @@ public class HitboxController : MonoBehaviour
         if (other.TryGetComponent<Health>(out Health health))
         {
             health.TakeDamage(damage);
-            Debug.Log($"{other.name} ÇÇ°İ - ÇöÀç Ã¼·Â: {health.CurrentHealth} / {health.MaxHealth}");
+            Debug.Log($"{other.name} í”¼ê²© - í˜„ì¬ ì²´ë ¥: {health.CurrentHealth} / {health.MaxHealth}");
         }
     }
 
-    // »õ·Î¿î °ø°İÀ» ½ÃÀÛÇÒ ¶§ ÃÊ±âÈ­
+    // ìƒˆë¡œìš´ ê³µê²©ì„ ì‹œì‘í•  ë•Œ ì´ˆê¸°í™”
     public void ResetHitTargets()
     {
         hitTargets.Clear();

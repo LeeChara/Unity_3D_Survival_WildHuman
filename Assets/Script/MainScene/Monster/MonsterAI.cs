@@ -9,7 +9,7 @@ public class MonsterAI : MonoBehaviour
     [SerializeField] protected MonsterData data;
     [SerializeField] protected Animator animator;
     [SerializeField] private Facing monsterFacing;
-    [SerializeField] private float cameraYAngle = 45f; // BillboardÀÇ °ª°ú ¹İµå½Ã ÀÏÄ¡ÇØ¾ßÇÔ
+    [SerializeField] private float cameraYAngle = 45f; // Billboardì˜ ê°’ê³¼ ë°˜ë“œì‹œ ì¼ì¹˜í•´ì•¼í•¨
     public MonsterData Data => data;
     protected enum State { Idle, Chase, Windup, Attack, Recover }
 
@@ -43,8 +43,8 @@ public class MonsterAI : MonoBehaviour
         health.Init(data.maxHealth);
     }
 
-    // ¸ó½ºÅÍÀÇ Çàµ¿ ±â¹İÀº ¸ñÇ¥¹°°úÀÇ °Å¸®
-    // µû¶ó¼­ ¸ñÇ¥¹° °»½ÅÀ» ¸ÕÀú ÁøÇà
+    // ëª¬ìŠ¤í„°ì˜ í–‰ë™ ê¸°ë°˜ì€ ëª©í‘œë¬¼ê³¼ì˜ ê±°ë¦¬
+    // ë”°ë¼ì„œ ëª©í‘œë¬¼ ê°±ì‹ ì„ ë¨¼ì € ì§„í–‰
     protected virtual void Update()
     {
         UpdateTarget();
@@ -70,7 +70,7 @@ public class MonsterAI : MonoBehaviour
                 Chase(distance, direction);
                 break;
             case State.Windup:
-                WindUp(direction);
+                Windup(direction);
                 break;
             case State.Attack:
                 Attack();
@@ -80,7 +80,7 @@ public class MonsterAI : MonoBehaviour
                 break;
         }
         
-        // ½ÇÁ¦·Î ÀÌµ¿ ÁßÀÎ ¹æÇâÀÌ ÀÖÀ» ¶§¸¸ Facing °»½Å
+        // ì‹¤ì œë¡œ ì´ë™ ì¤‘ì¸ ë°©í–¥ì´ ìˆì„ ë•Œë§Œ Facing ê°±ì‹ 
         Vector3 currentVelocity = rb.linearVelocity;
         if (currentVelocity.sqrMagnitude > 0.01f)
         {
@@ -93,7 +93,7 @@ public class MonsterAI : MonoBehaviour
 
     protected virtual void UpdateTarget()
     {
-        // Ãß°İ ÁßÀÎ ¸ñÇ¥¹°ÀÌ Ãß°İ ¹üÀ§º¸´Ù ¸Ö¾îÁö¸é Ãß°İ Æ÷±â
+        // ì¶”ê²© ì¤‘ì¸ ëª©í‘œë¬¼ì´ ì¶”ê²© ë²”ìœ„ë³´ë‹¤ ë©€ì–´ì§€ë©´ ì¶”ê²© í¬ê¸°
         if (target != null)
         {
             float distance = Vector3.Distance(transform.position, target.position);
@@ -164,6 +164,7 @@ public class MonsterAI : MonoBehaviour
     }
     protected virtual void Idle()
     {
+        // ëª©í‘œê°€ ê°ì§€ë˜ë©´ Chase ìƒíƒœë¡œ ì „í™˜
         if (target != null)
         {
             state = State.Chase;
@@ -172,6 +173,11 @@ public class MonsterAI : MonoBehaviour
             return;
         }
 
+        Wander();
+    }
+
+    protected virtual void Wander()
+    {
         if (wanderCooldownTime > 0f)
         {
             wanderCooldownTime -= Time.deltaTime;
@@ -196,6 +202,7 @@ public class MonsterAI : MonoBehaviour
             wanderCooldownTime = Mathf.Max(0f, data.wanderCooldown + Random.Range(-0.5f, 0.5f));
             return;
         }
+
         Vector3 wanderDirection = wanderDistance.normalized;
         rb.linearVelocity = wanderDirection * data.moveSpeed;
         transform.rotation = Quaternion.LookRotation(wanderDirection);
@@ -207,35 +214,42 @@ public class MonsterAI : MonoBehaviour
         {
             state = State.Idle;
 
+            ResetTrigger();
             animator.SetTrigger("Reset");
             return;
         }
 
-        rb.linearVelocity = direction * data.chaseSpeed;
-        transform.rotation = Quaternion.LookRotation(direction);
+        ChaseBehavior(distance, direction);
 
         if (distance <= data.windupRange)
         {
             state = State.Windup;
+
             stateTime = 0f;
 
             animator.SetTrigger("Windup");
         }
     }
 
-    protected virtual void WindUp(Vector3 direction)
+    protected virtual void ChaseBehavior(float distance, Vector3 direction)
+    {
+        rb.linearVelocity = direction * data.chaseSpeed;
+        transform.rotation = Quaternion.LookRotation(direction);
+    }
+
+    protected virtual void Windup(Vector3 direction)
     {
         if (target == null)
         {
             state = State.Idle;
 
+            ResetTrigger();
             animator.SetTrigger("Reset");
 
             return;
         }
 
-        rb.linearVelocity = Vector3.zero;
-        transform.rotation = Quaternion.LookRotation(direction);
+        WindupBehavior(direction);
 
         if (stateTime > data.windupDuration)
         {
@@ -250,9 +264,16 @@ public class MonsterAI : MonoBehaviour
         }
     }
 
+    protected virtual void WindupBehavior(Vector3 direction)
+    {
+        rb.linearVelocity = Vector3.zero;
+        transform.rotation = Quaternion.LookRotation(direction);
+    }
+
     protected virtual void Attack()
     {
-        rb.linearVelocity = attackDirection * data.attackSpeed;
+        AttackBehavior();
+
         if (stateTime > data.attackDuration)
         {
             state = State.Recover;
@@ -264,9 +285,14 @@ public class MonsterAI : MonoBehaviour
         }
     }
 
+    protected virtual void AttackBehavior()
+    {
+        rb.linearVelocity = attackDirection * data.attackSpeed;
+    }
+
     protected virtual void Recover()
     {
-        rb.linearVelocity = Vector3.zero;
+        RecoverBehavior();
 
         if (stateTime > data.recoverDuration)
         {
@@ -277,7 +303,12 @@ public class MonsterAI : MonoBehaviour
         }
     }
 
-    // ¼ÒºñµÇÁö ¾ÊÀº Æ®¸®°Å Ã³¸®
+    protected virtual void RecoverBehavior()
+    {
+        rb.linearVelocity = Vector3.zero;
+    }
+
+    // ì†Œë¹„ë˜ì§€ ì•Šì€ íŠ¸ë¦¬ê±° ì²˜ë¦¬
     private void ResetTrigger()
     {
         animator.ResetTrigger("Chase");

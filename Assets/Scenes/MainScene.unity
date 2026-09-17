@@ -1099,6 +1099,22 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1060618979 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6497605139147500748, guid: b7c2edd5481861741a49adfa724df037, type: 3}
+  m_PrefabInstance: {fileID: 8460207582260131282}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1060618981 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6463084329378836842, guid: b7c2edd5481861741a49adfa724df037, type: 3}
+  m_PrefabInstance: {fileID: 8460207582260131282}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1060618979}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 391871e325623814ea371bd4f7e66189, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::HitboxController
 --- !u!4 &1515454775 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5536276293848009136, guid: 53a89a95158fc604884e649e2e53dc34, type: 3}
@@ -1516,6 +1532,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8212119383527421846, guid: b7c2edd5481861741a49adfa724df037, type: 3}
+      propertyPath: hitbox
+      value: 
+      objectReference: {fileID: 1060618979}
+    - target: {fileID: 8212119383527421846, guid: b7c2edd5481861741a49adfa724df037, type: 3}
+      propertyPath: hitboxController
+      value: 
+      objectReference: {fileID: 1060618981}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

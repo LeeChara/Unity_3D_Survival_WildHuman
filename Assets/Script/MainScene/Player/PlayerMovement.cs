@@ -14,7 +14,7 @@ public class PlayerMovement : MonoBehaviour
     private Vector2 inputVec;
     private bool isSprinting;
 
-    [SerializeField] private float cameraYAngle = 45f; // BillboardÀÇ °ª°ú ¹Ýµå½Ã ÀÏÄ¡ÇØ¾ßÇÔ
+    [SerializeField] private float cameraYAngle = 45f; // Billboardì˜ ê°’ê³¼ ë°˜ë“œì‹œ ì¼ì¹˜í•´ì•¼í•¨
     private Quaternion cameraRotation;
     private Vector3 cameraRight;
     private Vector3 cameraForwardFlat;
@@ -29,21 +29,21 @@ public class PlayerMovement : MonoBehaviour
 
     private void FixedUpdate()
     {
-        // NormalÀÏ ¶§¸¸ ½ÇÇà (´Ù¸¥ Å¬·¡½º¿Í ¹èÅ¸Àû)
+        // Normalì¼ ë•Œë§Œ ì‹¤í–‰ (ë‹¤ë¥¸ í´ëž˜ìŠ¤ì™€ ë°°íƒ€ì )
         if (playerState.CurrentState != PlayerActionState.Normal) return;
 
-        // ÀÔ·Â º¤ÅÍ´Â Input Action¿¡¼­ ÀÌ¹Ì Á¤±ÔÈ­
+        // ìž…ë ¥ ë²¡í„°ëŠ” Input Actionì—ì„œ ì´ë¯¸ ì •ê·œí™”
         Vector3 moveVec = new Vector3(inputVec.x, 0, inputVec.y);
 
         moveVec *= moveSpeed;
         if (isSprinting) moveVec *= sprintMultiplier;
 
-        // ÄõÅÍºä Çü½Ä¿¡ ¸Â°Ô È¸Àü
+        // ì¿¼í„°ë·° í˜•ì‹ì— ë§žê²Œ íšŒì „
         moveVec = cameraRotation * moveVec;
 
         rb.linearVelocity = moveVec;
 
-        // ¿òÁ÷ÀÓÀÌ °ÅÀÇ ¾øÀ¸¸é ¾÷µ¥ÀÌÆ®ÇÏÁö ¾ÊÀ½
+        // ì›€ì§ìž„ì´ ê±°ì˜ ì—†ìœ¼ë©´ ì—…ë°ì´íŠ¸í•˜ì§€ ì•ŠìŒ
         if (moveVec.sqrMagnitude > 0.01f)
         {
             playerState.SetLastDir(new Vector2(moveVec.x, moveVec.z).normalized);

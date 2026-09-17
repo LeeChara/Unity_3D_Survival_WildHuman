@@ -6,7 +6,7 @@ public class PlayerState : MonoBehaviour
     public Vector2 LastDir { get; private set; }
     public PlayerActionState CurrentState { get; private set; }
 
-    // »õ·Î¿î ¾×¼Ç(°ø°Ý ¶Ç´Â È¸ÇÇ)À» ½ÃÀÛÇØµµ µÇ´ÂÁö ¿©ºÎ
+    // ìƒˆë¡œìš´ ì•¡ì…˜(ê³µê²© ë˜ëŠ” íšŒí”¼)ì„ ì‹œìž‘í•´ë„ ë˜ëŠ”ì§€ ì—¬ë¶€
     public bool CanAct => CurrentState == PlayerActionState.Normal;
 
     public void SetLastDir(Vector2 lastDir)

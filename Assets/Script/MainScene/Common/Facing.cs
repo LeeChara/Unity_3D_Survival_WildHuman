@@ -4,13 +4,13 @@ public class Facing : MonoBehaviour
     [SerializeField] private Animator animator;
     [SerializeField] private Transform root;
 
-    [Tooltip("±âº» ½ºÇÁ¶óÀÌÆ® ¹æÇâ. True: ¿À¸¥ÂÊ, False: ¿ÞÂÊ")]
-    [SerializeField] private bool baseSpriteFace; // True: ¿À¸¥ÂÊ, False: ¿ÞÂÊ
+    [Tooltip("ê¸°ë³¸ ìŠ¤í”„ë¼ì´íŠ¸ ë°©í–¥. True: ì˜¤ë¥¸ìª½, False: ì™¼ìª½")]
+    [SerializeField] private bool baseSpriteFace; // True: ì˜¤ë¥¸ìª½, False: ì™¼ìª½
     public void UpdateFacing(Vector3 moveDir, Vector3 cameraRight, Vector3 cameraForwardFlat)
     {
-        // ¾ç¼ö¸é ¿À¸¥ÂÊ, À½¼ö¸é ¿ÞÂÊ
+        // ì–‘ìˆ˜ë©´ ì˜¤ë¥¸ìª½, ìŒìˆ˜ë©´ ì™¼ìª½
         float sideDot = Vector3.Dot(moveDir, cameraRight);
-        // ¾ç¼ö¸é ¾Õ, À½¼ö¸é µÚ
+        // ì–‘ìˆ˜ë©´ ì•ž, ìŒìˆ˜ë©´ ë’¤
         float frontDot = Vector3.Dot(moveDir, -cameraForwardFlat);
 
         bool isFront = frontDot > Mathf.Abs(sideDot);
