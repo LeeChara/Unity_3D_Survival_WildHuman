@@ -9,6 +9,8 @@ public class HitboxController : MonoBehaviour
     // 한 번의 공격동안 같은 적을 중복으로 공격하지 않도록 추적
     private HashSet<Collider> hitTargets = new HashSet<Collider>();
 
+    public bool HasHit => hitTargets.Count > 0;
+
     private void OnTriggerEnter(Collider other)
     {
         // targetLayer에 해당하는 레이어가 아닌 경우 리턴
