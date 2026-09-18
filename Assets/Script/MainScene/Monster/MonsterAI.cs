@@ -8,17 +8,20 @@ public class MonsterAI : MonoBehaviour
     [SerializeField] protected LayerMask monsterLayer;
     [SerializeField] protected MonsterData data;
     [SerializeField] protected Animator animator;
-    [SerializeField] private Facing monsterFacing;
+    [SerializeField] protected Facing monsterFacing;
     [SerializeField] private float cameraYAngle = 45f; // Billboard의 값과 반드시 일치해야함
     public MonsterData Data => data;
     protected enum State { Idle, Chase, Windup, Attack, Recover }
 
-    private State state = State.Idle;
-    private float stateTime;
+    protected State state = State.Idle;
+    protected float stateTime;
 
     protected Rigidbody rb;
     protected Health health;
     protected Transform target;
+
+    protected Vector3 targetDirection;
+    protected float targetDistance;
 
     protected Vector3 attackDirection;
 
@@ -51,14 +54,12 @@ public class MonsterAI : MonoBehaviour
 
         stateTime += Time.deltaTime;
 
-        float distance = 0f;
-        Vector3 direction = Vector3.zero;
         if (target != null)
         {
-            distance = Vector3.Distance(transform.position, target.position);
-            direction = target.position - transform.position;
-            direction.y = 0f;
-            direction.Normalize();
+            targetDistance = Vector3.Distance(transform.position, target.position);
+            targetDirection = target.position - transform.position;
+            targetDirection.y = 0f;
+            targetDirection.Normalize();
         }
 
         switch (state)
@@ -67,10 +68,10 @@ public class MonsterAI : MonoBehaviour
                 Idle();
                 break;
             case State.Chase:
-                Chase(distance, direction);
+                Chase();
                 break;
             case State.Windup:
-                Windup(direction);
+                Windup();
                 break;
             case State.Attack:
                 Attack();
@@ -153,9 +154,9 @@ public class MonsterAI : MonoBehaviour
         }
         return false;
     }
-    private void SetTarget(Transform dectectedTarget)
+    private void SetTarget(Transform detectedTarget)
     {
-        target = dectectedTarget;   
+        target = detectedTarget;   
     }
 
     private void ClearTarget()
@@ -208,7 +209,7 @@ public class MonsterAI : MonoBehaviour
         transform.rotation = Quaternion.LookRotation(wanderDirection);
     }
 
-    protected virtual void Chase(float distance, Vector3 direction)
+    protected virtual void Chase()
     {
         if (target == null)
         {
@@ -219,9 +220,9 @@ public class MonsterAI : MonoBehaviour
             return;
         }
 
-        ChaseBehavior(distance, direction);
+        ChaseBehavior();
 
-        if (distance <= data.windupRange)
+        if (targetDistance <= data.windupRange)
         {
             state = State.Windup;
 
@@ -231,13 +232,13 @@ public class MonsterAI : MonoBehaviour
         }
     }
 
-    protected virtual void ChaseBehavior(float distance, Vector3 direction)
+    protected virtual void ChaseBehavior()
     {
-        rb.linearVelocity = direction * data.chaseSpeed;
-        transform.rotation = Quaternion.LookRotation(direction);
+        rb.linearVelocity = targetDirection * data.chaseSpeed;
+        transform.rotation = Quaternion.LookRotation(targetDirection);
     }
 
-    protected virtual void Windup(Vector3 direction)
+    protected virtual void Windup()
     {
         if (target == null)
         {
@@ -249,7 +250,7 @@ public class MonsterAI : MonoBehaviour
             return;
         }
 
-        WindupBehavior(direction);
+        WindupBehavior();
 
         if (stateTime > data.windupDuration)
         {
@@ -258,16 +259,16 @@ public class MonsterAI : MonoBehaviour
 
             animator.SetTrigger("Attack");
 
-            attackDirection = direction;
+            attackDirection = targetDirection;
             hitboxController.ResetHitTargets();
             hitbox.SetActive(true);
         }
     }
 
-    protected virtual void WindupBehavior(Vector3 direction)
+    protected virtual void WindupBehavior()
     {
         rb.linearVelocity = Vector3.zero;
-        transform.rotation = Quaternion.LookRotation(direction);
+        transform.rotation = Quaternion.LookRotation(targetDirection);
     }
 
     protected virtual void Attack()

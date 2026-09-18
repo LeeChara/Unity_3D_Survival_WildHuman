@@ -9,7 +9,7 @@ public class MonsterData : ScriptableObject
     public MonsterData[] hostileTargets;
 
     [Header("기본 능력치")]
-    public float maxHealth;
+    public float maxHealth; 
 
     [Header("Idle")]
     public float moveSpeed = 1f;
