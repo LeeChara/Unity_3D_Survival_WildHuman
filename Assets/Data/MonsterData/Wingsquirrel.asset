@@ -20,7 +20,7 @@ MonoBehaviour:
   wanderCooldown: 5
   chaseSpeed: 4
   chaseRange: 15
-  windupRange: 4
+  windupRange: 7
   windupDuration: 0.5
   attackSpeed: 5
   attackDuration: 3

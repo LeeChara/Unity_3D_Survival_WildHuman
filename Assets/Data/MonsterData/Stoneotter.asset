@@ -1,0 +1,35 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9049640348c66bc48b01403814ec4f85, type: 3}
+  m_Name: Stoneotter
+  m_EditorClassIdentifier: Assembly-CSharp::StoneotterData
+  monsterName: Stoneotter
+  hostileTargets:
+  - {fileID: 11400000, guid: 4eb1b38810d8744448d5e7c4fa8abb5b, type: 2}
+  - {fileID: 11400000, guid: ef0f350da93ecf941a6afe8a421b989a, type: 2}
+  maxHealth: 30
+  moveSpeed: 4
+  wanderRange: 4
+  wanderCooldown: 2
+  chaseSpeed: 5
+  chaseRange: 15
+  windupRange: 10
+  windupDuration: 1
+  attackSpeed: 6
+  attackDuration: 2
+  attackDamage: 5
+  recoverDuration: 1
+  windupMinRange: 3
+  stonePrefab: {fileID: 166747625551737325, guid: f27478d3334a03a4f8e100a9c476a1d4, type: 3}
+  stoneSpeed: 10
+  throwInterval: 0.5
+  throwCount: 3
