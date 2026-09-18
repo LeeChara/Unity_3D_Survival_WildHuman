@@ -1,0 +1,535 @@
+fileFormatVersion: 2
+guid: dc0da3feaf3fddf44982dd4ccc16f791
+TextureImporter:
+  internalIDToNameTable: []
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 0
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 0
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 0
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: Stoneotter_0
+      rect:
+        serializedVersion: 2
+        x: 17
+        y: 160
+        width: 56
+        height: 88
+      alignment: 9
+      pivot: {x: 0.3655899, y: 0.16030902}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 05134a6310a88324b9e68f3a1c517bab
+      internalID: 1571345359
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Stoneotter_1
+      rect:
+        serializedVersion: 2
+        x: 92
+        y: 160
+        width: 42
+        height: 68
+      alignment: 9
+      pivot: {x: 0.48463875, y: 0.20271638}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 26c7e43fe0f3ae846b9b28b412301ecd
+      internalID: 827349899
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Stoneotter_2
+      rect:
+        serializedVersion: 2
+        x: 145
+        y: 205
+        width: 38
+        height: 30
+      alignment: 9
+      pivot: {x: 0.3853034, y: 0.04838206}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: fc8527ac07c3a3245b77c6b67582fa53
+      internalID: -1518454227
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Stoneotter_6
+      rect:
+        serializedVersion: 2
+        x: 259
+        y: 199
+        width: 71
+        height: 33
+      alignment: 9
+      pivot: {x: 0.48260972, y: 0.09591027}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 22ca82eb7aa277a45b99674f00c5d9dd
+      internalID: -287757092
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Stoneotter_8
+      rect:
+        serializedVersion: 2
+        x: 149
+        y: 186
+        width: 13
+        height: 13
+      alignment: 9
+      pivot: {x: -0.16171147, y: 0.3180284}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 92e6c2300fe9bcc4c9c50cbb480014b6
+      internalID: 1345595677
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Stoneotter_9
+      rect:
+        serializedVersion: 2
+        x: 165
+        y: 186
+        width: 16
+        height: 13
+      alignment: 9
+      pivot: {x: 1.1048441, y: 0.49999884}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 617ec3b3551e0b04694ec242a39f7a38
+      internalID: 1655381439
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Stoneotter_10
+      rect:
+        serializedVersion: 2
+        x: 186
+        y: 186
+        width: 12
+        height: 14
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 920ef8c073a31d040abe9132765eaed3
+      internalID: -1623008075
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Stoneotter_11
+      rect:
+        serializedVersion: 2
+        x: 205
+        y: 187
+        width: 35
+        height: 21
+      alignment: 9
+      pivot: {x: 0.93625665, y: 0.19277664}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6e74afb4bfd440e49ac95e489f6d9eef
+      internalID: -817217055
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Stoneotter_12
+      rect:
+        serializedVersion: 2
+        x: 255
+        y: 171
+        width: 22
+        height: 23
+      alignment: 9
+      pivot: {x: 0.48184898, y: 0.9691069}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ebcf6a0850c6e754499b38076a057c81
+      internalID: -1447612655
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Stoneotter_13
+      rect:
+        serializedVersion: 2
+        x: 278
+        y: 171
+        width: 22
+        height: 23
+      alignment: 9
+      pivot: {x: 0.52609944, y: 0.97017103}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c7a02979ab254e44b8965727494694f3
+      internalID: -1019008155
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Stoneotter_14
+      rect:
+        serializedVersion: 2
+        x: 301
+        y: 171
+        width: 17
+        height: 20
+      alignment: 9
+      pivot: {x: 0.37052467, y: 0.9306427}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: caf3902906e66764aa202480dec07ead
+      internalID: 1523517731
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Stoneotter_15
+      rect:
+        serializedVersion: 2
+        x: 322
+        y: 172
+        width: 17
+        height: 20
+      alignment: 9
+      pivot: {x: 0.37052467, y: 0.94499815}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 019cd5d81926c69458027881cd7b3ad0
+      internalID: -359588492
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Stoneotter_16
+      rect:
+        serializedVersion: 2
+        x: 148
+        y: 160
+        width: 27
+        height: 15
+      alignment: 9
+      pivot: {x: 0.10971295, y: 0.6003591}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b855d98f63c53dc4f8b79dc39d4b6a82
+      internalID: -934511173
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Stoneotter_17
+      rect:
+        serializedVersion: 2
+        x: 204
+        y: 162
+        width: 35
+        height: 21
+      alignment: 9
+      pivot: {x: 0.9424011, y: 0.2542216}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1ae17121bb08ce843b63a24ab9c32325
+      internalID: -1229525038
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Stoneotter_3
+      rect:
+        serializedVersion: 2
+        x: 201
+        y: 222
+        width: 7
+        height: 10
+      alignment: 9
+      pivot: {x: 1.1190404, y: 0.5812515}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c1dafc721f4f8a4418778a6c3f2dad51
+      internalID: -1347197333
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Stoneotter_4
+      rect:
+        serializedVersion: 2
+        x: 231
+        y: 212
+        width: 17
+        height: 13
+      alignment: 9
+      pivot: {x: -0.009798835, y: 0.8999962}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: dc7c47b3cffa38b4e8259eb1c96ef07a
+      internalID: 1728492431
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Stoneotter_5
+      rect:
+        serializedVersion: 2
+        x: 146
+        y: 241
+        width: 11
+        height: 11
+      alignment: 9
+      pivot: {x: 0.671119, y: 0.31819013}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 93e24329ec7234b46ae2cf7edf770b0e
+      internalID: 82722457
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Stoneotter_7
+      rect:
+        serializedVersion: 2
+        x: 176
+        y: 240
+        width: 11
+        height: 12
+      alignment: 9
+      pivot: {x: 0.20054626, y: 0.50000256}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: be9d8eb36e1d8924f824c417dcf1effd
+      internalID: -1223790153
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: a140f4d54f672bc429b7805531260bed
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries:
+      - key: SpriteEditor.SliceSettings
+        value: '{"sliceOnImport":false,"gridCellCount":{"x":1.0,"y":1.0},"gridSpriteSize":{"x":64.0,"y":64.0},"gridSpriteOffset":{"x":0.0,"y":0.0},"gridSpritePadding":{"x":0.0,"y":0.0},"pivot":{"x":0.5,"y":0.5},"pivotPixels":{"x":0.0,"y":0.0},"autoSlicingMethod":0,"spriteAlignment":0,"pivotUnitMode":0,"slicingType":0,"keepEmptyRects":false,"isAlternate":false}'
+    nameFileIdTable:
+      Stoneotter_0: 1571345359
+      Stoneotter_1: 827349899
+      Stoneotter_10: -1623008075
+      Stoneotter_11: -817217055
+      Stoneotter_12: -1447612655
+      Stoneotter_13: -1019008155
+      Stoneotter_14: 1523517731
+      Stoneotter_15: -359588492
+      Stoneotter_16: -934511173
+      Stoneotter_17: -1229525038
+      Stoneotter_18: -1779105120
+      Stoneotter_19: -1497887268
+      Stoneotter_2: -1518454227
+      Stoneotter_3: -1347197333
+      Stoneotter_4: 1728492431
+      Stoneotter_5: 82722457
+      Stoneotter_6: -287757092
+      Stoneotter_7: -1223790153
+      Stoneotter_8: 1345595677
+      Stoneotter_9: 1655381439
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

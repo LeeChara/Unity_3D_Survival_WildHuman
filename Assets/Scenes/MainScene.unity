@@ -820,6 +820,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Shieldboar
       objectReference: {fileID: 0}
+    - target: {fileID: 3698754605101644, guid: 7796c72efd61e79468c0267d6f3492fb, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2326532825360013379, guid: 7796c72efd61e79468c0267d6f3492fb, type: 3}
       propertyPath: m_LocalPosition.x
       value: 20
@@ -1423,6 +1427,63 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2023879104}
   m_CullTransparentMesh: 1
+--- !u!1001 &836784433114017883
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 7148149839111202034, guid: 2d811b3e2425f154caf93e94ce34eb93, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 7148149839111202034, guid: 2d811b3e2425f154caf93e94ce34eb93, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7148149839111202034, guid: 2d811b3e2425f154caf93e94ce34eb93, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -6
+      objectReference: {fileID: 0}
+    - target: {fileID: 7148149839111202034, guid: 2d811b3e2425f154caf93e94ce34eb93, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7148149839111202034, guid: 2d811b3e2425f154caf93e94ce34eb93, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7148149839111202034, guid: 2d811b3e2425f154caf93e94ce34eb93, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7148149839111202034, guid: 2d811b3e2425f154caf93e94ce34eb93, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7148149839111202034, guid: 2d811b3e2425f154caf93e94ce34eb93, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7148149839111202034, guid: 2d811b3e2425f154caf93e94ce34eb93, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7148149839111202034, guid: 2d811b3e2425f154caf93e94ce34eb93, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7304474180741421677, guid: 2d811b3e2425f154caf93e94ce34eb93, type: 3}
+      propertyPath: m_Name
+      value: Stoneotter
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 2d811b3e2425f154caf93e94ce34eb93, type: 3}
 --- !u!1001 &4030971477659590208
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1492,6 +1553,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Wingsquirrel
       objectReference: {fileID: 0}
+    - target: {fileID: 48305459567241423, guid: b7c2edd5481861741a49adfa724df037, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1035891137015041403, guid: b7c2edd5481861741a49adfa724df037, type: 3}
       propertyPath: m_LocalPosition.x
       value: 15
@@ -1558,4 +1623,5 @@ SceneRoots:
   - {fileID: 638520172}
   - {fileID: 4030971477659590208}
   - {fileID: 579413621}
+  - {fileID: 836784433114017883}
   - {fileID: 8460207582260131282}
