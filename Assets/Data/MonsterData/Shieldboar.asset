@@ -15,7 +15,7 @@ MonoBehaviour:
   monsterName: Shieldboar
   hostileTargets:
   - {fileID: 11400000, guid: ef0f350da93ecf941a6afe8a421b989a, type: 2}
-  maxHealth: 30
+  maxHealth: 50
   moveSpeed: 2
   wanderRange: 7
   wanderCooldown: 3

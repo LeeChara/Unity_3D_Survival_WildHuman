@@ -14,16 +14,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::RoseviperData
   monsterName: 
   hostileTargets: []
-  maxHealth: 0
-  moveSpeed: 1
-  wanderRange: 3
-  wanderCooldown: 3
-  chaseSpeed: 3
-  chaseRange: 10
-  windupRange: 2
-  windupDuration: 1
-  attackSpeed: 6
-  attackDuration: 0.5
+  maxHealth: 40
+  moveSpeed: 3
+  wanderRange: 10
+  wanderCooldown: 7
+  chaseSpeed: 5
+  chaseRange: 15
+  windupRange: 3
+  windupDuration: 0.5
+  attackSpeed: 1
+  attackDuration: 3
   attackDamage: 10
   recoverDuration: 1
-  retreatSpeed: 6
+  attackHitDuration: 0.5
+  retreatSpeed: 15
