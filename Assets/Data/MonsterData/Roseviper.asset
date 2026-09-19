@@ -26,5 +26,5 @@ MonoBehaviour:
   attackDuration: 2
   attackDamage: 10
   recoverDuration: 1
-  attackHitDuration: 0.5
+  attackHitDuration: 1
   retreatSpeed: 15
