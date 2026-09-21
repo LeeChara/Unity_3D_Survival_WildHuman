@@ -31,26 +31,25 @@ public class RoseviperAI : MonsterAI
     {
         AttackBehavior();
 
-        if (stateTime <= viperData.attackHitDuration)
-        {
-            if (hitboxController.HasHit)
-            {
-                // 공격 성공: 즉시 Recover로 전환
-                state = State.Recover;
-                stateTime = 0f;
-
-                animator.SetTrigger("Recover");
-                hitbox.SetActive(false);
-                return;
-            }
-        }
-        else if (hitbox.activeSelf)
+        if (hitbox.activeSelf && stateTime > viperData.attackHitDuration)
         {
             // 판정 시간 종료: 명중 여부와 무관하게 히트박스 비활성화
             hitbox.SetActive(false);
         }
 
-        if (stateTime > data.attackDuration)
+        if (hitboxController.HasHit)
+        {
+            if (stateTime > viperData.attackHitDuration)
+            {
+                // 공격 성공: attackHitDuration까지만 재생한 뒤 Recover로 전환
+                state = State.Recover;
+                stateTime = 0f;
+
+                animator.SetTrigger("Recover");
+                return;
+            }
+        }
+        else if (stateTime > data.attackDuration)
         {
             // 공격 실패: 전체 지속시간을 다 채운 뒤 Recover로 전환
             state = State.Recover;

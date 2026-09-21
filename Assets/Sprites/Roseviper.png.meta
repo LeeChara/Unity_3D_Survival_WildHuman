@@ -474,12 +474,12 @@ TextureImporter:
       name: Roseviper_17
       rect:
         serializedVersion: 2
-        x: 44
-        y: 96
-        width: 36
-        height: 27
+        x: 191
+        y: 123
+        width: 21
+        height: 35
       alignment: 9
-      pivot: {x: 0.32396856, y: 0.004911352}
+      pivot: {x: 0.6731749, y: 0.21868765}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -496,12 +496,12 @@ TextureImporter:
       name: Roseviper_18
       rect:
         serializedVersion: 2
-        x: 92
-        y: 95
-        width: 23
-        height: 28
+        x: 212
+        y: 127
+        width: 22
+        height: 34
       alignment: 9
-      pivot: {x: 0.0025863647, y: 0.71585846}
+      pivot: {x: 0.5843437, y: 0.0033221524}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -647,22 +647,418 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Roseviper_25
+      name: Roseviper_27
       rect:
         serializedVersion: 2
-        x: 141
-        y: 111
-        width: 2
-        height: 1
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+        x: 284
+        y: 157
+        width: 27
+        height: 18
+      alignment: 9
+      pivot: {x: 0.9932409, y: 0.36547935}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 956697d7b1f83ce4e8720cdb8702e87c
+      spriteID: 78249b41c5c859a428c0d327edc6c5f1
+      internalID: 1138955227
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Roseviper_28
+      rect:
+        serializedVersion: 2
+        x: 338
+        y: 148
+        width: 28
+        height: 33
+      alignment: 9
+      pivot: {x: 0.9818028, y: 0.43186626}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9e7ce937c6cee8244b48bc9c5d126e2c
+      internalID: 1040366024
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Roseviper_30
+      rect:
+        serializedVersion: 2
+        x: 264
+        y: 135
+        width: 14
+        height: 33
+      alignment: 9
+      pivot: {x: 0.9941581, y: 0.7987398}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c19e5d43707b13d4681bfbb59afce4f2
+      internalID: 1623892092
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Roseviper_31
+      rect:
+        serializedVersion: 2
+        x: 316
+        y: 128
+        width: 20
+        height: 43
+      alignment: 9
+      pivot: {x: 0.22327271, y: 0.16213457}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3a8e3b9dd2af22d4faf5e25af09e6b2b
+      internalID: 324244326
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Roseviper_32
+      rect:
+        serializedVersion: 2
+        x: 368
+        y: 151
+        width: 38
+        height: 16
+      alignment: 9
+      pivot: {x: 0.98700434, y: 0.44595146}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: fd80494ff5d797a4190b3ec5c5b34e4c
+      internalID: 191500533
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Roseviper_33
+      rect:
+        serializedVersion: 2
+        x: 408
+        y: 148
+        width: 24
+        height: 19
+      alignment: 9
+      pivot: {x: 0.73060733, y: 0.017546805}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b745b777105e5f747857735c7a21f025
+      internalID: 2096047498
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Roseviper_34
+      rect:
+        serializedVersion: 2
+        x: 368
+        y: 120
+        width: 27
+        height: 18
+      alignment: 9
+      pivot: {x: 0.810409, y: 0.38077247}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c12ee70f6fbe81543b16af26f6b3fe36
+      internalID: -405869566
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Roseviper_35
+      rect:
+        serializedVersion: 2
+        x: 398
+        y: 124
+        width: 34
+        height: 20
+      alignment: 9
+      pivot: {x: 0.0053082635, y: 0.33339158}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a8b11b89baf7ee245ba0107f26d198a4
+      internalID: -1183559870
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Roseviper_36
+      rect:
+        serializedVersion: 2
+        x: 259
+        y: 100
+        width: 34
+        height: 28
+      alignment: 9
+      pivot: {x: 0.33945152, y: 0.98376954}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b1f1ea5f0fe9e2249a83137f30626d33
+      internalID: -2105752895
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Roseviper_37
+      rect:
+        serializedVersion: 2
+        x: 295
+        y: 101
+        width: 24
+        height: 21
+      alignment: 9
+      pivot: {x: 0.9972458, y: 0.3846966}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2c7a34890bc2eca4b8b304a3811f4e6a
+      internalID: 1572511821
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Roseviper_38
+      rect:
+        serializedVersion: 2
+        x: 361
+        y: 49
+        width: 33
+        height: 19
+      alignment: 9
+      pivot: {x: 0.70194775, y: 0.049030907}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 498769ea54abba24d9d59cf547c9f14d
+      internalID: 1391574500
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Roseviper_39
+      rect:
+        serializedVersion: 2
+        x: 165
+        y: 25
+        width: 28
+        height: 31
+      alignment: 9
+      pivot: {x: 0.78156006, y: 0.05559552}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ee4a9825aabc45c4daccaa8f5f189698
+      internalID: 317015512
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Roseviper_40
+      rect:
+        serializedVersion: 2
+        x: 227
+        y: 44
+        width: 33
+        height: 20
+      alignment: 9
+      pivot: {x: 0.7027028, y: 0.014237786}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 83332a664562b694a855961c44b3d92a
+      internalID: -519177510
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Roseviper_41
+      rect:
+        serializedVersion: 2
+        x: 324
+        y: 23
+        width: 29
+        height: 34
+      alignment: 9
+      pivot: {x: 0.9924359, y: 0.1499834}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2c904a2f1543a85488fa3800fb575376
+      internalID: -2146381724
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Roseviper_42
+      rect:
+        serializedVersion: 2
+        x: 201
+        y: 18
+        width: 39
+        height: 20
+      alignment: 9
+      pivot: {x: 0.89408207, y: 0.59954154}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 26deb3f4ffe5ebb4da8140f3cac2b2a1
+      internalID: 786511056
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Roseviper_43
+      rect:
+        serializedVersion: 2
+        x: 243
+        y: 18
+        width: 33
+        height: 21
+      alignment: 9
+      pivot: {x: 0.5603286, y: 0.12458656}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3dd812e1e07714643b0f707bb44b06ec
+      internalID: -1198094699
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Roseviper_44
+      rect:
+        serializedVersion: 2
+        x: 358
+        y: 7
+        width: 17
+        height: 17
+      alignment: 9
+      pivot: {x: 0.7986773, y: 0.5840033}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 45a248f8c1ebb9f4caec082a012f4ea5
+      internalID: -761086252
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Roseviper_45
+      rect:
+        serializedVersion: 2
+        x: 377
+        y: 13
+        width: 27
+        height: 29
+      alignment: 9
+      pivot: {x: 0.5763968, y: 0.06227799}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 63a38bbb9608c3848853808ebbfce35d
+      internalID: -1638379332
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Roseviper_25
+      rect:
+        serializedVersion: 2
+        x: 237
+        y: 146
+        width: 26
+        height: 20
+      alignment: 9
+      pivot: {x: 0.021332374, y: 0.35919493}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 314e3dc4a41d9b94a8d1db05aa42c012
       internalID: -559091184
       vertices: []
       indices: 
@@ -682,7 +1078,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries:
       - key: SpriteEditor.SliceSettings
-        value: '{"sliceOnImport":false,"gridCellCount":{"x":1.0,"y":1.0},"gridSpriteSize":{"x":64.0,"y":64.0},"gridSpriteOffset":{"x":0.0,"y":0.0},"gridSpritePadding":{"x":0.0,"y":0.0},"pivot":{"x":0.5,"y":0.5},"pivotPixels":{"x":0.0,"y":0.0},"autoSlicingMethod":0,"spriteAlignment":0,"pivotUnitMode":0,"slicingType":0,"keepEmptyRects":false,"isAlternate":false}'
+        value: '{"sliceOnImport":false,"gridCellCount":{"x":1.0,"y":1.0},"gridSpriteSize":{"x":64.0,"y":64.0},"gridSpriteOffset":{"x":0.0,"y":0.0},"gridSpritePadding":{"x":0.0,"y":0.0},"pivot":{"x":0.5,"y":0.5},"pivotPixels":{"x":0.0,"y":0.0},"autoSlicingMethod":2,"spriteAlignment":0,"pivotUnitMode":0,"slicingType":0,"keepEmptyRects":false,"isAlternate":false}'
     nameFileIdTable:
       Roseviper_0: 1301789277
       Roseviper_1: -1588784343
@@ -703,8 +1099,28 @@ TextureImporter:
       Roseviper_23: 1195400694
       Roseviper_24: 1452684394
       Roseviper_25: -559091184
+      Roseviper_26: 1837103841
+      Roseviper_27: 1138955227
+      Roseviper_28: 1040366024
+      Roseviper_29: -1662075652
       Roseviper_3: -851914363
+      Roseviper_30: 1623892092
+      Roseviper_31: 324244326
+      Roseviper_32: 191500533
+      Roseviper_33: 2096047498
+      Roseviper_34: -405869566
+      Roseviper_35: -1183559870
+      Roseviper_36: -2105752895
+      Roseviper_37: 1572511821
+      Roseviper_38: 1391574500
+      Roseviper_39: 317015512
       Roseviper_4: -237110313
+      Roseviper_40: -519177510
+      Roseviper_41: -2146381724
+      Roseviper_42: 786511056
+      Roseviper_43: -1198094699
+      Roseviper_44: -761086252
+      Roseviper_45: -1638379332
       Roseviper_5: 1490158240
       Roseviper_6: 1636377629
       Roseviper_7: 321063477
