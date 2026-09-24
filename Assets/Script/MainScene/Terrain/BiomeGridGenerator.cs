@@ -3,7 +3,7 @@ using UnityEngine;
 public class BiomeGridGenerator : MonoBehaviour
 {
     [SerializeField] private BiomeGridSetting setting;
-    [SerializeField] private BiomeData[] biomes;
+    [SerializeField] private BiomeDatabase biomeDatabase;
 
     private BiomeData[,] biomeGrid;
     private float seedOffsetX;
@@ -37,6 +37,7 @@ public class BiomeGridGenerator : MonoBehaviour
 
     private BiomeData ResolveBiome(float noiseValue)
     {
+        var biomes = biomeDatabase.biomes;
         foreach (var biome in biomes)
         {
             if (noiseValue >= biome.minThreshold && noiseValue < biome.maxThreshold)

@@ -12,4 +12,8 @@ public class BiomeGridSetting : ScriptableObject
     [Header("맵 크기")]
     public int mapChunkWidth = 32;
     public int mapChunkHeight = 32;
+
+    [Header("청크 크기")]
+    // 청크 하나의 프리팹 스케일
+    public float chunkSize = 10f;
 }
