@@ -18,5 +18,17 @@ MonoBehaviour:
   blendRange: 1
   minThreshold: 0
   maxThreshold: 1
-  propSpawnTable: []
+  propSpawnTable:
+  - propPrefab: {fileID: 5971007402934984497, guid: 13938be4caa5f6741a7acf89b8b5080e, type: 3}
+    minCount: 15
+    maxCount: 25
+    minSpacing: 6
+  - propPrefab: {fileID: 3237151097076446163, guid: cb16ea17beeef31479bf316d75cfdd88, type: 3}
+    minCount: 20
+    maxCount: 30
+    minSpacing: 3
+  - propPrefab: {fileID: 5058150033251958606, guid: b6b44b7ae4c777643bf914eb58a63134, type: 3}
+    minCount: 5
+    maxCount: 10
+    minSpacing: 4
   monsterSpawnTable: []

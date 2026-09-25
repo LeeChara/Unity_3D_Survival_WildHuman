@@ -15,8 +15,8 @@ public class BiomeData : ScriptableObject
     [Range(0f, 1f)] public float maxThreshold;
 
     [Header("스폰 테이블")]
-    // TODO: 아직 스폰 로직 구현 전이라 데이터 형식만 정의한 상태
     public PropSpawnEntry[] propSpawnTable;
+    // TODO: 아직 몬스터 스폰 로직 구현 전이라 데이터 형식만 정의한 상태
     public MonsterSpawnEntry[] monsterSpawnTable;
 }
 
@@ -24,7 +24,13 @@ public class BiomeData : ScriptableObject
 public struct PropSpawnEntry
 {
     public GameObject propPrefab;
-    [Range(0f, 1f)] public float spawnRate;
+
+    // 청크당 스폰 개수 (min~max 사이에서 결정)
+    [Min(0)] public int minCount;
+    [Min(0)] public int maxCount;
+
+    // 같은 청크에 이미 배치된 Prop과의 최소 거리
+    [Min(0f)] public float minSpacing;
 }
 
 [System.Serializable]

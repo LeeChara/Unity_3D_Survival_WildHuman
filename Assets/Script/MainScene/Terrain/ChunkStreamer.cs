@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -5,11 +6,17 @@ public class ChunkStreamer : MonoBehaviour
 {
     [SerializeField] private Transform player;
     [SerializeField] private BiomeGridSetting setting;
+    [SerializeField] private BiomeGridGenerator biomeGrid;
     [SerializeField] private TerrainChunk chunkPrefab;
     [SerializeField] private int loadRadius = 3;
 
     private readonly Dictionary<Vector2Int, TerrainChunk> activeChunks = new();
     private readonly Queue<TerrainChunk> pool = new();
+
+    // 청크 로드/언로드 시점을 스포너 등 외부 시스템에 알림
+    // 맵 범위 밖 청크는 biome이 null로 전달됨
+    public event Action<Vector2Int, BiomeData> ChunkLoaded;
+    public event Action<Vector2Int> ChunkUnloaded;
 
     private Vector2Int currentPlayerChunk;
     private bool initialized;
@@ -84,6 +91,8 @@ public class ChunkStreamer : MonoBehaviour
         chunk.Init(coord);
 
         activeChunks[coord] = chunk;
+
+        ChunkLoaded?.Invoke(coord, biomeGrid.GetBiome(coord));
     }
 
     private void ReleaseChunk(Vector2Int coord)
@@ -92,5 +101,7 @@ public class ChunkStreamer : MonoBehaviour
         activeChunks.Remove(coord);
         chunk.gameObject.SetActive(false);
         pool.Enqueue(chunk);
+
+        ChunkUnloaded?.Invoke(coord);
     }
 }
