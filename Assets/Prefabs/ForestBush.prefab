@@ -12,6 +12,8 @@ GameObject:
   - component: {fileID: 648115382013912102}
   - component: {fileID: 1966377576007491629}
   - component: {fileID: 495649180978681477}
+  - component: {fileID: 4369480945364997020}
+  - component: {fileID: 4207459239242559859}
   m_Layer: 0
   m_Name: ForestBush
   m_TagString: Untagged
@@ -127,3 +129,29 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::AxisAlignedBillboard
   cameraYAngle: 45
+--- !u!210 &4369480945364997020
+SortingGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3237151097076446163}
+  m_Enabled: 1
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_SortAtRoot: 0
+  m_Sort3DAs2D: 0
+--- !u!114 &4207459239242559859
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3237151097076446163}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0a320b4f505eb1248a0802967e5e0f97, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::DepthSorter
+  isStatic: 1

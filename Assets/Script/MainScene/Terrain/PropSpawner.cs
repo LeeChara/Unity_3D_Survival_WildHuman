@@ -59,6 +59,9 @@ public class PropSpawner : MonoBehaviour
                 GameObject instance = GetPool(entry.propPrefab).Get();
                 instance.transform.position = position;
 
+                // 풀에서 꺼낼 때(OnEnable) 이전 위치로 계산됐으므로 재계산
+                if (instance.TryGetComponent(out DepthSorter sorter)) sorter.Refresh();
+
                 placedPositions.Add(position);
                 props.Add(new SpawnedProp { prefab = entry.propPrefab, instance = instance });
             }

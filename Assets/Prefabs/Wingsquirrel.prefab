@@ -106,6 +106,8 @@ GameObject:
   - component: {fileID: 6643180911735808336}
   - component: {fileID: 8212119383527421846}
   - component: {fileID: 5685304711473520410}
+  - component: {fileID: 2558290542909066898}
+  - component: {fileID: 6358113138373694950}
   m_Layer: 0
   m_Name: Wingsquirrel
   m_TagString: Untagged
@@ -251,6 +253,32 @@ MonoBehaviour:
   animator: {fileID: 5177543345238029015}
   root: {fileID: 3553130799735271977}
   baseSpriteFace: 0
+--- !u!210 &2558290542909066898
+SortingGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 48305459567241423}
+  m_Enabled: 1
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_SortAtRoot: 0
+  m_Sort3DAs2D: 0
+--- !u!114 &6358113138373694950
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 48305459567241423}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0a320b4f505eb1248a0802967e5e0f97, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::DepthSorter
+  isStatic: 0
 --- !u!1 &313815749097548721
 GameObject:
   m_ObjectHideFlags: 0

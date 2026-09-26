@@ -1298,6 +1298,8 @@ GameObject:
   - component: {fileID: 4071701316557565397}
   - component: {fileID: 909642921054426830}
   - component: {fileID: 1880824026292873}
+  - component: {fileID: 7898951912869267727}
+  - component: {fileID: 415636759577446605}
   m_Layer: 6
   m_Name: Stoneotter
   m_TagString: Untagged
@@ -1444,6 +1446,32 @@ MonoBehaviour:
   animator: {fileID: 1013042614771950667}
   root: {fileID: 3198278194503275197}
   baseSpriteFace: 0
+--- !u!210 &7898951912869267727
+SortingGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7304474180741421677}
+  m_Enabled: 1
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_SortAtRoot: 0
+  m_Sort3DAs2D: 0
+--- !u!114 &415636759577446605
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7304474180741421677}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0a320b4f505eb1248a0802967e5e0f97, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::DepthSorter
+  isStatic: 0
 --- !u!1 &7496706528041794792
 GameObject:
   m_ObjectHideFlags: 0

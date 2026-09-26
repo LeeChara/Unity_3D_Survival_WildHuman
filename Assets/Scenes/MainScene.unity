@@ -1250,6 +1250,7 @@ GameObject:
   - component: {fileID: 838106082}
   - component: {fileID: 838106081}
   - component: {fileID: 838106083}
+  - component: {fileID: 838106084}
   m_Layer: 0
   m_Name: BiomeManager
   m_TagString: Untagged
@@ -1304,6 +1305,21 @@ MonoBehaviour:
   biomeGrid: {fileID: 838106081}
   chunkPrefab: {fileID: 7995802413934032039, guid: ffd2b5dc7015f284c8cf26bf91ae77e2, type: 3}
   loadRadius: 2
+--- !u!114 &838106084
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 838106080}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b96b6810e52a01041adad257df9a6689, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::DepthSortManager
+  cameraYAngle: 45
+  precision: 10
+  originSnap: 1000
 --- !u!1 &1060618979 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 6497605139147500748, guid: b7c2edd5481861741a49adfa724df037, type: 3}
@@ -1336,6 +1352,67 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 28392831faaed6b4bac8bd0e51c2c66c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Health
+--- !u!1001 &2008136160
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 4779477404852662998, guid: ffd2b5dc7015f284c8cf26bf91ae77e2, type: 3}
+      propertyPath: m_Name
+      value: TerrainChunk
+      objectReference: {fileID: 0}
+    - target: {fileID: 4779477404852662998, guid: ffd2b5dc7015f284c8cf26bf91ae77e2, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6386621526854565050, guid: ffd2b5dc7015f284c8cf26bf91ae77e2, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6386621526854565050, guid: ffd2b5dc7015f284c8cf26bf91ae77e2, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6386621526854565050, guid: ffd2b5dc7015f284c8cf26bf91ae77e2, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6386621526854565050, guid: ffd2b5dc7015f284c8cf26bf91ae77e2, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 6386621526854565050, guid: ffd2b5dc7015f284c8cf26bf91ae77e2, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 6386621526854565050, guid: ffd2b5dc7015f284c8cf26bf91ae77e2, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6386621526854565050, guid: ffd2b5dc7015f284c8cf26bf91ae77e2, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6386621526854565050, guid: ffd2b5dc7015f284c8cf26bf91ae77e2, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 90
+      objectReference: {fileID: 0}
+    - target: {fileID: 6386621526854565050, guid: ffd2b5dc7015f284c8cf26bf91ae77e2, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6386621526854565050, guid: ffd2b5dc7015f284c8cf26bf91ae77e2, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: ffd2b5dc7015f284c8cf26bf91ae77e2, type: 3}
 --- !u!1 &2016862009
 GameObject:
   m_ObjectHideFlags: 0
@@ -1718,3 +1795,4 @@ SceneRoots:
   - {fileID: 836784433114017883}
   - {fileID: 8460207582260131282}
   - {fileID: 366282164}
+  - {fileID: 2008136160}

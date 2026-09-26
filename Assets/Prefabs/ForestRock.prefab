@@ -12,6 +12,8 @@ GameObject:
   - component: {fileID: 3571806324979164446}
   - component: {fileID: 254592239610882043}
   - component: {fileID: 5252879965262089957}
+  - component: {fileID: 6498761017396317773}
+  - component: {fileID: 165885252782457660}
   m_Layer: 0
   m_Name: ForestRock
   m_TagString: Untagged
@@ -127,3 +129,29 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.4, y: 0.4, z: 0.4}
   m_Center: {x: 0, y: 0.1, z: 0.1}
+--- !u!210 &6498761017396317773
+SortingGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5058150033251958606}
+  m_Enabled: 1
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_SortAtRoot: 0
+  m_Sort3DAs2D: 0
+--- !u!114 &165885252782457660
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5058150033251958606}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0a320b4f505eb1248a0802967e5e0f97, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::DepthSorter
+  isStatic: 1

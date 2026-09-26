@@ -14,6 +14,8 @@ GameObject:
   - component: {fileID: 4502742799631205490}
   - component: {fileID: 166747625551737325}
   - component: {fileID: -1411927746524106058}
+  - component: {fileID: 2355713135560009570}
+  - component: {fileID: 5783743457584277641}
   m_Layer: 0
   m_Name: Stone
   m_TagString: Untagged
@@ -168,3 +170,29 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b7ddb02f9ac4aaf4a89f623f78311f2a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ScreenAlignedBillboard
+--- !u!210 &2355713135560009570
+SortingGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 785379690047203742}
+  m_Enabled: 1
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_SortAtRoot: 0
+  m_Sort3DAs2D: 0
+--- !u!114 &5783743457584277641
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 785379690047203742}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0a320b4f505eb1248a0802967e5e0f97, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::DepthSorter
+  isStatic: 0
