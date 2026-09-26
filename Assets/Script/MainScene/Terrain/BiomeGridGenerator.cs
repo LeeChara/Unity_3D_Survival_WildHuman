@@ -9,6 +9,10 @@ public class BiomeGridGenerator : MonoBehaviour
     private float seedOffsetX;
     private float seedOffsetZ;
 
+    // 맵을 원점 중심으로 배치하기 위한 보정값
+    // 청크 좌표 + gridOffset = 그리드 배열 인덱스
+    private Vector2Int gridOffset;
+
     private void Awake()
     {
         GenerateGrid();
@@ -20,6 +24,7 @@ public class BiomeGridGenerator : MonoBehaviour
         seedOffsetX = prng.Next(-100000, 100000);
         seedOffsetZ = prng.Next(-100000, 100000);
 
+        gridOffset = new Vector2Int(setting.mapChunkWidth / 2, setting.mapChunkHeight / 2);
         biomeGrid = new BiomeData[setting.mapChunkWidth, setting.mapChunkHeight];
 
         for (int x = 0; x < setting.mapChunkWidth; x++)
@@ -49,12 +54,14 @@ public class BiomeGridGenerator : MonoBehaviour
 
     public BiomeData GetBiome(Vector2Int chunkCoord)
     {
-        if (chunkCoord.x < 0 || chunkCoord.x >= setting.mapChunkWidth ||
-            chunkCoord.y < 0 || chunkCoord.y >= setting.mapChunkHeight)
+        Vector2Int index = chunkCoord + gridOffset;
+
+        if (index.x < 0 || index.x >= setting.mapChunkWidth ||
+            index.y < 0 || index.y >= setting.mapChunkHeight)
         {
             return null;
         }
 
-        return biomeGrid[chunkCoord.x, chunkCoord.y];
+        return biomeGrid[index.x, index.y];
     }
 }
