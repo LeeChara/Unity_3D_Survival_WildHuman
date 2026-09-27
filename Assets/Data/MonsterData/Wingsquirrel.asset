@@ -26,5 +26,9 @@ MonoBehaviour:
   windupDuration: 0.5
   attackSpeed: 5
   attackDuration: 3
-  attackDamage: 0
+  attack:
+    damage: 0
+    knockbackDistance: 1
   recoverDuration: 1
+  knockbackResistance: 0
+  superArmorWhileAttacking: 0

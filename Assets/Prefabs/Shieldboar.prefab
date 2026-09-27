@@ -18,6 +18,7 @@ GameObject:
   - component: {fileID: 6663867496172354887}
   - component: {fileID: 3421436144173811610}
   - component: {fileID: 3771748459930443015}
+  - component: {fileID: 7643790134975901254}
   m_Layer: 6
   m_Name: Shieldboar
   m_TagString: Untagged
@@ -209,6 +210,20 @@ MonoBehaviour:
   questionSprite: {fileID: 1002240229, guid: 07853e3bc1123cc46b5345dd858d3704, type: 3}
   emoteDuration: 1
   sweatRenderer: {fileID: 1894715564055446137}
+--- !u!114 &7643790134975901254
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3698754605101644}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f54d67c22c2fdcd4298d7c108a4eefb1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Knockback
+  deceleration: 50
+  resistance: 0
 --- !u!1 &672703311291656100
 GameObject:
   m_ObjectHideFlags: 0
@@ -883,7 +898,9 @@ MonoBehaviour:
   targetLayer:
     serializedVersion: 2
     m_Bits: 128
-  damage: 10
+  attack:
+    damage: 10
+    knockbackDistance: 1
 --- !u!1 &6090454876697522935
 GameObject:
   m_ObjectHideFlags: 0

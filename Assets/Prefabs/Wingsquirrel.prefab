@@ -109,6 +109,7 @@ GameObject:
   - component: {fileID: 2558290542909066898}
   - component: {fileID: 6358113138373694950}
   - component: {fileID: 4650513886033173971}
+  - component: {fileID: 5230826277495710516}
   m_Layer: 0
   m_Name: Wingsquirrel
   m_TagString: Untagged
@@ -300,6 +301,20 @@ MonoBehaviour:
   questionSprite: {fileID: 1002240229, guid: 07853e3bc1123cc46b5345dd858d3704, type: 3}
   emoteDuration: 1
   sweatRenderer: {fileID: 651041547830446113}
+--- !u!114 &5230826277495710516
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 48305459567241423}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f54d67c22c2fdcd4298d7c108a4eefb1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Knockback
+  deceleration: 50
+  resistance: 0
 --- !u!1 &313815749097548721
 GameObject:
   m_ObjectHideFlags: 0
@@ -1346,7 +1361,9 @@ MonoBehaviour:
   targetLayer:
     serializedVersion: 2
     m_Bits: 0
-  damage: 10
+  attack:
+    damage: 10
+    knockbackDistance: 1
 --- !u!1 &7304506979596487671
 GameObject:
   m_ObjectHideFlags: 0

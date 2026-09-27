@@ -114,6 +114,7 @@ GameObject:
   - component: {fileID: 8510803292639760883}
   - component: {fileID: 3160840250680078519}
   - component: {fileID: 381859072025218152}
+  - component: {fileID: 120331584656767264}
   m_Layer: 7
   m_Name: Player
   m_TagString: Untagged
@@ -375,6 +376,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DepthSorter
   isStatic: 0
+--- !u!114 &120331584656767264
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 956602779991621677}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f54d67c22c2fdcd4298d7c108a4eefb1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Knockback
+  deceleration: 50
+  resistance: 0
 --- !u!1 &2027391798678248913
 GameObject:
   m_ObjectHideFlags: 0
@@ -685,7 +700,9 @@ MonoBehaviour:
   targetLayer:
     serializedVersion: 2
     m_Bits: 64
-  damage: 10
+  attack:
+    damage: 10
+    knockbackDistance: 1
 --- !u!1 &4765726116046431758
 GameObject:
   m_ObjectHideFlags: 0

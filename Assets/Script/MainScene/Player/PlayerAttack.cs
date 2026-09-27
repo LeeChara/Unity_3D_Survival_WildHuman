@@ -33,6 +33,21 @@ public class PlayerAttack : MonoBehaviour
         Quaternion cameraRotation = Quaternion.Euler(0, cameraYAngle, 0);
         cameraRight = cameraRotation * Vector3.right;
         cameraForwardFlat = cameraRotation * Vector3.forward;
+
+        // 공격 도중 넉백되면 Update가 멈추므로 히트박스가 켜진 채 남지 않도록 공격을 취소
+        if (TryGetComponent<Knockback>(out Knockback knockback))
+        {
+            knockback.Started += CancelAttack;
+        }
+    }
+
+    private void CancelAttack()
+    {
+        if (attackPhase == AttackPhase.None) return;
+
+        attackPhase = AttackPhase.None;
+        hitboxObject.SetActive(false);
+        animator.ResetTrigger("Attack");
     }
 
     private void Update()

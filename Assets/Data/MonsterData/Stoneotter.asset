@@ -28,10 +28,17 @@ MonoBehaviour:
   windupDuration: 1
   attackSpeed: 6
   attackDuration: 2
-  attackDamage: 5
+  attack:
+    damage: 5
+    knockbackDistance: 1
   recoverDuration: 1
+  knockbackResistance: 0
+  superArmorWhileAttacking: 0
   windupMinRange: 3
   stonePrefab: {fileID: 166747625551737325, guid: f27478d3334a03a4f8e100a9c476a1d4, type: 3}
+  projectile:
+    damage: 5
+    knockbackDistance: 0.5
   stoneSpeed: 10
   throwInterval: 0.5
   throwCount: 3

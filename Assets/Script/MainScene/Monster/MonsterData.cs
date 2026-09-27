@@ -32,10 +32,16 @@ public class MonsterData : ScriptableObject
     [Header("Attack")]
     public float attackSpeed = 6f;
     public float attackDuration = 0.5f;
-    public float attackDamage = 10f;
+    public AttackData attack = new AttackData { damage = 10, knockbackDistance = 1f };
 
     [Header("Recover")]
     public float recoverDuration = 1f;
+
+    [Header("Knockback")]
+    [Tooltip("피격 시 덜 밀리는 정도 (1이면 밀리지 않음)")]
+    [Range(0f, 1f)] public float knockbackResistance = 0f;
+    [Tooltip("Windup/Attack 중 피격 시 넉백되지 않고 공격을 유지")]
+    public bool superArmorWhileAttacking = false;
 
     private void OnValidate()
     {

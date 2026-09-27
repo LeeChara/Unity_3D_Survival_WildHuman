@@ -24,6 +24,7 @@ public class MonsterAI : MonoBehaviour
 
     protected Rigidbody rb;
     protected Health health;
+    protected Knockback knockback;
     protected Transform target;
     private bool isTargetPlayer;
 
@@ -43,6 +44,15 @@ public class MonsterAI : MonoBehaviour
         health = GetComponent<Health>();
         hitbox.SetActive(false);
 
+        knockback = GetComponent<Knockback>();
+        if (knockback != null)
+        {
+            knockback.IsImmune = IsSuperArmor;
+            // 플레이 중 데이터 에셋 수정도 즉시 반영되도록 피격 시점에 참조
+            knockback.ResistanceProvider = () => data.knockbackResistance;
+            knockback.Started += OnKnockbackStarted;
+        }
+
         Quaternion cameraRotation = Quaternion.Euler(0, cameraYAngle, 0);
         cameraRight = cameraRotation * Vector3.right;
         cameraForwardFlat = cameraRotation * Vector3.forward;
@@ -58,6 +68,9 @@ public class MonsterAI : MonoBehaviour
     protected virtual void Update()
     {
         UpdateTarget();
+
+        // 넉백 중에는 Knockback이 속도를 제어하므로 상태머신 정지
+        if (knockback != null && knockback.IsActive) return;
 
         stateTime += Time.deltaTime;
 
@@ -281,6 +294,8 @@ public class MonsterAI : MonoBehaviour
             animator.SetTrigger("Attack");
 
             attackDirection = targetDirection;
+            // 공격 시작 시점에 해당 공격의 수치를 적용 (공격 종류별 수치, 플레이 중 수정 반영)
+            hitboxController.SetAttack(data.attack);
             hitboxController.ResetHitTargets();
             hitbox.SetActive(true);
         }
@@ -328,6 +343,24 @@ public class MonsterAI : MonoBehaviour
     protected virtual void RecoverBehavior()
     {
         rb.linearVelocity = Vector3.zero;
+    }
+
+    private bool IsSuperArmor()
+    {
+        return data.superArmorWhileAttacking && (state == State.Windup || state == State.Attack);
+    }
+
+    // 공격 준비/공격 중 넉백되면 공격을 취소하고 Idle부터 다시 판단
+    protected virtual void OnKnockbackStarted()
+    {
+        if (state != State.Windup && state != State.Attack) return;
+
+        hitbox.SetActive(false);
+        state = State.Idle;
+        stateTime = 0f;
+
+        ResetTrigger();
+        animator.SetTrigger("Reset");
     }
 
     // 소비되지 않은 트리거 처리

@@ -112,6 +112,6 @@ public class StoneotterAI : MonsterAI
     {
         Vector3 spawnPosition = throwPoint != null ? throwPoint.position : transform.position;
         Projectile projectile = Instantiate(otterData.stonePrefab, spawnPosition, Quaternion.identity);
-        projectile.Init(targetDirection, otterData.stoneSpeed, (int)data.attackDamage, playerLayer);
+        projectile.Init(targetDirection, otterData.stoneSpeed, otterData.projectile, playerLayer);
     }
 }

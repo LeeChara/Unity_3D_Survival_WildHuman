@@ -7,15 +7,15 @@ public class Projectile : MonoBehaviour
 
     private Vector3 direction;
     private float speed;
-    private int damage;
+    private AttackData attack;
     private LayerMask targetLayer;
 
-    public void Init(Vector3 direction, float speed, int damage, LayerMask targetLayer)
+    public void Init(Vector3 direction, float speed, AttackData attack, LayerMask targetLayer)
     {
         this.direction = direction.normalized;
         this.direction.y = 0f;
         this.speed = speed;
-        this.damage = damage;
+        this.attack = attack;
         this.targetLayer = targetLayer;
 
         if (this.direction.sqrMagnitude > 0f)
@@ -47,8 +47,14 @@ public class Projectile : MonoBehaviour
 
         if (other.TryGetComponent<Health>(out Health health))
         {
-            health.TakeDamage(damage);
+            health.TakeDamage(attack.damage);
             Debug.Log($"{other.name} 피격(돌멩이) - 현재 체력: {health.CurrentHealth} / {health.MaxHealth}");
+        }
+
+        // 투사체는 날아가던 방향으로 밀어냄
+        if (other.TryGetComponent<Knockback>(out Knockback knockback))
+        {
+            knockback.Apply(direction, attack.knockbackDistance);
         }
 
         Destroy(gameObject);

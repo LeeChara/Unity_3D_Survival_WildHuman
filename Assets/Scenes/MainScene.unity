@@ -1721,9 +1721,21 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 120331584656767264, guid: 53a89a95158fc604884e649e2e53dc34, type: 3}
+      propertyPath: duration
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 120331584656767264, guid: 53a89a95158fc604884e649e2e53dc34, type: 3}
+      propertyPath: resistance
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 956602779991621677, guid: 53a89a95158fc604884e649e2e53dc34, type: 3}
       propertyPath: m_Name
       value: Player
+      objectReference: {fileID: 0}
+    - target: {fileID: 3155815357568523409, guid: 53a89a95158fc604884e649e2e53dc34, type: 3}
+      propertyPath: attack.knockbackDistance
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 5536276293848009136, guid: 53a89a95158fc604884e649e2e53dc34, type: 3}
       propertyPath: m_LocalPosition.x

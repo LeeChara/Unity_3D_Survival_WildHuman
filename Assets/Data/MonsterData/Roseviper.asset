@@ -20,13 +20,17 @@ MonoBehaviour:
   wanderRange: 10
   wanderCooldown: 7
   chaseSpeed: 5
-  chaseRange: 15
-  chaseGiveUpRange: 20
+  chaseRange: 30
+  chaseGiveUpRange: 40
   windupRange: 3
   windupDuration: 1
   attackSpeed: 1
   attackDuration: 2
-  attackDamage: 10
+  attack:
+    damage: 10
+    knockbackDistance: 3
   recoverDuration: 1
+  knockbackResistance: 0
+  superArmorWhileAttacking: 1
   attackHitDuration: 1
   retreatSpeed: 15
