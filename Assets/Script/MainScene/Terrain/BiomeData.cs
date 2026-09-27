@@ -16,7 +16,6 @@ public class BiomeData : ScriptableObject
 
     [Header("스폰 테이블")]
     public PropSpawnEntry[] propSpawnTable;
-    // TODO: 아직 몬스터 스폰 로직 구현 전이라 데이터 형식만 정의한 상태
     public MonsterSpawnEntry[] monsterSpawnTable;
 }
 
@@ -36,6 +35,8 @@ public struct PropSpawnEntry
 [System.Serializable]
 public struct MonsterSpawnEntry
 {
-    public MonsterData monster;
-    [Range(0f, 1f)] public float spawnRate;
+    public MonsterAI monsterPrefab;
+
+    // 같은 바이옴 테이블 안에서의 상대 가중치
+    [Min(0f)] public float weight;
 }

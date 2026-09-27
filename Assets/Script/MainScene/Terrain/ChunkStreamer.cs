@@ -44,12 +44,17 @@ public class ChunkStreamer : MonoBehaviour
         }
     }
 
-    private Vector2Int WorldToChunkCoord(Vector3 worldPos)
+    public Vector2Int WorldToChunkCoord(Vector3 worldPos)
     {
         int x = Mathf.FloorToInt(worldPos.x / setting.chunkSize);
         int z = Mathf.FloorToInt(worldPos.z / setting.chunkSize);
         return new Vector2Int(x, z);
     }
+
+    public bool IsChunkActive(Vector2Int coord) => activeChunks.ContainsKey(coord);
+
+    // 맵 범위 밖이면 null
+    public BiomeData GetBiome(Vector2Int coord) => biomeGrid.GetBiome(coord);
 
     private void UpdateActiveChunks()
     {

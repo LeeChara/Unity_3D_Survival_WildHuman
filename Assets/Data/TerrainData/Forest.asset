@@ -31,4 +31,12 @@ MonoBehaviour:
     minCount: 5
     maxCount: 10
     minSpacing: 4
-  monsterSpawnTable: []
+  monsterSpawnTable:
+  - monsterPrefab: {fileID: 2855152217180434087, guid: e2b8e5632850d34498a808e34d60eef5, type: 3}
+    weight: 1
+  - monsterPrefab: {fileID: 5223719300316381313, guid: 7796c72efd61e79468c0267d6f3492fb, type: 3}
+    weight: 1
+  - monsterPrefab: {fileID: 909642921054426830, guid: 2d811b3e2425f154caf93e94ce34eb93, type: 3}
+    weight: 2
+  - monsterPrefab: {fileID: 8212119383527421846, guid: b7c2edd5481861741a49adfa724df037, type: 3}
+    weight: 2

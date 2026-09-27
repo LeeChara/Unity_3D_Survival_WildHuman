@@ -740,6 +740,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Roseviper
       objectReference: {fileID: 0}
+    - target: {fileID: 3698754605101644, guid: e2b8e5632850d34498a808e34d60eef5, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 712603319160436703, guid: e2b8e5632850d34498a808e34d60eef5, type: 3}
       propertyPath: m_IsActive
       value: 0
@@ -962,7 +966,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2326532825360013379, guid: 7796c72efd61e79468c0267d6f3492fb, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -10
+      value: 8.5
       objectReference: {fileID: 0}
     - target: {fileID: 2326532825360013379, guid: 7796c72efd61e79468c0267d6f3492fb, type: 3}
       propertyPath: m_LocalPosition.y
@@ -970,7 +974,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2326532825360013379, guid: 7796c72efd61e79468c0267d6f3492fb, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 10
+      value: 2.2
       objectReference: {fileID: 0}
     - target: {fileID: 2326532825360013379, guid: 7796c72efd61e79468c0267d6f3492fb, type: 3}
       propertyPath: m_LocalRotation.w
@@ -1304,7 +1308,7 @@ MonoBehaviour:
   setting: {fileID: 11400000, guid: 7ac0c01c2e66ea24e894c03af32eeafa, type: 2}
   biomeGrid: {fileID: 838106081}
   chunkPrefab: {fileID: 7995802413934032039, guid: ffd2b5dc7015f284c8cf26bf91ae77e2, type: 3}
-  loadRadius: 2
+  loadRadius: 3
 --- !u!114 &838106084
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1312,7 +1316,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 838106080}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b96b6810e52a01041adad257df9a6689, type: 3}
   m_Name: 
@@ -1320,6 +1324,62 @@ MonoBehaviour:
   cameraYAngle: 45
   precision: 10
   originSnap: 1000
+--- !u!1 &1060245801
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1060245803}
+  - component: {fileID: 1060245802}
+  m_Layer: 0
+  m_Name: MonsterSpawner
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1060245802
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1060245801}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9a239b0e9c7dbad48bfb1c8b3a24e219, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MonsterSpawner
+  player: {fileID: 1515454775}
+  chunkStreamer: {fileID: 838106083}
+  spawnInterval: 3
+  maxActiveMonsters: 20
+  minSpawnDistance: 150
+  maxSpawnDistance: 250
+  maxSpawnAttempts: 10
+  obstacleLayer:
+    serializedVersion: 2
+    m_Bits: 0
+  spawnClearance: 1
+  despawnCheckInterval: 1
+--- !u!4 &1060245803
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1060245801}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1060618979 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 6497605139147500748, guid: b7c2edd5481861741a49adfa724df037, type: 3}
@@ -1646,7 +1706,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7304474180741421677, guid: 2d811b3e2425f154caf93e94ce34eb93, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -1724,7 +1784,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 48305459567241423, guid: b7c2edd5481861741a49adfa724df037, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1035891137015041403, guid: b7c2edd5481861741a49adfa724df037, type: 3}
       propertyPath: m_LocalPosition.x
@@ -1790,6 +1850,7 @@ SceneRoots:
   - {fileID: 703605498}
   - {fileID: 638520172}
   - {fileID: 838106082}
+  - {fileID: 1060245803}
   - {fileID: 4030971477659590208}
   - {fileID: 579413621}
   - {fileID: 836784433114017883}

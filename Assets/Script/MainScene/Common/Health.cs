@@ -1,30 +1,43 @@
+using System;
 using UnityEngine;
 
 public class Health : MonoBehaviour
 {
     [SerializeField] private float maxHealth = 100;
     private float currentHealth;
+    private bool isDead;
 
     // 읽기 전용 프로퍼티
     public float MaxHealth => maxHealth;
     public float CurrentHealth => currentHealth;
+    public bool IsDead => isDead;
+
+    // 사망 시점을 스포너 등 외부 시스템에 알림
+    public event Action Died;
+    // 체력 감소 시점을 이펙트 등 외부 시스템에 알림
     public void Awake()
     {
         currentHealth = maxHealth;
+        isDead = false;
     }
 
     public void Init(float maxHealth)
     {
         this.maxHealth = maxHealth;
         currentHealth = this.maxHealth;
+        isDead = false;
     }
 
     public void TakeDamage(int damage)
     {
+        // Destroy는 프레임 끝에 처리되므로 같은 프레임의 추가 피격으로 Die가 중복 호출되는 것을 방지
+        if (isDead) return;
+
         currentHealth = Mathf.Max(0, currentHealth - damage);
 
         if (currentHealth <= 0)
         {
+            isDead = true;
             Die();
         }
     }
@@ -32,5 +45,6 @@ public class Health : MonoBehaviour
     protected virtual void Die()
     {
         Debug.Log($"{gameObject.name} has died.");
+        Died?.Invoke();
     }
 }
