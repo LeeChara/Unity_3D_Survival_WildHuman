@@ -111,7 +111,12 @@ public class StoneotterAI : MonsterAI
     private void ThrowStone()
     {
         Vector3 spawnPosition = throwPoint != null ? throwPoint.position : transform.position;
+
+        // 생성 위치 기준으로 조준해야 ThrowPoint 오프셋만큼 빗나가지 않음
+        Vector3 throwDirection = target.position - spawnPosition;
+        throwDirection.y = 0f;
+
         Projectile projectile = Instantiate(otterData.stonePrefab, spawnPosition, Quaternion.identity);
-        projectile.Init(targetDirection, otterData.stoneSpeed, otterData.projectile, playerLayer);
+        projectile.Init(throwDirection, otterData.stoneSpeed, otterData.projectile, playerLayer);
     }
 }
