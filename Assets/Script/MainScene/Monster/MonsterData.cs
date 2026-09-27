@@ -9,7 +9,9 @@ public class MonsterData : ScriptableObject
     public MonsterData[] hostileTargets;
 
     [Header("기본 능력치")]
-    public float maxHealth; 
+    public float maxHealth;
+    [Tooltip("체력 비율이 이 값 이하가 되면 땀방울 이펙트 표시")]
+    [Range(0f, 1f)] public float lowHealthRatio = 0.3f;
 
     [Header("Idle")]
     public float moveSpeed = 1f;
@@ -18,7 +20,10 @@ public class MonsterData : ScriptableObject
 
     [Header("Chase")]
     public float chaseSpeed = 3f;
+    [Tooltip("목표물 감지 반경")]
     public float chaseRange = 10f;
+    [Tooltip("추격 포기 반경. 감지 반경보다 넓어야 경계에서 인식/해제가 반복되지 않음")]
+    public float chaseGiveUpRange = 15f;
 
     [Header("Windup")]
     public float windupRange = 2f;
@@ -31,4 +36,10 @@ public class MonsterData : ScriptableObject
 
     [Header("Recover")]
     public float recoverDuration = 1f;
+
+    private void OnValidate()
+    {
+        // 포기 반경이 감지 반경보다 좁으면 감지 직후 바로 포기하게 되므로 보정
+        chaseGiveUpRange = Mathf.Max(chaseGiveUpRange, chaseRange);
+    }
 }

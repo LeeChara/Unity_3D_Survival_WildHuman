@@ -15,11 +15,13 @@ MonoBehaviour:
   monsterName: Wingsquirrel
   hostileTargets: []
   maxHealth: 20
+  lowHealthRatio: 0.3
   moveSpeed: 5
   wanderRange: 10
   wanderCooldown: 5
   chaseSpeed: 4
   chaseRange: 15
+  chaseGiveUpRange: 20
   windupRange: 7
   windupDuration: 0.5
   attackSpeed: 5

@@ -15,11 +15,13 @@ MonoBehaviour:
   monsterName: Roseviper
   hostileTargets: []
   maxHealth: 40
+  lowHealthRatio: 0.3
   moveSpeed: 3
   wanderRange: 10
   wanderCooldown: 7
   chaseSpeed: 5
   chaseRange: 15
+  chaseGiveUpRange: 20
   windupRange: 3
   windupDuration: 1
   attackSpeed: 1

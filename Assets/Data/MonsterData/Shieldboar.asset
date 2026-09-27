@@ -16,11 +16,13 @@ MonoBehaviour:
   hostileTargets:
   - {fileID: 11400000, guid: ef0f350da93ecf941a6afe8a421b989a, type: 2}
   maxHealth: 50
+  lowHealthRatio: 0.3
   moveSpeed: 2
   wanderRange: 7
   wanderCooldown: 3
   chaseSpeed: 3
   chaseRange: 10
+  chaseGiveUpRange: 15
   windupRange: 5
   windupDuration: 1.5
   attackSpeed: 15

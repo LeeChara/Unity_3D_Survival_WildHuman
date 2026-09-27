@@ -15,6 +15,7 @@ public class Health : MonoBehaviour
     // 사망 시점을 스포너 등 외부 시스템에 알림
     public event Action Died;
     // 체력 감소 시점을 이펙트 등 외부 시스템에 알림
+    public event Action Damaged;
     public void Awake()
     {
         currentHealth = maxHealth;
@@ -34,6 +35,7 @@ public class Health : MonoBehaviour
         if (isDead) return;
 
         currentHealth = Mathf.Max(0, currentHealth - damage);
+        Damaged?.Invoke();
 
         if (currentHealth <= 0)
         {

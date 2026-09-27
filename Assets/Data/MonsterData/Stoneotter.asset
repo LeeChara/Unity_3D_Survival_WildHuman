@@ -17,11 +17,13 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 4eb1b38810d8744448d5e7c4fa8abb5b, type: 2}
   - {fileID: 11400000, guid: ef0f350da93ecf941a6afe8a421b989a, type: 2}
   maxHealth: 30
+  lowHealthRatio: 0.3
   moveSpeed: 4
   wanderRange: 4
   wanderCooldown: 2
   chaseSpeed: 5
   chaseRange: 15
+  chaseGiveUpRange: 20
   windupRange: 10
   windupDuration: 1
   attackSpeed: 6

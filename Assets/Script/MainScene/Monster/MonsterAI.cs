@@ -1,4 +1,6 @@
+using System;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class MonsterAI : MonoBehaviour
 {
@@ -16,9 +18,14 @@ public class MonsterAI : MonoBehaviour
     protected State state = State.Idle;
     protected float stateTime;
 
+    // 플레이어 인식/인식 해제 시점을 이펙트 등 외부 시스템에 알림
+    public event Action PlayerDetected;
+    public event Action PlayerLost;
+
     protected Rigidbody rb;
     protected Health health;
     protected Transform target;
+    private bool isTargetPlayer;
 
     protected Vector3 targetDirection;
     protected float targetDistance;
@@ -94,11 +101,17 @@ public class MonsterAI : MonoBehaviour
 
     protected virtual void UpdateTarget()
     {
+        // 목표물이 Destroy된 경우에도 인식 해제 처리를 거치도록 함
+        if (target == null && !ReferenceEquals(target, null))
+        {
+            ClearTarget();
+        }
+
         // 추격 중인 목표물이 추격 범위보다 멀어지면 추격 포기
         if (target != null)
         {
             float distance = Vector3.Distance(transform.position, target.position);
-            if (distance > data.chaseRange)
+            if (distance > data.chaseGiveUpRange)
             {
                 ClearTarget();
             }
@@ -156,12 +169,20 @@ public class MonsterAI : MonoBehaviour
     }
     private void SetTarget(Transform detectedTarget)
     {
-        target = detectedTarget;   
+        target = detectedTarget;
+        isTargetPlayer = (playerLayer.value & (1 << target.gameObject.layer)) != 0;
+        if (isTargetPlayer) PlayerDetected?.Invoke();
     }
 
     private void ClearTarget()
     {
         this.target = null;
+        // Destroy된 목표물은 레이어를 읽을 수 없으므로 SetTarget 시점에 저장한 값으로 판단
+        if (isTargetPlayer)
+        {
+            isTargetPlayer = false;
+            PlayerLost?.Invoke();
+        }
     }
     protected virtual void Idle()
     {
