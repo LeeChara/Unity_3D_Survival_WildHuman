@@ -7,11 +7,10 @@ public class PlayerHunger : MonoBehaviour
     // 인스펙터에서 현재 허기 확인용 (Awake에서 maxHunger로 초기화)
     [SerializeField] private float currentHunger;
 
-    [SerializeField] private float timeToEmpty = 300f;          // 가득 찬 상태에서 0이 되기까지 걸리는 시간(초)
-    [SerializeField] private float sprintDecayMultiplier = 1.5f; // 달리는 중 허기 감소 배율
+    // 허기 감소 속도·굶주림 데미지 규칙
+    [SerializeField] private GameSetting gameSetting;
 
-    [SerializeField] private float starveInterval = 2f; // 굶주림 데미지 간격(초)
-    [SerializeField] private int starveDamage = 1;
+    private HungerRule Rule => gameSetting.hunger;
 
     private Health health;
     private PlayerMovement playerMovement;
@@ -37,18 +36,18 @@ public class PlayerHunger : MonoBehaviour
     {
         if (health.IsDead) return;
 
-        float decayPerSecond = maxHunger / timeToEmpty;
-        if (playerMovement != null && playerMovement.IsSprinting) decayPerSecond *= sprintDecayMultiplier;
+        float decayPerSecond = maxHunger / Rule.timeToEmpty;
+        if (playerMovement != null && playerMovement.IsSprinting) decayPerSecond *= Rule.sprintDecayMultiplier;
 
         SetHunger(currentHunger - decayPerSecond * Time.deltaTime);
 
         if (IsStarving)
         {
             starveTimer += Time.deltaTime;
-            if (starveTimer >= starveInterval)
+            if (starveTimer >= Rule.starveInterval)
             {
-                starveTimer -= starveInterval;
-                health.TakeDamage(starveDamage);
+                starveTimer -= Rule.starveInterval;
+                health.TakeDamage(Rule.starveDamage);
             }
         }
         else

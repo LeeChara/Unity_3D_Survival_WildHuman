@@ -10,10 +10,8 @@ public class MonsterSpawner : MonoBehaviour
     [SerializeField] private ChunkStreamer chunkStreamer;
 
     [Header("스폰")]
-    [SerializeField] private float spawnInterval = 5f;
-    [SerializeField] private int maxActiveMonsters = 10;
-    [SerializeField] private float minSpawnDistance = 20f;
-    [SerializeField] private float maxSpawnDistance = 30f;
+    // 스폰 주기·최대 수·거리 규칙
+    [SerializeField] private GameSetting gameSetting;
 
     // 유효한 스폰 지점을 찾기 위한 최대 시도 횟수
     [SerializeField] private int maxSpawnAttempts = 10;
@@ -26,6 +24,8 @@ public class MonsterSpawner : MonoBehaviour
     [Header("제거")]
     [SerializeField] private float despawnCheckInterval = 1f;
 
+    private SpawnRule Rule => gameSetting.spawn;
+
     private readonly HashSet<MonsterAI> activeMonsters = new();
     private readonly List<MonsterAI> despawnBuffer = new();
 
@@ -35,7 +35,7 @@ public class MonsterSpawner : MonoBehaviour
     private void Update()
     {
         spawnTimer += Time.deltaTime;
-        if (spawnTimer >= spawnInterval)
+        if (spawnTimer >= Rule.spawnInterval)
         {
             spawnTimer = 0f;
             TrySpawn();
@@ -51,7 +51,7 @@ public class MonsterSpawner : MonoBehaviour
 
     private void TrySpawn()
     {
-        if (activeMonsters.Count >= maxActiveMonsters) return;
+        if (activeMonsters.Count >= Rule.maxActiveMonsters) return;
         if (!TryFindSpawnPoint(out Vector3 position, out BiomeData biome)) return;
 
         MonsterAI prefab = PickMonster(biome.monsterSpawnTable);
@@ -73,7 +73,7 @@ public class MonsterSpawner : MonoBehaviour
         {
             // 플레이어 기준 랜덤 방향 + 랜덤 거리
             float angle = Random.Range(0f, Mathf.PI * 2f);
-            float distance = Random.Range(minSpawnDistance, maxSpawnDistance);
+            float distance = Random.Range(Rule.minSpawnDistance, Rule.maxSpawnDistance);
             position = player.position + new Vector3(Mathf.Cos(angle), 0f, Mathf.Sin(angle)) * distance; 
             position.y = 0f;
 

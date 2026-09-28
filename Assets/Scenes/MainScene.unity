@@ -813,6 +813,71 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 358785668}
   m_CullTransparentMesh: 1
+--- !u!1 &365404931
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 365404934}
+  - component: {fileID: 365404933}
+  - component: {fileID: 365404932}
+  m_Layer: 0
+  m_Name: DayNightCycle
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &365404932
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 365404931}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a5c821bc00beb1b47ad80094f64f5052, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::DayNightCycle
+  gameSetting: {fileID: 11400000, guid: a03fdec881da037409576a8a9e0579c7, type: 2}
+  nightVolume: {fileID: 365404933}
+  cycleTime: 0
+--- !u!114 &365404933
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 365404931}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 172515602e62fb746b5d573b38a5fe58, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.RenderPipelines.Core.Runtime::UnityEngine.Rendering.Volume
+  m_IsGlobal: 1
+  priority: 1
+  blendDistance: 0
+  weight: 0
+  sharedProfile: {fileID: 11400000, guid: 5e4685118fd0a65438a1ab3c0a912722, type: 2}
+--- !u!4 &365404934
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 365404931}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &366282164
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1234,6 +1299,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 597512412}
+  - component: {fileID: 597512413}
   m_Layer: 5
   m_Name: Clock
   m_TagString: Untagged
@@ -1263,6 +1329,20 @@ RectTransform:
   m_AnchoredPosition: {x: -10, y: -10}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 1, y: 1}
+--- !u!114 &597512413
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 597512411}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 829851f97027766409a3ef7e55cf02d2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ClockUI
+  dayNightCycle: {fileID: 365404932}
+  dial: {fileID: 1409985991}
 --- !u!1 &638520169
 GameObject:
   m_ObjectHideFlags: 0
@@ -1828,10 +1908,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::MonsterSpawner
   player: {fileID: 1515454775}
   chunkStreamer: {fileID: 838106083}
-  spawnInterval: 3
-  maxActiveMonsters: 20
-  minSpawnDistance: 150
-  maxSpawnDistance: 250
+  gameSetting: {fileID: 11400000, guid: a03fdec881da037409576a8a9e0579c7, type: 2}
   maxSpawnAttempts: 10
   obstacleLayer:
     serializedVersion: 2
@@ -1974,10 +2051,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PlayerHunger
   maxHunger: 100
   currentHunger: 0
-  timeToEmpty: 300
-  sprintDecayMultiplier: 1.5
-  starveInterval: 2
-  starveDamage: 1
+  gameSetting: {fileID: 11400000, guid: a03fdec881da037409576a8a9e0579c7, type: 2}
 --- !u!1 &1581059850
 GameObject:
   m_ObjectHideFlags: 0
@@ -2634,3 +2708,4 @@ SceneRoots:
   - {fileID: 8460207582260131282}
   - {fileID: 366282164}
   - {fileID: 2008136160}
+  - {fileID: 365404934}
