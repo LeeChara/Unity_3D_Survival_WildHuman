@@ -115,6 +115,7 @@ GameObject:
   - component: {fileID: 3160840250680078519}
   - component: {fileID: 381859072025218152}
   - component: {fileID: 120331584656767264}
+  - component: {fileID: 7265801469490413988}
   m_Layer: 7
   m_Name: Player
   m_TagString: Untagged
@@ -390,6 +391,29 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Knockback
   deceleration: 50
   resistance: 0
+--- !u!114 &7265801469490413988
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 956602779991621677}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 561cd3ce383f22c4aa9336344e454676, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::HitFlash
+  setting: {fileID: 11400000, guid: 51bb121b6879ffc4f8b98fda6b0fb2bf, type: 2}
+  health: {fileID: 1483377236426783555}
+  targets:
+  - {fileID: 4267351059319497668}
+  - {fileID: 1014969308521128291}
+  - {fileID: 6232990060471892334}
+  - {fileID: 8231875583896415935}
+  - {fileID: 2656076444967450987}
+  - {fileID: 3800492974980948731}
+  - {fileID: 6416501376188652739}
+  - {fileID: 2133943241525837881}
 --- !u!1 &2027391798678248913
 GameObject:
   m_ObjectHideFlags: 0

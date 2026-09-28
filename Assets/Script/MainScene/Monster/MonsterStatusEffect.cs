@@ -1,9 +1,11 @@
 using UnityEngine;
 
 // 몬스터 상태에 따른 이펙트 표시
+// 공용 값은 MonsterEffectSetting에서 일괄 관리 (피격 반짝임은 HitFlash가 담당)
 public class MonsterStatusEffect : MonoBehaviour
 {
     [Header("참조")]
+    [SerializeField] private MonsterEffectSetting setting;
     [SerializeField] private MonsterAI monsterAI;
     [SerializeField] private Health health;
     [SerializeField] private SpriteRenderer emoteRenderer;
@@ -11,7 +13,6 @@ public class MonsterStatusEffect : MonoBehaviour
     [Header("말풍선")]
     [SerializeField] private Sprite exclamationSprite;
     [SerializeField] private Sprite questionSprite;
-    [SerializeField] private float emoteDuration = 1f;
 
     [Header("땀방울")]
     [Tooltip("표시할 스프라이트는 이 SpriteRenderer에 직접 지정")]
@@ -74,7 +75,7 @@ public class MonsterStatusEffect : MonoBehaviour
 
         emoteRenderer.sprite = sprite;
         emoteRenderer.enabled = true;
-        emoteTimer = emoteDuration;
+        emoteTimer = setting.emoteDuration;
     }
 
     private void HideEmote()

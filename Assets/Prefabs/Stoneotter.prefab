@@ -1532,6 +1532,7 @@ GameObject:
   - component: {fileID: 415636759577446605}
   - component: {fileID: 7574368097942164359}
   - component: {fileID: 8739579781752174107}
+  - component: {fileID: 1248363107783891523}
   m_Layer: 6
   m_Name: Stoneotter
   m_TagString: Untagged
@@ -1717,12 +1718,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fc45c218abbf3d24b9bcbdff844134da, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MonsterStatusEffect
+  setting: {fileID: 11400000, guid: 805786e63ae83384287c95db73d801ce, type: 2}
   monsterAI: {fileID: 909642921054426830}
   health: {fileID: 4071701316557565397}
   emoteRenderer: {fileID: 469094993831122501}
   exclamationSprite: {fileID: 1792561453, guid: 07853e3bc1123cc46b5345dd858d3704, type: 3}
   questionSprite: {fileID: 1002240229, guid: 07853e3bc1123cc46b5345dd858d3704, type: 3}
-  emoteDuration: 1
   sweatRenderer: {fileID: 3952533637352832478}
 --- !u!114 &8739579781752174107
 MonoBehaviour:
@@ -1738,6 +1739,37 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Knockback
   deceleration: 50
   resistance: 0
+--- !u!114 &1248363107783891523
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7304474180741421677}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 561cd3ce383f22c4aa9336344e454676, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::HitFlash
+  setting: {fileID: 11400000, guid: 51bb121b6879ffc4f8b98fda6b0fb2bf, type: 2}
+  health: {fileID: 4071701316557565397}
+  targets:
+  - {fileID: 7011799400432246731}
+  - {fileID: 475394634318652768}
+  - {fileID: 4073644908303467355}
+  - {fileID: 5197473147776259898}
+  - {fileID: 8732646772250163196}
+  - {fileID: 4529145836680823133}
+  - {fileID: 2403111647744152958}
+  - {fileID: 3384540983227606517}
+  - {fileID: 8855196609985594246}
+  - {fileID: 3378059457047213869}
+  - {fileID: 182660247065006738}
+  - {fileID: 1689869812404063956}
+  - {fileID: 8434298875771435857}
+  - {fileID: 7219212651240175766}
+  - {fileID: 4646634932515267001}
+  - {fileID: 7402315736643988015}
 --- !u!1 &7496706528041794792
 GameObject:
   m_ObjectHideFlags: 0

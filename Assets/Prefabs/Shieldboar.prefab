@@ -19,6 +19,7 @@ GameObject:
   - component: {fileID: 3421436144173811610}
   - component: {fileID: 3771748459930443015}
   - component: {fileID: 7643790134975901254}
+  - component: {fileID: 5609203198714460062}
   m_Layer: 6
   m_Name: Shieldboar
   m_TagString: Untagged
@@ -203,12 +204,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fc45c218abbf3d24b9bcbdff844134da, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MonsterStatusEffect
+  setting: {fileID: 11400000, guid: 805786e63ae83384287c95db73d801ce, type: 2}
   monsterAI: {fileID: 5223719300316381313}
   health: {fileID: 6746420886992821520}
   emoteRenderer: {fileID: 2873960746124802827}
   exclamationSprite: {fileID: 1792561453, guid: 07853e3bc1123cc46b5345dd858d3704, type: 3}
   questionSprite: {fileID: 1002240229, guid: 07853e3bc1123cc46b5345dd858d3704, type: 3}
-  emoteDuration: 1
   sweatRenderer: {fileID: 1894715564055446137}
 --- !u!114 &7643790134975901254
 MonoBehaviour:
@@ -224,6 +225,28 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Knockback
   deceleration: 50
   resistance: 0
+--- !u!114 &5609203198714460062
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3698754605101644}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 561cd3ce383f22c4aa9336344e454676, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::HitFlash
+  setting: {fileID: 11400000, guid: 51bb121b6879ffc4f8b98fda6b0fb2bf, type: 2}
+  health: {fileID: 6746420886992821520}
+  targets:
+  - {fileID: 3347720300408591715}
+  - {fileID: 789202312266944342}
+  - {fileID: 745177332225059356}
+  - {fileID: 4695321864197988690}
+  - {fileID: 8905849064283582361}
+  - {fileID: 7374175199932856239}
+  - {fileID: 3594587991912147678}
 --- !u!1 &672703311291656100
 GameObject:
   m_ObjectHideFlags: 0

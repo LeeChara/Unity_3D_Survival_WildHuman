@@ -19,6 +19,7 @@ GameObject:
   - component: {fileID: 4444725581792591537}
   - component: {fileID: 6427872613729569299}
   - component: {fileID: 6348551723364330905}
+  - component: {fileID: 7552899788751607836}
   m_Layer: 6
   m_Name: Roseviper
   m_TagString: Untagged
@@ -203,12 +204,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fc45c218abbf3d24b9bcbdff844134da, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MonsterStatusEffect
+  setting: {fileID: 11400000, guid: 805786e63ae83384287c95db73d801ce, type: 2}
   monsterAI: {fileID: 2855152217180434087}
   health: {fileID: 6746420886992821520}
   emoteRenderer: {fileID: 6971656273712317888}
   exclamationSprite: {fileID: 1792561453, guid: 07853e3bc1123cc46b5345dd858d3704, type: 3}
   questionSprite: {fileID: 1002240229, guid: 07853e3bc1123cc46b5345dd858d3704, type: 3}
-  emoteDuration: 1
   sweatRenderer: {fileID: 8108208567731921349}
 --- !u!114 &6348551723364330905
 MonoBehaviour:
@@ -224,6 +225,27 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Knockback
   deceleration: 50
   resistance: 0
+--- !u!114 &7552899788751607836
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3698754605101644}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 561cd3ce383f22c4aa9336344e454676, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::HitFlash
+  setting: {fileID: 11400000, guid: 51bb121b6879ffc4f8b98fda6b0fb2bf, type: 2}
+  health: {fileID: 6746420886992821520}
+  targets:
+  - {fileID: 6084471838549621137}
+  - {fileID: 623282200080298485}
+  - {fileID: 2033159559620334833}
+  - {fileID: 2097703253227439533}
+  - {fileID: 8124583100005120052}
+  - {fileID: 7304518333256350814}
 --- !u!1 &1179079776317792325
 GameObject:
   m_ObjectHideFlags: 0
