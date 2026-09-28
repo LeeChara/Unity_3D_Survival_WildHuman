@@ -4,7 +4,8 @@ using UnityEngine;
 public class Health : MonoBehaviour
 {
     [SerializeField] private float maxHealth = 100;
-    private float currentHealth;
+    // 인스펙터에서 현재 체력 확인용 (Awake에서 maxHealth로 초기화)
+    [SerializeField] private float currentHealth;
     private bool isDead;
 
     // 읽기 전용 프로퍼티
@@ -16,6 +17,8 @@ public class Health : MonoBehaviour
     public event Action Died;
     // 체력 감소 시점을 이펙트 등 외부 시스템에 알림
     public event Action Damaged;
+    // 체력 변화 시점을 UI 등 외부 시스템에 알림 (현재값, 최대값)
+    public event Action<float, float> HealthChanged;
     // 자식 클래스에서 재정의 시 반드시 base.Awake() 호출 (체력 초기화)
     protected virtual void Awake()
     {
@@ -28,6 +31,7 @@ public class Health : MonoBehaviour
         this.maxHealth = maxHealth;
         currentHealth = this.maxHealth;
         isDead = false;
+        HealthChanged?.Invoke(currentHealth, this.maxHealth);
     }
 
     public void TakeDamage(int damage)
@@ -37,6 +41,7 @@ public class Health : MonoBehaviour
 
         currentHealth = Mathf.Max(0, currentHealth - damage);
         Damaged?.Invoke();
+        HealthChanged?.Invoke(currentHealth, maxHealth);
 
         if (currentHealth <= 0)
         {

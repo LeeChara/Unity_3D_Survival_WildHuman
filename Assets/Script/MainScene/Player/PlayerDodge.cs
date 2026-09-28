@@ -15,10 +15,12 @@ public class PlayerDodge : MonoBehaviour
     private float dodgeSpeed;
     private Vector3 dodgeVec;
     private float lastDodgeTime = -999f; // 시작 시 바로 사용 가능하도록 충분히 작은 값
+    private PlayerHunger playerHunger;
 
     private void Awake()
     {
         rb = GetComponent<Rigidbody>();
+        playerHunger = GetComponent<PlayerHunger>();
 
         dodgeSpeed = dodgeDistance / dodgeDuration;
     }
@@ -42,6 +44,8 @@ public class PlayerDodge : MonoBehaviour
         if (!playerState.CanAct) return;
         // 쿨다운 중에는 입력 무시
         if (Time.time < lastDodgeTime + dodgeCooldown) return;
+        // 굶주림 상태에서는 회피 불가
+        if (playerHunger != null && playerHunger.IsStarving) return;
 
         Vector2 lastDir = playerState.LastDir;
         dodgeVec = new Vector3(lastDir.x, 0, lastDir.y) * dodgeSpeed;
