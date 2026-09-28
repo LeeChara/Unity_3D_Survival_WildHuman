@@ -48,9 +48,11 @@ public class HitFlash : MonoBehaviour
         SetColor(setting.color);
     }
 
+    // 사망 시에는 피격 색을 복구하지 않고 유지 (시체 연출)
     private void OnDied()
     {
-        EndFlash();
+        timer = 0f;
+        SetColor(setting.color);
     }
 
     private void EndFlash()

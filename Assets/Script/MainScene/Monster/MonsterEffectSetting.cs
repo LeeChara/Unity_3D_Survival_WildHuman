@@ -8,4 +8,10 @@ public class MonsterEffectSetting : ScriptableObject
 {
     [Header("말풍선")]
     public float emoteDuration = 1f;
+
+    [Header("사망")]
+    [Tooltip("사망 후 시체가 남아 있는 시간")]
+    public float corpseDuration = 1f;
+    [Tooltip("시체가 사라질 때 생성할 이펙트 (비워두면 생성하지 않음)")]
+    public GameObject deathEffectPrefab;
 }

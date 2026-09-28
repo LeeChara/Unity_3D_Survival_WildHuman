@@ -214,10 +214,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 48305459567241423}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 28392831faaed6b4bac8bd0e51c2c66c, type: 3}
+  m_Script: {fileID: 11500000, guid: e19280a688887564aaac217bf3e9c98f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Health
   maxHealth: 100
+  setting: {fileID: 11400000, guid: 805786e63ae83384287c95db73d801ce, type: 2}
 --- !u!114 &8212119383527421846
 MonoBehaviour:
   m_ObjectHideFlags: 0

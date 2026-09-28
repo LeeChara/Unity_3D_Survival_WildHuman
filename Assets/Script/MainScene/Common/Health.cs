@@ -16,7 +16,8 @@ public class Health : MonoBehaviour
     public event Action Died;
     // 체력 감소 시점을 이펙트 등 외부 시스템에 알림
     public event Action Damaged;
-    public void Awake()
+    // 자식 클래스에서 재정의 시 반드시 base.Awake() 호출 (체력 초기화)
+    protected virtual void Awake()
     {
         currentHealth = maxHealth;
         isDead = false;

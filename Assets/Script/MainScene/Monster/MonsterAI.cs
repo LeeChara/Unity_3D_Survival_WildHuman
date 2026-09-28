@@ -26,6 +26,7 @@ public class MonsterAI : MonoBehaviour
     protected Health health;
     protected Knockback knockback;
     protected Transform target;
+    private Health targetHealth;
     private bool isTargetPlayer;
 
     protected Vector3 targetDirection;
@@ -42,6 +43,7 @@ public class MonsterAI : MonoBehaviour
     {
         rb = GetComponent<Rigidbody>();
         health = GetComponent<Health>();
+        health.Died += OnDied;
         hitbox.SetActive(false);
 
         knockback = GetComponent<Knockback>();
@@ -61,6 +63,11 @@ public class MonsterAI : MonoBehaviour
     protected virtual void Start()
     {
         health.Init(data.maxHealth);
+    }
+
+    protected virtual void OnDestroy()
+    {
+        if (health != null) health.Died -= OnDied;
     }
 
     // 몬스터의 행동 기반은 목표물과의 거리
@@ -120,6 +127,12 @@ public class MonsterAI : MonoBehaviour
             ClearTarget();
         }
 
+        // 추격 중인 목표물이 사망하면 시체가 남아 있어도 추격 포기
+        if (target != null && targetHealth != null && targetHealth.IsDead)
+        {
+            ClearTarget();
+        }
+
         // 추격 중인 목표물이 추격 범위보다 멀어지면 추격 포기
         if (target != null)
         {
@@ -160,6 +173,8 @@ public class MonsterAI : MonoBehaviour
 
             MonsterAI otherAI = c.GetComponent<MonsterAI>();
             if (otherAI == null || !IsInHostileTargets(otherAI.Data)) continue;
+            // 시체는 피격 판정을 위해 콜라이더가 남아 있으므로 탐지 단계에서 제외
+            if (c.TryGetComponent(out Health otherHealth) && otherHealth.IsDead) continue;
 
             float distance = Vector3.Distance(transform.position, c.transform.position);
             if (distance < closestDistance)
@@ -183,6 +198,7 @@ public class MonsterAI : MonoBehaviour
     private void SetTarget(Transform detectedTarget)
     {
         target = detectedTarget;
+        targetHealth = target.GetComponent<Health>();
         isTargetPlayer = (playerLayer.value & (1 << target.gameObject.layer)) != 0;
         if (isTargetPlayer) PlayerDetected?.Invoke();
     }
@@ -190,6 +206,7 @@ public class MonsterAI : MonoBehaviour
     private void ClearTarget()
     {
         this.target = null;
+        targetHealth = null;
         // Destroy된 목표물은 레이어를 읽을 수 없으므로 SetTarget 시점에 저장한 값으로 판단
         if (isTargetPlayer)
         {
@@ -347,12 +364,15 @@ public class MonsterAI : MonoBehaviour
 
     private bool IsSuperArmor()
     {
+        // 시체는 공격 상태로 멈춰 있어도 넉백되도록 슈퍼아머 해제
+        if (health.IsDead) return false;
         return data.superArmorWhileAttacking && (state == State.Windup || state == State.Attack);
     }
 
     // 공격 준비/공격 중 넉백되면 공격을 취소하고 Idle부터 다시 판단
     protected virtual void OnKnockbackStarted()
     {
+        if (health.IsDead) return;
         if (state != State.Windup && state != State.Attack) return;
 
         hitbox.SetActive(false);
@@ -361,6 +381,19 @@ public class MonsterAI : MonoBehaviour
 
         ResetTrigger();
         animator.SetTrigger("Reset");
+    }
+
+    // 사망 시 모든 행동을 멈추고 마지막 포즈로 정지
+    // 시체 유지, 제거는 MonsterHealth가 담당
+    protected virtual void OnDied()
+    {
+        hitbox.SetActive(false);
+
+        Vector3 velocity = rb.linearVelocity;
+        rb.linearVelocity = new Vector3(0f, velocity.y, 0f);
+
+        animator.speed = 0f;
+        enabled = false;
     }
 
     // 소비되지 않은 트리거 처리
