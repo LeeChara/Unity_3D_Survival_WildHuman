@@ -14,6 +14,8 @@ public class PropSpawner : MonoBehaviour
 
     private readonly Dictionary<GameObject, ObjectPool<GameObject>> pools = new();
     private readonly Dictionary<Vector2Int, List<SpawnedProp>> spawnedProps = new();
+    // 파괴된 자원이 어느 청크 소속인지 찾기 위한 역참조
+    private readonly Dictionary<GameObject, Vector2Int> propChunks = new();
 
     private struct SpawnedProp
     {
@@ -64,6 +66,7 @@ public class PropSpawner : MonoBehaviour
 
                 placedPositions.Add(position);
                 props.Add(new SpawnedProp { prefab = entry.propPrefab, instance = instance });
+                propChunks[instance] = coord;
             }
         }
 
@@ -76,9 +79,25 @@ public class PropSpawner : MonoBehaviour
 
         foreach (var prop in props)
         {
+            propChunks.Remove(prop.instance);
             pools[prop.prefab].Release(prop.instance);
         }
         spawnedProps.Remove(coord);
+    }
+
+    // 파괴된 자원을 청크 목록에서 빼고 풀에 반환 (언로드 시 중복 반환 방지)
+    // 파괴 기록은 남기지 않으므로 청크 재로드 시 원래 자리에 다시 배치됨
+    private void OnResourceDepleted(ResourceHealth resource)
+    {
+        GameObject instance = resource.gameObject;
+        if (!propChunks.TryGetValue(instance, out Vector2Int coord)) return;
+
+        propChunks.Remove(instance);
+
+        List<SpawnedProp> props = spawnedProps[coord];
+        int index = props.FindIndex(prop => prop.instance == instance);
+        pools[props[index].prefab].Release(instance);
+        props.RemoveAt(index);
     }
 
     private bool TryFindPosition(System.Random prng, Vector3 chunkOrigin, float minSpacing,
@@ -124,7 +143,13 @@ public class PropSpawner : MonoBehaviour
         if (!pools.TryGetValue(prefab, out var pool))
         {
             pool = new ObjectPool<GameObject>(
-                createFunc: () => Instantiate(prefab, transform),
+                createFunc: () =>
+                {
+                    GameObject obj = Instantiate(prefab, transform);
+                    // 인스턴스는 풀에서 계속 재사용되므로 생성 시 한 번만 구독
+                    if (obj.TryGetComponent(out ResourceHealth resource)) resource.Depleted += OnResourceDepleted;
+                    return obj;
+                },
                 actionOnGet: obj => obj.SetActive(true),
                 actionOnRelease: obj => obj.SetActive(false),
                 actionOnDestroy: obj => Destroy(obj));

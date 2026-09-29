@@ -1,16 +1,22 @@
 using UnityEngine;
 
 // 피격 시 파츠 스프라이트를 잠깐 다른 색으로 물들임
-// Health만 참조하므로 몬스터, 플레이어 등 Health를 가진 대상에 공용으로 사용
+// Health만 참조하므로 몬스터, 플레이어, 자원 등 Health를 가진 대상에 공용으로 사용
 public class HitFlash : MonoBehaviour
 {
+    // 대상 종류에 따라 HitFlashSetting의 어떤 색을 쓸지 결정
+    public enum HitFlashType { Character, Resource }
+
     [SerializeField] private HitFlashSetting setting;
+    [SerializeField] private HitFlashType type = HitFlashType.Character;
     [SerializeField] private Health health;
     [Tooltip("피격 시 색이 바뀌는 파츠 (아이콘 등 제외)")]
     [SerializeField] private SpriteRenderer[] targets;
 
     // 피격 색이 유지되고 남은 시간
     private float timer;
+
+    private Color FlashColor => type == HitFlashType.Resource ? setting.resourceColor : setting.color;
 
     private void Awake()
     {
@@ -45,14 +51,14 @@ public class HitFlash : MonoBehaviour
         if (health.IsDead) return;
 
         timer = setting.duration;
-        SetColor(setting.color);
+        SetColor(FlashColor);
     }
 
     // 사망 시에는 피격 색을 복구하지 않고 유지 (시체 연출)
     private void OnDied()
     {
         timer = 0f;
-        SetColor(setting.color);
+        SetColor(FlashColor);
     }
 
     private void EndFlash()

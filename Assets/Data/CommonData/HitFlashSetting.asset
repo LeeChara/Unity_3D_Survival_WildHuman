@@ -13,4 +13,5 @@ MonoBehaviour:
   m_Name: HitFlashSetting
   m_EditorClassIdentifier: Assembly-CSharp::HitFlashSetting
   color: {r: 1, g: 0.3, b: 0.3, a: 1}
+  resourceColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
   duration: 0.1

@@ -47,7 +47,7 @@ public class Projectile : MonoBehaviour
 
         if (other.TryGetComponent<Health>(out Health health))
         {
-            health.TakeDamage(attack.damage);
+            health.TakeHit(attack);
             Debug.Log($"{other.name} 피격(돌멩이) - 현재 체력: {health.CurrentHealth} / {health.MaxHealth}");
         }
 

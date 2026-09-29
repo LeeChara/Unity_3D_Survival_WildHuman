@@ -3,6 +3,7 @@ using UnityEngine;
 public class StoneotterAI : MonsterAI
 {
     [SerializeField] private Transform throwPoint;
+    [SerializeField] private LayerMask stoneTargetLayer; // 돌멩이가 맞힐 대상 (인식용 playerLayer와 별개)
 
     protected StoneotterData otterData;
     private int stonesThrown;
@@ -117,6 +118,6 @@ public class StoneotterAI : MonsterAI
         throwDirection.y = 0f;
 
         Projectile projectile = Instantiate(otterData.stonePrefab, spawnPosition, Quaternion.identity);
-        projectile.Init(throwDirection, otterData.stoneSpeed, otterData.projectile, playerLayer);
+        projectile.Init(throwDirection, otterData.stoneSpeed, otterData.projectile, stoneTargetLayer);
     }
 }

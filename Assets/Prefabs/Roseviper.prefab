@@ -105,6 +105,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Health
   maxHealth: 30
+  currentHealth: 0
   setting: {fileID: 11400000, guid: 805786e63ae83384287c95db73d801ce, type: 2}
 --- !u!95 &3897425078592910565
 Animator:
@@ -693,7 +694,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::HitboxController
   targetLayer:
     serializedVersion: 2
-    m_Bits: 128
+    m_Bits: 384
   attack:
     damage: 10
     knockbackDistance: 1

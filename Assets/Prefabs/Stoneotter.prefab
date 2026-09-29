@@ -459,7 +459,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::HitboxController
   targetLayer:
     serializedVersion: 2
-    m_Bits: 128
+    m_Bits: 384
   attack:
     damage: 10
     knockbackDistance: 1
@@ -1640,6 +1640,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Health
   maxHealth: 30
+  currentHealth: 0
   setting: {fileID: 11400000, guid: 805786e63ae83384287c95db73d801ce, type: 2}
 --- !u!114 &909642921054426830
 MonoBehaviour:
@@ -1666,6 +1667,9 @@ MonoBehaviour:
   monsterFacing: {fileID: 1880824026292873}
   cameraYAngle: 45
   throwPoint: {fileID: 7740188583381614744}
+  stoneTargetLayer:
+    serializedVersion: 2
+    m_Bits: 384
 --- !u!114 &1880824026292873
 MonoBehaviour:
   m_ObjectHideFlags: 0

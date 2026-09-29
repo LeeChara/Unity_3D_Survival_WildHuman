@@ -14,7 +14,9 @@ GameObject:
   - component: {fileID: 495649180978681477}
   - component: {fileID: 4369480945364997020}
   - component: {fileID: 4207459239242559859}
-  m_Layer: 0
+  - component: {fileID: 2320462754870765523}
+  - component: {fileID: 7603043299603333803}
+  m_Layer: 8
   m_Name: ForestBush
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -155,3 +157,37 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DepthSorter
   isStatic: 1
+--- !u!114 &2320462754870765523
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3237151097076446163}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cb7f99eaa01cbbe49bffca8d39ad977c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ResourceHealth
+  maxHealth: 100
+  currentHealth: 0
+  effectiveTool: 0
+  toolMultiplier: 5
+  destroyEffectPrefab: {fileID: 0}
+--- !u!114 &7603043299603333803
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3237151097076446163}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 561cd3ce383f22c4aa9336344e454676, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::HitFlash
+  setting: {fileID: 11400000, guid: 51bb121b6879ffc4f8b98fda6b0fb2bf, type: 2}
+  type: 1
+  health: {fileID: 2320462754870765523}
+  targets:
+  - {fileID: 648115382013912102}

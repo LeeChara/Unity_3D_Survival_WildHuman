@@ -6,4 +6,6 @@ public struct AttackData
 {
     public int damage;
     public float knockbackDistance;
+    // 도구 장비로 공격할 때 설정 (맞는 자원에 배율 적용)
+    public ToolType toolType;
 }

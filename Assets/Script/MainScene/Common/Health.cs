@@ -34,6 +34,18 @@ public class Health : MonoBehaviour
         HealthChanged?.Invoke(currentHealth, this.maxHealth);
     }
 
+    // 공격 정보(도구 종류 등)에 따라 피해량을 보정한 뒤 적용
+    public void TakeHit(AttackData attack)
+    {
+        TakeDamage(CalculateDamage(attack));
+    }
+
+    // 대상별 피해 보정이 필요하면 자식 클래스에서 재정의 (예: 자원의 도구 배율)
+    protected virtual int CalculateDamage(AttackData attack)
+    {
+        return attack.damage;
+    }
+
     public void TakeDamage(int damage)
     {
         // Destroy는 프레임 끝에 처리되므로 같은 프레임의 추가 피격으로 Die가 중복 호출되는 것을 방지
