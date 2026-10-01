@@ -111,7 +111,8 @@ GameObject:
   - component: {fileID: 4650513886033173971}
   - component: {fileID: 5230826277495710516}
   - component: {fileID: 8762941322943674159}
-  m_Layer: 0
+  - component: {fileID: 2296462474927426219}
+  m_Layer: 6
   m_Name: Wingsquirrel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -218,6 +219,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Health
   maxHealth: 100
+  currentHealth: 0
   setting: {fileID: 11400000, guid: 805786e63ae83384287c95db73d801ce, type: 2}
 --- !u!114 &8212119383527421846
 MonoBehaviour:
@@ -330,6 +332,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::HitFlash
   setting: {fileID: 11400000, guid: 51bb121b6879ffc4f8b98fda6b0fb2bf, type: 2}
+  type: 0
   health: {fileID: 6643180911735808336}
   targets:
   - {fileID: 7167745756431020336}
@@ -344,6 +347,19 @@ MonoBehaviour:
   - {fileID: 5807142307977050937}
   - {fileID: 6317324968070425150}
   - {fileID: 3241515018317755223}
+--- !u!114 &2296462474927426219
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 48305459567241423}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 367b0ec096f498140b2adc3552a4da32, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ItemDropOnDeath
+  drops: []
 --- !u!1 &313815749097548721
 GameObject:
   m_ObjectHideFlags: 0
@@ -809,7 +825,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3848763059461072679}
   - component: {fileID: 3142959397608190811}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: StatusIcons
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -945,7 +961,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4971306368027533693}
   - component: {fileID: 651041547830446113}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: SweatIcon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1127,7 +1143,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3553130799735271977}
   - component: {fileID: 7873794477957490820}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Root
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1393,6 +1409,7 @@ MonoBehaviour:
   attack:
     damage: 10
     knockbackDistance: 1
+    toolType: 0
 --- !u!1 &7304506979596487671
 GameObject:
   m_ObjectHideFlags: 0
@@ -1680,7 +1697,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6165120400732924438}
   - component: {fileID: 5740497243657100180}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: EmoteIcon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
