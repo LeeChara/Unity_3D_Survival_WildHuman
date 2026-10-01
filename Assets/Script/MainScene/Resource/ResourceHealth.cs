@@ -34,8 +34,8 @@ public class ResourceHealth : Health
     protected override void Die()
     {
         SpawnDestroyEffect();
-        // TODO: 아이템 드랍
 
+        // 아이템 드랍은 Died를 구독하는 ItemDropOnDeath가 처리
         base.Die();
         Depleted?.Invoke(this);
     }

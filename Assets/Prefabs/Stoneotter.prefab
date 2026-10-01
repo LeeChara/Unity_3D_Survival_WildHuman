@@ -463,6 +463,7 @@ MonoBehaviour:
   attack:
     damage: 10
     knockbackDistance: 1
+    toolType: 0
 --- !u!1 &2415495034327808268
 GameObject:
   m_ObjectHideFlags: 0
@@ -1533,6 +1534,7 @@ GameObject:
   - component: {fileID: 7574368097942164359}
   - component: {fileID: 8739579781752174107}
   - component: {fileID: 1248363107783891523}
+  - component: {fileID: 6953231604298821222}
   m_Layer: 6
   m_Name: Stoneotter
   m_TagString: Untagged
@@ -1757,6 +1759,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::HitFlash
   setting: {fileID: 11400000, guid: 51bb121b6879ffc4f8b98fda6b0fb2bf, type: 2}
+  type: 0
   health: {fileID: 4071701316557565397}
   targets:
   - {fileID: 7011799400432246731}
@@ -1775,6 +1778,19 @@ MonoBehaviour:
   - {fileID: 7219212651240175766}
   - {fileID: 4646634932515267001}
   - {fileID: 7402315736643988015}
+--- !u!114 &6953231604298821222
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7304474180741421677}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 367b0ec096f498140b2adc3552a4da32, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ItemDropOnDeath
+  drops: []
 --- !u!1 &7496706528041794792
 GameObject:
   m_ObjectHideFlags: 0

@@ -26,3 +26,11 @@ MonoBehaviour:
     maxActiveMonsters: 20
     minSpawnDistance: 150
     maxSpawnDistance: 250
+  item:
+    groundLifetime: 600
+    pickupDelay: 0.5
+    scatterRadius: 1
+    popHeight: 1
+    popDuration: 0.4
+    throwDistance: 4
+    throwPickupDelay: 2

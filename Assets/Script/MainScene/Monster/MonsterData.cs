@@ -43,6 +43,10 @@ public class MonsterData : ScriptableObject
     [Tooltip("Windup/Attack 중 피격 시 넉백되지 않고 공격을 유지")]
     public bool superArmorWhileAttacking = false;
 
+    [Header("Drop")]
+    [Tooltip("사망 시 드랍 (ItemDropOnDeath가 있는 프리팹에만 적용)")]
+    public ItemDrop[] drops;
+
     private void OnValidate()
     {
         // 포기 반경이 감지 반경보다 좁으면 감지 직후 바로 포기하게 되므로 보정
