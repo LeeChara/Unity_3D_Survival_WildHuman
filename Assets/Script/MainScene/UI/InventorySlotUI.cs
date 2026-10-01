@@ -10,6 +10,8 @@ public class InventorySlotUI : MonoBehaviour, IBeginDragHandler, IDragHandler, I
 {
     [SerializeField] private Image icon;
     [SerializeField] private TMP_Text countText;
+    [Tooltip("개수 글자 뒤에 상하좌우 1px씩 어긋나게 깐 검은 글자 (픽셀 외곽선)")]
+    [SerializeField] private TMP_Text[] countOutlines;
 
     private InventoryUI owner;
     private int index;
@@ -28,7 +30,12 @@ public class InventorySlotUI : MonoBehaviour, IBeginDragHandler, IDragHandler, I
         icon.sprite = hasItem ? stack.item.icon : null;
 
         // 1개일 때는 개수를 표시하지 않음
-        countText.text = hasItem && stack.count > 1 ? stack.count.ToString() : string.Empty;
+        string count = hasItem && stack.count > 1 ? stack.count.ToString() : string.Empty;
+        countText.text = count;
+        foreach (var outline in countOutlines)
+        {
+            outline.text = count;
+        }
     }
 
     public void OnBeginDrag(PointerEventData eventData) => owner.BeginDrag(index, eventData);
