@@ -204,8 +204,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 367b0ec096f498140b2adc3552a4da32, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ItemDropOnDeath
-  drops:
-  - item: {fileID: 11400000, guid: 3e08ef162b85784488af3fdac8201f5f, type: 2}
-    minCount: 2
-    maxCount: 3
-    chance: 1
+  dropTable: {fileID: 11400000, guid: 704623b2ca0d32b46935d0d5614ca032, type: 2}

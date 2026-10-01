@@ -1,12 +1,12 @@
 using UnityEngine;
 
 // Health가 0이 되는 시점(Died)에 드랍 테이블대로 아이템을 떨어뜨림
-// 자원 Prop과 몬스터가 함께 사용 (몬스터는 MonsterAI가 MonsterData.drops로 덮어씀)
+// 자원 Prop과 몬스터가 함께 사용 (몬스터는 MonsterAI가 MonsterData.dropTable로 덮어씀)
 [RequireComponent(typeof(Health))]
 public class ItemDropOnDeath : MonoBehaviour
 {
-    [Tooltip("몬스터는 MonsterData.drops로 덮어쓰므로 여기서 설정하지 않음")]
-    [SerializeField] private ItemDrop[] drops;
+    [Tooltip("몬스터는 MonsterData.dropTable로 덮어쓰므로 여기서 설정하지 않음")]
+    [SerializeField] private DropTable dropTable;
 
     private Health health;
 
@@ -26,15 +26,15 @@ public class ItemDropOnDeath : MonoBehaviour
         health.Died -= OnDied;
     }
 
-    public void SetDrops(ItemDrop[] drops)
+    public void SetDropTable(DropTable dropTable)
     {
-        this.drops = drops;
+        this.dropTable = dropTable;
     }
 
     // ResourceHealth는 Died 이후에 풀로 반환되므로 이 시점의 위치는 아직 유효함
     private void OnDied()
     {
-        if (drops == null || drops.Length == 0) return;
+        if (dropTable == null || dropTable.Drops == null || dropTable.Drops.Count == 0) return;
 
         if (ItemDropper.Instance == null)
         {
@@ -42,6 +42,6 @@ public class ItemDropOnDeath : MonoBehaviour
             return;
         }
 
-        ItemDropper.Instance.Drop(drops, transform.position);
+        ItemDropper.Instance.Drop(dropTable.Drops, transform.position);
     }
 }

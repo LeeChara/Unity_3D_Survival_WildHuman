@@ -262,7 +262,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 367b0ec096f498140b2adc3552a4da32, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ItemDropOnDeath
-  drops: []
+  dropTable: {fileID: 11400000, guid: 1b0fffb99a958144eb828ed7af4a1c7b, type: 2}
 --- !u!1 &1179079776317792325
 GameObject:
   m_ObjectHideFlags: 0

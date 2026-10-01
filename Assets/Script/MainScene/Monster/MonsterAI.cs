@@ -63,7 +63,7 @@ public class MonsterAI : MonoBehaviour
     protected virtual void Start()
     {
         health.Init(data.maxHealth);
-        if (TryGetComponent(out ItemDropOnDeath dropOnDeath)) dropOnDeath.SetDrops(data.drops);
+        if (TryGetComponent(out ItemDropOnDeath dropOnDeath)) dropOnDeath.SetDropTable(data.dropTable);
     }
 
     protected virtual void OnDestroy()

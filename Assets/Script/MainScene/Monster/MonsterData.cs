@@ -45,7 +45,7 @@ public class MonsterData : ScriptableObject
 
     [Header("Drop")]
     [Tooltip("사망 시 드랍 (ItemDropOnDeath가 있는 프리팹에만 적용)")]
-    public ItemDrop[] drops;
+    public DropTable dropTable;
 
     private void OnValidate()
     {
