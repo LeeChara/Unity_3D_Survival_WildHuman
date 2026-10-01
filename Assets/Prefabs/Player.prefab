@@ -116,6 +116,10 @@ GameObject:
   - component: {fileID: 381859072025218152}
   - component: {fileID: 120331584656767264}
   - component: {fileID: 7265801469490413988}
+  - component: {fileID: 7429304456562804311}
+  - component: {fileID: 2004002038596902290}
+  - component: {fileID: 5485155978177760989}
+  - component: {fileID: 4686375444617240654}
   m_Layer: 7
   m_Name: Player
   m_TagString: Untagged
@@ -416,6 +420,63 @@ MonoBehaviour:
   - {fileID: 3800492974980948731}
   - {fileID: 6416501376188652739}
   - {fileID: 2133943241525837881}
+--- !u!114 &7429304456562804311
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 956602779991621677}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1a05f7565bbbd7247b5249f067ad5531, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ItemCollector
+  itemLayer:
+    serializedVersion: 2
+    m_Bits: 512
+  pullRadius: 3
+  releaseRadius: 6
+  pullSpeed: 10
+  collectDistance: 0.3
+--- !u!114 &2004002038596902290
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 956602779991621677}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7b7675a5b40fdaa4f8c22cb5a4fc12eb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Inventory
+  slotCount: 40
+--- !u!114 &5485155978177760989
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 956602779991621677}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8ddb1cc6573953943aed166817db2a45, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerHotbar
+  inventory: {fileID: 2004002038596902290}
+--- !u!114 &4686375444617240654
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 956602779991621677}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8debe070153a1f345bdb000997566138, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerItemThrower
 --- !u!1 &2027391798678248913
 GameObject:
   m_ObjectHideFlags: 0
