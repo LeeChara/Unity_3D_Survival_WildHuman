@@ -2,7 +2,8 @@ using System;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class InventoryUI : MonoBehaviour
+// 같은 Canvas의 UI 위에서 굴린 휠은 부모를 타고 올라와 여기(IScrollHandler)로 들어옴
+public class InventoryUI : MonoBehaviour, IScrollHandler
 {
     // 이 스크립트는 항상 활성 상태인 부모에 두고, 패널만 켜고 끔
     [SerializeField] private GameObject panel;
@@ -21,6 +22,8 @@ public class InventoryUI : MonoBehaviour
 
     public bool IsOpen { get; private set; }
     public event Action<bool> OpenStateChanged;
+    // 열린 인벤토리 영역 위에서 휠을 굴림 (양수: 위로, 음수: 아래로). 제작 창 선택 이동용
+    public event Action<float> Scrolled;
 
     // 드래그 중인 칸 번호 (-1이면 드래그 중 아님)와 들고 있는 개수
     private int dragFrom = -1;
@@ -148,8 +151,18 @@ public class InventoryUI : MonoBehaviour
         CancelDrag();
     }
 
+    // 핫바 선택(PlayerHotbar)은 같은 조건일 때 휠을 무시하므로 둘이 동시에 움직이지 않음
+    public void OnScroll(PointerEventData eventData)
+    {
+        float scroll = eventData.scrollDelta.y;
+        if (!IsOpen || Mathf.Approximately(scroll, 0f)) return;
+        if (!IsOverInventoryArea(eventData.position)) return;
+
+        Scrolled?.Invoke(scroll);
+    }
+
     // Screen Space - Overlay 캔버스이므로 카메라는 null
-    private bool IsOverInventoryArea(Vector2 screenPos)
+    public bool IsOverInventoryArea(Vector2 screenPos)
     {
         foreach (var area in inventoryAreas)
         {

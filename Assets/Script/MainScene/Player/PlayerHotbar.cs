@@ -6,6 +6,10 @@ using UnityEngine.InputSystem;
 public class PlayerHotbar : MonoBehaviour
 {
     [SerializeField] private Inventory inventory;
+    [Tooltip("열린 인벤토리 위에서 굴린 휠은 제작 창 선택용이므로 핫바는 무시")]
+    [SerializeField] private InventoryUI inventoryUI;
+
+    private Vector2 pointerScreenPos;
 
     public int SelectedIndex { get; private set; }
     public ItemStack SelectedStack => inventory.Get(SelectedIndex);
@@ -19,6 +23,11 @@ public class PlayerHotbar : MonoBehaviour
 
         SelectedIndex = index;
         SelectionChanged?.Invoke(SelectedIndex);
+    }
+
+    void OnPoint(InputValue value)
+    {
+        pointerScreenPos = value.Get<Vector2>();
     }
 
     // 키 1~9는 1~9, 키 0은 10으로 들어옴 (바인딩의 Scale 프로세서)
@@ -36,6 +45,7 @@ public class PlayerHotbar : MonoBehaviour
     {
         float scroll = value.Get<float>();
         if (Mathf.Approximately(scroll, 0f)) return;
+        if (inventoryUI != null && inventoryUI.IsOpen && inventoryUI.IsOverInventoryArea(pointerScreenPos)) return;
 
         Select(SelectedIndex + (scroll < 0f ? 1 : -1));
     }

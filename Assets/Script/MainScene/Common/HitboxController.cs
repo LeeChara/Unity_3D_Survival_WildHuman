@@ -28,7 +28,9 @@ public class HitboxController : MonoBehaviour
 
         hitTargets.Add(other);
 
-        if (other.TryGetComponent<Health>(out Health health))
+        // 설치물처럼 콜라이더가 자식에 있는 경우 루트의 체력을 찾음 (자기 자신부터 검사)
+        Health health = other.GetComponentInParent<Health>();
+        if (health != null)
         {
             health.TakeHit(attack);
             Debug.Log($"{other.name} 피격 - 현재 체력: {health.CurrentHealth} / {health.MaxHealth}");
@@ -49,6 +51,12 @@ public class HitboxController : MonoBehaviour
     public void SetAttack(AttackData attack)
     {
         this.attack = attack;
+    }
+
+    // 들고 있는 도구에 따라 공격의 도구 종류만 교체 (피해량 등 나머지 수치는 유지)
+    public void SetToolType(ToolType toolType)
+    {
+        attack.toolType = toolType;
     }
 
     // 새로운 공격을 시작할 때 초기화

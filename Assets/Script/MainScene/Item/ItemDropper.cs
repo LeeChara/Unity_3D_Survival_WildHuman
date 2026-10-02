@@ -37,15 +37,18 @@ public class ItemDropper : MonoBehaviour
             if (Random.value > drop.chance) continue;
 
             int maxCount = Mathf.Max(drop.minCount, drop.maxCount);
-            int count = Random.Range(drop.minCount, maxCount + 1);
+            Drop(drop.item, Random.Range(drop.minCount, maxCount + 1), origin);
+        }
+    }
 
-            // 최대 개수를 넘으면 여러 덩어리로 나눠서 떨어뜨림
-            while (count > 0)
-            {
-                int stack = Mathf.Min(count, drop.item.maxStack);
-                Spawn(drop.item, stack, origin);
-                count -= stack;
-            }
+    // 정해진 개수를 origin 주변에 흩어 떨어뜨림 (최대 개수를 넘으면 여러 덩어리로 나눔)
+    public void Drop(ItemData data, int count, Vector3 origin)
+    {
+        while (count > 0)
+        {
+            int stack = Mathf.Min(count, data.maxStack);
+            Spawn(data, stack, origin);
+            count -= stack;
         }
     }
 

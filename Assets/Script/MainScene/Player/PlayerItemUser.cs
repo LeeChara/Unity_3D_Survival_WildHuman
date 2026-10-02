@@ -29,9 +29,10 @@ public class PlayerItemUser : MonoBehaviour
         ItemStack stack = hotbar.SelectedStack;
         if (stack.IsEmpty) return;
 
-        if (!PointerUtil.TryGetGroundPoint(pointerScreenPos, transform.position.y, out Vector3 aimPoint))
+        // 설치물이 커서가 가리키는 지면에 놓이도록 실제 지면 높이 기준으로 계산
+        if (!PointerUtil.TryGetGroundPoint(pointerScreenPos, PointerUtil.GroundHeight, out Vector3 aimPoint))
         {
-            aimPoint = transform.position;
+            aimPoint = new Vector3(transform.position.x, PointerUtil.GroundHeight, transform.position.z);
         }
 
         // 마지막 1개를 쓰면 Remove에서 칸이 비워지므로 미리 보관

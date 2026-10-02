@@ -10,6 +10,7 @@ public class PlayerAttack : MonoBehaviour
     [SerializeField] private Animator animator;
     [SerializeField] private Facing playerFacing;
     [SerializeField] private Transform attackPivot; // Hitbox(및 추후 검기 이펙트)를 클릭 방향으로 회전시키는 피벗
+    [SerializeField] private PlayerHotbar hotbar; // 선택한 도구를 공격에 반영
 
     public float windupDuration = 0.2f;
     public float attackDuration = 0.5f;
@@ -107,6 +108,10 @@ public class PlayerAttack : MonoBehaviour
         Vector3 attackDir = ComputeAttackDirection();
         attackPivot.rotation = Quaternion.LookRotation(attackDir);
         playerFacing.UpdateFacing(attackDir, cameraRight, cameraForwardFlat);
+
+        // 핫바에서 고른 아이템이 도구면 그 도구로 공격 (장착 외형은 추후 추가)
+        ToolItemData tool = hotbar.SelectedStack.IsEmpty ? null : hotbar.SelectedStack.item as ToolItemData;
+        hitboxController.SetToolType(tool != null ? tool.toolType : ToolType.None);
 
         attackPhase = AttackPhase.Windup;
         phaseTime = 0f;

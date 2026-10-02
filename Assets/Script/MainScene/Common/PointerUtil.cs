@@ -5,6 +5,10 @@ using UnityEngine.EventSystems;
 // 마우스 포인터 관련 공용 계산 (UI 위 여부, 커서 아래 땅 지점)
 public static class PointerUtil
 {
+    // 지형 표면 높이 (지형 청크와 Prop이 모두 y=0에 배치됨)
+    // 플레이어·몬스터의 pivot은 몸 중앙이라 이 값과 다름
+    public const float GroundHeight = 0f;
+
     private static PointerEventData uiPointerData;
     private static EventSystem uiPointerDataOwner;
     private static readonly List<RaycastResult> uiRaycastResults = new();

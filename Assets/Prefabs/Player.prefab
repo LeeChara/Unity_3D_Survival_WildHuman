@@ -122,6 +122,8 @@ GameObject:
   - component: {fileID: 4686375444617240654}
   - component: {fileID: 2047506345014099351}
   - component: {fileID: 8526991879530310513}
+  - component: {fileID: 4599729644261060645}
+  - component: {fileID: 1411617412918827877}
   m_Layer: 7
   m_Name: Player
   m_TagString: Untagged
@@ -353,6 +355,7 @@ MonoBehaviour:
   animator: {fileID: 1689757010358613412}
   playerFacing: {fileID: 3201412052657367465}
   attackPivot: {fileID: 9200000000000002222}
+  hotbar: {fileID: 5485155978177760989}
   windupDuration: 0.2
   attackDuration: 0.3
   recoverDuration: 0.3
@@ -454,6 +457,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Inventory
   slotCount: 40
+  startingItems:
+  - item: {fileID: 11400000, guid: 76b2af717ed051443bd913f83a6d097f, type: 2}
+    count: 10
+  - item: {fileID: 11400000, guid: d70a2825f3d4c3c41af45d4fdb09f2c0, type: 2}
+    count: 3
+  - item: {fileID: 11400000, guid: fd70b53152413f847aa8ed27128e3157, type: 2}
+    count: 1
 --- !u!114 &5485155978177760989
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -467,6 +477,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerHotbar
   inventory: {fileID: 2004002038596902290}
+  inventoryUI: {fileID: 0}
 --- !u!114 &4686375444617240654
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -523,9 +534,40 @@ MonoBehaviour:
   sparkleCount: 4
   spawnCenter: {x: 0, y: 0}
   spawnArea: {x: 0.4, y: 0.4}
+  sparkleScale: 0.5
   sparkleDuration: 0.5
   sparkleInterval: 0.08
   riseDistance: 0.1
+--- !u!114 &4599729644261060645
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 956602779991621677}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a0528027c6483f34483bde9e96c3019f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerPlacementPreview
+  inventory: {fileID: 2004002038596902290}
+  hotbar: {fileID: 5485155978177760989}
+  validColor: {r: 0.5, g: 1, b: 0.5, a: 0.6}
+  invalidColor: {r: 1, g: 0.4, b: 0.4, a: 0.6}
+--- !u!114 &1411617412918827877
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 956602779991621677}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c72744614e8818c418e5267f0c1e5f78, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerCrafter
+  inventory: {fileID: 2004002038596902290}
+  stationCheckInterval: 0.2
 --- !u!1 &2027391798678248913
 GameObject:
   m_ObjectHideFlags: 0
@@ -776,7 +818,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::HitboxController
   targetLayer:
     serializedVersion: 2
-    m_Bits: 320
+    m_Bits: 1344
   attack:
     damage: 10
     knockbackDistance: 1

@@ -8,6 +8,8 @@ public class Inventory : MonoBehaviour, IItemReceiver
     public const int SlotsPerRow = 10;
 
     [SerializeField, Min(1)] private int slotCount = 40;
+    [Tooltip("시작할 때 들고 있는 아이템 (앞쪽 칸부터 채움)")]
+    [SerializeField] private ItemStack[] startingItems;
 
     private ItemStack[] slots;
 
@@ -22,6 +24,17 @@ public class Inventory : MonoBehaviour, IItemReceiver
         for (int i = 0; i < slotCount; i++)
         {
             slots[i] = new ItemStack();
+        }
+    }
+
+    // UI 등이 SlotChanged를 구독한 뒤에 채우도록 Start에서 추가
+    private void Start()
+    {
+        if (startingItems == null) return;
+
+        foreach (ItemStack stack in startingItems)
+        {
+            if (!stack.IsEmpty) TryAdd(stack.item, stack.count);
         }
     }
 
@@ -101,6 +114,36 @@ public class Inventory : MonoBehaviour, IItemReceiver
 
         SlotChanged?.Invoke(from);
         SlotChanged?.Invoke(to);
+    }
+
+    // 모든 칸에 있는 해당 아이템의 총 개수
+    public int CountOf(ItemData item)
+    {
+        if (item == null) return 0;
+
+        int total = 0;
+        foreach (ItemStack slot in slots)
+        {
+            if (!slot.IsEmpty && slot.item == item) total += slot.count;
+        }
+        return total;
+    }
+
+    // 여러 칸에 걸쳐 해당 아이템을 count개 뺌 (실제로 뺀 개수를 반환)
+    // 손에 든 핫바 칸이 마지막에 줄어들도록 가방 뒤쪽 칸부터 뺌
+    public int RemoveItem(ItemData item, int count)
+    {
+        if (item == null || count <= 0) return 0;
+
+        int remaining = count;
+        for (int i = slotCount - 1; i >= 0 && remaining > 0; i--)
+        {
+            ItemStack slot = slots[i];
+            if (slot.IsEmpty || slot.item != item) continue;
+
+            remaining -= Remove(i, remaining);
+        }
+        return count - remaining;
     }
 
     // 실제로 뺀 개수를 반환
