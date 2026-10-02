@@ -9,10 +9,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 14d134c79926234459558509630a7e8b, type: 3}
+  m_Script: {fileID: 11500000, guid: c6152e5595f5e2b4dab734e9eb7b35c9, type: 3}
   m_Name: RawMeat
-  m_EditorClassIdentifier: Assembly-CSharp::ItemData
+  m_EditorClassIdentifier: Assembly-CSharp::FoodItemData
   id: raw_meat
   displayName: "\uC0DD\uACE0\uAE30"
   icon: {fileID: -1826713133, guid: d59cb77a7afcea64ebfec73511964a9d, type: 3}
   maxStack: 99
+  hungerAmount: 15
+  healAmount: 0

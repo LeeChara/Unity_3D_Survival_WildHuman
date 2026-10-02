@@ -1,6 +1,4 @@
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 
 public class PlayerAttack : MonoBehaviour
@@ -23,9 +21,6 @@ public class PlayerAttack : MonoBehaviour
     private Vector3 cameraForwardFlat;
 
     private Vector2 pointerScreenPos;
-
-    private PointerEventData uiPointerData;
-    private readonly List<RaycastResult> uiRaycastResults = new();
 
     private enum AttackPhase { None, Windup, Attack, Recover }
     private AttackPhase attackPhase = AttackPhase.None;
@@ -103,7 +98,7 @@ public class PlayerAttack : MonoBehaviour
     void OnAttack(InputValue value)
     {
         // UI(인벤토리 칸 등) 위를 클릭한 경우 무시
-        if (IsPointerOverUI()) return;
+        if (PointerUtil.IsOverUI(pointerScreenPos)) return;
         // 회피 또는 공격 중에는 입력 무시
         if (!playerState.CanAct) return;
         // 쿨다운 중에는 입력 무시
@@ -121,29 +116,10 @@ public class PlayerAttack : MonoBehaviour
         animator.SetTrigger("Attack");
     }
 
-    // 입력 콜백 안에서는 EventSystem.IsPointerOverGameObject()가 이전 프레임 기준이라 경고가 뜨므로
-    // 현재 포인터 위치로 UI 레이캐스트를 직접 수행 (Raycast Target이 켜진 UI만 해당)
-    private bool IsPointerOverUI()
-    {
-        EventSystem eventSystem = EventSystem.current;
-        if (eventSystem == null) return false;
-
-        uiPointerData ??= new PointerEventData(eventSystem);
-        uiPointerData.position = pointerScreenPos;
-
-        uiRaycastResults.Clear();
-        eventSystem.RaycastAll(uiPointerData, uiRaycastResults);
-        return uiRaycastResults.Count > 0;
-    }
-
     private Vector3 ComputeAttackDirection()
     {
-        Ray ray = Camera.main.ScreenPointToRay(pointerScreenPos);
-        Plane groundPlane = new Plane(Vector3.up, transform.position);
-
-        if (groundPlane.Raycast(ray, out float distance))
+        if (PointerUtil.TryGetGroundPoint(pointerScreenPos, transform.position.y, out Vector3 hitPoint))
         {
-            Vector3 hitPoint = ray.GetPoint(distance);
             Vector3 dir = hitPoint - transform.position;
             dir.y = 0f;
 

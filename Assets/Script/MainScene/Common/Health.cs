@@ -62,6 +62,17 @@ public class Health : MonoBehaviour
         }
     }
 
+    public void Heal(float amount)
+    {
+        if (isDead || amount <= 0f) return;
+
+        float newHealth = Mathf.Min(maxHealth, currentHealth + amount);
+        if (Mathf.Approximately(newHealth, currentHealth)) return;
+
+        currentHealth = newHealth;
+        HealthChanged?.Invoke(currentHealth, maxHealth);
+    }
+
     protected virtual void Die()
     {
         Debug.Log($"{gameObject.name} has died.");

@@ -30,6 +30,8 @@ MonoBehaviour:
   attack:
     damage: 10
     knockbackDistance: 8
+    toolType: 0
   recoverDuration: 2
   knockbackResistance: 0
   superArmorWhileAttacking: 0
+  dropTable: {fileID: 11400000, guid: a7d47715cf4921c499ecb46a9b774f42, type: 2}
