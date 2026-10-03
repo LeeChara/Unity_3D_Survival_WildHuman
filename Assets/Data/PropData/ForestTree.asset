@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0895ffe710741c54aa0f3bf7c304c11e, type: 3}
   m_Name: ForestTree
   m_EditorClassIdentifier: Assembly-CSharp::PropData
+  displayName: "\uB098\uBB34"
   maxHealth: 30
   toolWeakness:
     tool: 1

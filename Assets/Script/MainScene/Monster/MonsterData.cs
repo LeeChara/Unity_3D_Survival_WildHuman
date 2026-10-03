@@ -4,6 +4,8 @@ using UnityEngine;
 public class MonsterData : ScriptableObject
 {
     public string monsterName;
+    [Tooltip("마우스를 올렸을 때 표시할 이름 (비워두면 표시하지 않음)")]
+    public string displayName;
 
     [Header("적대 대상")]
     public MonsterData[] hostileTargets;

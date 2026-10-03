@@ -13,6 +13,8 @@ public class RecipeSlotUI : MonoBehaviour, IPointerClickHandler
     [SerializeField] private TMP_Text[] countOutlines;
     [Tooltip("제작할 수 없을 때 아이콘에 곱할 색")]
     [SerializeField] private Color unavailableTint = new(1f, 1f, 1f, 0.35f);
+    [Tooltip("마우스를 올리면 결과물 정보 표시")]
+    [SerializeField] private ItemTooltipTrigger tooltip;
 
     private CraftingUI owner;
     private int offset;
@@ -39,6 +41,8 @@ public class RecipeSlotUI : MonoBehaviour, IPointerClickHandler
         {
             outline.text = count;
         }
+
+        if (tooltip != null) tooltip.SetItem(hasRecipe ? recipe.result : null, hasRecipe ? recipe.resultCount : 0);
     }
 
     public void OnPointerClick(PointerEventData eventData)

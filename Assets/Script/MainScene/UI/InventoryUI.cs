@@ -77,6 +77,10 @@ public class InventoryUI : MonoBehaviour, IScrollHandler
 
         IsOpen = open;
         panel.SetActive(open);
+        foreach (var slot in slotUIs)
+        {
+            slot.SetTooltipEnabled(open);
+        }
         OpenStateChanged?.Invoke(open);
     }
 
@@ -122,6 +126,9 @@ public class InventoryUI : MonoBehaviour, IScrollHandler
         previewRect.sizeDelta = ((RectTransform)slotUIs[index].transform).rect.size;
         previewRect.position = eventData.position;
         dragPreview.gameObject.SetActive(true);
+
+        // 드래그 중에는 툴팁을 숨기고, 끝나면 그때 커서 아래 칸의 툴팁이 다시 보임
+        if (ItemTooltipUI.Instance != null) ItemTooltipUI.Instance.SetSuppressed(true);
     }
 
     public void Drag(PointerEventData eventData)
@@ -178,5 +185,6 @@ public class InventoryUI : MonoBehaviour, IScrollHandler
         dragAmount = 0;
         droppedOnSlot = false;
         if (dragPreview != null) dragPreview.gameObject.SetActive(false);
+        if (ItemTooltipUI.Instance != null) ItemTooltipUI.Instance.SetSuppressed(false);
     }
 }

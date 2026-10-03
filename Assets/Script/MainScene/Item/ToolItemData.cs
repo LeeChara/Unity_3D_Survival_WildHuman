@@ -12,4 +12,9 @@ public class ToolItemData : ItemData
 
     [Tooltip("손에 들었을 때 표시할 스프라이트 (비워두면 아무것도 표시하지 않음)")]
     public Sprite heldSprite;
+
+    public override string GetStatText()
+    {
+        return $"{damage} 피해";
+    }
 }

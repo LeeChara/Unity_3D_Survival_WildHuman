@@ -12,6 +12,8 @@ public class Health : MonoBehaviour
     public float MaxHealth => maxHealth;
     public float CurrentHealth => currentHealth;
     public bool IsDead => isDead;
+    // 마우스를 올렸을 때 표시할 이름 (빈 문자열이면 표시하지 않음, 종류별로 데이터에서 읽도록 재정의)
+    public virtual string DisplayName => string.Empty;
 
     // 사망 시점을 스포너 등 외부 시스템에 알림
     public event Action Died;

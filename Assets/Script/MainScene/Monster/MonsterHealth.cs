@@ -13,6 +13,9 @@ public class MonsterHealth : Health
 
     private Rigidbody rb;
     private Knockback knockback;
+    private MonsterAI ai;
+
+    public override string DisplayName => ai != null && ai.Data != null ? ai.Data.displayName : string.Empty;
 
     // 시체가 남아 있고 남은 시간
     private float corpseTimer;
@@ -23,6 +26,7 @@ public class MonsterHealth : Health
         base.Awake();
         rb = GetComponent<Rigidbody>();
         knockback = GetComponent<Knockback>();
+        ai = GetComponent<MonsterAI>();
     }
 
     private void OnEnable()

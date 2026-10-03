@@ -12,6 +12,8 @@ public class PropHealth : Health
     // Died 구독자(HitFlash 등)가 모두 처리된 뒤에 호출되어야 비활성화 이후 색이 덮어써지지 않음
     public event Action<PropHealth> Depleted;
 
+    public override string DisplayName => data.displayName;
+
     protected override void Awake()
     {
         base.Awake();

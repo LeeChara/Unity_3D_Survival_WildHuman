@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: Shieldboar
   m_EditorClassIdentifier: Assembly-CSharp::MonsterData
   monsterName: Shieldboar
+  displayName: "\uBC29\uD328\uBA67\uB3FC\uC9C0"
   hostileTargets:
   - {fileID: 11400000, guid: ef0f350da93ecf941a6afe8a421b989a, type: 2}
   maxHealth: 50

@@ -125,6 +125,8 @@ GameObject:
   - component: {fileID: 4599729644261060645}
   - component: {fileID: 1411617412918827877}
   - component: {fileID: 426023613752420637}
+  - component: {fileID: 6460211273972572966}
+  - component: {fileID: 7882459763966053072}
   m_Layer: 7
   m_Name: Player
   m_TagString: Untagged
@@ -585,6 +587,40 @@ MonoBehaviour:
   hotbar: {fileID: 5485155978177760989}
   inventory: {fileID: 2004002038596902290}
   heldRenderer: {fileID: 8231875583896415935}
+--- !u!114 &6460211273972572966
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 956602779991621677}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d317c7b99b379eb459ab688ce0ec492d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::WorldItemHover
+  itemLayer:
+    serializedVersion: 2
+    m_Bits: 512
+  hoverRadius: 0.3
+  maxDistance: 100
+--- !u!114 &7882459763966053072
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 956602779991621677}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe44b39daf7c4be45bbc361b5a0a269f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::WorldHoverText
+  targetLayers:
+    serializedVersion: 2
+    m_Bits: 1344
+  maxDistance: 100
+  itemHover: {fileID: 6460211273972572966}
 --- !u!1 &2027391798678248913
 GameObject:
   m_ObjectHideFlags: 0

@@ -558,6 +558,28 @@ TextureImporter:
       indices: 
       edges: []
       weights: []
+    - serializedVersion: 2
+      name: UI_21
+      rect:
+        serializedVersion: 2
+        x: 289
+        y: 143
+        width: 34
+        height: 50
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 4, y: 4, z: 4, w: 4}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a119d707000000000800000000000000
+      internalID: 1887277338
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
     customData: 
     physicsShape: []
@@ -588,6 +610,7 @@ TextureImporter:
       UI_19: 617199763
       UI_2: 1398276190
       UI_20: 686956730
+      UI_21: 1887277338
       UI_3: 1036591697
       UI_4: 688237556
       UI_5: 1310077540

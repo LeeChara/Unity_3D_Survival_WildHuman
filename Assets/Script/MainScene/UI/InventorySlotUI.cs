@@ -12,6 +12,8 @@ public class InventorySlotUI : MonoBehaviour, IBeginDragHandler, IDragHandler, I
     [SerializeField] private TMP_Text countText;
     [Tooltip("개수 글자 뒤에 상하좌우 1px씩 어긋나게 깐 검은 글자 (픽셀 외곽선)")]
     [SerializeField] private TMP_Text[] countOutlines;
+    [Tooltip("마우스를 올리면 아이템 정보 표시 (드래그 미리보기 칸은 비워 둠)")]
+    [SerializeField] private ItemTooltipTrigger tooltip;
 
     private InventoryUI owner;
     private int index;
@@ -36,6 +38,14 @@ public class InventorySlotUI : MonoBehaviour, IBeginDragHandler, IDragHandler, I
         {
             outline.text = count;
         }
+
+        if (tooltip != null) tooltip.SetItem(hasItem ? stack.item : null, stack.count);
+    }
+
+    // 인벤토리가 닫혀 있을 때 핫바 칸에서는 툴팁을 띄우지 않음
+    public void SetTooltipEnabled(bool value)
+    {
+        if (tooltip != null) tooltip.enabled = value;
     }
 
     public void OnBeginDrag(PointerEventData eventData) => owner.BeginDrag(index, eventData);

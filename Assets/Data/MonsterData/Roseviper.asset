@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: Roseviper
   m_EditorClassIdentifier: Assembly-CSharp::RoseviperData
   monsterName: Roseviper
+  displayName: "\uAC00\uC2DC\uAF43\uC0B4\uBAA8\uC0AC"
   hostileTargets: []
   maxHealth: 40
   lowHealthRatio: 0.3

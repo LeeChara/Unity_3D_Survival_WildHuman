@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: Wingsquirrel
   m_EditorClassIdentifier: Assembly-CSharp::MonsterData
   monsterName: Wingsquirrel
+  displayName: "\uB0A0\uAC1C\uB2E4\uB78C\uC950"
   hostileTargets: []
   maxHealth: 20
   lowHealthRatio: 0.3
