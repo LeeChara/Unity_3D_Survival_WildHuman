@@ -14,6 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ToolItemData
   id: wooden_hammer
   displayName: "\uB098\uBB34 \uB9DD\uCE58"
-  icon: {fileID: 1381666342, guid: d59cb77a7afcea64ebfec73511964a9d, type: 3}
+  icon: {fileID: 930297127, guid: 3a05820ac71af1e49993d4578d06825d, type: 3}
   maxStack: 1
   toolType: 3
+  damage: 5
+  heldSprite: {fileID: 930297127, guid: 3a05820ac71af1e49993d4578d06825d, type: 3}

@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::FoodItemData
   id: raw_meat
   displayName: "\uC0DD\uACE0\uAE30"
-  icon: {fileID: -1826713133, guid: d59cb77a7afcea64ebfec73511964a9d, type: 3}
+  icon: {fileID: -1299388168, guid: d59cb77a7afcea64ebfec73511964a9d, type: 3}
   maxStack: 99
   hungerAmount: 15
   healAmount: 0

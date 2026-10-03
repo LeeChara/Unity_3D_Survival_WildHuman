@@ -19,3 +19,8 @@ MonoBehaviour:
   placedPrefab: {fileID: 2515706202527716380, guid: dd4e93f1cc9abc241a875f4dadf15d81, type: 3}
   alignToPlayer: 1
   placeRange: 3
+  maxHealth: 50
+  toolWeakness:
+    tool: 3
+    multiplier: 5
+  dropTable: {fileID: 11400000, guid: 290620d9af39f414e9e6655e309be567, type: 2}

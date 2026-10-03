@@ -53,9 +53,10 @@ public class HitboxController : MonoBehaviour
         this.attack = attack;
     }
 
-    // 들고 있는 도구에 따라 공격의 도구 종류만 교체 (피해량 등 나머지 수치는 유지)
-    public void SetToolType(ToolType toolType)
+    // 들고 있는 도구에 따라 공격의 피해량과 도구 종류만 교체 (넉백 등 나머지 수치는 유지)
+    public void SetWeapon(int damage, ToolType toolType)
     {
+        attack.damage = damage;
         attack.toolType = toolType;
     }
 

@@ -8,12 +8,16 @@ public class CraftingStation : MonoBehaviour
     private static readonly List<CraftingStation> active = new();
     public static IReadOnlyList<CraftingStation> Active => active;
 
-    [Tooltip("레시피의 requiredStation과 비교할 아이템 (보통 이 설치물을 설치하는 아이템)")]
-    [SerializeField] private ItemData stationItem;
     [Tooltip("이 거리(수평) 안에 있으면 제작 가능")]
     [SerializeField, Min(0f)] private float range = 3f;
 
-    public ItemData StationItem => stationItem;
+    // 레시피의 requiredStation과 비교할 아이템 (이 설치물을 놓는 아이템)
+    public ItemData StationItem { get; private set; }
+
+    private void Awake()
+    {
+        StationItem = GetComponent<StructureHealth>().SourceItem;
+    }
 
     private void OnEnable()
     {

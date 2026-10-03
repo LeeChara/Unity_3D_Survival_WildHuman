@@ -87,9 +87,9 @@ public class PropSpawner : MonoBehaviour
 
     // 파괴된 자원을 청크 목록에서 빼고 풀에 반환 (언로드 시 중복 반환 방지)
     // 파괴 기록은 남기지 않으므로 청크 재로드 시 원래 자리에 다시 배치됨
-    private void OnResourceDepleted(ResourceHealth resource)
+    private void OnPropDepleted(PropHealth propHealth)
     {
-        GameObject instance = resource.gameObject;
+        GameObject instance = propHealth.gameObject;
         if (!propChunks.TryGetValue(instance, out Vector2Int coord)) return;
 
         propChunks.Remove(instance);
@@ -147,7 +147,7 @@ public class PropSpawner : MonoBehaviour
                 {
                     GameObject obj = Instantiate(prefab, transform);
                     // 인스턴스는 풀에서 계속 재사용되므로 생성 시 한 번만 구독
-                    if (obj.TryGetComponent(out ResourceHealth resource)) resource.Depleted += OnResourceDepleted;
+                    if (obj.TryGetComponent(out PropHealth propHealth)) propHealth.Depleted += OnPropDepleted;
                     return obj;
                 },
                 actionOnGet: obj => obj.SetActive(true),

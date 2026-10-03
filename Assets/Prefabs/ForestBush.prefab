@@ -172,9 +172,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ResourceHealth
   maxHealth: 20
   currentHealth: 0
-  effectiveTool: 0
-  toolMultiplier: 5
-  destroyEffectPrefab: {fileID: 0}
+  data: {fileID: 11400000, guid: 723403362231b5f4aa1fde1040329688, type: 2}
 --- !u!114 &7603043299603333803
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -204,4 +202,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 367b0ec096f498140b2adc3552a4da32, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ItemDropOnDeath
-  dropTable: {fileID: 11400000, guid: 22e840f30ead26b4caf2b524b2d6b064, type: 2}
+  dropTable: {fileID: 0}

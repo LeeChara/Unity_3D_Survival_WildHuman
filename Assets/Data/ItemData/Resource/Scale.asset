@@ -14,5 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ItemData
   id: scale
   displayName: "\uBE44\uB298"
-  icon: {fileID: -1299388168, guid: d59cb77a7afcea64ebfec73511964a9d, type: 3}
+  icon: {fileID: -1826713133, guid: d59cb77a7afcea64ebfec73511964a9d, type: 3}
   maxStack: 99

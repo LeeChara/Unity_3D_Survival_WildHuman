@@ -322,8 +322,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::StructureHealth
   maxHealth: 1000
   currentHealth: 0
-  effectiveTool: 3
-  toolMultiplier: 100
+  sourceItem: {fileID: 11400000, guid: 76b2af717ed051443bd913f83a6d097f, type: 2}
 --- !u!114 &461133060534230767
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -357,7 +356,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 367b0ec096f498140b2adc3552a4da32, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ItemDropOnDeath
-  dropTable: {fileID: 11400000, guid: 290620d9af39f414e9e6655e309be567, type: 2}
+  dropTable: {fileID: 0}
 --- !u!114 &5378677269464803943
 MonoBehaviour:
   m_ObjectHideFlags: 0

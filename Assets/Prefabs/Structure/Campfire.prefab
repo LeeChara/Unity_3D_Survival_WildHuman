@@ -81,8 +81,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::StructureHealth
   maxHealth: 1000
   currentHealth: 0
-  effectiveTool: 3
-  toolMultiplier: 100
+  sourceItem: {fileID: 11400000, guid: d70a2825f3d4c3c41af45d4fdb09f2c0, type: 2}
 --- !u!114 &5084821625904961200
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -112,7 +111,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 367b0ec096f498140b2adc3552a4da32, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ItemDropOnDeath
-  dropTable: {fileID: 11400000, guid: 4f4edf4bf9d714b449a785a2539802d9, type: 2}
+  dropTable: {fileID: 0}
 --- !u!114 &4969263982535670644
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -143,7 +142,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2a53ec5b348e0c9449a871f2734ffba8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CraftingStation
-  stationItem: {fileID: 11400000, guid: d70a2825f3d4c3c41af45d4fdb09f2c0, type: 2}
   range: 3
 --- !u!1 &2921128210236080249
 GameObject:

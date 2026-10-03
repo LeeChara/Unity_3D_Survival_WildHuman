@@ -13,6 +13,12 @@ public class PlaceableItemData : ItemData
     [Tooltip("플레이어로부터 설치 가능한 최대 거리")]
     [Min(0f)] public float placeRange = 3f;
 
+    [Header("설치물")]
+    [Min(1)] public float maxHealth = 1000f;
+    public ToolWeakness toolWeakness = new ToolWeakness { tool = ToolType.Hammer, multiplier = 100f };
+    [Tooltip("부서질 때 떨어뜨릴 아이템")]
+    public DropTable dropTable;
+
     public override bool TryUse(ItemUseContext context)
     {
         PlacementManager manager = PlacementManager.Instance;
