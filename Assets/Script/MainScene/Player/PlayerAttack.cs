@@ -47,6 +47,12 @@ public class PlayerAttack : MonoBehaviour
         {
             knockback.Started += CancelAttack;
         }
+
+        // 공격 도중 사망해도 같은 이유로 공격을 취소
+        if (TryGetComponent<Health>(out Health health))
+        {
+            health.Died += CancelAttack;
+        }
     }
 
     private void CancelAttack()

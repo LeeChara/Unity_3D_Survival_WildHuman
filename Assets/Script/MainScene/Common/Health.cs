@@ -21,6 +21,8 @@ public class Health : MonoBehaviour
     public event Action Damaged;
     // 체력 변화 시점을 UI 등 외부 시스템에 알림 (현재값, 최대값)
     public event Action<float, float> HealthChanged;
+    // 부활 시점을 이펙트·UI 등 외부 시스템에 알림
+    public event Action Revived;
     // 자식 클래스에서 재정의 시 반드시 base.Awake() 호출 (체력 초기화)
     protected virtual void Awake()
     {
@@ -73,6 +75,17 @@ public class Health : MonoBehaviour
 
         currentHealth = newHealth;
         HealthChanged?.Invoke(currentHealth, maxHealth);
+    }
+
+    // 사망 상태를 해제하고 체력을 가득 채움
+    public void Revive()
+    {
+        if (!isDead) return;
+
+        isDead = false;
+        currentHealth = maxHealth;
+        HealthChanged?.Invoke(currentHealth, maxHealth);
+        Revived?.Invoke();
     }
 
     protected virtual void Die()

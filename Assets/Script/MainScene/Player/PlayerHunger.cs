@@ -62,6 +62,13 @@ public class PlayerHunger : MonoBehaviour
         SetHunger(currentHunger + amount);
     }
 
+    // 부활 시 허기를 가득 채움
+    public void Refill()
+    {
+        starveTimer = 0f;
+        SetHunger(maxHunger);
+    }
+
     private void SetHunger(float value)
     {
         float newHunger = Mathf.Clamp(value, 0f, maxHunger);

@@ -27,12 +27,14 @@ public class HitFlash : MonoBehaviour
     {
         health.Damaged += OnDamaged;
         health.Died += OnDied;
+        health.Revived += EndFlash;
     }
 
     private void OnDisable()
     {
         health.Damaged -= OnDamaged;
         health.Died -= OnDied;
+        health.Revived -= EndFlash;
 
         EndFlash();
     }

@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public enum PlayerActionState { Normal, Dodge, Attack, Knockback }
+public enum PlayerActionState { Normal, Dodge, Attack, Knockback, Dead }
 public class PlayerState : MonoBehaviour
 {
     public Vector2 LastDir { get; private set; }
@@ -26,8 +26,15 @@ public class PlayerState : MonoBehaviour
     {
         LastDir = lastDir;
     }
+    // 사망 중에는 넉백 종료 등으로 다른 상태로 바뀌지 않음 (Revive로만 해제)
     public void SetState(PlayerActionState newState)
     {
+        if (CurrentState == PlayerActionState.Dead) return;
         CurrentState = newState;
+    }
+
+    public void Revive()
+    {
+        CurrentState = PlayerActionState.Normal;
     }
 }

@@ -10,6 +10,7 @@ public class GameSetting : ScriptableObject
     public HungerRule hunger = new();
     public SpawnRule spawn = new();
     public ItemRule item = new();
+    public DeathRule death = new();
 }
 
 [Serializable]
@@ -61,4 +62,13 @@ public class ItemRule
     public float throwDistance = 4f;
     [Tooltip("던진 아이템을 다시 주울 수 있게 되기까지 대기 시간(초)")]
     public float throwPickupDelay = 2f;
+}
+
+[Serializable]
+public class DeathRule
+{
+    [Tooltip("사망 후 부활하기까지 걸리는 시간(초)")]
+    public float respawnDelay = 5f;
+    [Tooltip("사망 시 인벤토리의 모든 아이템을 사망 위치에 떨어뜨릴지 여부 (끄면 그대로 유지)")]
+    public bool dropItemsOnDeath = true;
 }
