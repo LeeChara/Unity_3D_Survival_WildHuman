@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -28,6 +29,11 @@ public class PlayerAttack : MonoBehaviour
     private AttackPhase attackPhase = AttackPhase.None;
     private float phaseTime;
     private float lastAttackTime = -999f; // 시작 시 바로 사용 가능하도록 충분히 작은 값
+
+    // 판정이 켜지고 꺼지는 시점 (휘두르기 이펙트 등이 구독)
+    public event Action AttackStarted;
+    public event Action AttackEnded;
+
     private void Awake()
     {
         hitboxObject.SetActive(false);
@@ -50,6 +56,7 @@ public class PlayerAttack : MonoBehaviour
         attackPhase = AttackPhase.None;
         hitboxObject.SetActive(false);
         animator.ResetTrigger("Attack");
+        AttackEnded?.Invoke();
     }
 
     private void Update()
@@ -69,6 +76,7 @@ public class PlayerAttack : MonoBehaviour
 
                     hitboxController.ResetHitTargets();
                     hitboxObject.SetActive(true);
+                    AttackStarted?.Invoke();
                 }
                 break;
 
@@ -79,6 +87,7 @@ public class PlayerAttack : MonoBehaviour
                     phaseTime = 0f;
 
                     hitboxObject.SetActive(false);
+                    AttackEnded?.Invoke();
                 }    
                 break;
 

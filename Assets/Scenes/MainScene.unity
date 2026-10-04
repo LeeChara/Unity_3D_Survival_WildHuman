@@ -16430,6 +16430,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
+    - target: {fileID: 1252148239270760363, guid: 53a89a95158fc604884e649e2e53dc34, type: 3}
+      propertyPath: 'frames.Array.data[0]'
+      value: 
+      objectReference: {fileID: 563789710, guid: 07853e3bc1123cc46b5345dd858d3704, type: 3}
     - target: {fileID: 3155815357568523409, guid: 53a89a95158fc604884e649e2e53dc34, type: 3}
       propertyPath: attack.knockbackDistance
       value: 2
@@ -16510,6 +16514,10 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7996437695568024195, guid: 53a89a95158fc604884e649e2e53dc34, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 563789710, guid: 07853e3bc1123cc46b5345dd858d3704, type: 3}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
