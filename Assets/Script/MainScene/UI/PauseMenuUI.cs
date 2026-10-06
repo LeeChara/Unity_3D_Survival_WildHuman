@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 
 // Esc로 여는 일시정지 메뉴. 열려 있는 동안 게임 시간과 플레이어 조작을 멈춤
@@ -11,6 +12,10 @@ public class PauseMenuUI : MonoBehaviour
     [SerializeField] private PlayerHealth playerHealth;
     [Tooltip("Esc를 눌렀을 때 열려 있으면 일시정지 대신 이것부터 닫음")]
     [SerializeField] private InventoryUI inventoryUI;
+    [SerializeField] private SettingsUI settingsUI;
+    [Tooltip("일시정지 메뉴를 열거나 설정 창을 닫으면 선택할 버튼")]
+    [SerializeField] private GameObject resumeButton;
+    [SerializeField] private GameObject settingsButton;
 
     public bool IsPaused { get; private set; }
     public event Action<bool> PausedChanged;
@@ -21,6 +26,7 @@ public class PauseMenuUI : MonoBehaviour
     private void Awake()
     {
         actions = new PlayerAction();
+        InputBindings.Register(actions.asset);
 
         // 시작 시 닫힌 상태로 통일
         panel.SetActive(false);
@@ -30,6 +36,7 @@ public class PauseMenuUI : MonoBehaviour
     {
         actions.System.Pause.performed += OnPausePerformed;
         actions.System.Enable();
+        settingsUI.Closed += OnSettingsClosed;
     }
 
     private void OnDisable()
@@ -37,10 +44,12 @@ public class PauseMenuUI : MonoBehaviour
         // 재활성화 시 중복 등록되지 않도록 OnEnable과 짝을 맞춰 해제
         actions.System.Pause.performed -= OnPausePerformed;
         actions.System.Disable();
+        settingsUI.Closed -= OnSettingsClosed;
     }
 
     private void OnDestroy()
     {
+        InputBindings.Unregister(actions.asset);
         actions.Dispose();
 
         // 씬 전환 외의 경로(Play 종료 등)로 파괴될 때도 시간 배율이 멈춘 채 남지 않도록 복구
@@ -49,6 +58,13 @@ public class PauseMenuUI : MonoBehaviour
 
     private void OnPausePerformed(InputAction.CallbackContext ctx)
     {
+        // 설정 창이 열려 있으면 Esc는 설정 창의 뒤로 가기
+        if (settingsUI.IsOpen)
+        {
+            settingsUI.Back();
+            return;
+        }
+
         if (!IsPaused && inventoryUI != null && inventoryUI.IsOpen)
         {
             inventoryUI.SetOpen(false);
@@ -63,7 +79,9 @@ public class PauseMenuUI : MonoBehaviour
         if (IsPaused == paused) return;
 
         IsPaused = paused;
+        if (!paused) settingsUI.Close();
         panel.SetActive(paused);
+        if (paused) Select(resumeButton);
         Time.timeScale = paused ? 0f : 1f;
 
         // 시간이 멈춰도 입력 콜백은 계속 오므로 조작을 직접 차단
@@ -85,6 +103,21 @@ public class PauseMenuUI : MonoBehaviour
     public void Resume()
     {
         SetPaused(false);
+    }
+
+    public void OpenSettings()
+    {
+        settingsUI.Open();
+    }
+
+    private void OnSettingsClosed()
+    {
+        Select(settingsButton);
+    }
+
+    private static void Select(GameObject target)
+    {
+        if (EventSystem.current != null && target != null) EventSystem.current.SetSelectedGameObject(target);
     }
 
     public void GoToTitle()

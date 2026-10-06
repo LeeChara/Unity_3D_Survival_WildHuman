@@ -72,6 +72,7 @@ public class SwingEffect : MonoBehaviour
     private void Play()
     {
         if (frames == null || frames.Length == 0) return;
+        if (!GameOptions.ShowSwingEffect) return;
 
         spriteRenderer.sprite = frames[0];
         spriteRenderer.color = color;

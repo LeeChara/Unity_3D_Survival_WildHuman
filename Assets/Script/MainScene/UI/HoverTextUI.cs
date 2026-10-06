@@ -34,8 +34,29 @@ public class HoverTextUI : MonoBehaviour
         panel.gameObject.SetActive(false);
     }
 
+    private void OnEnable()
+    {
+        GameOptions.Changed += OnOptionsChanged;
+    }
+
+    private void OnDisable()
+    {
+        GameOptions.Changed -= OnOptionsChanged;
+    }
+
+    // 설정에서 끄면 떠 있던 글자도 바로 숨김
+    private void OnOptionsChanged()
+    {
+        if (GameOptions.ShowHoverText || owner == null) return;
+
+        owner = null;
+        panel.gameObject.SetActive(false);
+    }
+
     public void Show(object requester, string value)
     {
+        if (!GameOptions.ShowHoverText) return;
+
         owner = requester;
         panel.gameObject.SetActive(true);
 

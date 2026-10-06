@@ -29,7 +29,10 @@ public class MenuInteractable : MonoBehaviour, IPointerClickHandler
     [SerializeField] private float reactStrength = 8f;
     [SerializeField] private Color flashColor = new(1f, 0.45f, 0.45f, 1f);
     [SerializeField] private float flashDuration = 0.15f;
-    [SerializeField] private float destroyDuration = 0.3f;
+    [Tooltip("파괴 시 사라지기 전에 깜빡이는 횟수")]
+    [SerializeField] private int blinkCount = 3;
+    [Tooltip("깜빡임 한 번(꺼짐+켜짐)의 절반 길이(초)")]
+    [SerializeField] private float blinkInterval = 0.07f;
     [SerializeField] private float respawnDuration = 0.4f;
 
     private int hits;
@@ -112,20 +115,22 @@ public class MenuInteractable : MonoBehaviour, IPointerClickHandler
     {
         isBroken = true;
         visualGroup.blocksRaycasts = false;
-        graphic.color = flashColor;
+        // 깜빡이는 동안 제자리에 멈춰 있도록 이동 중지
+        if (wanderer != null) wanderer.enabled = false;
 
-        // 옆으로 퍼지며 납작해지고 투명해짐
-        for (float t = 0f; t < destroyDuration; t += Time.unscaledDeltaTime)
+        // 고전 게임처럼 붉게 몇 번 깜빡이다가 사라짐
+        graphic.color = flashColor;
+        var interval = new WaitForSecondsRealtime(blinkInterval);
+        for (int i = 0; i < blinkCount; i++)
         {
-            float p = t / destroyDuration;
-            visual.localScale = new Vector3(1f + p * 0.4f, 1f - p, 1f);
-            visualGroup.alpha = 1f - p;
-            yield return null;
+            visualGroup.alpha = 0f;
+            yield return interval;
+            visualGroup.alpha = 1f;
+            yield return interval;
         }
 
         visualGroup.alpha = 0f;
         ResetVisual();
-        if (wanderer != null) wanderer.enabled = false;
 
         yield return new WaitForSecondsRealtime(Random.Range(respawnDelayRange.x, respawnDelayRange.y));
 
