@@ -11,6 +11,7 @@ public class GameSetting : ScriptableObject
     public SpawnRule spawn = new();
     public ItemRule item = new();
     public DeathRule death = new();
+    public SaveRule save = new();
 }
 
 [Serializable]
@@ -71,4 +72,11 @@ public class DeathRule
     public float respawnDelay = 5f;
     [Tooltip("사망 시 인벤토리의 모든 아이템을 사망 위치에 떨어뜨릴지 여부 (끄면 그대로 유지)")]
     public bool dropItemsOnDeath = true;
+}
+
+[Serializable]
+public class SaveRule
+{
+    [Tooltip("자동 저장 간격(초)")]
+    [Min(10f)] public float autosaveInterval = 300f;
 }

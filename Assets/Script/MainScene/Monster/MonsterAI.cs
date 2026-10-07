@@ -58,11 +58,14 @@ public class MonsterAI : MonoBehaviour
         Quaternion cameraRotation = Quaternion.Euler(0, cameraYAngle, 0);
         cameraRight = cameraRotation * Vector3.right;
         cameraForwardFlat = cameraRotation * Vector3.forward;
+
+        // 생성 직후 세이브의 체력으로 덮어쓸 수 있도록 Start가 아닌 Awake에서 초기화
+        // (Health.Awake보다 먼저 실행돼도 Health.Awake가 바뀐 최대 체력으로 다시 채우므로 결과 동일)
+        health.Init(data.maxHealth);
     }
 
     protected virtual void Start()
     {
-        health.Init(data.maxHealth);
         if (TryGetComponent(out ItemDropOnDeath dropOnDeath)) dropOnDeath.SetDropTable(data.dropTable);
     }
 

@@ -1,0 +1,42 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d530d22e9eb98a94db4cfc99e1177709, type: 3}
+  m_Name: WorldGenConfig
+  m_EditorClassIdentifier: Assembly-CSharp::WorldGenConfig
+  genVersion: 1
+  biomeDatabase: {fileID: 11400000, guid: 76cdb14d1d30bec4d86cb2fc0be9d2f6, type: 2}
+  grid: {fileID: 11400000, guid: 7ac0c01c2e66ea24e894c03af32eeafa, type: 2}
+  steps:
+  - {fileID: 11400000, guid: ee22d2c4376c7ab4195e1ed507c105c7, type: 2}
+  - {fileID: 11400000, guid: 18443be857be8ab498d9b1a21a3b5855, type: 2}
+  - {fileID: 11400000, guid: 3c7ec99037861244da6041834986db20, type: 2}
+  mapSizes:
+  - id: small
+    displayName: "\uC791\uAC8C"
+    chunks: 16
+  - id: medium
+    displayName: "\uBCF4\uD1B5"
+    chunks: 24
+  - id: large
+    displayName: "\uD06C\uAC8C"
+    chunks: 32
+  difficulties:
+  - id: easy
+    displayName: "\uC26C\uC6C0"
+  - id: normal
+    displayName: "\uBCF4\uD1B5"
+  - id: hard
+    displayName: "\uC5B4\uB824\uC6C0"
+  editorSettings:
+    seed: 814
+    mapSize: large
+    difficulty: normal

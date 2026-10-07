@@ -1152,6 +1152,7 @@ GameObject:
   - component: {fileID: 331853118}
   - component: {fileID: 331853117}
   - component: {fileID: 331853116}
+  - component: {fileID: 331853120}
   m_Layer: 5
   m_Name: Fader
   m_TagString: Untagged
@@ -1228,6 +1229,19 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &331853120
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 331853115}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b5b79c217e8190544be60cbaeab31bde, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ScreenFader
+  duration: 0.6
 --- !u!1 &335476649
 GameObject:
   m_ObjectHideFlags: 0
@@ -6453,8 +6467,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 68fe8560fa4867641a1d76cde6a0f4fb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MainMenuUI
-  fader: {fileID: 331853116}
-  fadeDuration: 0.6
+  fader: {fileID: 331853120}
   firstSelected: {fileID: 473608020}
   settingsUI: {fileID: 381479931}
   settingsButton: {fileID: 1256788238}

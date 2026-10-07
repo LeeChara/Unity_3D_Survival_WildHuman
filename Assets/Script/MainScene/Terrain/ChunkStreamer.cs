@@ -6,7 +6,7 @@ public class ChunkStreamer : MonoBehaviour
 {
     [SerializeField] private Transform player;
     [SerializeField] private BiomeGridSetting setting;
-    [SerializeField] private BiomeGridGenerator biomeGrid;
+    [SerializeField] private WorldState worldState;
     [SerializeField] private TerrainChunk chunkPrefab;
     [SerializeField] private int loadRadius = 3;
 
@@ -14,7 +14,7 @@ public class ChunkStreamer : MonoBehaviour
     private readonly Queue<TerrainChunk> pool = new();
 
     // 청크 로드/언로드 시점을 스포너 등 외부 시스템에 알림
-    // 맵 범위 밖 청크는 biome이 null로 전달됨
+    // 경계 밖 청크도 바이옴이 있으므로, 경계 안인지는 WorldState.IsInside로 구분
     public event Action<Vector2Int, BiomeData> ChunkLoaded;
     public event Action<Vector2Int> ChunkUnloaded;
 
@@ -53,8 +53,7 @@ public class ChunkStreamer : MonoBehaviour
 
     public bool IsChunkActive(Vector2Int coord) => activeChunks.ContainsKey(coord);
 
-    // 맵 범위 밖이면 null
-    public BiomeData GetBiome(Vector2Int coord) => biomeGrid.GetBiome(coord);
+    public BiomeData GetBiome(Vector2Int coord) => worldState.GetBiome(coord);
 
     private void UpdateActiveChunks()
     {
@@ -97,7 +96,7 @@ public class ChunkStreamer : MonoBehaviour
 
         activeChunks[coord] = chunk;
 
-        ChunkLoaded?.Invoke(coord, biomeGrid.GetBiome(coord));
+        ChunkLoaded?.Invoke(coord, worldState.GetBiome(coord));
     }
 
     private void ReleaseChunk(Vector2Int coord)

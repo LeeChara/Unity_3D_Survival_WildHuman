@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0895ffe710741c54aa0f3bf7c304c11e, type: 3}
   m_Name: ForestRock
   m_EditorClassIdentifier: Assembly-CSharp::PropData
+  id: forest_rock
   displayName: "\uBC14\uC704"
   maxHealth: 50
   toolWeakness:

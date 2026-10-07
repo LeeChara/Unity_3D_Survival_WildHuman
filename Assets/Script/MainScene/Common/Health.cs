@@ -1,7 +1,8 @@
 using System;
+using Newtonsoft.Json.Linq;
 using UnityEngine;
 
-public class Health : MonoBehaviour
+public class Health : MonoBehaviour, ISaveable
 {
     [SerializeField] private float maxHealth = 100;
     // 인스펙터에서 현재 체력 확인용 (Awake에서 maxHealth로 초기화)
@@ -93,4 +94,22 @@ public class Health : MonoBehaviour
         Debug.Log($"{gameObject.name} has died.");
         Died?.Invoke();
     }
+
+    #region 저장
+
+    public string SaveKey => "health";
+
+    public virtual JToken Save()
+    {
+        return new JObject { ["hp"] = currentHealth };
+    }
+
+    // 사망한 개체는 저장하지 않으므로 살아 있는 상태로만 복원
+    public void Load(JToken data)
+    {
+        currentHealth = Mathf.Clamp(data.Value<float>("hp"), 1f, maxHealth);
+        HealthChanged?.Invoke(currentHealth, maxHealth);
+    }
+
+    #endregion
 }

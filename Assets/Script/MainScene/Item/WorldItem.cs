@@ -13,6 +13,9 @@ public class WorldItem : MonoBehaviour
     public ItemCollector Collector { get; private set; }
 
     public bool CanBeClaimed => !isPopping && pickupTimer <= 0f && Collector == null;
+    public float RemainingLifetime => lifetime;
+    // 튀어 오르는 중이면 착지할 위치 (저장용)
+    public Vector3 RestingPosition => isPopping ? popEnd : transform.position;
 
     private ItemRule rule;
     private float lifetime;
@@ -26,6 +29,18 @@ public class WorldItem : MonoBehaviour
     // pickupDelay를 지정하지 않으면(음수) 규칙의 기본 대기 시간을 사용 (던진 아이템은 더 길게 지정)
     public void Init(ItemData data, int count, Vector3 start, Vector3 landing, ItemRule rule, float pickupDelay = -1f)
     {
+        Setup(data, count, start, landing, rule, pickupDelay, rule.groundLifetime);
+    }
+
+    // 세이브에서 복원: 튀어 오르지 않고 그 자리에 놓이며, 남은 수명을 이어감
+    public void Restore(ItemData data, int count, Vector3 position, ItemRule rule, float remainingLifetime)
+    {
+        Setup(data, count, position, position, rule, 0f, remainingLifetime);
+        isPopping = false;
+    }
+
+    private void Setup(ItemData data, int count, Vector3 start, Vector3 landing, ItemRule rule, float pickupDelay, float lifetime)
+    {
         Data = data;
         Count = count;
         Collector = null;
@@ -33,7 +48,7 @@ public class WorldItem : MonoBehaviour
 
         spriteRenderer.sprite = data.icon;
 
-        lifetime = rule.groundLifetime;
+        this.lifetime = lifetime;
         pickupTimer = pickupDelay >= 0f ? pickupDelay : rule.pickupDelay;
 
         isPopping = rule.popDuration > 0f;

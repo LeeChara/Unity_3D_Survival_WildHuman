@@ -120,13 +120,17 @@ public class PauseMenuUI : MonoBehaviour
         if (EventSystem.current != null && target != null) EventSystem.current.SetSelectedGameObject(target);
     }
 
+    // 나가기 전에 저장을 끝까지 기다린 뒤 이동
     public void GoToTitle()
     {
+        if (WorldSaveManager.Instance != null) WorldSaveManager.Instance.SaveForExit();
+        WorldSession.Clear();
         SceneFlow.LoadTitle();
     }
 
     public void QuitGame()
     {
+        if (WorldSaveManager.Instance != null) WorldSaveManager.Instance.SaveForExit();
         SceneFlow.Quit();
     }
 }

@@ -1,7 +1,8 @@
 using System;
+using Newtonsoft.Json.Linq;
 using UnityEngine;
 
-public class PlayerHunger : MonoBehaviour
+public class PlayerHunger : MonoBehaviour, ISaveable
 {
     [SerializeField] private float maxHunger = 100f;
     // 인스펙터에서 현재 허기 확인용 (Awake에서 maxHunger로 초기화)
@@ -67,6 +68,20 @@ public class PlayerHunger : MonoBehaviour
     {
         starveTimer = 0f;
         SetHunger(maxHunger);
+    }
+
+    public string SaveKey => "hunger";
+
+    // 사망 중이면 부활할 때의 허기(가득)로 저장
+    public JToken Save()
+    {
+        return new JObject { ["value"] = health.IsDead ? maxHunger : currentHunger };
+    }
+
+    public void Load(JToken data)
+    {
+        starveTimer = 0f;
+        SetHunger(data.Value<float>("value"));
     }
 
     private void SetHunger(float value)

@@ -5,9 +5,11 @@ using UnityEngine.SceneManagement;
 public static class SceneFlow
 {
     public const string TitleScene = "TitleScene";
+    public const string WorldSelectScene = "WorldSelectScene";
     public const string MainScene = "MainScene";
 
     public static void LoadTitle() => Load(TitleScene);
+    public static void LoadWorldSelect() => Load(WorldSelectScene);
     public static void LoadMain() => Load(MainScene);
 
     public static void Quit()

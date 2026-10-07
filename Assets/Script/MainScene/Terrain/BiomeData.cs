@@ -3,6 +3,8 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "BiomeData", menuName = "Biome/BiomeData")]
 public class BiomeData : ScriptableObject
 {
+    [Tooltip("저장·로드 시 식별용 고유 ID (한 번 정하면 변경하지 않음)")]
+    public string id;
     public string biomeName;
 
     [Header("바닥 텍스처")]

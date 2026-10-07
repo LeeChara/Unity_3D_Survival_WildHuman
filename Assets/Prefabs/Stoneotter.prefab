@@ -1535,6 +1535,7 @@ GameObject:
   - component: {fileID: 8739579781752174107}
   - component: {fileID: 1248363107783891523}
   - component: {fileID: 6953231604298821222}
+  - component: {fileID: 2605690474898844537}
   m_Layer: 6
   m_Name: Stoneotter
   m_TagString: Untagged
@@ -1791,6 +1792,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ItemDropOnDeath
   dropTable: {fileID: 11400000, guid: cb94b897e2f793a4f84d6552d4a4e84a, type: 2}
+--- !u!114 &2605690474898844537
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7304474180741421677}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fde1371e74b3d94488a71531f2b028bf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SaveableEntity
+  typeId: stoneotter
 --- !u!1 &7496706528041794792
 GameObject:
   m_ObjectHideFlags: 0

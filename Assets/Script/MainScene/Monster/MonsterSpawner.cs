@@ -4,8 +4,11 @@ using UnityEngine;
 // 일정 주기마다 플레이어 주변 로드된 청크에 몬스터 스폰을 시도
 // 스폰 지점의 바이옴 monsterSpawnTable 가중치에 따라 몬스터 종류를 결정
 // 청크 로드 범위 밖으로 벗어난 몬스터는 제거
-public class MonsterSpawner : MonoBehaviour
+// 저장 시에는 지금 살아 있는 몬스터만 기록 (멀어져 제거된 몬스터는 남지 않음)
+public class MonsterSpawner : MonoBehaviour, ISaveParticipant
 {
+    private const string SaveKey = "monsters";
+
     [SerializeField] private Transform player;
     [SerializeField] private ChunkStreamer chunkStreamer;
 
@@ -58,12 +61,45 @@ public class MonsterSpawner : MonoBehaviour
         if (prefab == null) return;
 
         MonsterAI monster = Instantiate(prefab, position, Quaternion.identity, transform);
+        Register(monster);
+    }
+
+    private void Register(MonsterAI monster)
+    {
         activeMonsters.Add(monster);
 
         // 사망 시 MonsterHealth가 직접 Destroy하므로 목록에서만 제거
         if (monster.TryGetComponent(out Health health))
         {
             health.Died += () => activeMonsters.Remove(monster);
+        }
+    }
+
+    public void Capture(WorldSaveData data)
+    {
+        var records = new List<EntityRecord>();
+        foreach (var monster in activeMonsters)
+        {
+            if (monster == null || !monster.TryGetComponent(out SaveableEntity entity)) continue;
+            // 시체로 남아 있는 몬스터는 저장하지 않음
+            if (monster.TryGetComponent(out Health health) && health.IsDead) continue;
+
+            records.Add(entity.Capture());
+        }
+        data.entities[SaveKey] = records;
+    }
+
+    public void Restore(WorldSaveData data)
+    {
+        foreach (var record in data.GetEntities(SaveKey))
+        {
+            SaveableEntity prefab = SaveRegistry.Active.GetEntity(record.type);
+            if (prefab == null || !prefab.TryGetComponent(out MonsterAI monsterPrefab)) continue;
+
+            // Awake에서 최대 체력으로 초기화된 뒤 저장된 체력으로 덮어씀
+            MonsterAI monster = Instantiate(monsterPrefab, record.Position(), Quaternion.identity, transform);
+            monster.GetComponent<SaveableEntity>().LoadData(record);
+            Register(monster);
         }
     }
 
@@ -79,6 +115,8 @@ public class MonsterSpawner : MonoBehaviour
 
             Vector2Int coord = chunkStreamer.WorldToChunkCoord(position);
             if (!chunkStreamer.IsChunkActive(coord)) continue;
+            // 경계 밖 청크도 화면에는 보이지만 스폰하지 않음
+            if (WorldState.Instance != null && !WorldState.Instance.IsInside(coord)) continue;
 
             biome = chunkStreamer.GetBiome(coord);
             if (biome == null || biome.monsterSpawnTable == null || biome.monsterSpawnTable.Length == 0) continue;

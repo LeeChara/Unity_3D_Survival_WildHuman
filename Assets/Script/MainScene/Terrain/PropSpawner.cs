@@ -2,17 +2,16 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Pool;
 
-// 청크 로드 시 바이옴의 propSpawnTable에 따라 Prop을 배치
-// 청크 좌표 + 전역 시드 기반 결정론적 랜덤이라 재로드해도 항상 같은 위치에 배치됨
+// 청크 로드 시 WorldState의 청크 데이터에 적힌 자원을 배치
+// 경계 안은 월드 생성 때 정해져 저장된 목록, 경계 밖은 시드로 즉석 생성한 목록
+// 파괴된 자원은 청크 데이터에서도 지우므로 다시 불러와도 되살아나지 않음 (경계 밖은 언로드 시 버려져 원래대로)
 public class PropSpawner : MonoBehaviour
 {
     [SerializeField] private ChunkStreamer chunkStreamer;
-    [SerializeField] private BiomeGridSetting setting;
-
-    // minSpacing을 만족하는 위치를 찾기 위한 최대 시도 횟수
-    [SerializeField] private int maxPlacementAttempts = 10;
+    [SerializeField] private WorldState worldState;
 
     private readonly Dictionary<GameObject, ObjectPool<GameObject>> pools = new();
+    // 청크 데이터의 자원 목록과 같은 순서로 유지 (파괴 시 같은 번호를 함께 지움)
     private readonly Dictionary<Vector2Int, List<SpawnedProp>> spawnedProps = new();
     // 파괴된 자원이 어느 청크 소속인지 찾기 위한 역참조
     private readonly Dictionary<GameObject, Vector2Int> propChunks = new();
@@ -20,6 +19,7 @@ public class PropSpawner : MonoBehaviour
     private struct SpawnedProp
     {
         public GameObject prefab;
+        // 프리팹을 찾지 못한 종류면 null (번호를 맞추기 위해 자리만 차지)
         public GameObject instance;
     }
 
@@ -37,37 +37,26 @@ public class PropSpawner : MonoBehaviour
 
     private void OnChunkLoaded(Vector2Int coord, BiomeData biome)
     {
-        if (biome == null || biome.propSpawnTable == null) return;
+        ChunkData chunk = worldState.GetChunk(coord);
+        var props = new List<SpawnedProp>(chunk.PropCount());
 
-        var prng = new System.Random(GetChunkSeed(coord));
-        var props = new List<SpawnedProp>();
-        var placedPositions = new List<Vector3>();
-
-        Vector3 chunkOrigin = new Vector3(coord.x * setting.chunkSize, 0f, coord.y * setting.chunkSize);
-
-        // 테이블 순서대로 난수를 소비해야 결정론이 유지됨
-        foreach (var entry in biome.propSpawnTable)
+        for (int i = 0; i < chunk.PropCount(); i++)
         {
-            if (entry.propPrefab == null) continue;
-
-            int maxCount = Mathf.Max(entry.minCount, entry.maxCount);
-            int count = prng.Next(entry.minCount, maxCount + 1);
-
-            for (int i = 0; i < count; i++)
+            GameObject prefab = worldState.GetPropPrefab(chunk.types[i]);
+            if (prefab == null)
             {
-                if (!TryFindPosition(prng, chunkOrigin, entry.minSpacing, placedPositions, out Vector3 position))
-                    continue;
-
-                GameObject instance = GetPool(entry.propPrefab).Get();
-                instance.transform.position = position;
-
-                // 풀에서 꺼낼 때(OnEnable) 이전 위치로 계산됐으므로 재계산
-                if (instance.TryGetComponent(out DepthSorter sorter)) sorter.Refresh();
-
-                placedPositions.Add(position);
-                props.Add(new SpawnedProp { prefab = entry.propPrefab, instance = instance });
-                propChunks[instance] = coord;
+                props.Add(default);
+                continue;
             }
+
+            GameObject instance = GetPool(prefab).Get();
+            instance.transform.position = new Vector3(chunk.px[i], 0f, chunk.pz[i]);
+
+            // 풀에서 꺼낼 때(OnEnable) 이전 위치로 계산됐으므로 재계산
+            if (instance.TryGetComponent(out DepthSorter sorter)) sorter.Refresh();
+
+            props.Add(new SpawnedProp { prefab = prefab, instance = instance });
+            propChunks[instance] = coord;
         }
 
         spawnedProps[coord] = props;
@@ -79,14 +68,15 @@ public class PropSpawner : MonoBehaviour
 
         foreach (var prop in props)
         {
+            if (prop.instance == null) continue;
+
             propChunks.Remove(prop.instance);
             pools[prop.prefab].Release(prop.instance);
         }
         spawnedProps.Remove(coord);
     }
 
-    // 파괴된 자원을 청크 목록에서 빼고 풀에 반환 (언로드 시 중복 반환 방지)
-    // 파괴 기록은 남기지 않으므로 청크 재로드 시 원래 자리에 다시 배치됨
+    // 파괴된 자원을 풀에 반환하고 청크 데이터에서 지움 (언로드 시 중복 반환 방지)
     private void OnPropDepleted(PropHealth propHealth)
     {
         GameObject instance = propHealth.gameObject;
@@ -98,44 +88,7 @@ public class PropSpawner : MonoBehaviour
         int index = props.FindIndex(prop => prop.instance == instance);
         pools[props[index].prefab].Release(instance);
         props.RemoveAt(index);
-    }
-
-    private bool TryFindPosition(System.Random prng, Vector3 chunkOrigin, float minSpacing,
-        List<Vector3> placedPositions, out Vector3 position)
-    {
-        float minSpacingSqr = minSpacing * minSpacing;
-
-        for (int attempt = 0; attempt < maxPlacementAttempts; attempt++)
-        {
-            position = chunkOrigin + new Vector3(
-                (float)prng.NextDouble() * setting.chunkSize,
-                0f,
-                (float)prng.NextDouble() * setting.chunkSize);
-
-            bool tooClose = false;
-            foreach (var placed in placedPositions)
-            {
-                if ((placed - position).sqrMagnitude < minSpacingSqr)
-                {
-                    tooClose = true;
-                    break;
-                }
-            }
-
-            if (!tooClose) return true;
-        }
-
-        position = default;
-        return false;
-    }
-
-    // Vector2Int.GetHashCode()는 인접 좌표끼리 충돌이 잦아 소수 곱 기반 해시 사용
-    private int GetChunkSeed(Vector2Int coord)
-    {
-        unchecked
-        {
-            return (coord.x * 73856093) ^ (coord.y * 19349663) ^ setting.seed;
-        }
+        worldState.GetChunk(coord).RemovePropAt(index);
     }
 
     private ObjectPool<GameObject> GetPool(GameObject prefab)

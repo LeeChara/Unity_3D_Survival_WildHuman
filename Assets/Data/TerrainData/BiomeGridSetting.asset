@@ -12,8 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cd0f6ec38bc6fca4b86a5f8a9db18611, type: 3}
   m_Name: BiomeGridSetting
   m_EditorClassIdentifier: Assembly-CSharp::BiomeGridSetting
-  seed: 814
-  noiseScale: 0.1
-  mapChunkWidth: 32
-  mapChunkHeight: 32
   chunkSize: 100

@@ -1,3 +1,5 @@
+using Newtonsoft.Json.Linq;
+using Unity.Cinemachine;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -20,9 +22,11 @@ public class PlayerHealth : Health
     private PlayerInput playerInput;
     private PlayerHunger hunger;
 
-    // 부활 위치 (게임 시작 위치)
+    // 부활 위치 (월드 시작 지점)
     private Vector3 spawnPoint;
     private float respawnTimer;
+
+    public Vector3 SpawnPoint => spawnPoint;
 
     // 부활까지 남은 시간 (UI 표시용)
     public float RespawnRemaining => IsDead ? Mathf.Max(0f, respawnTimer) : 0f;
@@ -36,9 +40,33 @@ public class PlayerHealth : Health
         hunger = GetComponent<PlayerHunger>();
     }
 
+    // 월드 생성 시 정해진 시작 지점에서 시작 (높이는 씬에 배치된 값 유지)
     private void Start()
     {
         spawnPoint = rb.position;
+        if (WorldState.Instance == null) return;
+
+        Vector3 start = WorldState.Instance.SpawnPoint;
+        spawnPoint = new Vector3(start.x, spawnPoint.y, start.z);
+        rb.position = spawnPoint;
+        transform.position = spawnPoint;
+    }
+
+    // 저장된 위치로 순간 이동 (카메라가 따라 미끄러지지 않도록 Cinemachine에 알림)
+    public void WarpTo(Vector3 position)
+    {
+        Vector3 delta = position - transform.position;
+        rb.position = position;
+        transform.position = position;
+        rb.linearVelocity = Vector3.zero;
+        CinemachineCore.OnTargetObjectWarped(transform, delta);
+    }
+
+    // 사망 중이면 부활할 때의 체력(가득)으로 저장
+    public override JToken Save()
+    {
+        if (IsDead) return new JObject { ["hp"] = MaxHealth };
+        return base.Save();
     }
 
     private void OnEnable()

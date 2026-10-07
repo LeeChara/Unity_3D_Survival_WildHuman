@@ -3,8 +3,10 @@ using UnityEngine;
 
 // 설치물 배치 판정과 생성, 설치된 목록 관리
 // 설치물은 청크와 상관없이 유지 (청크 언로드 시에도 제거하지 않음)
-public class PlacementManager : MonoBehaviour
+public class PlacementManager : MonoBehaviour, ISaveParticipant
 {
+    private const string SaveKey = "structures";
+
     [Tooltip("이 레이어의 물체가 설치물 콜라이더 범위에 있으면 설치 불가 (자원, 설치물, 몬스터, 플레이어)")]
     [SerializeField] private LayerMask blockingLayers;
     [Tooltip("alignToPlayer 설치물의 회전 단위 (0이면 자유 각도)")]
@@ -51,6 +53,8 @@ public class PlacementManager : MonoBehaviour
         Vector3 offset = position - userPosition;
         offset.y = 0f;
         if (offset.sqrMagnitude > item.placeRange * item.placeRange) return false;
+        // 맵 경계 밖에는 설치 불가
+        if (WorldState.Instance != null && !WorldState.Instance.IsInside(position)) return false;
 
         // 콜라이더가 없는 설치물은 겹침 검사 없이 설치
         BoxCollider box = prefab.GetComponentInChildren<BoxCollider>();
@@ -75,12 +79,38 @@ public class PlacementManager : MonoBehaviour
         Quaternion rotation = GetRotation(item, userPosition, position);
         GameObject instance = Instantiate(item.placedPrefab, position, rotation, transform);
 
-        if (instance.TryGetComponent(out StructureHealth structure))
-        {
-            placed.Add(structure);
-            structure.Destroyed += OnStructureDestroyed;
-        }
+        if (instance.TryGetComponent(out StructureHealth structure)) Register(structure);
         return instance;
+    }
+
+    private void Register(StructureHealth structure)
+    {
+        placed.Add(structure);
+        structure.Destroyed += OnStructureDestroyed;
+    }
+
+    public void Capture(WorldSaveData data)
+    {
+        var records = new List<EntityRecord>();
+        foreach (var structure in placed)
+        {
+            if (structure.TryGetComponent(out SaveableEntity entity)) records.Add(entity.Capture());
+        }
+        data.entities[SaveKey] = records;
+    }
+
+    public void Restore(WorldSaveData data)
+    {
+        foreach (var record in data.GetEntities(SaveKey))
+        {
+            SaveableEntity prefab = SaveRegistry.Active.GetEntity(record.type);
+            if (prefab == null) continue;
+
+            // Awake에서 최대 체력으로 초기화된 뒤 저장된 체력으로 덮어씀
+            SaveableEntity entity = Instantiate(prefab, record.Position(), Quaternion.Euler(0f, record.rotY, 0f), transform);
+            entity.LoadData(record);
+            if (entity.TryGetComponent(out StructureHealth structure)) Register(structure);
+        }
     }
 
     private void OnStructureDestroyed(StructureHealth structure)

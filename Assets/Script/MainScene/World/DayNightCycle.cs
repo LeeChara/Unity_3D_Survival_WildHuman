@@ -1,11 +1,14 @@
 using System;
+using Newtonsoft.Json.Linq;
 using UnityEngine;
 using UnityEngine.Rendering;
 
 // 낮 → 밤 → 낮 ... 순서로 시간을 진행
 // 스프라이트가 Unlit이라 조명 대신 밤 전용 Volume(후처리)의 weight로 화면을 어둡게 함
-public class DayNightCycle : MonoBehaviour
+public class DayNightCycle : MonoBehaviour, ISaveParticipant
 {
+    private const string SaveKey = "time";
+
     [SerializeField] private GameSetting gameSetting;
 
     // 밤 화면 톤을 담은 Volume (weight 0 = 낮, 1 = 밤)
@@ -46,6 +49,21 @@ public class DayNightCycle : MonoBehaviour
 
         if (IsNight != wasNight) PhaseChanged?.Invoke(IsNight);
 
+        ApplyNightWeight();
+    }
+
+    public void Capture(WorldSaveData data)
+    {
+        data.systems[SaveKey] = new JObject { ["cycleTime"] = cycleTime, ["dayCount"] = DayCount };
+    }
+
+    public void Restore(WorldSaveData data)
+    {
+        JToken saved = data.GetSystem(SaveKey);
+        if (saved == null) return;
+
+        cycleTime = Mathf.Clamp(saved.Value<float>("cycleTime"), 0f, CycleDuration);
+        DayCount = Mathf.Max(1, saved.Value<int>("dayCount"));
         ApplyNightWeight();
     }
 

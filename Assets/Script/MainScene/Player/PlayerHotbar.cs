@@ -1,9 +1,10 @@
 using System;
+using Newtonsoft.Json.Linq;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
 // 핫바 선택 칸 관리 (숫자키 1~9, 0 / 마우스 휠)
-public class PlayerHotbar : MonoBehaviour
+public class PlayerHotbar : MonoBehaviour, ISaveable
 {
     [SerializeField] private Inventory inventory;
     [Tooltip("열린 인벤토리 위에서 굴린 휠은 제작 창 선택용이므로 핫바는 무시")]
@@ -15,6 +16,12 @@ public class PlayerHotbar : MonoBehaviour
     public ItemStack SelectedStack => inventory.Get(SelectedIndex);
 
     public event Action<int> SelectionChanged;
+
+    public string SaveKey => "hotbar";
+
+    public JToken Save() => new JObject { ["selected"] = SelectedIndex };
+
+    public void Load(JToken data) => Select(data.Value<int>("selected"));
 
     public void Select(int index)
     {

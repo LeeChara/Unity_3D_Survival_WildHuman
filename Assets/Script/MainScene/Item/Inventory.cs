@@ -1,9 +1,10 @@
 using System;
+using Newtonsoft.Json.Linq;
 using UnityEngine;
 
 // 슬롯 기반 인벤토리 데이터 (UI와 분리, UI는 SlotChanged 이벤트만 보고 갱신)
 // 슬롯 순서는 화면의 좌상단부터: 0~9 핫바, 10~39 가방 3줄
-public class Inventory : MonoBehaviour, IItemReceiver
+public class Inventory : MonoBehaviour, IItemReceiver, ISaveable
 {
     public const int SlotsPerRow = 10;
 
@@ -39,6 +40,48 @@ public class Inventory : MonoBehaviour, IItemReceiver
     }
 
     public ItemStack Get(int index) => slots[index];
+
+    #region 저장
+
+    public string SaveKey => "inventory";
+
+    // 칸 순서 그대로 저장 (빈칸은 null)
+    public JToken Save()
+    {
+        var array = new JArray();
+        foreach (ItemStack slot in slots)
+        {
+            array.Add(slot.IsEmpty ? (JToken)JValue.CreateNull() : new JObject { ["id"] = slot.item.id, ["count"] = slot.count });
+        }
+        return new JObject { ["slots"] = array };
+    }
+
+    // 모든 칸을 교체하므로 Start에서 받은 시작 아이템은 남지 않음
+    // 지금은 없는 아이템(삭제된 에셋 등)의 칸은 비워 둠
+    public void Load(JToken data)
+    {
+        var array = data["slots"] as JArray;
+
+        for (int i = 0; i < slotCount; i++)
+        {
+            ItemStack slot = slots[i];
+            slot.Clear();
+
+            JToken saved = array != null && i < array.Count ? array[i] : null;
+            if (saved is JObject stack)
+            {
+                ItemData item = SaveRegistry.Active.GetItem(stack.Value<string>("id"));
+                if (item != null)
+                {
+                    slot.item = item;
+                    slot.count = Mathf.Clamp(stack.Value<int>("count"), 1, item.maxStack);
+                }
+            }
+            SlotChanged?.Invoke(i);
+        }
+    }
+
+    #endregion
 
     // 같은 아이템이 덜 찬 칸을 먼저 채우고, 남으면 앞쪽 빈칸부터 채움
     public int TryAdd(ItemData item, int count)
