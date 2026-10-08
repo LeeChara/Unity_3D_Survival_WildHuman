@@ -7,6 +7,9 @@ public class ToolItemData : ItemData
 {
     public ToolType toolType;
 
+    [Tooltip("도구 티어 (자원의 요구 티어 이상이어야 채집 가능, 예: 1 = 나무, 2 = 돌, 3 = 구리)")]
+    [Min(0)] public int tier = 1;
+
     [Tooltip("이 도구로 공격할 때의 기본 피해량 (도구 배율은 맞는 대상에서 따로 적용)")]
     [Min(0)] public int damage = 10;
 
@@ -15,6 +18,6 @@ public class ToolItemData : ItemData
 
     public override string GetStatText()
     {
-        return $"{damage} 피해";
+        return $"티어 {tier} · {damage} 피해";
     }
 }

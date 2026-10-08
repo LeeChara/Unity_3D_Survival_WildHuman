@@ -8,4 +8,6 @@ public struct AttackData
     public float knockbackDistance;
     // 도구 장비로 공격할 때 설정 (맞는 자원에 배율 적용)
     public ToolType toolType;
+    // 도구 티어 (맨손·몬스터는 0, 자원의 요구 티어와 비교)
+    public int toolTier;
 }

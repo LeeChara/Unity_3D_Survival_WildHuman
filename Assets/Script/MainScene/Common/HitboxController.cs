@@ -53,11 +53,12 @@ public class HitboxController : MonoBehaviour
         this.attack = attack;
     }
 
-    // 들고 있는 도구에 따라 공격의 피해량과 도구 종류만 교체 (넉백 등 나머지 수치는 유지)
-    public void SetWeapon(int damage, ToolType toolType)
+    // 들고 있는 도구에 따라 공격의 피해량과 도구 종류·티어만 교체 (넉백 등 나머지 수치는 유지)
+    public void SetWeapon(int damage, ToolType toolType, int toolTier)
     {
         attack.damage = damage;
         attack.toolType = toolType;
+        attack.toolTier = toolTier;
     }
 
     // 새로운 공격을 시작할 때 초기화

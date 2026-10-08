@@ -27,8 +27,15 @@ public class PropHealth : Health
         Init(data.maxHealth);
     }
 
+    // 요구 티어가 있으면 맞는 도구이면서 티어가 충분할 때만 채집 가능 (맨손·다른 도구·몬스터 공격은 불가)
+    public bool CanHarvest(ToolType toolType, int toolTier)
+    {
+        return data.requiredTier == 0 || (toolType == data.toolWeakness.tool && toolTier >= data.requiredTier);
+    }
+
     protected override int CalculateDamage(AttackData attack)
     {
+        if (!CanHarvest(attack.toolType, attack.toolTier)) return 0;
         return data.toolWeakness.CalculateDamage(attack);
     }
 

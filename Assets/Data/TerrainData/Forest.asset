@@ -32,6 +32,14 @@ MonoBehaviour:
     minCount: 5
     maxCount: 10
     minSpacing: 4
+  - propPrefab: {fileID: 3541052992667228540, guid: b6fb0e1c0ea09614fb0939b3c2b12fc4, type: 3}
+    minCount: 2
+    maxCount: 4
+    minSpacing: 6
+  - propPrefab: {fileID: 4672482584563935786, guid: 1ffa00c871a33dc49ab70d1d57ae92d7, type: 3}
+    minCount: 1
+    maxCount: 2
+    minSpacing: 8
   monsterSpawnTable:
   - monsterPrefab: {fileID: 2855152217180434087, guid: e2b8e5632850d34498a808e34d60eef5, type: 3}
     weight: 1

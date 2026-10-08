@@ -129,11 +129,11 @@ public class PlayerAttack : MonoBehaviour
         ToolItemData tool = hotbar.SelectedStack.IsEmpty ? null : hotbar.SelectedStack.item as ToolItemData;
         if (tool != null)
         {
-            hitboxController.SetWeapon(tool.damage, tool.toolType);
+            hitboxController.SetWeapon(tool.damage, tool.toolType, tool.tier);
         }
         else
         {
-            hitboxController.SetWeapon(bareHandDamage, ToolType.None);
+            hitboxController.SetWeapon(bareHandDamage, ToolType.None, 0);
         }
 
         attackPhase = AttackPhase.Windup;

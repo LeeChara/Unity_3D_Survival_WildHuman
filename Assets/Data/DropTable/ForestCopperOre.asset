@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a4a8cdcf472114c43968dc253cadd925, type: 3}
+  m_Name: ForestCopperOre
+  m_EditorClassIdentifier: Assembly-CSharp::DropTable
+  drops:
+  - item: {fileID: 11400000, guid: 5ea3236de08d64b4899d7ca7fd32f1ff, type: 2}
+    minCount: 2
+    maxCount: 3
+    chance: 1
+  - item: {fileID: 11400000, guid: 3e08ef162b85784488af3fdac8201f5f, type: 2}
+    minCount: 1
+    maxCount: 1
+    chance: 0.5

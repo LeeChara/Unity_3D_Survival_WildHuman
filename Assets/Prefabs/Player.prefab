@@ -468,13 +468,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Inventory
   slotCount: 40
-  startingItems:
-  - item: {fileID: 11400000, guid: 76b2af717ed051443bd913f83a6d097f, type: 2}
-    count: 10
-  - item: {fileID: 11400000, guid: d70a2825f3d4c3c41af45d4fdb09f2c0, type: 2}
-    count: 3
-  - item: {fileID: 11400000, guid: fd70b53152413f847aa8ed27128e3157, type: 2}
-    count: 1
+  startingItems: []
 --- !u!114 &5485155978177760989
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -628,6 +622,7 @@ MonoBehaviour:
     m_Bits: 1344
   maxDistance: 100
   itemHover: {fileID: 6460211273972572966}
+  hotbar: {fileID: 5485155978177760989}
 --- !u!114 &9076175397589892311
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -908,6 +903,7 @@ MonoBehaviour:
     damage: 10
     knockbackDistance: 1
     toolType: 0
+    toolTier: 0
 --- !u!1 &4765726116046431758
 GameObject:
   m_ObjectHideFlags: 0
