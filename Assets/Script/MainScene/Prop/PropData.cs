@@ -8,6 +8,8 @@ public class PropData : ScriptableObject
     public string id;
     [Tooltip("마우스를 올렸을 때 표시할 이름 (비워두면 표시하지 않음)")]
     public string displayName;
+    [Tooltip("도감에 표시할 설명 (특징, 상호작용 등)")]
+    [TextArea] public string description;
     [Min(1)] public float maxHealth = 30f;
     public ToolWeakness toolWeakness = new ToolWeakness { tool = ToolType.None, multiplier = 5f };
     [Tooltip("채집에 필요한 도구 티어 (0이면 제한 없음, 1 이상이면 toolWeakness의 도구로 이 티어 이상이어야 피해를 받음)")]

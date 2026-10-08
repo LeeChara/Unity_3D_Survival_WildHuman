@@ -13,7 +13,10 @@ MonoBehaviour:
   m_Name: Forest
   m_EditorClassIdentifier: Assembly-CSharp::BiomeData
   id: forest
-  biomeName: 
+  biomeName: "\uC232"
+  description: "\uB098\uBB34\uC640 \uB364\uBD88\uC774 \uC6B0\uAC70\uC9C4 \uAE30\uBCF8
+    \uC9C0\uD615. \uBC14\uC704\uC640 \uAE08\uC18D \uAD11\uB9E5\uC774 \uD769\uC5B4\uC838
+    \uC788\uACE0 \uB2E4\uC591\uD55C \uBAAC\uC2A4\uD130\uAC00 \uC0B0\uB2E4."
   planeTexture: {fileID: 2800000, guid: df23628559924be44a291fa948983951, type: 3}
   tilingScale: 1
   blendRange: 1
@@ -33,13 +36,13 @@ MonoBehaviour:
     maxCount: 10
     minSpacing: 4
   - propPrefab: {fileID: 3541052992667228540, guid: b6fb0e1c0ea09614fb0939b3c2b12fc4, type: 3}
-    minCount: 2
+    minCount: 0
     maxCount: 4
-    minSpacing: 6
+    minSpacing: 1
   - propPrefab: {fileID: 4672482584563935786, guid: 1ffa00c871a33dc49ab70d1d57ae92d7, type: 3}
-    minCount: 1
+    minCount: 0
     maxCount: 2
-    minSpacing: 8
+    minSpacing: 1
   monsterSpawnTable:
   - monsterPrefab: {fileID: 2855152217180434087, guid: e2b8e5632850d34498a808e34d60eef5, type: 3}
     weight: 1

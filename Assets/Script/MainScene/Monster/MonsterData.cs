@@ -6,6 +6,10 @@ public class MonsterData : ScriptableObject
     public string monsterName;
     [Tooltip("마우스를 올렸을 때 표시할 이름 (비워두면 표시하지 않음)")]
     public string displayName;
+    [Tooltip("도감에 표시할 설명 (특징, 행동 패턴 등)")]
+    [TextArea] public string description;
+    [Tooltip("도감 등 UI에 표시할 전신 이미지 (몬스터 프리팹은 부위별 스프라이트로 나뉘어 있음)")]
+    public Sprite portrait;
 
     [Header("적대 대상")]
     public MonsterData[] hostileTargets;

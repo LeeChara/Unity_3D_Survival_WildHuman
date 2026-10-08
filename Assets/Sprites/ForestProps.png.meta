@@ -100,12 +100,12 @@ TextureImporter:
       name: ForestProps_0
       rect:
         serializedVersion: 2
-        x: 3
+        x: 4
         y: 194
-        width: 60
+        width: 58
         height: 60
       alignment: 9
-      pivot: {x: 0.50963646, y: 0.07742879}
+      pivot: {x: 0.5, y: 0.07}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -158,6 +158,50 @@ TextureImporter:
       bones: []
       spriteID: 7fba4bd88d3e1194694a81b67358e19b
       internalID: -987203430
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ForestProps_2
+      rect:
+        serializedVersion: 2
+        x: 159
+        y: 192
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.21173143}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5026acac20fe6994c8bc3d81266331fe
+      internalID: 1638531989
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ForestProps_3
+      rect:
+        serializedVersion: 2
+        x: 223
+        y: 192
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.21486473}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f7c57400dd91502438d26fdec4e67597
+      internalID: -1097709943
       vertices: []
       indices: 
       edges: []

@@ -14,6 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PropData
   id: forest_copper_ore
   displayName: "\uAD6C\uB9AC \uAD11\uB9E5"
+  description: "\uAD6C\uB9AC\uAC00 \uBC15\uD78C \uAD11\uB9E5. \uB3CC \uACE1\uAD2D\uC774
+    \uC774\uC0C1\uC758 \uACE1\uAD2D\uC774\uB85C\uB9CC \uCE98 \uC218 \uC788\uB2E4."
   maxHealth: 80
   toolWeakness:
     tool: 2

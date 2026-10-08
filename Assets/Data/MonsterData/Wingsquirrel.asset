@@ -14,6 +14,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::MonsterData
   monsterName: Wingsquirrel
   displayName: "\uB0A0\uAC1C\uB2E4\uB78C\uC950"
+  description: "\uD53C\uB9C9\uC744 \uD3B4\uACE0 \uD65C\uACF5\uD558\uB294 \uC791\uC740
+    \uB2E4\uB78C\uC950. \uACF5\uACA9\uB825\uC774 \uC5C6\uC73C\uBA70 \uB2E4\uB978
+    \uBAAC\uC2A4\uD130\uB4E4\uC758 \uBA39\uC787\uAC10\uC774 \uB41C\uB2E4."
+  portrait: {fileID: -599146464, guid: 6da8c72ed300cda4f82b9fe7b88119c4, type: 3}
   hostileTargets: []
   maxHealth: 20
   lowHealthRatio: 0.3
@@ -31,6 +35,7 @@ MonoBehaviour:
     damage: 0
     knockbackDistance: 1
     toolType: 0
+    toolTier: 0
   recoverDuration: 1
   knockbackResistance: 0
   superArmorWhileAttacking: 0

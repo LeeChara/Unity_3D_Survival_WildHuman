@@ -1,0 +1,49 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 623922e7671e8584e8c7d53a19546067, type: 3}
+  m_Name: CodexDatabase
+  m_EditorClassIdentifier: Assembly-CSharp::CodexDatabase
+  items:
+  - {fileID: 11400000, guid: 5ea3236de08d64b4899d7ca7fd32f1ff, type: 2}
+  - {fileID: 11400000, guid: ea4de77ac551cda4d82f99f67f69dfcf, type: 2}
+  - {fileID: 11400000, guid: 4242f49b940c52842ad548479f6fe826, type: 2}
+  - {fileID: 11400000, guid: d0338d79a7e65b5428461831465e3515, type: 2}
+  - {fileID: 11400000, guid: 3e08ef162b85784488af3fdac8201f5f, type: 2}
+  - {fileID: 11400000, guid: 99f39533a967d9b409e7885afb4eec06, type: 2}
+  - {fileID: 11400000, guid: 0db4ae6882b2a7f46aaaaf35de4cc446, type: 2}
+  - {fileID: 11400000, guid: 6695b7eb42a75104c928dfa8f9c9a77d, type: 2}
+  - {fileID: 11400000, guid: 55d352c4ae168d342ab579a95211a7c2, type: 2}
+  - {fileID: 11400000, guid: dcf2e16544ee3d743a046c1d2d2dee65, type: 2}
+  - {fileID: 11400000, guid: 80a3634aaf41aec4c976d2359ad50b31, type: 2}
+  - {fileID: 11400000, guid: b3462f24e611a834d9b53b02d8979c00, type: 2}
+  - {fileID: 11400000, guid: 11aa11476e1c33643b48dd86b3cc8eb5, type: 2}
+  - {fileID: 11400000, guid: fd70b53152413f847aa8ed27128e3157, type: 2}
+  - {fileID: 11400000, guid: dfc0e7eda5184804999121623d9f541f, type: 2}
+  - {fileID: 11400000, guid: d70a2825f3d4c3c41af45d4fdb09f2c0, type: 2}
+  - {fileID: 11400000, guid: 76b2af717ed051443bd913f83a6d097f, type: 2}
+  recipeBook: {fileID: 11400000, guid: c741f133a292f544eb7aa3ce5a9f1043, type: 2}
+  props:
+  - {fileID: 2320462754870765523, guid: cb16ea17beeef31479bf316d75cfdd88, type: 3}
+  - {fileID: 8871782756554530355, guid: b6fb0e1c0ea09614fb0939b3c2b12fc4, type: 3}
+  - {fileID: 787357670917811557, guid: 1ffa00c871a33dc49ab70d1d57ae92d7, type: 3}
+  - {fileID: 867109096770320385, guid: b6b44b7ae4c777643bf914eb58a63134, type: 3}
+  - {fileID: 1755294285903418751, guid: 13938be4caa5f6741a7acf89b8b5080e, type: 3}
+  structures:
+  - {fileID: 130948604810500206, guid: accee2b0887b0c6498cd8215f1e35d4f, type: 3}
+  - {fileID: 3003109801364211945, guid: dd4e93f1cc9abc241a875f4dadf15d81, type: 3}
+  monsters:
+  - {fileID: 2855152217180434087, guid: e2b8e5632850d34498a808e34d60eef5, type: 3}
+  - {fileID: 5223719300316381313, guid: 7796c72efd61e79468c0267d6f3492fb, type: 3}
+  - {fileID: 909642921054426830, guid: 2d811b3e2425f154caf93e94ce34eb93, type: 3}
+  - {fileID: 8212119383527421846, guid: b7c2edd5481861741a49adfa724df037, type: 3}
+  biomes:
+  - {fileID: 11400000, guid: c21e4b334491fea4b9ddfe5771ab5cc7, type: 2}

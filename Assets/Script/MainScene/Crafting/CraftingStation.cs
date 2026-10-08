@@ -13,6 +13,7 @@ public class CraftingStation : MonoBehaviour
 
     // 레시피의 requiredStation과 비교할 아이템 (이 설치물을 놓는 아이템)
     public ItemData StationItem { get; private set; }
+    public float Range => range;
 
     private void Awake()
     {

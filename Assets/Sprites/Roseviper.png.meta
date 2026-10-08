@@ -1064,6 +1064,28 @@ TextureImporter:
       indices: 
       edges: []
       weights: []
+    - serializedVersion: 2
+      name: Roseviper_Portrait
+      rect:
+        serializedVersion: 2
+        x: 245
+        y: 191
+        width: 72
+        height: 53
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 89f84db1113b2894abde426cdb690fab
+      internalID: 1535209438
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
     customData: 
     physicsShape: []
@@ -1126,6 +1148,7 @@ TextureImporter:
       Roseviper_7: 321063477
       Roseviper_8: -2062600368
       Roseviper_9: 804526667
+      Roseviper_Portrait: 1535209438
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

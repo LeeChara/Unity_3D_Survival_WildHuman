@@ -14,6 +14,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::MonsterData
   monsterName: Shieldboar
   displayName: "\uBC29\uD328\uBA67\uB3FC\uC9C0"
+  description: "\uB2E8\uB2E8\uD55C \uBA38\uB9AC\uB85C \uB4E4\uC774\uBC1B\uB294 \uBA67\uB3FC\uC9C0.
+    \uB3CC\uC9C4\uC5D0 \uB9DE\uC73C\uBA74 \uBA40\uB9AC \uBC00\uB824\uB09C\uB2E4.
+    \uB0A0\uAC1C\uB2E4\uB78C\uC950\uB97C \uC0AC\uB0E5\uD55C\uB2E4."
+  portrait: {fileID: -1874664336, guid: 6e2b20fd95546194a9b6e25ce4b037ae, type: 3}
   hostileTargets:
   - {fileID: 11400000, guid: ef0f350da93ecf941a6afe8a421b989a, type: 2}
   maxHealth: 50
@@ -32,6 +36,7 @@ MonoBehaviour:
     damage: 10
     knockbackDistance: 8
     toolType: 0
+    toolTier: 0
   recoverDuration: 2
   knockbackResistance: 0
   superArmorWhileAttacking: 0

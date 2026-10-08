@@ -14,9 +14,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PropData
   id: forest_rock
   displayName: "\uBC14\uC704"
+  description: "\uC232 \uBC14\uB2E5\uC5D0 \uBC15\uD78C \uBC14\uC704. \uACE1\uAD2D\uC774\uB85C
+    \uCE90\uBA74 \uD6A8\uC728\uC774 \uC88B\uACE0 \uB3CC\uC744 \uC5BB\uB294\uB2E4."
   maxHealth: 50
   toolWeakness:
     tool: 2
     multiplier: 2
+  requiredTier: 0
   dropTable: {fileID: 11400000, guid: 704623b2ca0d32b46935d0d5614ca032, type: 2}
   destroyEffectPrefab: {fileID: 0}
