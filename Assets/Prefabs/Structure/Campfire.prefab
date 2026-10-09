@@ -17,6 +17,7 @@ GameObject:
   - component: {fileID: 4969263982535670644}
   - component: {fileID: 3017409246114348136}
   - component: {fileID: 383067987812429660}
+  - component: {fileID: 3185461393435933156}
   m_Layer: 10
   m_Name: Campfire
   m_TagString: Untagged
@@ -157,6 +158,24 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SaveableEntity
   typeId: campfire
+--- !u!114 &3185461393435933156
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1727470311522946942}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 01dc803f3a43f1940a049ba2eec764d2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::LightSource
+  radius: 6
+  intensity: 3
+  color: {r: 1, g: 0.72, b: 0.45, a: 1}
+  flickerAmount: 0.08
+  flickerSpeed: 3
+  countsAsSafe: 1
 --- !u!1 &2921128210236080249
 GameObject:
   m_ObjectHideFlags: 0

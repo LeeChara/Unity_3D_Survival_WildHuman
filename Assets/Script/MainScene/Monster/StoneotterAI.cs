@@ -29,7 +29,7 @@ public class StoneotterAI : MonsterAI
         {
             state = State.Idle;
 
-            animator.SetTrigger("Reset");
+            PlayAnimation(State.Idle);
             return;
         }
 
@@ -48,7 +48,7 @@ public class StoneotterAI : MonsterAI
 
             stateTime = 0f;
 
-            animator.SetTrigger("Windup");
+            PlayAnimation(State.Windup);
         }
     }
 
@@ -58,7 +58,7 @@ public class StoneotterAI : MonsterAI
         {
             state = State.Idle;
 
-            animator.SetTrigger("Reset");
+            PlayAnimation(State.Idle);
             return;
         }
 
@@ -69,7 +69,7 @@ public class StoneotterAI : MonsterAI
             state = State.Attack;
             stateTime = 0f;
 
-            animator.SetTrigger("Attack");
+            PlayAnimation(State.Attack);
 
             stonesThrown = 0;
         }
@@ -82,7 +82,7 @@ public class StoneotterAI : MonsterAI
             state = State.Recover;
             stateTime = 0f;
 
-            animator.SetTrigger("Recover");
+            PlayAnimation(State.Recover);
             return;
         }
 
@@ -99,7 +99,7 @@ public class StoneotterAI : MonsterAI
             state = State.Recover;
             stateTime = 0f;
 
-            animator.SetTrigger("Recover");
+            PlayAnimation(State.Recover);
         }
     }
 

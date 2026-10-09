@@ -3,6 +3,8 @@ using UnityEngine.InputSystem;
 
 public class PlayerDodge : MonoBehaviour
 {
+    private static readonly int IsDodgingHash = Animator.StringToHash("IsDodging");
+
     private Rigidbody rb;
     [SerializeField] private PlayerState playerState;
     [SerializeField] private Animator animator;
@@ -28,7 +30,12 @@ public class PlayerDodge : MonoBehaviour
     private void FixedUpdate()
     {
         // Dodge일 때만 실행 (다른 클래스와 배타적)
-        if (playerState.CurrentState != PlayerActionState.Dodge) return;
+        if (playerState.CurrentState != PlayerActionState.Dodge)
+        {
+            // 사망 등으로 구르기가 도중에 끊긴 경우에도 모션이 남지 않게 함
+            if (animator.GetBool(IsDodgingHash)) animator.SetBool(IsDodgingHash, false);
+            return;
+        }
 
         dodgeTime += Time.fixedDeltaTime;
         rb.linearVelocity = dodgeVec;
@@ -36,6 +43,8 @@ public class PlayerDodge : MonoBehaviour
         if (dodgeTime >= dodgeDuration)
         {
             playerState.SetState(PlayerActionState.Normal);
+            // 클립 길이와 상관없이 이동이 끝나는 순간 구르기 모션도 끝냄
+            animator.SetBool(IsDodgingHash, false);
         }
     }
     void OnDodge(InputValue value)
@@ -53,6 +62,7 @@ public class PlayerDodge : MonoBehaviour
         lastDodgeTime = Time.time;
 
         playerState.SetState(PlayerActionState.Dodge);
+        animator.SetBool(IsDodgingHash, true);
         animator.SetTrigger("Dodge");
     }
 }

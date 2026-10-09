@@ -10,12 +10,14 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 2a1526d2c449b5949a83e8af86c35acd, type: 3}
-  m_Name: WoodenSpear
+  m_Name: IronAxe
   m_EditorClassIdentifier: Assembly-CSharp::ToolItemData
-  id: wooden_spear
-  displayName: "\uB098\uBB34 \uCC3D"
-  icon: {fileID: -1624245872, guid: 3a05820ac71af1e49993d4578d06825d, type: 3}
+  id: iron_axe
+  displayName: "\uCCA0 \uB3C4\uB07C"
+  icon: {fileID: 21300000, guid: b744d913f85272c4b9aab597b5f9b5a7, type: 3}
+  description: 
   maxStack: 1
-  toolType: 0
-  damage: 15
-  heldSprite: {fileID: -1624245872, guid: 3a05820ac71af1e49993d4578d06825d, type: 3}
+  toolType: 1
+  tier: 4
+  damage: 11
+  heldSprite: {fileID: 21300000, guid: b744d913f85272c4b9aab597b5f9b5a7, type: 3}

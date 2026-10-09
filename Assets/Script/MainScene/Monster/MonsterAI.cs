@@ -12,6 +12,8 @@ public class MonsterAI : MonoBehaviour
     [SerializeField] protected Animator animator;
     [SerializeField] protected Facing monsterFacing;
     [SerializeField] private float cameraYAngle = 45f; // Billboard의 값과 반드시 일치해야함
+    [Tooltip("행동 상태가 바뀔 때 애니메이션이 섞이는 시간(초)")]
+    [SerializeField] private float animationFade = 0.1f;
     public MonsterData Data => data;
     protected enum State { Idle, Chase, Windup, Attack, Recover }
 
@@ -39,6 +41,10 @@ public class MonsterAI : MonoBehaviour
 
     protected Vector3 cameraRight;
     protected Vector3 cameraForwardFlat;
+
+    // State 순서대로 애니메이터 상태 해시
+    private int[] animationHashes;
+
     protected virtual void Awake()
     {
         rb = GetComponent<Rigidbody>();
@@ -62,6 +68,8 @@ public class MonsterAI : MonoBehaviour
         // 생성 직후 세이브의 체력으로 덮어쓸 수 있도록 Start가 아닌 Awake에서 초기화
         // (Health.Awake보다 먼저 실행돼도 Health.Awake가 바뀐 최대 체력으로 다시 채우므로 결과 동일)
         health.Init(data.maxHealth);
+
+        CacheAnimationHashes();
     }
 
     protected virtual void Start()
@@ -224,8 +232,7 @@ public class MonsterAI : MonoBehaviour
         if (target != null)
         {
             state = State.Chase;
-            ResetTrigger();
-            animator.SetTrigger("Chase");
+            PlayAnimation(State.Chase);
             return;
         }
 
@@ -270,8 +277,7 @@ public class MonsterAI : MonoBehaviour
         {
             state = State.Idle;
 
-            ResetTrigger();
-            animator.SetTrigger("Reset");
+            PlayAnimation(State.Idle);
             return;
         }
 
@@ -283,7 +289,7 @@ public class MonsterAI : MonoBehaviour
 
             stateTime = 0f;
 
-            animator.SetTrigger("Windup");
+            PlayAnimation(State.Windup);
         }
     }
 
@@ -299,8 +305,7 @@ public class MonsterAI : MonoBehaviour
         {
             state = State.Idle;
 
-            ResetTrigger();
-            animator.SetTrigger("Reset");
+            PlayAnimation(State.Idle);
 
             return;
         }
@@ -312,7 +317,7 @@ public class MonsterAI : MonoBehaviour
             state = State.Attack;
             stateTime = 0f;
 
-            animator.SetTrigger("Attack");
+            PlayAnimation(State.Attack);
 
             attackDirection = targetDirection;
             // 공격 시작 시점에 해당 공격의 수치를 적용 (공격 종류별 수치, 플레이 중 수정 반영)
@@ -337,7 +342,7 @@ public class MonsterAI : MonoBehaviour
             state = State.Recover;
             stateTime = 0f;
 
-            animator.SetTrigger("Recover");
+            PlayAnimation(State.Recover);
 
             hitbox.SetActive(false);
         }
@@ -356,8 +361,7 @@ public class MonsterAI : MonoBehaviour
         {
             state = State.Idle;
 
-            ResetTrigger();
-            animator.SetTrigger("Reset");
+            PlayAnimation(State.Idle);
         }
     }
 
@@ -383,8 +387,7 @@ public class MonsterAI : MonoBehaviour
         state = State.Idle;
         stateTime = 0f;
 
-        ResetTrigger();
-        animator.SetTrigger("Reset");
+        PlayAnimation(State.Idle);
     }
 
     // 사망 시 모든 행동을 멈추고 마지막 포즈로 정지
@@ -400,13 +403,29 @@ public class MonsterAI : MonoBehaviour
         enabled = false;
     }
 
-    // 소비되지 않은 트리거 처리
-    private void ResetTrigger()
+    // 행동 상태와 같은 애니메이터 상태로 바로 전환
+    // 트리거 연쇄를 거치지 않으므로 상태가 연달아 바뀌거나 넉백으로 끊겨도 모션이 어긋나지 않음
+    protected void PlayAnimation(State animState)
     {
-        animator.ResetTrigger("Chase");
-        animator.ResetTrigger("Windup");
-        animator.ResetTrigger("Attack");
-        animator.ResetTrigger("Recover");
-        animator.ResetTrigger("Reset");
+        animator.CrossFadeInFixedTime(animationHashes[(int)animState], animationFade);
+    }
+
+    // 애니메이터 상태 이름은 '컨트롤러 이름 + 행동 상태' (예: ShieldboarWindup), 없으면 행동 상태 이름 그대로
+    private void CacheAnimationHashes()
+    {
+        string prefix = animator.runtimeAnimatorController != null ? animator.runtimeAnimatorController.name : "";
+        State[] states = (State[])Enum.GetValues(typeof(State));
+        animationHashes = new int[states.Length];
+
+        foreach (State s in states)
+        {
+            int hash = Animator.StringToHash(prefix + s);
+            if (!animator.HasState(0, hash))
+            {
+                hash = Animator.StringToHash(s.ToString());
+                if (!animator.HasState(0, hash)) Debug.LogWarning($"[MonsterAI] 애니메이터에 {prefix + s} 상태가 없음: {name}", this);
+            }
+            animationHashes[(int)s] = hash;
+        }
     }
 }

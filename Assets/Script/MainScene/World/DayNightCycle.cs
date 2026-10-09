@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.Rendering;
 
 // 낮 → 밤 → 낮 ... 순서로 시간을 진행
-// 스프라이트가 Unlit이라 조명 대신 밤 전용 Volume(후처리)의 weight로 화면을 어둡게 함
+// 밤 어둠은 LightingSystem(조명 오버레이)이 NightFactor로 그리고, 밤 전용 Volume(후처리)은 화면 톤만 바꿈
 public class DayNightCycle : MonoBehaviour, ISaveParticipant
 {
     private const string SaveKey = "time";
@@ -27,6 +27,21 @@ public class DayNightCycle : MonoBehaviour, ISaveParticipant
     public float PhaseProgress => IsNight
         ? (cycleTime - Rule.dayDuration) / Rule.nightDuration
         : cycleTime / Rule.dayDuration;
+
+    // 밤 정도 0~1 (0 = 낮, 1 = 밤). 각 페이즈 시작부터 transitionDuration 동안 서서히 바뀜
+    public float NightFactor
+    {
+        get
+        {
+            float elapsedInPhase = IsNight ? cycleTime - Rule.dayDuration : cycleTime;
+            float t = Rule.transitionDuration > 0f ? Mathf.Clamp01(elapsedInPhase / Rule.transitionDuration) : 1f;
+
+            // 첫 날 시작은 전환 없이 바로 낮
+            if (!IsNight && DayCount == 1) t = 1f;
+
+            return IsNight ? t : 1f - t;
+        }
+    }
 
     // 낮↔밤 전환 시점을 외부 시스템에 알림 (밤이면 true)
     public event Action<bool> PhaseChanged;
@@ -67,17 +82,10 @@ public class DayNightCycle : MonoBehaviour, ISaveParticipant
         ApplyNightWeight();
     }
 
-    // 각 페이즈 시작부터 transitionDuration 동안 서서히 전환
     private void ApplyNightWeight()
     {
         if (nightVolume == null) return;
 
-        float elapsedInPhase = IsNight ? cycleTime - Rule.dayDuration : cycleTime;
-        float t = Rule.transitionDuration > 0f ? Mathf.Clamp01(elapsedInPhase / Rule.transitionDuration) : 1f;
-
-        // 첫 날 시작은 전환 없이 바로 낮
-        if (!IsNight && DayCount == 1) t = 1f;
-
-        nightVolume.weight = IsNight ? t : 1f - t;
+        nightVolume.weight = NightFactor;
     }
 }

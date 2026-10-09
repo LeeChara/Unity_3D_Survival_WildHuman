@@ -45,7 +45,7 @@ public class RoseviperAI : MonsterAI
                 state = State.Recover;
                 stateTime = 0f;
 
-                animator.SetTrigger("Recover");
+                PlayAnimation(State.Recover);
                 return;
             }
         }
@@ -55,7 +55,7 @@ public class RoseviperAI : MonsterAI
             state = State.Recover;
             stateTime = 0f;
 
-            animator.SetTrigger("Recover");
+            PlayAnimation(State.Recover);
         }
     }
 
