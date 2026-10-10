@@ -55,10 +55,18 @@ public class CodexDetailBuilder
                 if (food.hungerAmount > 0f) stats.Add(("허기 회복", $"+{food.hungerAmount:0.#}"));
                 if (food.healAmount > 0f) stats.Add(("체력 회복", $"+{food.healAmount:0.#}"));
                 break;
+            case LanternItemData lantern:
+                stats.Add(("도구 종류", "랜턴 (손에 들면 빛)"));
+                stats.Add(("빛 반경", $"{lantern.lightRadius:0.#}m"));
+                stats.Add(("빛 세기", $"{lantern.lightIntensity:0.#}"));
+                stats.Add(("피해", lantern.damage.ToString()));
+                if (lantern.element != ElementType.None) stats.Add(("속성", ToolItemData.ElementName(lantern.element)));
+                break;
             case ToolItemData tool:
                 stats.Add(("도구 종류", tool.toolType == ToolType.None ? "무기" : ToolName(tool.toolType)));
                 stats.Add(("티어", tool.tier.ToString()));
                 stats.Add(("피해", tool.damage.ToString()));
+                if (tool.element != ElementType.None) stats.Add(("속성", ToolItemData.ElementName(tool.element)));
                 break;
             case PlaceableItemData placeable:
                 stats.Add(("내구도", $"{placeable.maxHealth:0.#}"));
@@ -117,7 +125,8 @@ public class CodexDetailBuilder
             view.Section("획득처");
             foreach (CodexDatabase.DropSource source in sources)
             {
-                LinkLine(source.source, $"{source.source.name} · {DropText(source.drop)}");
+                string condition = string.IsNullOrEmpty(source.condition) ? string.Empty : $"{source.condition} ";
+                LinkLine(source.source, $"{source.source.name} · {condition}{DropText(source.drop)}");
             }
         }
 
@@ -186,6 +195,12 @@ public class CodexDetailBuilder
         }
 
         DropSection("드랍", prop.dropTable);
+        if (prop.flammable)
+        {
+            view.Section("불");
+            view.Text($"화염 속성 공격에 맞으면 불이 붙어 {Color($"{prop.burnDuration:0.#}초", ValueColor)} 뒤 다 타서 사라짐");
+            DropSection("다 탔을 때 드랍", prop.burnDropTable);
+        }
         HabitatSection(entry);
     }
 
@@ -545,6 +560,7 @@ public class CodexDetailBuilder
     private static string ItemKind(ItemData item) => item switch
     {
         FoodItemData => "음식",
+        LanternItemData => "도구",
         ToolItemData tool => tool.toolType == ToolType.None ? "무기" : "도구",
         PlaceableItemData => "설치 아이템",
         _ => "재료",

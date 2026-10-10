@@ -14,10 +14,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ToolItemData
   id: obsidian_pickaxe
   displayName: "\uD751\uC694\uC11D \uACE1\uAD2D\uC774"
-  icon: {fileID: 21300000, guid: bc4ace56df6512845b346677339e6947, type: 3}
+  icon: {fileID: -1112938238, guid: 3a05820ac71af1e49993d4578d06825d, type: 3}
   description: 
   maxStack: 1
   toolType: 2
   tier: 3
   damage: 7
-  heldSprite: {fileID: 21300000, guid: bc4ace56df6512845b346677339e6947, type: 3}
+  element: 0
+  heldSprite: {fileID: -1112938238, guid: 3a05820ac71af1e49993d4578d06825d, type: 3}

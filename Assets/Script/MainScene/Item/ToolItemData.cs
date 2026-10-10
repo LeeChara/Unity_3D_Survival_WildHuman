@@ -13,11 +13,27 @@ public class ToolItemData : ItemData
     [Tooltip("이 도구로 공격할 때의 기본 피해량 (도구 배율은 맞는 대상에서 따로 적용)")]
     [Min(0)] public int damage = 10;
 
+    [Tooltip("공격 속성 (None이 아니면 속성 공격 이펙트가 나가고 공격에 속성이 실림)")]
+    public ElementType element;
+
     [Tooltip("손에 들었을 때 표시할 스프라이트 (비워두면 아무것도 표시하지 않음)")]
     public Sprite heldSprite;
 
     public override string GetStatText()
     {
-        return $"티어 {tier} · {damage} 피해";
+        return AppendElement($"티어 {tier} · {damage} 피해");
     }
+
+    // 속성이 있으면 툴팁 스탯 아래에 한 줄 추가
+    protected string AppendElement(string stats)
+    {
+        string element = ElementName(this.element);
+        return element.Length > 0 ? $"{stats}\n{element} 속성" : stats;
+    }
+
+    public static string ElementName(ElementType element) => element switch
+    {
+        ElementType.Fire => "화염",
+        _ => string.Empty,
+    };
 }

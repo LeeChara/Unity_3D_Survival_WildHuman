@@ -34,6 +34,9 @@ public class PlayerAttack : MonoBehaviour
     public event Action AttackStarted;
     public event Action AttackEnded;
 
+    // 이번 공격의 속성 (들고 있는 도구에서 정해지며, 휘두르기 이펙트가 모양을 고르는 데 사용)
+    public ElementType CurrentElement { get; private set; }
+
     private Rigidbody rb;
 
     private void Awake()
@@ -140,13 +143,14 @@ public class PlayerAttack : MonoBehaviour
 
         // 핫바에서 고른 아이템이 도구면 그 도구로, 아니면 맨손으로 공격 (손에 든 외형은 PlayerHeldItemVisual이 담당)
         ToolItemData tool = hotbar.SelectedStack.IsEmpty ? null : hotbar.SelectedStack.item as ToolItemData;
+        CurrentElement = tool != null ? tool.element : ElementType.None;
         if (tool != null)
         {
-            hitboxController.SetWeapon(tool.damage, tool.toolType, tool.tier);
+            hitboxController.SetWeapon(tool.damage, tool.toolType, tool.tier, CurrentElement);
         }
         else
         {
-            hitboxController.SetWeapon(bareHandDamage, ToolType.None, 0);
+            hitboxController.SetWeapon(bareHandDamage, ToolType.None, 0, CurrentElement);
         }
 
         attackPhase = AttackPhase.Windup;

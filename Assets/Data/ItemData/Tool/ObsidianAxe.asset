@@ -14,10 +14,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ToolItemData
   id: obsidian_axe
   displayName: "\uD751\uC694\uC11D \uB3C4\uB07C"
-  icon: {fileID: 21300000, guid: 024486ae817e0ac44b73cec5d3aac580, type: 3}
+  icon: {fileID: -930478263, guid: 3a05820ac71af1e49993d4578d06825d, type: 3}
   description: 
   maxStack: 1
   toolType: 1
   tier: 3
   damage: 9
-  heldSprite: {fileID: 21300000, guid: 024486ae817e0ac44b73cec5d3aac580, type: 3}
+  element: 0
+  heldSprite: {fileID: -930478263, guid: 3a05820ac71af1e49993d4578d06825d, type: 3}

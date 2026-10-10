@@ -45,6 +45,14 @@ MonoBehaviour:
     - item: {fileID: 11400000, guid: 99f39533a967d9b409e7885afb4eec06, type: 2}
       count: 5
     requiredStation: {fileID: 0}
+  - result: {fileID: 11400000, guid: 3593524248c96d84585ace0136b37496, type: 2}
+    resultCount: 1
+    ingredients:
+    - item: {fileID: 11400000, guid: 731a55263738a544a962dcfeeda3ff4f, type: 2}
+      count: 2
+    - item: {fileID: 11400000, guid: 2a6cd0d6fd44a5b439222b1730b9fc7f, type: 2}
+      count: 2
+    requiredStation: {fileID: 0}
   - result: {fileID: 11400000, guid: 11aa11476e1c33643b48dd86b3cc8eb5, type: 2}
     resultCount: 1
     ingredients:

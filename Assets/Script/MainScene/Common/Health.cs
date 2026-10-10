@@ -24,6 +24,8 @@ public class Health : MonoBehaviour, ISaveable
     public event Action<float, float> HealthChanged;
     // 부활 시점을 이펙트·UI 등 외부 시스템에 알림
     public event Action Revived;
+    // 공격을 받은 시점을 속성 반응 등 외부 시스템에 알림 (피해 적용 후, 피해가 0이어도 호출)
+    public event Action<AttackData> Hit;
     // 자식 클래스에서 재정의 시 반드시 base.Awake() 호출 (체력 초기화)
     protected virtual void Awake()
     {
@@ -43,6 +45,7 @@ public class Health : MonoBehaviour, ISaveable
     public void TakeHit(AttackData attack)
     {
         TakeDamage(CalculateDamage(attack));
+        Hit?.Invoke(attack);
     }
 
     // 대상별 피해 보정이 필요하면 자식 클래스에서 재정의 (예: 자원의 도구 배율)
@@ -87,6 +90,17 @@ public class Health : MonoBehaviour, ISaveable
         currentHealth = maxHealth;
         HealthChanged?.Invoke(currentHealth, maxHealth);
         Revived?.Invoke();
+    }
+
+    // 피해 없이 바로 쓰러뜨림 (예: 다 타버린 나무, 피격 이펙트 없음)
+    public void Kill()
+    {
+        if (isDead) return;
+
+        currentHealth = 0;
+        isDead = true;
+        HealthChanged?.Invoke(currentHealth, maxHealth);
+        Die();
     }
 
     protected virtual void Die()

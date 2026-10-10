@@ -10,4 +10,6 @@ public struct AttackData
     public ToolType toolType;
     // 도구 티어 (맨손·몬스터는 0, 자원의 요구 티어와 비교)
     public int toolTier;
+    // 공격 속성 (예: 랜턴 → 화염)
+    public ElementType element;
 }

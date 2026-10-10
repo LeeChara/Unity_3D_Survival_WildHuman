@@ -1,11 +1,21 @@
+using System;
 using UnityEngine;
 
 // 공격 판정이 켜져 있는 동안 히트박스 범위에 맞춰 바닥에 눕힌 스프라이트를 재생해 공격 범위를 보여줌
 // AttackPivot 아래에 두면 클릭 방향을 따라 회전하고, 위치·크기는 히트박스(BoxCollider)에서 계산
 // 프레임이 한 장뿐이면 프레임 애니메이션 대신 알파를 줄여 사라지게 함
+// 속성 공격(예: 화염)이면 그 속성의 이펙트로 바꿔 재생 (설정에서 휘두르기 이펙트를 꺼도 표시)
 [RequireComponent(typeof(SpriteRenderer))]
 public class SwingEffect : MonoBehaviour
 {
+    [Serializable]
+    private struct ElementEffect
+    {
+        public ElementType element;
+        public Sprite[] frames;
+        public Color color;
+    }
+
     [Header("참조")]
     [SerializeField] private PlayerAttack attack;
     [Tooltip("범위의 기준이 되는 히트박스")]
@@ -15,12 +25,17 @@ public class SwingEffect : MonoBehaviour
     [Tooltip("휘두르기 프레임 (위쪽이 공격 방향, Attack 단계 동안 순서대로 재생)")]
     [SerializeField] private Sprite[] frames;
     [SerializeField] private Color color = Color.white;
+    [Tooltip("속성 공격일 때 대신 재생할 이펙트 (없는 속성은 기본 이펙트 사용)")]
+    [SerializeField] private ElementEffect[] elementEffects;
     [Tooltip("판정 범위 대비 표시 크기 배율 (x: 좌우, y: 앞뒤)")]
     [SerializeField] private Vector2 sizeMultiplier = Vector2.one;
     [Tooltip("바닥과 겹쳐 깜빡이지 않도록 띄우는 높이 (월드 기준)")]
     [SerializeField] private float heightOffset = 0.01f;
 
     private SpriteRenderer spriteRenderer;
+    // 이번 공격에 재생 중인 프레임·색 (기본 또는 속성 이펙트)
+    private Sprite[] playingFrames;
+    private Color playingColor;
     private float elapsed;
     private bool isPlaying;
 
@@ -56,14 +71,14 @@ public class SwingEffect : MonoBehaviour
             return;
         }
 
-        if (frames.Length > 1)
+        if (playingFrames.Length > 1)
         {
-            int index = Mathf.Min(Mathf.FloorToInt(t * frames.Length), frames.Length - 1);
-            spriteRenderer.sprite = frames[index];
+            int index = Mathf.Min(Mathf.FloorToInt(t * playingFrames.Length), playingFrames.Length - 1);
+            spriteRenderer.sprite = playingFrames[index];
         }
         else
         {
-            Color faded = color;
+            Color faded = playingColor;
             faded.a *= 1f - t;
             spriteRenderer.color = faded;
         }
@@ -71,16 +86,40 @@ public class SwingEffect : MonoBehaviour
 
     private void Play()
     {
-        if (frames == null || frames.Length == 0) return;
-        if (!GameOptions.ShowSwingEffect) return;
+        if (TryGetElementEffect(attack.CurrentElement, out ElementEffect effect))
+        {
+            playingFrames = effect.frames;
+            playingColor = effect.color;
+        }
+        else
+        {
+            if (!GameOptions.ShowSwingEffect) return;
+            playingFrames = frames;
+            playingColor = color;
+        }
+        if (playingFrames == null || playingFrames.Length == 0) return;
 
-        spriteRenderer.sprite = frames[0];
-        spriteRenderer.color = color;
+        spriteRenderer.sprite = playingFrames[0];
+        spriteRenderer.color = playingColor;
         FitToHitbox();
 
         elapsed = 0f;
         isPlaying = true;
         spriteRenderer.enabled = true;
+    }
+
+    private bool TryGetElementEffect(ElementType element, out ElementEffect effect)
+    {
+        effect = default;
+        if (element == ElementType.None || elementEffects == null) return false;
+
+        foreach (ElementEffect candidate in elementEffects)
+        {
+            if (candidate.element != element || candidate.frames == null || candidate.frames.Length == 0) continue;
+            effect = candidate;
+            return true;
+        }
+        return false;
     }
 
     private void Stop()

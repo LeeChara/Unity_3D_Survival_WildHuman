@@ -12,19 +12,34 @@ public class PropHealth : Health
     // Died 구독자(HitFlash 등)가 모두 처리된 뒤에 호출되어야 비활성화 이후 색이 덮어써지지 않음
     public event Action<PropHealth> Depleted;
 
+    private ItemDropOnDeath dropOnDeath;
+    private PropBurner burner;
+
     public PropData Data => data;
-    public override string DisplayName => data.displayName;
+    public override string DisplayName => burner != null && burner.IsBurning ? $"{data.displayName} (불타는 중)" : data.displayName;
 
     protected override void Awake()
     {
         base.Awake();
 
-        if (TryGetComponent(out ItemDropOnDeath dropOnDeath)) dropOnDeath.SetDropTable(data.dropTable);
+        dropOnDeath = GetComponent<ItemDropOnDeath>();
+        burner = GetComponent<PropBurner>();
     }
 
+    // 다 타서 사라질 때 드랍 테이블을 바꿨을 수 있으므로 재사용될 때마다 원래대로 되돌림
     private void OnEnable()
     {
         Init(data.maxHealth);
+        if (dropOnDeath != null) dropOnDeath.SetDropTable(data.dropTable);
+    }
+
+    // 다 타버림: 피해 없이 쓰러지고 원래 드랍 대신 burnDropTable을 떨어뜨림 (예: 나무 → 숯)
+    public void BurnOut()
+    {
+        if (IsDead) return;
+
+        if (dropOnDeath != null) dropOnDeath.SetDropTable(data.burnDropTable);
+        Kill();
     }
 
     // 요구 티어가 있으면 맞는 도구이면서 티어가 충분할 때만 채집 가능 (맨손·다른 도구·몬스터 공격은 불가)

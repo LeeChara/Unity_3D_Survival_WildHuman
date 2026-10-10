@@ -29,11 +29,14 @@ public class CodexDatabase : ScriptableObject
     {
         public readonly CodexEntry source;
         public readonly ItemDrop drop;
+        // 얻는 조건 (예: "다 타면", 비어 있으면 일반 드랍)
+        public readonly string condition;
 
-        public DropSource(CodexEntry source, ItemDrop drop)
+        public DropSource(CodexEntry source, ItemDrop drop, string condition = null)
         {
             this.source = source;
             this.drop = drop;
+            this.condition = condition;
         }
     }
 
@@ -242,18 +245,23 @@ public class CodexDatabase : ScriptableObject
 
     private void BuildDropLinks()
     {
-        foreach (CodexEntry entry in entries[CodexCategory.Prop]) AddDrops(entry, ((PropData)entry.data).dropTable);
+        foreach (CodexEntry entry in entries[CodexCategory.Prop])
+        {
+            var prop = (PropData)entry.data;
+            AddDrops(entry, prop.dropTable);
+            if (prop.flammable) AddDrops(entry, prop.burnDropTable, "다 타면");
+        }
         foreach (CodexEntry entry in entries[CodexCategory.Structure]) AddDrops(entry, ((PlaceableItemData)entry.data).dropTable);
         foreach (CodexEntry entry in entries[CodexCategory.Monster]) AddDrops(entry, ((MonsterData)entry.data).dropTable);
     }
 
-    private void AddDrops(CodexEntry source, DropTable table)
+    private void AddDrops(CodexEntry source, DropTable table, string condition = null)
     {
         if (table == null) return;
 
         foreach (ItemDrop drop in table.Drops)
         {
-            if (drop.item != null) AddTo(dropSources, drop.item, new DropSource(source, drop));
+            if (drop.item != null) AddTo(dropSources, drop.item, new DropSource(source, drop, condition));
         }
     }
 

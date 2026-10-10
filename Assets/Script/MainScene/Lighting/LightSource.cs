@@ -38,6 +38,15 @@ public class LightSource : MonoBehaviour
         noiseSeed = Random.value * 100f;
     }
 
+    // 실행 중에 수치를 바꿀 때 사용 (예: 손에 든 랜턴의 빛)
+    public void Configure(float radius, float intensity, Color color, float flickerAmount)
+    {
+        this.radius = radius;
+        this.intensity = intensity;
+        this.color = color;
+        this.flickerAmount = flickerAmount;
+    }
+
     private void OnEnable()
     {
         LightingSystem.Register(this);

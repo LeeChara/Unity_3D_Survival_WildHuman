@@ -18,4 +18,12 @@ public class PropData : ScriptableObject
     public DropTable dropTable;
     [Tooltip("파괴될 때 생성할 이펙트 (비워두면 생성하지 않음)")]
     public GameObject destroyEffectPrefab;
+
+    [Header("불")]
+    [Tooltip("화염 속성 공격에 맞으면 불이 붙는지 (프리팹에 PropBurner가 있어야 함)")]
+    public bool flammable;
+    [Tooltip("불이 붙은 뒤 다 타서 사라지기까지 걸리는 시간 (초)")]
+    [Min(0.1f)] public float burnDuration = 20f;
+    [Tooltip("다 타서 사라질 때 떨어뜨릴 아이템 (dropTable 대신 사용)")]
+    public DropTable burnDropTable;
 }

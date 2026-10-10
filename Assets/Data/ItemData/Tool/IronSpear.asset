@@ -14,10 +14,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ToolItemData
   id: iron_spear
   displayName: "\uCCA0 \uCC3D"
-  icon: {fileID: 21300000, guid: 0807419f3fb47944cb7e82c5fd5f12e1, type: 3}
+  icon: {fileID: -1950017584, guid: 3a05820ac71af1e49993d4578d06825d, type: 3}
   description: 
   maxStack: 1
   toolType: 0
   tier: 4
   damage: 25
-  heldSprite: {fileID: 21300000, guid: 0807419f3fb47944cb7e82c5fd5f12e1, type: 3}
+  element: 0
+  heldSprite: {fileID: -1950017584, guid: 3a05820ac71af1e49993d4578d06825d, type: 3}
