@@ -14,6 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::CodexDatabase
   items:
   - {fileID: 11400000, guid: 2a6cd0d6fd44a5b439222b1730b9fc7f, type: 2}
+  - {fileID: 11400000, guid: 731a55263738a544a962dcfeeda3ff4f, type: 2}
   - {fileID: 11400000, guid: ea4de77ac551cda4d82f99f67f69dfcf, type: 2}
   - {fileID: 11400000, guid: 4242f49b940c52842ad548479f6fe826, type: 2}
   - {fileID: 11400000, guid: 5ea3236de08d64b4899d7ca7fd32f1ff, type: 2}
@@ -36,8 +37,11 @@ MonoBehaviour:
   - {fileID: 11400000, guid: fd70b53152413f847aa8ed27128e3157, type: 2}
   - {fileID: 11400000, guid: d70a2825f3d4c3c41af45d4fdb09f2c0, type: 2}
   - {fileID: 11400000, guid: 76b2af717ed051443bd913f83a6d097f, type: 2}
+  - {fileID: 11400000, guid: 0c75b1c16bcae44499fcbd60ef23dd40, type: 2}
   recipeBook: {fileID: 11400000, guid: c741f133a292f544eb7aa3ce5a9f1043, type: 2}
-  cookingBook: {fileID: 11400000, guid: eae2d086cccfb57439bba3c399f52094, type: 2}
+  cookingBooks:
+  - {fileID: 11400000, guid: eae2d086cccfb57439bba3c399f52094, type: 2}
+  - {fileID: 11400000, guid: f6c10ce3202494645b6510b3cf9bc2d7, type: 2}
   props:
   - {fileID: 2320462754870765523, guid: cb16ea17beeef31479bf316d75cfdd88, type: 3}
   - {fileID: 787357670917811557, guid: 1ffa00c871a33dc49ab70d1d57ae92d7, type: 3}
@@ -47,6 +51,7 @@ MonoBehaviour:
   structures:
   - {fileID: 130948604810500206, guid: accee2b0887b0c6498cd8215f1e35d4f, type: 3}
   - {fileID: 3003109801364211945, guid: dd4e93f1cc9abc241a875f4dadf15d81, type: 3}
+  - {fileID: 130948604810500206, guid: 4de173c17ba48be47a09857dfaf8acd5, type: 3}
   monsters:
   - {fileID: 2855152217180434087, guid: e2b8e5632850d34498a808e34d60eef5, type: 3}
   - {fileID: 5223719300316381313, guid: 7796c72efd61e79468c0267d6f3492fb, type: 3}

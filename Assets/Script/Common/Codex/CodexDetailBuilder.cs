@@ -86,20 +86,29 @@ public class CodexDetailBuilder
             foreach (Recipe recipe in recipes) RecipeRow(recipe);
         }
 
-        IReadOnlyList<CookingRecipe> cooking = db.GetCookingFor(item);
-        if (cooking.Count > 0)
+        // 굽기·재련은 작업 이름별로 섹션을 나눔 (예: 구운 고기 → "굽기", 철 주괴 → "재련")
+        IReadOnlyList<CodexDatabase.CookingLink> cooking = db.GetCookingFor(item);
+        var cookingSections = new List<string>();
+        foreach (CodexDatabase.CookingLink link in cooking)
         {
-            view.Section("굽기");
-            foreach (CookingRecipe recipe in cooking) CookingRow(recipe);
+            if (!cookingSections.Contains(link.book.ActionName)) cookingSections.Add(link.book.ActionName);
+        }
+        foreach (string action in cookingSections)
+        {
+            view.Section(action);
+            foreach (CodexDatabase.CookingLink link in cooking)
+            {
+                if (link.book.ActionName == action) CookingRow(link);
+            }
         }
 
         IReadOnlyList<Recipe> usedIn = db.GetRecipesUsing(item);
-        IReadOnlyList<CookingRecipe> cookedFrom = db.GetCookingUsing(item);
+        IReadOnlyList<CodexDatabase.CookingLink> cookedFrom = db.GetCookingUsing(item);
         if (usedIn.Count > 0 || cookedFrom.Count > 0)
         {
             view.Section("재료로 사용");
             foreach (Recipe recipe in usedIn) RecipeRow(recipe);
-            foreach (CookingRecipe recipe in cookedFrom) CookingRow(recipe);
+            foreach (CodexDatabase.CookingLink link in cookedFrom) CookingRow(link);
         }
 
         IReadOnlyList<CodexDatabase.DropSource> sources = db.GetDropSources(item);
@@ -208,12 +217,14 @@ public class CodexDetailBuilder
             foreach (Recipe recipe in recipes) RecipeRow(recipe);
         }
 
-        if (entry.prefab.TryGetComponent(out CampfireCooker _))
+        if (entry.prefab.TryGetComponent(out Cooker cooker) && cooker.Book != null)
         {
-            view.Section("굽기");
-            view.Text("재료를 들고 우클릭해 1개씩 올리면 시간이 지나 아래 결과물로 바뀜");
-            if (db.CookingRecipes.Count == 0) view.Text(Color("굽기 레시피가 없음", BadColor));
-            foreach (CookingRecipe recipe in db.CookingRecipes) CookingRow(recipe);
+            string action = cooker.Book.ActionName;
+            view.Section(action);
+            view.Text($"재료를 들고 우클릭해 최대 {Color($"{cooker.Capacity}개", ValueColor)}까지 올리면 하나씩 차례로 아래 결과물로 바뀜");
+            IReadOnlyList<CodexDatabase.CookingLink> links = db.GetCookingInBook(cooker.Book);
+            if (links.Count == 0) view.Text(Color($"{action} 레시피가 없음", BadColor));
+            foreach (CodexDatabase.CookingLink link in links) CookingRow(link);
         }
 
         view.Section("도구별 파괴");
@@ -442,20 +453,19 @@ public class CodexDetailBuilder
     }
 
     // [재료 → 결과 · n초 @ 모닥불] 한 줄
-    private void CookingRow(CookingRecipe recipe)
+    private void CookingRow(CodexDatabase.CookingLink link)
     {
-        if (recipe.input == null || recipe.result == null) return;
-
+        CookingRecipe recipe = link.recipe;
         RectTransform row = view.Row();
         ItemChip(row, recipe.input, recipe.input.displayName);
         view.InlineText(row, "→");
         ItemChip(row, recipe.result, recipe.result.displayName);
         view.InlineText(row, $"· {recipe.seconds:0.#}초");
 
-        if (db.CookingStation != null)
+        if (link.station != null)
         {
             view.InlineText(row, "@");
-            ItemChip(row, db.CookingStation, db.CookingStation.displayName);
+            ItemChip(row, link.station, link.station.displayName);
         }
     }
 

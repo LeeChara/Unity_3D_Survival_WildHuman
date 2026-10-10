@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4efde5b5c98615a44b21dddc6c3da300, type: 3}
   m_Name: CookingBook
   m_EditorClassIdentifier: Assembly-CSharp::CookingBook
+  actionName: "\uAD7D\uAE30"
   recipes:
   - input: {fileID: 11400000, guid: 55d352c4ae168d342ab579a95211a7c2, type: 2}
     result: {fileID: 11400000, guid: 6695b7eb42a75104c928dfa8f9c9a77d, type: 2}

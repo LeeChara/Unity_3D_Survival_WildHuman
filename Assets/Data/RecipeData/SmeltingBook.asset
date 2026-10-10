@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4efde5b5c98615a44b21dddc6c3da300, type: 3}
+  m_Name: SmeltingBook
+  m_EditorClassIdentifier: Assembly-CSharp::CookingBook
+  actionName: "\uC7AC\uB828"
+  recipes:
+  - input: {fileID: 11400000, guid: ea4de77ac551cda4d82f99f67f69dfcf, type: 2}
+    result: {fileID: 11400000, guid: 731a55263738a544a962dcfeeda3ff4f, type: 2}
+    seconds: 20
