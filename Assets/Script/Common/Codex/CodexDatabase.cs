@@ -18,6 +18,7 @@ public class CodexDatabase : ScriptableObject
 {
     [SerializeField] private ItemData[] items;
     [SerializeField] private RecipeBook recipeBook;
+    [SerializeField] private CookingBook cookingBook;
     [SerializeField] private PropHealth[] props;
     [SerializeField] private StructureHealth[] structures;
     [SerializeField] private MonsterAI[] monsters;
@@ -53,6 +54,7 @@ public class CodexDatabase : ScriptableObject
     }
 
     private static readonly IReadOnlyList<Recipe> NoRecipes = new Recipe[0];
+    private static readonly IReadOnlyList<CookingRecipe> NoCooking = new CookingRecipe[0];
     private static readonly IReadOnlyList<DropSource> NoDrops = new DropSource[0];
     private static readonly IReadOnlyList<Habitat> NoHabitats = new Habitat[0];
 
@@ -63,8 +65,24 @@ public class CodexDatabase : ScriptableObject
     private readonly Dictionary<ItemData, List<Recipe>> recipesFor = new();
     private readonly Dictionary<ItemData, List<Recipe>> usedIn = new();
     private readonly Dictionary<ItemData, List<Recipe>> stationRecipes = new();
+    private readonly Dictionary<ItemData, List<CookingRecipe>> cookingFor = new();
+    private readonly Dictionary<ItemData, List<CookingRecipe>> cookingUsing = new();
     private readonly Dictionary<ItemData, List<DropSource>> dropSources = new();
     private readonly Dictionary<CodexEntry, List<Habitat>> habitats = new();
+
+    // 굽기 레시피 전체 (모닥불처럼 CampfireCooker가 있는 설치물에서 사용)
+    public IReadOnlyList<CookingRecipe> CookingRecipes => cookingBook != null ? cookingBook.Recipes : NoCooking;
+
+    // 굽기를 하는 설치물의 아이템 (레시피 줄의 '@ 모닥불' 표시용, 없으면 null)
+    public ItemData CookingStation
+    {
+        get
+        {
+            Build();
+            return cookingStation;
+        }
+    }
+    private ItemData cookingStation;
 
     public IReadOnlyList<ToolItemData> Tools => tools;
     private readonly List<ToolItemData> tools = new();
@@ -86,6 +104,8 @@ public class CodexDatabase : ScriptableObject
     public IReadOnlyList<Recipe> GetRecipesFor(ItemData item) => Get(recipesFor, item, NoRecipes);
     public IReadOnlyList<Recipe> GetRecipesUsing(ItemData item) => Get(usedIn, item, NoRecipes);
     public IReadOnlyList<Recipe> GetRecipesAtStation(ItemData stationItem) => Get(stationRecipes, stationItem, NoRecipes);
+    public IReadOnlyList<CookingRecipe> GetCookingFor(ItemData item) => Get(cookingFor, item, NoCooking);
+    public IReadOnlyList<CookingRecipe> GetCookingUsing(ItemData item) => Get(cookingUsing, item, NoCooking);
     public IReadOnlyList<DropSource> GetDropSources(ItemData item) => Get(dropSources, item, NoDrops);
     public IReadOnlyList<Habitat> GetHabitats(CodexEntry entry) => Get(habitats, entry, NoHabitats);
 
@@ -119,6 +139,7 @@ public class CodexDatabase : ScriptableObject
 
         BuildEntries();
         BuildRecipeLinks();
+        BuildCookingLinks();
         BuildDropLinks();
         BuildHabitatLinks();
     }
@@ -189,6 +210,25 @@ public class CodexDatabase : ScriptableObject
                 if (usedIn.TryGetValue(ingredient.item, out List<Recipe> list) && list.Contains(recipe)) continue;
                 AddTo(usedIn, ingredient.item, recipe);
             }
+        }
+    }
+
+    private void BuildCookingLinks()
+    {
+        foreach (StructureHealth structure in NonNull(structures))
+        {
+            if (!structure.TryGetComponent(out CampfireCooker _)) continue;
+            cookingStation = structure.SourceItem;
+            break;
+        }
+
+        if (cookingBook == null) return;
+
+        foreach (CookingRecipe recipe in cookingBook.Recipes)
+        {
+            if (recipe.input == null || recipe.result == null) continue;
+            AddTo(cookingFor, recipe.result, recipe);
+            AddTo(cookingUsing, recipe.input, recipe);
         }
     }
 
@@ -296,6 +336,9 @@ public class CodexDatabase : ScriptableObject
         recipesFor.Clear();
         usedIn.Clear();
         stationRecipes.Clear();
+        cookingFor.Clear();
+        cookingUsing.Clear();
+        cookingStation = null;
         dropSources.Clear();
         habitats.Clear();
         tools.Clear();
@@ -308,6 +351,8 @@ public class CodexDatabase : ScriptableObject
         biomes = FindAssets<BiomeData>("t:BiomeData");
         RecipeBook[] books = FindAssets<RecipeBook>("t:RecipeBook");
         recipeBook = books.Length > 0 ? books[0] : null;
+        CookingBook[] cookingBooks = FindAssets<CookingBook>("t:CookingBook");
+        cookingBook = cookingBooks.Length > 0 ? cookingBooks[0] : null;
 
         var foundProps = new List<PropHealth>();
         var foundStructures = new List<StructureHealth>();
@@ -335,7 +380,8 @@ public class CodexDatabase : ScriptableObject
         OnValidate();
         UnityEditor.EditorUtility.SetDirty(this);
         Debug.Log($"[CodexDatabase] 아이템 {items.Length}, 자원 {props.Length}, 설치물 {structures.Length}, " +
-                  $"몬스터 {monsters.Length}, 바이옴 {biomes.Length}, 레시피북 {(recipeBook != null ? recipeBook.name : "없음")}");
+                  $"몬스터 {monsters.Length}, 바이옴 {biomes.Length}, 레시피북 {(recipeBook != null ? recipeBook.name : "없음")}, " +
+                  $"굽기 {(cookingBook != null ? cookingBook.name : "없음")}");
     }
 
     private static int ItemOrder(ItemData item) => item switch

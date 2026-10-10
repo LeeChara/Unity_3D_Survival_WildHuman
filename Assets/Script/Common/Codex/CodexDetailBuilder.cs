@@ -86,11 +86,20 @@ public class CodexDetailBuilder
             foreach (Recipe recipe in recipes) RecipeRow(recipe);
         }
 
+        IReadOnlyList<CookingRecipe> cooking = db.GetCookingFor(item);
+        if (cooking.Count > 0)
+        {
+            view.Section("굽기");
+            foreach (CookingRecipe recipe in cooking) CookingRow(recipe);
+        }
+
         IReadOnlyList<Recipe> usedIn = db.GetRecipesUsing(item);
-        if (usedIn.Count > 0)
+        IReadOnlyList<CookingRecipe> cookedFrom = db.GetCookingUsing(item);
+        if (usedIn.Count > 0 || cookedFrom.Count > 0)
         {
             view.Section("재료로 사용");
             foreach (Recipe recipe in usedIn) RecipeRow(recipe);
+            foreach (CookingRecipe recipe in cookedFrom) CookingRow(recipe);
         }
 
         IReadOnlyList<CodexDatabase.DropSource> sources = db.GetDropSources(item);
@@ -103,7 +112,7 @@ public class CodexDetailBuilder
             }
         }
 
-        if (recipes.Count == 0 && sources.Count == 0)
+        if (recipes.Count == 0 && cooking.Count == 0 && sources.Count == 0)
         {
             view.Section("획득처");
             view.Text(Color("아직 얻을 방법이 없음", BadColor));
@@ -197,6 +206,14 @@ public class CodexDetailBuilder
             IReadOnlyList<Recipe> recipes = db.GetRecipesAtStation(item);
             if (recipes.Count == 0) view.Text(Color("이 설치물이 필요한 레시피가 없음", BadColor));
             foreach (Recipe recipe in recipes) RecipeRow(recipe);
+        }
+
+        if (entry.prefab.TryGetComponent(out CampfireCooker _))
+        {
+            view.Section("굽기");
+            view.Text("재료를 들고 우클릭해 1개씩 올리면 시간이 지나 아래 결과물로 바뀜");
+            if (db.CookingRecipes.Count == 0) view.Text(Color("굽기 레시피가 없음", BadColor));
+            foreach (CookingRecipe recipe in db.CookingRecipes) CookingRow(recipe);
         }
 
         view.Section("도구별 파괴");
@@ -421,6 +438,24 @@ public class CodexDetailBuilder
         {
             view.InlineText(row, "@");
             ItemChip(row, recipe.requiredStation, recipe.requiredStation.displayName);
+        }
+    }
+
+    // [재료 → 결과 · n초 @ 모닥불] 한 줄
+    private void CookingRow(CookingRecipe recipe)
+    {
+        if (recipe.input == null || recipe.result == null) return;
+
+        RectTransform row = view.Row();
+        ItemChip(row, recipe.input, recipe.input.displayName);
+        view.InlineText(row, "→");
+        ItemChip(row, recipe.result, recipe.result.displayName);
+        view.InlineText(row, $"· {recipe.seconds:0.#}초");
+
+        if (db.CookingStation != null)
+        {
+            view.InlineText(row, "@");
+            ItemChip(row, db.CookingStation, db.CookingStation.displayName);
         }
     }
 

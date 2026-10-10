@@ -19,3 +19,13 @@ public class Ingredient
     public ItemData item;
     [Min(1)] public int count = 1;
 }
+
+// 모닥불에 1개 올려 두면 시간이 지나 결과물 1개로 바뀌는 굽기 레시피 (CookingBook 에셋에 모아서 관리)
+[Serializable]
+public class CookingRecipe
+{
+    public ItemData input;
+    public ItemData result;
+    [Tooltip("다 굽는 데 걸리는 시간 (초)")]
+    [Min(0.1f)] public float seconds = 10f;
+}

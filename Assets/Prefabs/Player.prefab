@@ -511,6 +511,10 @@ MonoBehaviour:
   inventory: {fileID: 2004002038596902290}
   hotbar: {fileID: 5485155978177760989}
   playerState: {fileID: 3330602398864973997}
+  interactLayers:
+    serializedVersion: 2
+    m_Bits: 1024
+  interactRayDistance: 100
 --- !u!114 &8526991879530310513
 MonoBehaviour:
   m_ObjectHideFlags: 0

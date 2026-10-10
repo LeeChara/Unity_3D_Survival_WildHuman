@@ -3,11 +3,15 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 
 // 우클릭 시 핫바에서 선택한 아이템을 사용하고, 사용되면 1개 소모
+// 커서가 가까운 상호작용 대상(모닥불 등)을 가리키면 아이템 사용 대신 상호작용
 public class PlayerItemUser : MonoBehaviour
 {
     [SerializeField] private Inventory inventory;
     [SerializeField] private PlayerHotbar hotbar;
     [SerializeField] private PlayerState playerState;
+    [Tooltip("상호작용 대상을 찾을 레이어 (설치물)")]
+    [SerializeField] private LayerMask interactLayers;
+    [SerializeField] private float interactRayDistance = 100f;
 
     private Vector2 pointerScreenPos;
 
@@ -26,6 +30,13 @@ public class PlayerItemUser : MonoBehaviour
         // 회피·공격·넉백 중에는 사용 불가
         if (!playerState.CanAct) return;
 
+        // 상호작용 대상 위에서는 들고 있는 아이템을 먹거나 설치하지 않음 (빈손이어도 회수 가능)
+        if (TryGetInteractable(out IInteractable interactable))
+        {
+            interactable.Interact(inventory, hotbar);
+            return;
+        }
+
         ItemStack stack = hotbar.SelectedStack;
         if (stack.IsEmpty) return;
 
@@ -42,5 +53,18 @@ public class PlayerItemUser : MonoBehaviour
             inventory.Remove(hotbar.SelectedIndex, 1);
             ItemUsed?.Invoke(item);
         }
+    }
+
+    // 커서 광선이 처음 닿은 대상이 상호작용 거리 안이면 true
+    private bool TryGetInteractable(out IInteractable interactable)
+    {
+        interactable = null;
+        if (Camera.main == null) return false;
+
+        Ray ray = Camera.main.ScreenPointToRay(pointerScreenPos);
+        if (!Physics.Raycast(ray, out RaycastHit hit, interactRayDistance, interactLayers, QueryTriggerInteraction.Ignore)) return false;
+
+        interactable = hit.collider.GetComponentInParent<IInteractable>();
+        return interactable != null && interactable.CanInteract(transform.position);
     }
 }
