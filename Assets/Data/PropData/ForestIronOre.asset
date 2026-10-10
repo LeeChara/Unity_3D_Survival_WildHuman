@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PropData
   id: forest_iron_ore
   displayName: "\uCCA0 \uAD11\uB9E5"
-  description: "\uB2E8\uB2E8\uD55C \uCCA0 \uAD11\uB9E5. \uAD6C\uB9AC \uACE1\uAD2D\uC774
+  description: "\uB2E8\uB2E8\uD55C \uCCA0 \uAD11\uB9E5. \uD751\uC694\uC11D \uACE1\uAD2D\uC774
     \uC774\uC0C1\uC758 \uACE1\uAD2D\uC774\uB85C\uB9CC \uCE98 \uC218 \uC788\uB2E4."
   maxHealth: 120
   toolWeakness:

@@ -10,10 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 14d134c79926234459558509630a7e8b, type: 3}
-  m_Name: CopperOre
+  m_Name: Obsidian
   m_EditorClassIdentifier: Assembly-CSharp::ItemData
-  id: copper_ore
-  displayName: "\uAD6C\uB9AC \uAD11\uC11D"
+  id: obsidian
+  displayName: "\uD751\uC694\uC11D"
   icon: {fileID: 21300000, guid: 356531b62e528e040b618643555b6190, type: 3}
   description: 
   maxStack: 99

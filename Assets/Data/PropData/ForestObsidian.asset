@@ -10,13 +10,15 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0895ffe710741c54aa0f3bf7c304c11e, type: 3}
-  m_Name: ForestCopperOre
+  m_Name: ForestObsidian
   m_EditorClassIdentifier: Assembly-CSharp::PropData
-  id: forest_copper_ore
-  displayName: "\uAD6C\uB9AC \uAD11\uB9E5"
-  description: "\uAD6C\uB9AC\uAC00 \uBC15\uD78C \uAD11\uB9E5. \uB3CC \uACE1\uAD2D\uC774
-    \uC774\uC0C1\uC758 \uACE1\uAD2D\uC774\uB85C\uB9CC \uCE98 \uC218 \uC788\uB2E4."
-  maxHealth: 80
+  id: forest_obsidian
+  displayName: "\uD751\uC694\uC11D \uBC14\uC704"
+  description: "\uAC80\uAC8C \uBE5B\uB098\uB294 \uC791\uC740 \uBC14\uC704. \uB3CC
+    \uACE1\uAD2D\uC774 \uC774\uC0C1\uC758 \uACE1\uAD2D\uC774\uB85C \uAE68\uB728\uB9AC\uBA74
+    \uB0A0\uCE74\uB85C\uC6B4 \uD751\uC694\uC11D \uC870\uAC01\uC774 \uB098\uC624\uAE30\uB3C4
+    \uD55C\uB2E4."
+  maxHealth: 40
   toolWeakness:
     tool: 2
     multiplier: 2

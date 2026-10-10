@@ -58,7 +58,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5058150033251958606, guid: b6b44b7ae4c777643bf914eb58a63134, type: 3}
       propertyPath: m_Name
-      value: ForestCopperOre
+      value: ForestObsidian
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
