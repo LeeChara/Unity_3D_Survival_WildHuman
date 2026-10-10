@@ -310,8 +310,13 @@ public class CodexDetailBuilder
                 CodexEntry prop = db.Find(spawn.propPrefab);
                 if (prop == null) continue;
 
-                string text = $"{prop.name} · 청크당 {Range(spawn.minCount, spawn.maxCount)}개";
-                if (ShowDevInfo) text += $" · 간격 {spawn.minSpacing:0.#}";
+                string text = $"{prop.name} · {PropCountText(spawn)}";
+                if (ShowDevInfo)
+                {
+                    text += $" · 간격 {spawn.minSpacing:0.#}";
+                    if (spawn.clusterRadius > 0f) text += $" · 군집 반경 {spawn.clusterRadius:0.#}";
+                    if (spawn.countWeights != null && spawn.countWeights.Length > 0) text += $" · {CountWeightsText(spawn)}";
+                }
                 LinkLine(prop, text);
             }
         }
@@ -349,7 +354,7 @@ public class CodexDetailBuilder
         {
             string text = entry.category == CodexCategory.Monster
                 ? $"{habitat.biome.name} · 출현 {habitat.monsterChance * 100f:0}%"
-                : $"{habitat.biome.name} · 청크당 {Range(habitat.propEntry.minCount, habitat.propEntry.maxCount)}개";
+                : $"{habitat.biome.name} · {PropCountText(habitat.propEntry)}";
             LinkLine(habitat.biome, text);
         }
     }
@@ -452,6 +457,32 @@ public class CodexDetailBuilder
     private static string Color(string text, string color) => $"<color={color}>{text}</color>";
 
     private static string Range(int min, int max) => min == max ? min.ToString() : $"{min}~{max}";
+
+    private static string PropCountText(PropSpawnEntry spawn)
+    {
+        spawn.GetCountRange(out int min, out int max);
+        string text = $"청크당 {Range(min, max)}개";
+
+        float chance = spawn.AppearChance();
+        if (chance < 1f) text += $" (출현 {chance * 100f:0.#}%)";
+        return text;
+    }
+
+    // 개수별 확률 (예: 0개 80% / 1개 15% / 2개 5%)
+    private static string CountWeightsText(PropSpawnEntry spawn)
+    {
+        float total = 0f;
+        foreach (PropCountWeight w in spawn.countWeights) total += Mathf.Max(0f, w.weight);
+        if (total <= 0f) return "가중치 없음";
+
+        var parts = new List<string>();
+        foreach (PropCountWeight w in spawn.countWeights)
+        {
+            if (w.weight <= 0f) continue;
+            parts.Add($"{w.count}개 {w.weight / total * 100f:0.#}%");
+        }
+        return string.Join(" / ", parts);
+    }
 
     private static string DropText(ItemDrop drop)
     {

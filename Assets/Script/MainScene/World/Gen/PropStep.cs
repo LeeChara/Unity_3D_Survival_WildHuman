@@ -29,12 +29,23 @@ public class PropStep : WorldGenStep
             if (entry.propPrefab == null) continue;
 
             int type = ctx.PropIndex(entry.propPrefab);
-            int maxCount = Mathf.Max(entry.minCount, entry.maxCount);
-            int count = prng.Next(entry.minCount, maxCount + 1);
+            int count = entry.RollCount(prng);
+            if (count == 0) continue;
+
+            // 군집이면 중심을 먼저 정함 (군집이 청크 밖으로 나가지 않게 반경만큼 안쪽에서)
+            Vector3 clusterCenter = default;
+            if (entry.clusterRadius > 0f)
+            {
+                float inset = Mathf.Min(entry.clusterRadius, ctx.ChunkSize * 0.5f);
+                clusterCenter = chunkOrigin + new Vector3(
+                    inset + (float)prng.NextDouble() * (ctx.ChunkSize - inset * 2f),
+                    0f,
+                    inset + (float)prng.NextDouble() * (ctx.ChunkSize - inset * 2f));
+            }
 
             for (int i = 0; i < count; i++)
             {
-                if (!TryFindPosition(prng, chunkOrigin, ctx.ChunkSize, entry.minSpacing, placedPositions, out Vector3 position))
+                if (!TryFindPosition(prng, entry, clusterCenter, chunkOrigin, ctx.ChunkSize, placedPositions, out Vector3 position))
                     continue;
 
                 // 세이브 크기를 줄이기 위해 소수 둘째 자리까지만 저장
@@ -47,17 +58,27 @@ public class PropStep : WorldGenStep
         }
     }
 
-    private bool TryFindPosition(System.Random prng, Vector3 chunkOrigin, float chunkSize, float minSpacing,
-        List<Vector3> placedPositions, out Vector3 position)
+    private bool TryFindPosition(System.Random prng, PropSpawnEntry entry, Vector3 clusterCenter,
+        Vector3 chunkOrigin, float chunkSize, List<Vector3> placedPositions, out Vector3 position)
     {
-        float minSpacingSqr = minSpacing * minSpacing;
+        float minSpacingSqr = entry.minSpacing * entry.minSpacing;
 
         for (int attempt = 0; attempt < maxPlacementAttempts; attempt++)
         {
-            position = chunkOrigin + new Vector3(
-                (float)prng.NextDouble() * chunkSize,
-                0f,
-                (float)prng.NextDouble() * chunkSize);
+            if (entry.clusterRadius > 0f)
+            {
+                // 원 안에 고르게 분포하도록 반지름에 제곱근을 씀
+                float angle = (float)prng.NextDouble() * Mathf.PI * 2f;
+                float radius = entry.clusterRadius * Mathf.Sqrt((float)prng.NextDouble());
+                position = clusterCenter + new Vector3(Mathf.Cos(angle) * radius, 0f, Mathf.Sin(angle) * radius);
+            }
+            else
+            {
+                position = chunkOrigin + new Vector3(
+                    (float)prng.NextDouble() * chunkSize,
+                    0f,
+                    (float)prng.NextDouble() * chunkSize);
+            }
 
             bool tooClose = false;
             foreach (var placed in placedPositions)

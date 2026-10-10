@@ -464,6 +464,7 @@ MonoBehaviour:
     damage: 10
     knockbackDistance: 1
     toolType: 0
+    toolTier: 0
 --- !u!1 &2415495034327808268
 GameObject:
   m_ObjectHideFlags: 0
@@ -1594,7 +1595,7 @@ BoxCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7304474180741421677}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: 99d528c982a20b74eac8b0230f3e9481, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -1669,6 +1670,7 @@ MonoBehaviour:
   animator: {fileID: 1013042614771950667}
   monsterFacing: {fileID: 1880824026292873}
   cameraYAngle: 45
+  animationFade: 0.1
   throwPoint: {fileID: 7740188583381614744}
   stoneTargetLayer:
     serializedVersion: 2

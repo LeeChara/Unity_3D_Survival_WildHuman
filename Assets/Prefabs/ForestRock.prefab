@@ -11,12 +11,12 @@ GameObject:
   - component: {fileID: 3759742687489679756}
   - component: {fileID: 3571806324979164446}
   - component: {fileID: 254592239610882043}
-  - component: {fileID: 5252879965262089957}
   - component: {fileID: 6498761017396317773}
   - component: {fileID: 165885252782457660}
   - component: {fileID: 867109096770320385}
   - component: {fileID: 3246982819515879143}
   - component: {fileID: 8484404535405193676}
+  - component: {fileID: 7777402817961816930}
   m_Layer: 8
   m_Name: ForestRock
   m_TagString: Untagged
@@ -111,27 +111,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::AxisAlignedBillboard
   cameraYAngle: 45
---- !u!65 &5252879965262089957
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5058150033251958606}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 0.4, y: 0.4, z: 0.35}
-  m_Center: {x: 0, y: 0.1, z: 0.15}
 --- !u!210 &6498761017396317773
 SortingGroup:
   m_ObjectHideFlags: 0
@@ -203,3 +182,26 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ItemDropOnDeath
   dropTable: {fileID: 0}
+--- !u!136 &7777402817961816930
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5058150033251958606}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.2
+  m_Height: 0.4
+  m_Direction: 1
+  m_Center: {x: 0, y: 0.1, z: 0.15}

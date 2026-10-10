@@ -80,7 +80,7 @@ BoxCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3698754605101644}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: 99d528c982a20b74eac8b0230f3e9481, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -170,6 +170,7 @@ MonoBehaviour:
   animator: {fileID: 3897425078592910565}
   monsterFacing: {fileID: -4888124917078114788}
   cameraYAngle: 45
+  animationFade: 0.1
 --- !u!210 &3673113696254783241
 SortingGroup:
   m_ObjectHideFlags: 0
@@ -728,6 +729,7 @@ MonoBehaviour:
     damage: 10
     knockbackDistance: 1
     toolType: 0
+    toolTier: 0
 --- !u!1 &3997864156695220494
 GameObject:
   m_ObjectHideFlags: 0

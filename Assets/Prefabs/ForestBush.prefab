@@ -10,13 +10,13 @@ GameObject:
   m_Component:
   - component: {fileID: 7553821115010099431}
   - component: {fileID: 648115382013912102}
-  - component: {fileID: 1966377576007491629}
   - component: {fileID: 495649180978681477}
   - component: {fileID: 4369480945364997020}
   - component: {fileID: 4207459239242559859}
   - component: {fileID: 2320462754870765523}
   - component: {fileID: 7603043299603333803}
   - component: {fileID: 5221534519765284842}
+  - component: {fileID: 7135056181040804095}
   m_Layer: 8
   m_Name: ForestBush
   m_TagString: Untagged
@@ -98,27 +98,6 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
---- !u!65 &1966377576007491629
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3237151097076446163}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 0.1, y: 0.1, z: 0.05}
-  m_Center: {x: 0, y: 0.05, z: 0.02}
 --- !u!114 &495649180978681477
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -203,3 +182,26 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ItemDropOnDeath
   dropTable: {fileID: 0}
+--- !u!136 &7135056181040804095
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3237151097076446163}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.05
+  m_Height: 0.1
+  m_Direction: 1
+  m_Center: {x: 0, y: 0.05, z: 0.02}
