@@ -34,8 +34,11 @@ public class PlayerAttack : MonoBehaviour
     public event Action AttackStarted;
     public event Action AttackEnded;
 
+    private Rigidbody rb;
+
     private void Awake()
     {
+        rb = GetComponent<Rigidbody>();
         hitboxObject.SetActive(false);
 
         Quaternion cameraRotation = Quaternion.Euler(0, cameraYAngle, 0);
@@ -63,6 +66,16 @@ public class PlayerAttack : MonoBehaviour
         hitboxObject.SetActive(false);
         animator.ResetTrigger("Attack");
         AttackEnded?.Invoke();
+    }
+
+    private void FixedUpdate()
+    {
+        // Attack일 때만 실행 (다른 클래스와 배타적)
+        if (playerState.CurrentState != PlayerActionState.Attack) return;
+
+        // 몸체 마찰이 0이라 이동 속도가 남아 미끄러지므로 공격 중에는 제자리에 고정
+        Vector3 velocity = rb.linearVelocity;
+        rb.linearVelocity = new Vector3(0f, velocity.y, 0f);
     }
 
     private void Update()
