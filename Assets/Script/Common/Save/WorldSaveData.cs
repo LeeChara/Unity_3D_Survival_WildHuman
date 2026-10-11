@@ -157,6 +157,7 @@ public class MapData
 
 // 청크 하나의 내용
 // 자원은 상태가 "존재 여부와 위치"뿐이라 개체 기록 대신 같은 길이의 배열 3개로 압축 저장
+// 시간이 지나면 다른 종류로 바뀌는 자원(빈 덤불, 밑동)과 다른 위치에 다시 생길 자원은 따로 짧은 목록으로 저장
 [Serializable]
 public class ChunkData
 {
@@ -167,21 +168,96 @@ public class ChunkData
     public List<float> px = new();
     public List<float> pz = new();
 
+    // 바뀔 자원의 번호(types 기준)와 바뀌는 월드 시간. 대부분의 자원은 바뀌지 않으므로 해당하는 것만 저장
+    public List<int> growIndex = new();
+    public List<float> growAt = new();
+
+    // 다른 위치에 다시 생길 자원의 종류(propPalette 번호)와 생길 월드 시간
+    public List<int> regenTypes = new();
+    public List<float> regenAt = new();
+
     public int PropCount() => types.Count;
 
-    public void AddProp(int type, float x, float z)
+    public int AddProp(int type, float x, float z)
     {
         types.Add(type);
         px.Add(x);
         pz.Add(z);
+        return types.Count - 1;
     }
 
+    // 뒤 번호들이 한 칸씩 당겨지므로 바뀔 자원 번호도 맞춰 당김
     public void RemovePropAt(int index)
     {
         types.RemoveAt(index);
         px.RemoveAt(index);
         pz.RemoveAt(index);
+
+        for (int i = growIndex.Count - 1; i >= 0; i--)
+        {
+            if (growIndex[i] == index) RemoveGrowAt(i);
+            else if (growIndex[i] > index) growIndex[i]--;
+        }
     }
+
+    public Vector3 PropPosition(int index) => new(px[index], 0f, pz[index]);
+
+    #region 바뀌는 자원
+
+    // time이 0 이하면 바뀌지 않음으로 지움
+    public void SetGrowTime(int index, float time)
+    {
+        int slot = growIndex.IndexOf(index);
+        if (time <= 0f)
+        {
+            if (slot >= 0) RemoveGrowAt(slot);
+            return;
+        }
+
+        if (slot >= 0) growAt[slot] = time;
+        else
+        {
+            growIndex.Add(index);
+            growAt.Add(time);
+        }
+    }
+
+    // 지금(now)까지 바뀔 시간이 된 자원 번호
+    public List<int> DueGrowths(float now)
+    {
+        var due = new List<int>();
+        for (int i = 0; i < growIndex.Count; i++)
+        {
+            if (growAt[i] <= now) due.Add(growIndex[i]);
+        }
+        return due;
+    }
+
+    private void RemoveGrowAt(int slot)
+    {
+        growIndex.RemoveAt(slot);
+        growAt.RemoveAt(slot);
+    }
+
+    #endregion
+
+    #region 다른 위치에 다시 생길 자원
+
+    public void AddRegen(int type, float time)
+    {
+        regenTypes.Add(type);
+        regenAt.Add(time);
+    }
+
+    public int RegenCount() => regenTypes.Count;
+
+    public void RemoveRegenAt(int index)
+    {
+        regenTypes.RemoveAt(index);
+        regenAt.RemoveAt(index);
+    }
+
+    #endregion
 
     public ChunkData Clone()
     {
@@ -191,6 +267,10 @@ public class ChunkData
             types = new List<int>(types),
             px = new List<float>(px),
             pz = new List<float>(pz),
+            growIndex = new List<int>(growIndex),
+            growAt = new List<float>(growAt),
+            regenTypes = new List<int>(regenTypes),
+            regenAt = new List<float>(regenAt),
         };
     }
 }

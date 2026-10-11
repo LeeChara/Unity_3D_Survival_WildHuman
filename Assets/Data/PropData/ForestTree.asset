@@ -27,3 +27,9 @@ MonoBehaviour:
   flammable: 1
   burnDuration: 20
   burnDropTable: {fileID: 11400000, guid: 5418200fb2c1b9c42b1be45c17fc9701, type: 2}
+  growInto: {fileID: 0}
+  growTime: 300
+  leaveBehind: {fileID: 5971007402934984497, guid: a6bfafb7774d3f049817de54bf4856e4, type: 3}
+  regrowAs: {fileID: 0}
+  regrowDelay: 300
+  spacing: 6

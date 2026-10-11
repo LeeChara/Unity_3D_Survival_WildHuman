@@ -106,6 +106,13 @@ public class WorldState : MonoBehaviour
     // 세이브에 있지만 지금은 없는 종류면 null
     public GameObject GetPropPrefab(int type) => context.GetPropPrefab(type);
 
+    // 자원 프리팹의 이름표 번호 (처음 보는 종류면 이름표에 추가)
+    public int GetPropType(GameObject prefab) => context.PropIndex(prefab);
+
+    public Vector2Int WorldToChunk(Vector3 position) => context.WorldToChunk(position);
+
+    public Vector3 ChunkOrigin(Vector2Int coord) => context.ChunkOrigin(coord);
+
     private void OnChunkUnloaded(Vector2Int coord)
     {
         outsideChunks.Remove(coord);

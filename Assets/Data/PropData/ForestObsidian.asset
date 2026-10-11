@@ -25,3 +25,12 @@ MonoBehaviour:
   requiredTier: 2
   dropTable: {fileID: 11400000, guid: ce33338b9dc80b44e8ebb425b7f46748, type: 2}
   destroyEffectPrefab: {fileID: 0}
+  flammable: 0
+  burnDuration: 20
+  burnDropTable: {fileID: 0}
+  growInto: {fileID: 0}
+  growTime: 300
+  leaveBehind: {fileID: 0}
+  regrowAs: {fileID: 0}
+  regrowDelay: 300
+  spacing: 4

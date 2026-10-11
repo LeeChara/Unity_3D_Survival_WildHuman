@@ -26,4 +26,17 @@ public class PropData : ScriptableObject
     [Min(0.1f)] public float burnDuration = 20f;
     [Tooltip("다 타서 사라질 때 떨어뜨릴 아이템 (dropTable 대신 사용)")]
     public DropTable burnDropTable;
+
+    // 아래 프리팹들은 모두 자원 프리팹 (PropHealth가 있어야 함). 시간은 월드 시간(초) 기준이라 청크가 언로드돼도 흐름
+    [Header("재생")]
+    [Tooltip("그 자리에서 growTime이 지나면 이 자원으로 바뀜 (예: 빈 덤불 → 덤불, 밑동 → 나무). 비워두면 바뀌지 않음")]
+    public GameObject growInto;
+    [Min(0f)] public float growTime = 300f;
+    [Tooltip("파괴되면 그 자리에 바로 남는 자원 (예: 나무 → 밑동). 다 타서 사라질 때는 남기지 않음")]
+    public GameObject leaveBehind;
+    [Tooltip("파괴되면 regrowDelay 뒤 같은 청크의 다른 위치에 생기는 자원 (예: 덤불 → 빈 덤불). 비워두면 다시 생기지 않음")]
+    public GameObject regrowAs;
+    [Min(0f)] public float regrowDelay = 300f;
+    [Tooltip("재생·지진으로 새로 생길 때 다른 자원과 띄울 최소 거리")]
+    [Min(0f)] public float spacing = 2f;
 }

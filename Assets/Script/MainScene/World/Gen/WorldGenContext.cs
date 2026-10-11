@@ -30,12 +30,30 @@ public class WorldGenContext
             if (biome == null) continue;
             biomesById[biome.id] = biome;
 
-            if (biome.propSpawnTable == null) continue;
-            foreach (var entry in biome.propSpawnTable)
+            if (biome.propSpawnTable != null)
             {
-                if (entry.propPrefab != null) propsById[PropId(entry.propPrefab)] = entry.propPrefab;
+                foreach (var entry in biome.propSpawnTable) RegisterProp(entry.propPrefab);
+            }
+            if (biome.earthquakeTable != null)
+            {
+                foreach (var entry in biome.earthquakeTable) RegisterProp(entry.propPrefab);
             }
         }
+    }
+
+    // 생성 테이블에 없어도 자원끼리 이어진 종류(밑동, 빈 덤불 등)까지 저장된 번호로 찾을 수 있도록 등록
+    private void RegisterProp(GameObject prefab)
+    {
+        if (prefab == null) return;
+
+        string id = PropId(prefab);
+        if (propsById.ContainsKey(id)) return;
+        propsById[id] = prefab;
+
+        if (!prefab.TryGetComponent(out PropHealth health) || health.Data == null) return;
+        RegisterProp(health.Data.growInto);
+        RegisterProp(health.Data.leaveBehind);
+        RegisterProp(health.Data.regrowAs);
     }
 
     // 자원 프리팹의 저장용 id (PropData.id, 없으면 프리팹 이름)

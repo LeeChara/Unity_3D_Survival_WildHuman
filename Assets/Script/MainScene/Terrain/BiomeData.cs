@@ -21,6 +21,37 @@ public class BiomeData : ScriptableObject
     [Header("스폰 테이블")]
     public PropSpawnEntry[] propSpawnTable;
     public MonsterSpawnEntry[] monsterSpawnTable;
+    [Tooltip("이 바이옴에서 지진이 나면 솟아오르는 자원 (가중치는 상대값)")]
+    public WeightedProp[] earthquakeTable;
+
+    // 지진 테이블에서 가중치대로 하나 고름 (비어 있으면 null)
+    public GameObject PickEarthquakeProp(float roll01)
+    {
+        if (earthquakeTable == null) return null;
+
+        float total = 0f;
+        foreach (var entry in earthquakeTable)
+        {
+            if (entry.propPrefab != null && entry.weight > 0f) total += entry.weight;
+        }
+        if (total <= 0f) return null;
+
+        float roll = roll01 * total;
+        foreach (var entry in earthquakeTable)
+        {
+            if (entry.propPrefab == null || entry.weight <= 0f) continue;
+            roll -= entry.weight;
+            if (roll < 0f) return entry.propPrefab;
+        }
+        return null;
+    }
+}
+
+[System.Serializable]
+public struct WeightedProp
+{
+    public GameObject propPrefab;
+    [Min(0f)] public float weight;
 }
 
 [System.Serializable]

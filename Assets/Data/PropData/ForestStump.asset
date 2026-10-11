@@ -1,0 +1,36 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0895ffe710741c54aa0f3bf7c304c11e, type: 3}
+  m_Name: ForestStump
+  m_EditorClassIdentifier: Assembly-CSharp::PropData
+  id: forest_tree_stump
+  displayName: "\uB098\uBB34 \uBC11\uB3D9"
+  description: "\uB098\uBB34\uB97C \uBCA0\uACE0 \uB0A8\uC740 \uBC11\uB3D9. \uC2DC\uAC04\uC774
+    \uC9C0\uB098\uBA74 \uB2E4\uC2DC \uB098\uBB34\uB85C \uC790\uB780\uB2E4. \uBC11\uB3D9\uAE4C\uC9C0
+    \uCE90\uB0B4\uBA74 \uADF8 \uC790\uB9AC\uC5D0\uB294 \uB354 \uC774\uC0C1 \uB098\uBB34\uAC00
+    \uC790\uB77C\uC9C0 \uC54A\uB294\uB2E4."
+  maxHealth: 15
+  toolWeakness:
+    tool: 1
+    multiplier: 1.5
+  requiredTier: 0
+  dropTable: {fileID: 11400000, guid: f88fde8b5a414e6409dab3c5843cfd51, type: 2}
+  destroyEffectPrefab: {fileID: 0}
+  flammable: 0
+  burnDuration: 20
+  burnDropTable: {fileID: 0}
+  growInto: {fileID: 5971007402934984497, guid: 13938be4caa5f6741a7acf89b8b5080e, type: 3}
+  growTime: 600
+  leaveBehind: {fileID: 0}
+  regrowAs: {fileID: 0}
+  regrowDelay: 300
+  spacing: 6

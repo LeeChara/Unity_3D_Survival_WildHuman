@@ -201,7 +201,76 @@ public class CodexDetailBuilder
             view.Text($"화염 속성 공격에 맞으면 불이 붙어 {Color($"{prop.burnDuration:0.#}초", ValueColor)} 뒤 다 타서 사라짐");
             DropSection("다 탔을 때 드랍", prop.burnDropTable);
         }
+        RegrowSection(prop);
         HabitatSection(entry);
+        EarthquakeSection(entry);
+    }
+
+    // 시간이 지나 바뀌는 것, 파괴 후 남는 것, 다른 곳에 다시 생기는 것
+    private void RegrowSection(PropData prop)
+    {
+        view.Section("재생");
+        bool any = false;
+
+        if (prop.growInto != null)
+        {
+            any = true;
+            PropLink(prop.growInto, target => $"{Color(SecondsText(prop.growTime), ValueColor)} 뒤 {target}(으)로 자람");
+        }
+        if (prop.leaveBehind != null)
+        {
+            any = true;
+            PropLink(prop.leaveBehind, target => $"파괴되면 그 자리에 {target}이(가) 남음" + (prop.flammable ? " (다 타면 남지 않음)" : ""));
+        }
+        if (prop.regrowAs != null)
+        {
+            any = true;
+            PropLink(prop.regrowAs, target => $"파괴되면 {Color(SecondsText(prop.regrowDelay), ValueColor)} 뒤 같은 지역 다른 곳에 {target}이(가) 생김");
+        }
+
+        if (!any) view.Text(Color("파괴되면 다시 생기지 않음", BadColor));
+    }
+
+    // 지진 때 솟아오르는 바이옴과 확률
+    private void EarthquakeSection(CodexEntry entry)
+    {
+        bool header = false;
+        foreach (CodexEntry biomeEntry in db.GetEntries(CodexCategory.Biome))
+        {
+            var biome = (BiomeData)biomeEntry.data;
+            if (biome.earthquakeTable == null) continue;
+
+            float total = 0f, weight = 0f;
+            foreach (WeightedProp quake in biome.earthquakeTable)
+            {
+                if (quake.propPrefab == null || quake.weight <= 0f) continue;
+                total += quake.weight;
+                if (quake.propPrefab == entry.prefab) weight += quake.weight;
+            }
+            if (weight <= 0f) continue;
+
+            if (!header)
+            {
+                view.Section("지진");
+                header = true;
+            }
+            LinkLine(biomeEntry, $"{biomeEntry.name} · 지진 때 솟아오름 · {weight / total * 100f:0}%");
+        }
+    }
+
+    private void PropLink(GameObject prefab, System.Func<string, string> format)
+    {
+        CodexEntry target = db.Find(prefab);
+        string name = target != null ? target.name : prefab.name;
+        string text = format(name);
+        if (target != null) LinkLine(target, text);
+        else view.Text(text);
+    }
+
+    // 하루(낮+밤)가 600초라 분 단위로도 함께 표시
+    private static string SecondsText(float seconds)
+    {
+        return seconds >= 60f ? $"{seconds / 60f:0.#}분" : $"{seconds:0.#}초";
     }
 
     // ───────── 설치물 ─────────
@@ -378,6 +447,23 @@ public class CodexDetailBuilder
                     if (spawn.countWeights != null && spawn.countWeights.Length > 0) text += $" · {CountWeightsText(spawn)}";
                 }
                 LinkLine(prop, text);
+            }
+        }
+
+        if (biome.earthquakeTable != null && biome.earthquakeTable.Length > 0)
+        {
+            float total = 0f;
+            foreach (WeightedProp quake in biome.earthquakeTable)
+            {
+                if (quake.propPrefab != null && quake.weight > 0f) total += quake.weight;
+            }
+
+            view.Section("지진 때 솟아오르는 자원");
+            foreach (WeightedProp quake in biome.earthquakeTable)
+            {
+                CodexEntry prop = db.Find(quake.propPrefab);
+                if (prop == null || quake.weight <= 0f) continue;
+                LinkLine(prop, $"{prop.name} · {quake.weight / total * 100f:0}%");
             }
         }
 

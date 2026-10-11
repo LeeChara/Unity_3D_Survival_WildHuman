@@ -7,6 +7,8 @@ using UnityEngine;
 public class PropHealth : Health
 {
     [SerializeField] private PropData data;
+    [Tooltip("나타난 직후 이 시간(초) 동안은 피해를 받지 않음 (나무를 쓰러뜨린 공격이 그 자리에 남은 밑동까지 때리지 않도록)")]
+    [SerializeField, Min(0f)] private float spawnGrace = 0.4f;
 
     // 파괴 처리가 모두 끝난 시점을 스포너에 알림 (풀 반환용)
     // Died 구독자(HitFlash 등)가 모두 처리된 뒤에 호출되어야 비활성화 이후 색이 덮어써지지 않음
@@ -14,8 +16,11 @@ public class PropHealth : Health
 
     private ItemDropOnDeath dropOnDeath;
     private PropBurner burner;
+    private float spawnedAt;
 
     public PropData Data => data;
+    // 다 타서 쓰러졌는지 (밑동을 남기지 않는 등 일반 파괴와 구분)
+    public bool BurnedOut { get; private set; }
     public override string DisplayName => burner != null && burner.IsBurning ? $"{data.displayName} (불타는 중)" : data.displayName;
 
     protected override void Awake()
@@ -29,6 +34,8 @@ public class PropHealth : Health
     // 다 타서 사라질 때 드랍 테이블을 바꿨을 수 있으므로 재사용될 때마다 원래대로 되돌림
     private void OnEnable()
     {
+        BurnedOut = false;
+        spawnedAt = Time.time;
         Init(data.maxHealth);
         if (dropOnDeath != null) dropOnDeath.SetDropTable(data.dropTable);
     }
@@ -39,6 +46,7 @@ public class PropHealth : Health
         if (IsDead) return;
 
         if (dropOnDeath != null) dropOnDeath.SetDropTable(data.burnDropTable);
+        BurnedOut = true;
         Kill();
     }
 
@@ -50,6 +58,7 @@ public class PropHealth : Health
 
     protected override int CalculateDamage(AttackData attack)
     {
+        if (Time.time - spawnedAt < spawnGrace) return 0;
         if (!CanHarvest(attack.toolType, attack.toolTier)) return 0;
         return data.toolWeakness.CalculateDamage(attack);
     }
