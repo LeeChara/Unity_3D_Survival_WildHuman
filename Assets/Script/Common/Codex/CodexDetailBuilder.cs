@@ -99,14 +99,14 @@ public class CodexDetailBuilder
         var cookingSections = new List<string>();
         foreach (CodexDatabase.CookingLink link in cooking)
         {
-            if (!cookingSections.Contains(link.book.ActionName)) cookingSections.Add(link.book.ActionName);
+            if (!cookingSections.Contains(link.action)) cookingSections.Add(link.action);
         }
         foreach (string action in cookingSections)
         {
             view.Section(action);
             foreach (CodexDatabase.CookingLink link in cooking)
             {
-                if (link.book.ActionName == action) CookingRow(link);
+                if (link.action == action) CookingRow(link);
             }
         }
 
@@ -238,6 +238,17 @@ public class CodexDetailBuilder
             view.Section(action);
             view.Text($"재료를 들고 우클릭해 최대 {Color($"{cooker.Capacity}개", ValueColor)}까지 올리면 하나씩 차례로 아래 결과물로 바뀜");
             IReadOnlyList<CodexDatabase.CookingLink> links = db.GetCookingInBook(cooker.Book);
+            if (links.Count == 0) view.Text(Color($"{action} 레시피가 없음", BadColor));
+            foreach (CodexDatabase.CookingLink link in links) CookingRow(link);
+        }
+
+        if (entry.prefab.TryGetComponent(out Smelter smelter) && smelter.Book != null)
+        {
+            string action = smelter.Book.ActionName;
+            view.Section(action);
+            view.Text($"우클릭해 창을 열고 재료 칸 {Color($"{smelter.InputSlots}칸", ValueColor)}에 재료를 넣으면, " +
+                      $"알맞은 레시피대로 결과 칸 {Color($"{smelter.OutputSlots}칸", ValueColor)}에 쌓임");
+            IReadOnlyList<CodexDatabase.CookingLink> links = db.GetCookingInBook(smelter.Book);
             if (links.Count == 0) view.Text(Color($"{action} 레시피가 없음", BadColor));
             foreach (CodexDatabase.CookingLink link in links) CookingRow(link);
         }
@@ -467,20 +478,29 @@ public class CodexDetailBuilder
         }
     }
 
-    // [재료 → 결과 · n초 @ 모닥불] 한 줄
+    // [재료 + 재료 → 결과 · n초 @ 모닥불] 한 줄 (1개짜리는 개수 생략)
     private void CookingRow(CodexDatabase.CookingLink link)
     {
-        CookingRecipe recipe = link.recipe;
         RectTransform row = view.Row();
-        ItemChip(row, recipe.input, recipe.input.displayName);
+        CookingChips(row, link.inputs);
         view.InlineText(row, "→");
-        ItemChip(row, recipe.result, recipe.result.displayName);
-        view.InlineText(row, $"· {recipe.seconds:0.#}초");
+        CookingChips(row, link.results);
+        view.InlineText(row, $"· {link.seconds:0.#}초");
 
         if (link.station != null)
         {
             view.InlineText(row, "@");
             ItemChip(row, link.station, link.station.displayName);
+        }
+    }
+
+    private void CookingChips(RectTransform row, Ingredient[] lines)
+    {
+        for (int i = 0; i < lines.Length; i++)
+        {
+            Ingredient line = lines[i];
+            if (i > 0) view.InlineText(row, "+");
+            ItemChip(row, line.item, line.count > 1 ? $"{line.item.displayName} ×{line.count}" : line.item.displayName);
         }
     }
 

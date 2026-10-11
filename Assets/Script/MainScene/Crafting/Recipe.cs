@@ -29,3 +29,14 @@ public class CookingRecipe
     [Tooltip("다 굽는 데 걸리는 시간 (초)")]
     [Min(0.1f)] public float seconds = 10f;
 }
+
+// 재련기 재료 칸에 재료가 모두 있으면 시간이 지나 결과물로 바뀌는 재련 레시피 (SmeltingBook 에셋에 모아서 관리)
+[Serializable]
+public class SmeltingRecipe
+{
+    public Ingredient[] ingredients;
+    [Tooltip("결과물 (재련기 결과 칸 수보다 많은 종류는 넣을 수 없음)")]
+    public Ingredient[] results;
+    [Tooltip("다 재련하는 데 걸리는 시간 (초)")]
+    [Min(0.1f)] public float seconds = 20f;
+}

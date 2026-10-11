@@ -1,12 +1,13 @@
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.InputSystem;
 using UnityEngine.UI;
 
 // 인벤토리 한 칸의 표시 (아이콘 + 개수)
-// 마우스 드래그 이벤트는 받아서 InventoryUI에 칸 번호와 함께 넘기기만 함
+// 마우스 드래그·Shift+클릭 이벤트는 받아서 InventoryUI에 자기 자신(칸 묶음 + 칸 번호)과 함께 넘기기만 함
 // 이벤트를 받으려면 루트에 Raycast Target이 켜진 Graphic(투명 Image)이 있어야 함
-public class InventorySlotUI : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler, IDropHandler
+public class InventorySlotUI : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler, IDropHandler, IPointerClickHandler
 {
     [SerializeField] private Image icon;
     [SerializeField] private TMP_Text countText;
@@ -16,12 +17,16 @@ public class InventorySlotUI : MonoBehaviour, IBeginDragHandler, IDragHandler, I
     [SerializeField] private ItemTooltipTrigger tooltip;
 
     private InventoryUI owner;
-    private int index;
 
-    public void Bind(InventoryUI owner, int index)
+    // 이 칸이 보여 주는 칸 묶음과 그 안의 칸 번호
+    public ISlotContainer Container { get; private set; }
+    public int Index { get; private set; }
+
+    public void Bind(InventoryUI owner, ISlotContainer container, int index)
     {
         this.owner = owner;
-        this.index = index;
+        Container = container;
+        Index = index;
     }
 
     public void Set(ItemStack stack)
@@ -48,8 +53,16 @@ public class InventorySlotUI : MonoBehaviour, IBeginDragHandler, IDragHandler, I
         if (tooltip != null) tooltip.enabled = value;
     }
 
-    public void OnBeginDrag(PointerEventData eventData) => owner.BeginDrag(index, eventData);
+    public void OnBeginDrag(PointerEventData eventData) => owner.BeginDrag(this, eventData);
     public void OnDrag(PointerEventData eventData) => owner.Drag(eventData);
     public void OnEndDrag(PointerEventData eventData) => owner.EndDrag(eventData);
-    public void OnDrop(PointerEventData eventData) => owner.Drop(index, eventData);
+    public void OnDrop(PointerEventData eventData) => owner.Drop(this, eventData);
+
+    // Shift+좌클릭: 묶음 전체를 반대편(재련기 ↔ 인벤토리, 또는 핫바 ↔ 가방)으로 옮김
+    public void OnPointerClick(PointerEventData eventData)
+    {
+        if (eventData.button != PointerEventData.InputButton.Left || owner == null) return;
+        if (Keyboard.current == null || !Keyboard.current.shiftKey.isPressed) return;
+        owner.QuickMove(this);
+    }
 }

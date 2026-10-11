@@ -125,3 +125,27 @@ MonoBehaviour:
     - item: {fileID: 11400000, guid: 731a55263738a544a962dcfeeda3ff4f, type: 2}
       count: 2
     requiredStation: {fileID: 0}
+  - result: {fileID: 11400000, guid: 78d8786a02dabd441937cea3a7b4c076, type: 2}
+    resultCount: 1
+    ingredients:
+    - item: {fileID: 11400000, guid: 99f39533a967d9b409e7885afb4eec06, type: 2}
+      count: 3
+    - item: {fileID: 11400000, guid: c703e2d1b4e5f2f4fb3396ce1a4f262e, type: 2}
+      count: 3
+    requiredStation: {fileID: 0}
+  - result: {fileID: 11400000, guid: ef7f3ecaea4b5d74f95c10dc0d343cc2, type: 2}
+    resultCount: 1
+    ingredients:
+    - item: {fileID: 11400000, guid: 99f39533a967d9b409e7885afb4eec06, type: 2}
+      count: 3
+    - item: {fileID: 11400000, guid: c703e2d1b4e5f2f4fb3396ce1a4f262e, type: 2}
+      count: 3
+    requiredStation: {fileID: 0}
+  - result: {fileID: 11400000, guid: 62d8d0031646d9944956301c75f0ee50, type: 2}
+    resultCount: 1
+    ingredients:
+    - item: {fileID: 11400000, guid: 99f39533a967d9b409e7885afb4eec06, type: 2}
+      count: 4
+    - item: {fileID: 11400000, guid: c703e2d1b4e5f2f4fb3396ce1a4f262e, type: 2}
+      count: 2
+    requiredStation: {fileID: 0}

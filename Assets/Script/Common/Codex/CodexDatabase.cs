@@ -19,6 +19,7 @@ public class CodexDatabase : ScriptableObject
     [SerializeField] private ItemData[] items;
     [SerializeField] private RecipeBook recipeBook;
     [SerializeField] private CookingBook[] cookingBooks;
+    [SerializeField] private SmeltingBook[] smeltingBooks;
     [SerializeField] private PropHealth[] props;
     [SerializeField] private StructureHealth[] structures;
     [SerializeField] private MonsterAI[] monsters;
@@ -40,17 +41,23 @@ public class CodexDatabase : ScriptableObject
         }
     }
 
-    // 굽기·재련 레시피 하나와, 그 레시피를 쓰는 책·설치물 (설치물이 없으면 null)
+    // 굽기(CookingBook)·재련(SmeltingBook) 레시피 하나를 같은 모양으로 펼친 것과, 그 레시피를 쓰는 책·설치물 (설치물이 없으면 null)
     public readonly struct CookingLink
     {
-        public readonly CookingBook book;
-        public readonly CookingRecipe recipe;
+        public readonly ScriptableObject book;
+        public readonly string action;
+        public readonly Ingredient[] inputs;
+        public readonly Ingredient[] results;
+        public readonly float seconds;
         public readonly ItemData station;
 
-        public CookingLink(CookingBook book, CookingRecipe recipe, ItemData station)
+        public CookingLink(ScriptableObject book, string action, Ingredient[] inputs, Ingredient[] results, float seconds, ItemData station)
         {
             this.book = book;
-            this.recipe = recipe;
+            this.action = action;
+            this.inputs = inputs;
+            this.results = results;
+            this.seconds = seconds;
             this.station = station;
         }
     }
@@ -85,7 +92,7 @@ public class CodexDatabase : ScriptableObject
     private readonly Dictionary<ItemData, List<Recipe>> stationRecipes = new();
     private readonly Dictionary<ItemData, List<CookingLink>> cookingFor = new();
     private readonly Dictionary<ItemData, List<CookingLink>> cookingUsing = new();
-    private readonly Dictionary<CookingBook, List<CookingLink>> cookingInBook = new();
+    private readonly Dictionary<ScriptableObject, List<CookingLink>> cookingInBook = new();
     private readonly Dictionary<ItemData, List<DropSource>> dropSources = new();
     private readonly Dictionary<CodexEntry, List<Habitat>> habitats = new();
 
@@ -111,7 +118,7 @@ public class CodexDatabase : ScriptableObject
     public IReadOnlyList<Recipe> GetRecipesAtStation(ItemData stationItem) => Get(stationRecipes, stationItem, NoRecipes);
     public IReadOnlyList<CookingLink> GetCookingFor(ItemData item) => Get(cookingFor, item, NoCooking);
     public IReadOnlyList<CookingLink> GetCookingUsing(ItemData item) => Get(cookingUsing, item, NoCooking);
-    public IReadOnlyList<CookingLink> GetCookingInBook(CookingBook book) => Get(cookingInBook, book, NoCooking);
+    public IReadOnlyList<CookingLink> GetCookingInBook(ScriptableObject book) => Get(cookingInBook, book, NoCooking);
     public IReadOnlyList<DropSource> GetDropSources(ItemData item) => Get(dropSources, item, NoDrops);
     public IReadOnlyList<Habitat> GetHabitats(CodexEntry entry) => Get(habitats, entry, NoHabitats);
 
@@ -221,11 +228,12 @@ public class CodexDatabase : ScriptableObject
 
     private void BuildCookingLinks()
     {
-        // 책마다 그 책을 쓰는 Cooker 설치물 (같은 책을 여러 설치물이 쓰면 먼저 찾은 것)
-        var stations = new Dictionary<CookingBook, ItemData>();
+        // 책마다 그 책을 쓰는 Cooker·Smelter 설치물 (같은 책을 여러 설치물이 쓰면 먼저 찾은 것)
+        var stations = new Dictionary<ScriptableObject, ItemData>();
         foreach (StructureHealth structure in NonNull(structures))
         {
             if (structure.TryGetComponent(out Cooker cooker) && cooker.Book != null) stations.TryAdd(cooker.Book, structure.SourceItem);
+            if (structure.TryGetComponent(out Smelter smelter) && smelter.Book != null) stations.TryAdd(smelter.Book, structure.SourceItem);
         }
 
         foreach (CookingBook book in NonNull(cookingBooks))
@@ -235,12 +243,46 @@ public class CodexDatabase : ScriptableObject
             {
                 if (recipe.input == null || recipe.result == null) continue;
 
-                var link = new CookingLink(book, recipe, station);
-                AddTo(cookingFor, recipe.result, link);
-                AddTo(cookingUsing, recipe.input, link);
-                AddTo(cookingInBook, book, link);
+                var inputs = new[] { new Ingredient { item = recipe.input, count = 1 } };
+                var results = new[] { new Ingredient { item = recipe.result, count = 1 } };
+                AddCookingLink(new CookingLink(book, book.ActionName, inputs, results, recipe.seconds, station));
             }
         }
+
+        foreach (SmeltingBook book in NonNull(smeltingBooks))
+        {
+            stations.TryGetValue(book, out ItemData station);
+            foreach (SmeltingRecipe recipe in book.Recipes)
+            {
+                if (!IsComplete(recipe.ingredients) || !IsComplete(recipe.results)) continue;
+                AddCookingLink(new CookingLink(book, book.ActionName, recipe.ingredients, recipe.results, recipe.seconds, station));
+            }
+        }
+    }
+
+    private void AddCookingLink(CookingLink link)
+    {
+        AddTo(cookingInBook, link.book, link);
+        // 같은 레시피에 같은 아이템이 두 줄이어도 한 번만 표시
+        foreach (Ingredient result in link.results) AddOnce(cookingFor, result.item, link);
+        foreach (Ingredient input in link.inputs) AddOnce(cookingUsing, input.item, link);
+    }
+
+    private static void AddOnce(Dictionary<ItemData, List<CookingLink>> map, ItemData item, CookingLink link)
+    {
+        if (map.TryGetValue(item, out List<CookingLink> list) && list.Exists(l => l.inputs == link.inputs)) return;
+        AddTo(map, item, link);
+    }
+
+    // 비어 있지 않고 모든 줄에 아이템이 지정됨
+    private static bool IsComplete(Ingredient[] lines)
+    {
+        if (lines == null || lines.Length == 0) return false;
+        foreach (Ingredient line in lines)
+        {
+            if (line.item == null) return false;
+        }
+        return true;
     }
 
     private void BuildDropLinks()
@@ -368,6 +410,7 @@ public class CodexDatabase : ScriptableObject
         RecipeBook[] books = FindAssets<RecipeBook>("t:RecipeBook");
         recipeBook = books.Length > 0 ? books[0] : null;
         cookingBooks = FindAssets<CookingBook>("t:CookingBook");
+        smeltingBooks = FindAssets<SmeltingBook>("t:SmeltingBook");
 
         var foundProps = new List<PropHealth>();
         var foundStructures = new List<StructureHealth>();
@@ -396,7 +439,7 @@ public class CodexDatabase : ScriptableObject
         UnityEditor.EditorUtility.SetDirty(this);
         Debug.Log($"[CodexDatabase] 아이템 {items.Length}, 자원 {props.Length}, 설치물 {structures.Length}, " +
                   $"몬스터 {monsters.Length}, 바이옴 {biomes.Length}, 레시피북 {(recipeBook != null ? recipeBook.name : "없음")}, " +
-                  $"굽기·재련 책 {cookingBooks.Length}");
+                  $"굽기 책 {cookingBooks.Length}, 재련 책 {smeltingBooks.Length}");
     }
 
     private static int ItemOrder(ItemData item) => item switch

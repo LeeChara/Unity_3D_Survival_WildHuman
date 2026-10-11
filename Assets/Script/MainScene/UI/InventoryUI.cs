@@ -25,7 +25,12 @@ public class InventoryUI : MonoBehaviour, IScrollHandler
     // 열린 인벤토리 영역 위에서 휠을 굴림 (양수: 위로, 음수: 아래로). 제작 창 선택 이동용
     public event Action<float> Scrolled;
 
-    // 드래그 중인 칸 번호 (-1이면 드래그 중 아님)와 들고 있는 개수
+    // 인벤토리와 함께 열린 다른 칸 묶음 (재련기 등, 없으면 null)과 그 창 영역
+    public ISlotContainer External { get; private set; }
+    private RectTransform externalArea;
+
+    // 드래그 중인 칸 묶음·칸 번호 (-1이면 드래그 중 아님)와 들고 있는 개수
+    private ISlotContainer dragContainer;
     private int dragFrom = -1;
     private int dragAmount;
     private bool droppedOnSlot;
@@ -35,7 +40,7 @@ public class InventoryUI : MonoBehaviour, IScrollHandler
     {
         for (int i = 0; i < slotUIs.Length; i++)
         {
-            slotUIs[i].Bind(this, i);
+            slotUIs[i].Bind(this, inventory, i);
         }
 
         // 시작 시 닫힌 상태로 통일
@@ -97,21 +102,31 @@ public class InventoryUI : MonoBehaviour, IScrollHandler
         selectionHighlight.SetAsFirstSibling();
     }
 
-    // 좌클릭 드래그는 전부, 우클릭 드래그는 절반(올림)을 들어 올림
-    public void BeginDrag(int index, PointerEventData eventData)
+    // 재련기 창처럼 인벤토리와 함께 쓰는 칸 묶음을 연결 (null이면 해제)
+    // 영역 안에서 놓으면 던지지 않음. 해제할 때 그 묶음의 칸을 드래그 중이었으면 취소
+    public void SetExternal(ISlotContainer container, RectTransform area)
     {
-        ItemStack stack = inventory.Get(index);
+        if (dragFrom >= 0 && dragContainer == External && External != container) CancelDrag();
+        External = container;
+        externalArea = container != null ? area : null;
+    }
+
+    // 좌클릭 드래그는 전부, 우클릭 드래그는 절반(올림)을 들어 올림
+    public void BeginDrag(InventorySlotUI slot, PointerEventData eventData)
+    {
+        ItemStack stack = slot.Container != null ? slot.Container.Get(slot.Index) : null;
         bool validButton = eventData.button == PointerEventData.InputButton.Left
             || eventData.button == PointerEventData.InputButton.Right;
 
-        if (stack.IsEmpty || !validButton)
+        if (stack == null || stack.IsEmpty || !validButton)
         {
             // 드래그 자체를 취소해 Drag·Drop·EndDrag가 오지 않게 함
             eventData.pointerDrag = null;
             return;
         }
 
-        dragFrom = index;
+        dragContainer = slot.Container;
+        dragFrom = slot.Index;
         droppedOnSlot = false;
         dragAmount = eventData.button == PointerEventData.InputButton.Left
             ? stack.count
@@ -123,7 +138,7 @@ public class InventoryUI : MonoBehaviour, IScrollHandler
 
         // 원래 칸과 같은 크기로 표시
         var previewRect = (RectTransform)dragPreview.transform;
-        previewRect.sizeDelta = ((RectTransform)slotUIs[index].transform).rect.size;
+        previewRect.sizeDelta = ((RectTransform)slot.transform).rect.size;
         previewRect.position = eventData.position;
         dragPreview.gameObject.SetActive(true);
 
@@ -138,11 +153,11 @@ public class InventoryUI : MonoBehaviour, IScrollHandler
     }
 
     // Drop은 놓은 칸에서 EndDrag보다 먼저 호출됨
-    public void Drop(int index, PointerEventData eventData)
+    public void Drop(InventorySlotUI slot, PointerEventData eventData)
     {
-        if (dragFrom < 0) return;
+        if (dragFrom < 0 || slot.Container == null) return;
         droppedOnSlot = true;
-        inventory.Move(dragFrom, index, dragAmount);
+        SlotTransfer.Move(dragContainer, dragFrom, slot.Container, slot.Index, dragAmount);
     }
 
     // 칸에 놓이지 않았을 때: 인벤토리 영역 안이면 취소, 밖이면 들고 있던 만큼 던짐
@@ -150,12 +165,36 @@ public class InventoryUI : MonoBehaviour, IScrollHandler
     {
         if (dragFrom >= 0 && !droppedOnSlot && !IsOverInventoryArea(eventData.position))
         {
-            ItemData item = inventory.Get(dragFrom).item;
-            int removed = inventory.Remove(dragFrom, dragAmount);
-            thrower.Throw(item, removed, eventData.position);
+            ItemData item = dragContainer.Get(dragFrom).item;
+            int removed = SlotTransfer.Remove(dragContainer, dragFrom, dragAmount);
+            if (removed > 0) thrower.Throw(item, removed, eventData.position);
         }
 
         CancelDrag();
+    }
+
+    // Shift+클릭: 함께 열린 칸 묶음이 있으면 인벤토리 ↔ 그 묶음, 없으면 핫바 ↔ 가방으로 묶음 전체를 옮김
+    public void QuickMove(InventorySlotUI slot)
+    {
+        if (!IsOpen || dragFrom >= 0 || slot.Container == null) return;
+
+        int hotbarEnd = Mathf.Min(Inventory.SlotsPerRow, inventory.SlotCount);
+        if (slot.Container != (ISlotContainer)inventory)
+        {
+            SlotTransfer.QuickMove(slot.Container, slot.Index, inventory, 0, inventory.SlotCount);
+        }
+        else if (External != null)
+        {
+            SlotTransfer.QuickMove(inventory, slot.Index, External, 0, External.SlotCount);
+        }
+        else if (slot.Index < hotbarEnd)
+        {
+            SlotTransfer.QuickMove(inventory, slot.Index, inventory, hotbarEnd, inventory.SlotCount);
+        }
+        else
+        {
+            SlotTransfer.QuickMove(inventory, slot.Index, inventory, 0, hotbarEnd);
+        }
     }
 
     // 핫바 선택(PlayerHotbar)은 같은 조건일 때 휠을 무시하므로 둘이 동시에 움직이지 않음
@@ -176,11 +215,13 @@ public class InventoryUI : MonoBehaviour, IScrollHandler
             if (!area.gameObject.activeInHierarchy) continue;
             if (RectTransformUtility.RectangleContainsScreenPoint(area, screenPos, null)) return true;
         }
-        return false;
+        return externalArea != null && externalArea.gameObject.activeInHierarchy
+            && RectTransformUtility.RectangleContainsScreenPoint(externalArea, screenPos, null);
     }
 
     private void CancelDrag()
     {
+        dragContainer = null;
         dragFrom = -1;
         dragAmount = 0;
         droppedOnSlot = false;

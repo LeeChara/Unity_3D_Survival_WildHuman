@@ -9,11 +9,24 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4efde5b5c98615a44b21dddc6c3da300, type: 3}
+  m_Script: {fileID: 11500000, guid: 6432f33bce648174dac160cf1499c755, type: 3}
   m_Name: SmeltingBook
-  m_EditorClassIdentifier: Assembly-CSharp::CookingBook
+  m_EditorClassIdentifier: Assembly-CSharp::SmeltingBook
   actionName: "\uC7AC\uB828"
   recipes:
-  - input: {fileID: 11400000, guid: ea4de77ac551cda4d82f99f67f69dfcf, type: 2}
-    result: {fileID: 11400000, guid: 731a55263738a544a962dcfeeda3ff4f, type: 2}
+  - ingredients:
+    - item: {fileID: 11400000, guid: ea4de77ac551cda4d82f99f67f69dfcf, type: 2}
+      count: 1
+    results:
+    - item: {fileID: 11400000, guid: 731a55263738a544a962dcfeeda3ff4f, type: 2}
+      count: 1
+    seconds: 20
+  - ingredients:
+    - item: {fileID: 11400000, guid: 731a55263738a544a962dcfeeda3ff4f, type: 2}
+      count: 2
+    - item: {fileID: 11400000, guid: 2a6cd0d6fd44a5b439222b1730b9fc7f, type: 2}
+      count: 1
+    results:
+    - item: {fileID: 11400000, guid: c703e2d1b4e5f2f4fb3396ce1a4f262e, type: 2}
+      count: 1
     seconds: 20
