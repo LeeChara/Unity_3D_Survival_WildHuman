@@ -1,6 +1,6 @@
 // 바닥 그림자 (ShadowCaster가 바닥에 눕힌 사각형 스프라이트에 사용)
 // UV로 타원을 그리고, 색·알파는 SpriteRenderer.color로 받음
-// 해 그림자 머티리얼(_UseSunAlpha = 1)은 시간대 진하기 전역값 _ShadowSunAlpha를 함께 곱함
+// 해 그림자 머티리얼(_UseSunAlpha = 1)은 시간대 진하기 전역값 _ShadowSunAlpha와 구름(CloudShadow.hlsl)을 함께 곱함
 // 스텐실로 그림자끼리 겹친 곳은 한 번만 어두워지게 함 (먼저 그린 그림자가 차지)
 Shader "WildHuman/GroundShadow"
 {
@@ -40,6 +40,7 @@ Shader "WildHuman/GroundShadow"
             #pragma fragment Frag
 
             #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Core.hlsl"
+            #include "CloudShadow.hlsl"
 
             CBUFFER_START(UnityPerMaterial)
                 float _EdgeSoftness;
@@ -61,6 +62,7 @@ Shader "WildHuman/GroundShadow"
                 float4 positionCS : SV_POSITION;
                 float4 color : COLOR;
                 float2 uv : TEXCOORD0;
+                float2 groundXZ : TEXCOORD1;
             };
 
             Varyings Vert(Attributes input)
@@ -70,6 +72,7 @@ Shader "WildHuman/GroundShadow"
                 // URP는 SpriteRenderer.color를 정점 색이 아닌 unity_SpriteColor로 넘김
                 output.color = input.color * unity_SpriteColor;
                 output.uv = input.uv;
+                output.groundXZ = TransformObjectToWorld(input.positionOS.xyz).xz;
                 return output;
             }
 
@@ -78,9 +81,10 @@ Shader "WildHuman/GroundShadow"
                 // 중심 0 → 테두리 1
                 float d = length(input.uv * 2.0 - 1.0);
                 float mask = 1.0 - smoothstep(1.0 - _EdgeSoftness, 1.0, d);
-                // 해 그림자는 시간대 진하기를 곱하고, 조명 그림자는 정점 색 알파만 사용
-                // 구름 그림자가 생기면 해 그림자 쪽에 구름 값을 함께 곱함
-                float alpha = input.color.a * mask * lerp(1.0, _ShadowSunAlpha, _UseSunAlpha);
+                // 해 그림자는 시간대 진하기를 곱하고, 구름이 해를 가린 곳에서는 옅어짐
+                // 조명 그림자는 정점 색 알파만 사용
+                float sun = _ShadowSunAlpha * (1.0 - CloudCover(input.groundXZ));
+                float alpha = input.color.a * mask * lerp(1.0, sun, _UseSunAlpha);
                 // 타원 밖이나 완전히 투명한 그림자(밤의 해 그림자 등)는 스텐실을 차지하지 않도록 버림
                 clip(alpha - 0.001);
 

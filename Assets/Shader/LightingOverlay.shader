@@ -1,5 +1,6 @@
 // 조명 오버레이 (Full Screen Pass Renderer Feature에서 사용)
 // 픽셀마다 카메라 광선이 지면과 만나는 점을 구해, 광원과의 거리로 밝기를 계산하고 화면 색에 곱함
+// 낮에는 같은 지면 위치의 구름 그림자(CloudShadow.hlsl)로 어둠 색을 줄임
 // 값은 LightingSystem이 전역으로 넘겨줌 (같은 계산을 LightingSystem.GetLightLevel에서도 사용)
 Shader "Hidden/WildHuman/LightingOverlay"
 {
@@ -18,6 +19,7 @@ Shader "Hidden/WildHuman/LightingOverlay"
 
             #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Core.hlsl"
             #include "Packages/com.unity.render-pipelines.core/Runtime/Utilities/Blit.hlsl"
+            #include "CloudShadow.hlsl"
 
             // LightingSetting.MaxLights와 같아야 함
             #define MAX_LIGHTS 32
@@ -51,6 +53,9 @@ Shader "Hidden/WildHuman/LightingOverlay"
                 float t = (_OverlayGroundHeight - origin.y) / min(ray.y, -1e-4);
                 float2 ground = origin.xz + ray.xz * max(t, 0);
 
+                // 구름 그림자는 해가 만드는 밝기(어둠 색)만 줄이므로, 모닥불 등 광원 빛은 구름 아래서도 그대로
+                float3 ambient = _OverlayAmbient.rgb * (1 - CloudCover(ground) * _CloudParams.w);
+
                 float3 lights = 0;
                 for (int i = 0; i < _OverlayLightCount; i++)
                 {
@@ -59,7 +64,7 @@ Shader "Hidden/WildHuman/LightingOverlay"
                     lights += _OverlayLightColor[i].rgb * (f * f * (3 - 2 * f)) * l.w;
                 }
 
-                float3 light = saturate(max(_OverlayAmbient.rgb, lights));
+                float3 light = saturate(max(ambient, lights));
                 if (_OverlaySteps > 0)
                     light = ceil(light * _OverlaySteps) / _OverlaySteps;
 

@@ -25,6 +25,8 @@ public class DayNightCycle : MonoBehaviour, ISaveParticipant
     public int DayCount { get; private set; } = 1;
     // 월드가 시작된 뒤 흐른 게임 시간(초). 자원 재생·지진처럼 청크가 언로드돼도 이어져야 하는 시간의 기준
     public float WorldTime => (DayCount - 1) * CycleDuration + cycleTime;
+    // 하루(낮 + 밤) 안에서의 진행도 0~1
+    public float CycleProgress => cycleTime / CycleDuration;
     // 현재 페이즈(낮 또는 밤) 안에서의 진행도 0~1
     public float PhaseProgress => IsNight
         ? (cycleTime - Rule.dayDuration) / Rule.nightDuration

@@ -35,6 +35,23 @@ public class ShadowSetting : ScriptableObject
     [Tooltip("높이 1당 그림자 길이: 빛 반경 끝")]
     [Min(0f)] public float farLightLength = 1.5f;
 
+    [Header("구름 그림자")]
+    [Tooltip("이음매 없이 반복되는 노이즈 (값이 0~1에 고르게 퍼져 있어야 덮는 비율 ≈ 구름 면적). CPU 조회를 위해 Read/Write 필요")]
+    public Texture2D cloudTexture;
+    [Tooltip("노이즈 한 장이 덮는 지면 크기 (m). 구름 하나는 대략 이 값의 1/4")]
+    [Min(1f)] public float cloudTileSize = 160f;
+    [Tooltip("바람이 부는 방향 (월드 Y 각도)")]
+    public float windYaw = 60f;
+    [Tooltip("구름이 흘러가는 속도 (m/초)")]
+    [Min(0f)] public float windSpeed = 1.5f;
+    [Tooltip("날마다 정해지는 하늘을 덮는 비율의 범위 (0 = 맑음). 하루 동안 다음 날 값으로 서서히 바뀜")]
+    [Range(0f, 1f)] public float minCoverage = 0.1f;
+    [Range(0f, 1f)] public float maxCoverage = 0.6f;
+    [Tooltip("구름 가장자리가 퍼지는 정도")]
+    [Range(0.01f, 0.5f)] public float cloudSoftness = 0.12f;
+    [Tooltip("구름 아래 지면이 어두워지는 정도 (낮 기준, 밤에는 사라짐)")]
+    [Range(0f, 1f)] public float cloudDarkness = 0.25f;
+
     [Header("지면")]
     [Tooltip("발밑 높이에서 살짝 띄워 지면과 겹쳐 깜빡이지 않게 함")]
     [Min(0f)] public float lift = 0.02f;

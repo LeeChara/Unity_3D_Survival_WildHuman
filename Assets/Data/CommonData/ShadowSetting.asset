@@ -22,4 +22,12 @@ MonoBehaviour:
   lightAlpha: 0.85
   nearLightLength: 0.3
   farLightLength: 1.5
+  cloudTexture: {fileID: 2800000, guid: 85930dfff55d40e4ea56839b43996389, type: 3}
+  cloudTileSize: 80
+  windYaw: 60
+  windSpeed: 1.5
+  minCoverage: 0.1
+  maxCoverage: 0.6
+  cloudSoftness: 0.12
+  cloudDarkness: 0.4
   lift: 0.02

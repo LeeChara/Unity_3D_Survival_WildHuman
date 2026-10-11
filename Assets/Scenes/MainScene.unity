@@ -34588,6 +34588,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ShadowSystem
   setting: {fileID: 11400000, guid: 8d5a7e0a7430e1847bb4c17cf63cfbf7, type: 2}
   dayNightCycle: {fileID: 365404932}
+  worldState: {fileID: 838106085}
 --- !u!1 &1652484435
 GameObject:
   m_ObjectHideFlags: 0
