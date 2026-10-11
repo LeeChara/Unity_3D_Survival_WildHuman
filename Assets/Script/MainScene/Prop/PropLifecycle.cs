@@ -159,7 +159,7 @@ public class PropLifecycle : MonoBehaviour
     {
         if (!worldState.IsInside(position)) return false;
         if (requireHidden && IsVisible(position)) return false;
-        if (spacing > 0f && HasPropNear(position, spacing)) return false;
+        if (HasPropNear(position, spacing)) return false;
 
         if (structureClearance > 0f &&
             Physics.CheckSphere(position, structureClearance, structureLayers, QueryTriggerInteraction.Ignore)) return false;
@@ -170,12 +170,13 @@ public class PropLifecycle : MonoBehaviour
     }
 
     // 청크 데이터 기준이라 로드되지 않은 청크의 자원도 확인함 (경계 안 청크만)
+    // 바닥을 넓게 차지하는 자원(PropFootprint) 근처는 distance보다 멀어도 막음
     private bool HasPropNear(Vector3 position, float distance)
     {
-        Vector3 reach = new(distance, 0f, distance);
+        float range = Mathf.Max(distance, PropFootprint.MaxRadius);
+        Vector3 reach = new(range, 0f, range);
         Vector2Int min = worldState.WorldToChunk(position - reach);
         Vector2Int max = worldState.WorldToChunk(position + reach);
-        float distanceSqr = distance * distance;
 
         for (int x = min.x; x <= max.x; x++)
         {
@@ -189,7 +190,9 @@ public class PropLifecycle : MonoBehaviour
                 {
                     float dx = chunk.px[i] - position.x;
                     float dz = chunk.pz[i] - position.z;
-                    if (dx * dx + dz * dz < distanceSqr) return true;
+                    float limit = Mathf.Max(distance, PropFootprint.RadiusOf(worldState.GetPropPrefab(chunk.types[i]),
+                        new Vector3(chunk.px[i], 0f, chunk.pz[i])));
+                    if (dx * dx + dz * dz < limit * limit) return true;
                 }
             }
         }

@@ -1,0 +1,67 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 54bff54710e235148969b485c5de088d, type: 3}
+  m_Name: Volcanic
+  m_EditorClassIdentifier: Assembly-CSharp::BiomeData
+  id: volcanic
+  biomeName: "\uD654\uC0B0 \uC9C0\uB300"
+  description: "\uC7AC\uC640 \uD604\uBB34\uC554\uC73C\uB85C \uB4A4\uB36E\uC778 \uBA54\uB9C8\uB978
+    \uB545. \uC720\uD669 \uAD11\uB9E5\uACFC \uD751\uC694\uC11D\uC774 \uB9CE\uACE0
+    \uB098\uBB34\uB294 \uC790\uB77C\uC9C0 \uC54A\uB294\uB2E4."
+  planeTexture: {fileID: 2800000, guid: f18fddce124bbf248a8243052c49bc40, type: 3}
+  tilingScale: 5
+  blendRange: 1
+  minThreshold: 0.7
+  maxThreshold: 1
+  propSpawnTable:
+  - propPrefab: {fileID: 5058150033251958606, guid: b6b44b7ae4c777643bf914eb58a63134, type: 3}
+    minCount: 10
+    maxCount: 15
+    countWeights: []
+    minSpacing: 3
+    clusterRadius: 0
+  - propPrefab: {fileID: 3541052992667228540, guid: b6fb0e1c0ea09614fb0939b3c2b12fc4, type: 3}
+    minCount: 4
+    maxCount: 8
+    countWeights: []
+    minSpacing: 3
+    clusterRadius: 0
+  - propPrefab: {fileID: 4672482584563935786, guid: 32af5dfbb465ca64b8045adcff7c5b47, type: 3}
+    minCount: 3
+    maxCount: 6
+    countWeights: []
+    minSpacing: 1
+    clusterRadius: 15
+  - propPrefab: {fileID: 4672482584563935786, guid: 1ffa00c871a33dc49ab70d1d57ae92d7, type: 3}
+    minCount: 0
+    maxCount: 2
+    countWeights:
+    - count: 0
+      weight: 80
+    - count: 1
+      weight: 15
+    - count: 2
+      weight: 5
+    minSpacing: 1
+    clusterRadius: 8
+  monsterSpawnTable:
+  - monsterPrefab: {fileID: 909642921054426830, guid: 2d811b3e2425f154caf93e94ce34eb93, type: 3}
+    weight: 1
+  earthquakeTable:
+  - propPrefab: {fileID: 4672482584563935786, guid: 32af5dfbb465ca64b8045adcff7c5b47, type: 3}
+    weight: 40
+  - propPrefab: {fileID: 3541052992667228540, guid: b6fb0e1c0ea09614fb0939b3c2b12fc4, type: 3}
+    weight: 30
+  - propPrefab: {fileID: 5058150033251958606, guid: b6b44b7ae4c777643bf914eb58a63134, type: 3}
+    weight: 20
+  - propPrefab: {fileID: 4672482584563935786, guid: 1ffa00c871a33dc49ab70d1d57ae92d7, type: 3}
+    weight: 10

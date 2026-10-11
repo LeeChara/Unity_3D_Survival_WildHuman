@@ -39,21 +39,21 @@ public class SpawnPointStep : WorldGenStep
 
     private bool IsClear(WorldGenContext ctx, Vector3 position)
     {
-        float clearanceSqr = clearance * clearance;
         Vector2Int center = ctx.WorldToChunk(position);
+        // 여러 청크에 걸친 용암 호수까지 검사하도록 가장 큰 점유 반경만큼 주변 청크를 봄
+        int range = Mathf.CeilToInt(PropFootprint.MaxRadius / ctx.ChunkSize);
 
-        // 청크 경계 근처 자원도 검사하도록 주변 9개 청크
-        for (int dx = -1; dx <= 1; dx++)
+        for (int dx = -range; dx <= range; dx++)
         {
-            for (int dz = -1; dz <= 1; dz++)
+            for (int dz = -range; dz <= range; dz++)
             {
                 if (!ctx.map.TryGetChunk(center + new Vector2Int(dx, dz), out ChunkData chunk)) continue;
 
                 for (int i = 0; i < chunk.PropCount(); i++)
                 {
-                    float x = chunk.px[i] - position.x;
-                    float z = chunk.pz[i] - position.z;
-                    if (x * x + z * z < clearanceSqr) return false;
+                    var prop = new Vector3(chunk.px[i], 0f, chunk.pz[i]);
+                    float limit = clearance + PropFootprint.RadiusOf(ctx.GetPropPrefab(chunk.types[i]), prop);
+                    if ((prop - position).sqrMagnitude < limit * limit) return false;
                 }
             }
         }

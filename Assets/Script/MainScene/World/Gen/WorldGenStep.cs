@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 // 월드 생성 단계 하나 (바이옴, 자원 배치, 시작 지점, 이후 구조물 등)
@@ -16,4 +17,14 @@ public abstract class WorldGenStep : ScriptableObject
 
     // 모든 청크를 채운 뒤 맵 전체를 보고 처리 (경계 안 생성 시에만 호출)
     public virtual void GenerateMap(WorldGenContext ctx) { }
+
+    // 바이옴 테이블에 없지만 이 단계가 놓는 자원 (세이브 번호로 프리팹을 찾을 수 있도록 등록)
+    public virtual IEnumerable<GameObject> ReferencedProps => System.Array.Empty<GameObject>();
+}
+
+// 다른 청크에 놓였지만 이 청크까지 넓게 차지하는 자원을 알려주는 단계 (예: 여러 청크에 걸친 용암 호수)
+// 자원 배치 단계가 이 범위를 피해서 놓음
+public interface IFootprintProvider
+{
+    void AddFootprints(WorldGenContext ctx, Vector2Int coord, List<Vector3> positions, List<float> radii);
 }

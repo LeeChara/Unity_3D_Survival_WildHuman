@@ -12,6 +12,8 @@ public class PropBurner : MonoBehaviour
     [SerializeField] private SpriteRenderer flame;
     [Tooltip("타는 동안 켜지는 광원 (처음에는 꺼 둠)")]
     [SerializeField] private LightSource fireLight;
+    [Tooltip("타는 동안 활성화되는 접촉 화염 피해 범위 (FireHazard 오브젝트, 처음에는 꺼 둠)")]
+    [SerializeField] private GameObject fireHazard;
     [Tooltip("그을림 색을 적용할 피격 반짝임 (원래 색 대신 이 색으로 돌아가도록)")]
     [SerializeField] private HitFlash hitFlash;
     [Tooltip("다 탔을 때의 색 (타는 동안 흰색에서 이 색으로 바뀜)")]
@@ -75,6 +77,7 @@ public class PropBurner : MonoBehaviour
         elapsed = 0f;
         flame.enabled = true;
         if (fireLight != null) fireLight.enabled = true;
+        if (fireHazard != null) fireHazard.SetActive(true);
     }
 
     private void Extinguish()
@@ -83,6 +86,7 @@ public class PropBurner : MonoBehaviour
         elapsed = 0f;
         flame.enabled = false;
         if (fireLight != null) fireLight.enabled = false;
+        if (fireHazard != null) fireHazard.SetActive(false);
         // 쓰러진 직후에는 HitFlash가 색을 바로 바꾸지 않고, 풀에 반환될 때(OnDisable) 흰색으로 돌아감
         if (hitFlash != null) hitFlash.SetBaseColor(Color.white);
     }

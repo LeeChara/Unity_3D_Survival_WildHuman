@@ -1,0 +1,35 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0895ffe710741c54aa0f3bf7c304c11e, type: 3}
+  m_Name: ForestSulfurOre
+  m_EditorClassIdentifier: Assembly-CSharp::PropData
+  id: forest_sulfur_ore
+  displayName: "\uC720\uD669 \uAD11\uB9E5"
+  description: "\uB178\uB780 \uACB0\uC815\uC774 \uBC15\uD78C \uAD11\uB9E5. \uD751\uC694\uC11D
+    \uACE1\uAD2D\uC774 \uC774\uC0C1\uC758 \uACE1\uAD2D\uC774\uB85C\uB9CC \uCE98 \uC218
+    \uC788\uB2E4."
+  maxHealth: 120
+  toolWeakness:
+    tool: 2
+    multiplier: 2
+  requiredTier: 3
+  dropTable: {fileID: 11400000, guid: 51a16cf0c456f16468e2689afb0a83e2, type: 2}
+  destroyEffectPrefab: {fileID: 0}
+  flammable: 0
+  burnDuration: 20
+  burnDropTable: {fileID: 0}
+  growInto: {fileID: 0}
+  growTime: 300
+  leaveBehind: {fileID: 0}
+  regrowAs: {fileID: 0}
+  regrowDelay: 300
+  spacing: 4

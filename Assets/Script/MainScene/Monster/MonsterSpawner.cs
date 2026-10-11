@@ -23,6 +23,8 @@ public class MonsterSpawner : MonoBehaviour, ISaveParticipant
     // 이 레이어와 겹치는 지점에는 스폰하지 않음 (Nothing이면 검사 생략)
     [SerializeField] private LayerMask obstacleLayer;
     [SerializeField] private float spawnClearance = 1f;
+    [Tooltip("이 레이어의 위험 지형(용암 호수 등) 안에는 스폰하지 않음")]
+    [SerializeField] private LayerMask hazardLayers;
 
     [Header("제거")]
     [SerializeField] private float despawnCheckInterval = 1f;
@@ -123,6 +125,8 @@ public class MonsterSpawner : MonoBehaviour, ISaveParticipant
 
             if (obstacleLayer != 0 &&
                 Physics.CheckSphere(position + Vector3.up * spawnClearance, spawnClearance, obstacleLayer)) continue;
+            // 용암 호수 같은 위험 지형 안에는 스폰하지 않음
+            if (HazardQuery.IsInside(position, hazardLayers)) continue;
 
             return true;
         }

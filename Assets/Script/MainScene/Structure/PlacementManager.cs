@@ -9,6 +9,8 @@ public class PlacementManager : MonoBehaviour, ISaveParticipant
 
     [Tooltip("이 레이어의 물체가 설치물 콜라이더 범위에 있으면 설치 불가 (자원, 설치물, 몬스터, 플레이어)")]
     [SerializeField] private LayerMask blockingLayers;
+    [Tooltip("이 레이어의 트리거 범위(마그마 등 위험 지형)와 겹쳐도 설치 불가")]
+    [SerializeField] private LayerMask hazardLayers;
     [Tooltip("alignToPlayer 설치물의 회전 단위 (0이면 자유 각도)")]
     [SerializeField, Min(0f)] private float rotationStep = 45f;
     // 카메라 각도는 현재 프로젝트에선 45도로 고정되어 있음 (AxisAlignedBillboard와 동일 전제)
@@ -57,7 +59,7 @@ public class PlacementManager : MonoBehaviour, ISaveParticipant
         if (WorldState.Instance != null && !WorldState.Instance.IsInside(position)) return false;
 
         // 콜라이더가 없는 설치물은 겹침 검사 없이 설치
-        BoxCollider box = prefab.GetComponentInChildren<BoxCollider>();
+        BoxCollider box = FindBodyCollider(prefab);
         if (box == null) return true;
 
         // 자식 콜라이더의 프리팹 루트 기준 위치·회전에 설치 회전을 더해 실제 놓일 자리를 계산
@@ -69,7 +71,30 @@ public class PlacementManager : MonoBehaviour, ISaveParticipant
         Vector3 center = position + placeRotation * localCenter;
         Vector3 halfExtents = Vector3.Scale(box.size, boxTransform.lossyScale) * 0.5f;
         // 히트박스·수집 범위 같은 트리거는 무시하고 실제 몸체만 검사
-        return !Physics.CheckBox(center, halfExtents, rotation, blockingLayers, QueryTriggerInteraction.Ignore);
+        if (Physics.CheckBox(center, halfExtents, rotation, blockingLayers, QueryTriggerInteraction.Ignore)) return false;
+        // 위험 지형은 트리거라서 따로 검사 (용암 호수처럼 모양이 불규칙하면 실제 모양 기준으로 중심·네 모서리를 확인)
+        Vector3 ground = new Vector3(center.x, 0f, center.z);
+        if (HazardQuery.IsInside(ground, hazardLayers)) return false;
+        for (int sx = -1; sx <= 1; sx += 2)
+        {
+            for (int sz = -1; sz <= 1; sz += 2)
+            {
+                Vector3 corner = ground + rotation * new Vector3(halfExtents.x * sx, 0f, halfExtents.z * sz);
+                corner.y = 0f;
+                if (HazardQuery.IsInside(corner, hazardLayers)) return false;
+            }
+        }
+        return true;
+    }
+
+    // 모닥불의 화염 범위처럼 트리거 BoxCollider가 함께 있을 수 있으므로 몸체(트리거 아님)만 찾음
+    private static BoxCollider FindBodyCollider(GameObject prefab)
+    {
+        foreach (BoxCollider box in prefab.GetComponentsInChildren<BoxCollider>(true))
+        {
+            if (!box.isTrigger) return box;
+        }
+        return null;
     }
 
     public GameObject Place(PlaceableItemData item, Vector3 userPosition, Vector3 position)

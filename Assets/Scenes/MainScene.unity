@@ -23170,6 +23170,9 @@ MonoBehaviour:
   blockingLayers:
     serializedVersion: 2
     m_Bits: 1472
+  hazardLayers:
+    serializedVersion: 2
+    m_Bits: 4096
   rotationStep: 45
   cameraYAngle: 45
 --- !u!4 &1006392595
@@ -24173,6 +24176,9 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 0
   spawnClearance: 1
+  hazardLayers:
+    serializedVersion: 2
+    m_Bits: 4096
   despawnCheckInterval: 1
 --- !u!4 &1060245803
 Transform:

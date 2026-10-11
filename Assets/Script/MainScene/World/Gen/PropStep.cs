@@ -16,11 +16,19 @@ public class PropStep : WorldGenStep
         var prng = ctx.ChunkRandom(this, coord);
         Vector3 chunkOrigin = ctx.ChunkOrigin(coord);
 
-        // 앞 단계가 이미 놓은 것과도 간격을 지킴
+        // 앞 단계가 이미 놓은 것과도 간격을 지킴 (바닥을 넓게 차지하는 자원은 그 반경도 함께 기록)
         var placedPositions = new List<Vector3>();
+        var placedRadii = new List<float>();
         for (int i = 0; i < chunk.PropCount(); i++)
         {
-            placedPositions.Add(new Vector3(chunk.px[i], 0f, chunk.pz[i]));
+            var placed = new Vector3(chunk.px[i], 0f, chunk.pz[i]);
+            placedPositions.Add(placed);
+            placedRadii.Add(PropFootprint.RadiusOf(ctx.GetPropPrefab(chunk.types[i]), placed));
+        }
+        // 다른 청크에 놓였지만 이 청크까지 덮는 것 (여러 청크에 걸친 용암 호수 등)
+        foreach (var step in ctx.Steps)
+        {
+            if (step is IFootprintProvider provider) provider.AddFootprints(ctx, coord, placedPositions, placedRadii);
         }
 
         // 테이블 순서대로 난수를 소비해야 결정론이 유지됨
@@ -29,6 +37,7 @@ public class PropStep : WorldGenStep
             if (entry.propPrefab == null) continue;
 
             int type = ctx.PropIndex(entry.propPrefab);
+            float footprint = PropFootprint.RadiusOf(entry.propPrefab, Vector3.zero);
             int count = entry.RollCount(prng);
             if (count == 0) continue;
 
@@ -45,7 +54,7 @@ public class PropStep : WorldGenStep
 
             for (int i = 0; i < count; i++)
             {
-                if (!TryFindPosition(prng, entry, clusterCenter, chunkOrigin, ctx.ChunkSize, placedPositions, out Vector3 position))
+                if (!TryFindPosition(prng, entry, footprint, clusterCenter, chunkOrigin, ctx.ChunkSize, placedPositions, placedRadii, out Vector3 position))
                     continue;
 
                 // 세이브 크기를 줄이기 위해 소수 둘째 자리까지만 저장
@@ -53,15 +62,17 @@ public class PropStep : WorldGenStep
                 position.z = Mathf.Round(position.z * 100f) / 100f;
 
                 placedPositions.Add(position);
+                placedRadii.Add(footprint);
                 chunk.AddProp(type, position.x, position.z);
             }
         }
     }
 
-    private bool TryFindPosition(System.Random prng, PropSpawnEntry entry, Vector3 clusterCenter,
-        Vector3 chunkOrigin, float chunkSize, List<Vector3> placedPositions, out Vector3 position)
+    // 간격 = minSpacing, 이미 놓인 자원의 점유 반경, 새 자원의 점유 반경 중 가장 큰 값
+    private bool TryFindPosition(System.Random prng, PropSpawnEntry entry, float footprint, Vector3 clusterCenter,
+        Vector3 chunkOrigin, float chunkSize, List<Vector3> placedPositions, List<float> placedRadii, out Vector3 position)
     {
-        float minSpacingSqr = entry.minSpacing * entry.minSpacing;
+        float baseSpacing = Mathf.Max(entry.minSpacing, footprint);
 
         for (int attempt = 0; attempt < maxPlacementAttempts; attempt++)
         {
@@ -81,9 +92,10 @@ public class PropStep : WorldGenStep
             }
 
             bool tooClose = false;
-            foreach (var placed in placedPositions)
+            for (int i = 0; i < placedPositions.Count; i++)
             {
-                if ((placed - position).sqrMagnitude < minSpacingSqr)
+                float spacing = Mathf.Max(baseSpacing, placedRadii[i]);
+                if ((placedPositions[i] - position).sqrMagnitude < spacing * spacing)
                 {
                     tooClose = true;
                     break;

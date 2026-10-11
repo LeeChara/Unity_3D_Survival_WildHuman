@@ -14,6 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::CodexDatabase
   items:
   - {fileID: 11400000, guid: 2a6cd0d6fd44a5b439222b1730b9fc7f, type: 2}
+  - {fileID: 11400000, guid: 94cb79e2408d3d248b1efca9f7d3600b, type: 2}
   - {fileID: 11400000, guid: 731a55263738a544a962dcfeeda3ff4f, type: 2}
   - {fileID: 11400000, guid: ea4de77ac551cda4d82f99f67f69dfcf, type: 2}
   - {fileID: 11400000, guid: 4242f49b940c52842ad548479f6fe826, type: 2}
@@ -21,6 +22,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: d0338d79a7e65b5428461831465e3515, type: 2}
   - {fileID: 11400000, guid: c703e2d1b4e5f2f4fb3396ce1a4f262e, type: 2}
   - {fileID: 11400000, guid: 3e08ef162b85784488af3fdac8201f5f, type: 2}
+  - {fileID: 11400000, guid: 557b72a7be4af5b47816d1c6c0487dad, type: 2}
   - {fileID: 11400000, guid: 99f39533a967d9b409e7885afb4eec06, type: 2}
   - {fileID: 11400000, guid: 0db4ae6882b2a7f46aaaaf35de4cc446, type: 2}
   - {fileID: 11400000, guid: 6695b7eb42a75104c928dfa8f9c9a77d, type: 2}
@@ -43,6 +45,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: d70a2825f3d4c3c41af45d4fdb09f2c0, type: 2}
   - {fileID: 11400000, guid: c689a6281ae944842bf1067f12eb5c3d, type: 2}
   - {fileID: 11400000, guid: 76b2af717ed051443bd913f83a6d097f, type: 2}
+  - {fileID: 11400000, guid: 9365385851806b546bef0a7daa2386f7, type: 2}
   - {fileID: 11400000, guid: 0c75b1c16bcae44499fcbd60ef23dd40, type: 2}
   recipeBook: {fileID: 11400000, guid: c741f133a292f544eb7aa3ce5a9f1043, type: 2}
   cookingBooks:
@@ -56,11 +59,13 @@ MonoBehaviour:
   - {fileID: 8871782756554530355, guid: b6fb0e1c0ea09614fb0939b3c2b12fc4, type: 3}
   - {fileID: 867109096770320385, guid: b6b44b7ae4c777643bf914eb58a63134, type: 3}
   - {fileID: 1755294285903418751, guid: a6bfafb7774d3f049817de54bf4856e4, type: 3}
+  - {fileID: 787357670917811557, guid: 32af5dfbb465ca64b8045adcff7c5b47, type: 3}
   - {fileID: 1755294285903418751, guid: 13938be4caa5f6741a7acf89b8b5080e, type: 3}
   structures:
   - {fileID: 130948604810500206, guid: accee2b0887b0c6498cd8215f1e35d4f, type: 3}
   - {fileID: 130948604810500206, guid: 1811b933c42044f45b8d2b1993bba3c4, type: 3}
   - {fileID: 3003109801364211945, guid: dd4e93f1cc9abc241a875f4dadf15d81, type: 3}
+  - {fileID: 130948604810500206, guid: d47cc962029623345ace33151b91c3e6, type: 3}
   - {fileID: 130948604810500206, guid: 4de173c17ba48be47a09857dfaf8acd5, type: 3}
   monsters:
   - {fileID: 2855152217180434087, guid: e2b8e5632850d34498a808e34d60eef5, type: 3}
@@ -69,3 +74,4 @@ MonoBehaviour:
   - {fileID: 8212119383527421846, guid: b7c2edd5481861741a49adfa724df037, type: 3}
   biomes:
   - {fileID: 11400000, guid: c21e4b334491fea4b9ddfe5771ab5cc7, type: 2}
+  - {fileID: 11400000, guid: bd9ab688d73694f43856b0a5a477a455, type: 2}

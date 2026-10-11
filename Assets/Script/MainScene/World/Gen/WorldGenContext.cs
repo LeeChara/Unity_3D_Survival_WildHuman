@@ -39,7 +39,15 @@ public class WorldGenContext
                 foreach (var entry in biome.earthquakeTable) RegisterProp(entry.propPrefab);
             }
         }
+
+        foreach (var step in config.steps)
+        {
+            if (step == null) continue;
+            foreach (var prefab in step.ReferencedProps) RegisterProp(prefab);
+        }
     }
+
+    public IReadOnlyList<WorldGenStep> Steps => config.steps;
 
     // 생성 테이블에 없어도 자원끼리 이어진 종류(밑동, 빈 덤불 등)까지 저장된 번호로 찾을 수 있도록 등록
     private void RegisterProp(GameObject prefab)

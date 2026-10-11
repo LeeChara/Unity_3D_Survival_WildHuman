@@ -91,6 +91,79 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
+--- !u!1 &4397267861760372885
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 866966668762955155}
+  - component: {fileID: 1147396034049275053}
+  - component: {fileID: 7951942771010180396}
+  m_Layer: 12
+  m_Name: FireHazard
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!4 &866966668762955155
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4397267861760372885}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 5396938282067013434}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!136 &1147396034049275053
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4397267861760372885}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.15
+  m_Height: 0.5
+  m_Direction: 1
+  m_Center: {x: 0, y: 0.25, z: 0.06}
+--- !u!114 &7951942771010180396
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4397267861760372885}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9a9733cf69ade23498d6dede59532358, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::FireHazard
+  damage: 2
+  interval: 1
+  targetLayers:
+    serializedVersion: 2
+    m_Bits: 192
 --- !u!1 &5971007402934984497
 GameObject:
   m_ObjectHideFlags: 0
@@ -131,6 +204,7 @@ Transform:
   m_Children:
   - {fileID: 3544933437256066110}
   - {fileID: 4938660715967136548}
+  - {fileID: 866966668762955155}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &4690171413081905736
@@ -246,6 +320,7 @@ MonoBehaviour:
   maxHealth: 30
   currentHealth: 0
   data: {fileID: 11400000, guid: 6e870e2576f2e804bae6539b5e24f487, type: 2}
+  spawnGrace: 0.4
 --- !u!114 &6065202040265556893
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -313,6 +388,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PropBurner
   flame: {fileID: 5447806504727894011}
   fireLight: {fileID: 9152869043671063426}
+  fireHazard: {fileID: 4397267861760372885}
   hitFlash: {fileID: 6065202040265556893}
   charredColor: {r: 0.3, g: 0.25, b: 0.22, a: 1}
   flameFrames:

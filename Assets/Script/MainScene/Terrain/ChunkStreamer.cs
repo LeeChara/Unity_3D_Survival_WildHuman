@@ -94,9 +94,23 @@ public class ChunkStreamer : MonoBehaviour
         chunk.gameObject.SetActive(true);
         chunk.Init(coord);
 
+        BiomeData biome = worldState.GetBiome(coord);
+        chunk.ApplyBiome(biome, GetNeighbors(coord));
+
         activeChunks[coord] = chunk;
 
-        ChunkLoaded?.Invoke(coord, worldState.GetBiome(coord));
+        ChunkLoaded?.Invoke(coord, biome);
+    }
+
+    private NeighborBiomes GetNeighbors(Vector2Int coord)
+    {
+        return new NeighborBiomes
+        {
+            East = worldState.GetBiome(coord + Vector2Int.right),
+            West = worldState.GetBiome(coord + Vector2Int.left),
+            North = worldState.GetBiome(coord + Vector2Int.up),
+            South = worldState.GetBiome(coord + Vector2Int.down)
+        };
     }
 
     private void ReleaseChunk(Vector2Int coord)

@@ -8,6 +8,12 @@ public class BiomeStep : WorldGenStep
 
     public override void GenerateChunk(WorldGenContext ctx, Vector2Int coord, ChunkData chunk)
     {
+        chunk.biome = ctx.BiomeIndex(Evaluate(ctx, coord));
+    }
+
+    // 청크 데이터 없이 좌표만으로 바이옴을 계산 (아직 생성되지 않은 이웃 청크를 보는 단계가 사용)
+    public BiomeData Evaluate(WorldGenContext ctx, Vector2Int coord)
+    {
         // 시드마다 노이즈의 다른 구역을 쓰도록 오프셋을 줌
         var prng = ctx.StepRandom(this);
         float offsetX = prng.Next(-100000, 100000);
@@ -17,7 +23,7 @@ public class BiomeStep : WorldGenStep
             coord.x * noiseScale + offsetX,
             coord.y * noiseScale + offsetZ);
 
-        chunk.biome = ctx.BiomeIndex(Resolve(ctx.Biomes, noiseValue));
+        return Resolve(ctx.Biomes, noiseValue);
     }
 
     private static BiomeData Resolve(BiomeDatabase database, float noiseValue)

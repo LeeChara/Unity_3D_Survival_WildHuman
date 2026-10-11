@@ -17,6 +17,7 @@ MonoBehaviour:
   grid: {fileID: 11400000, guid: 7ac0c01c2e66ea24e894c03af32eeafa, type: 2}
   steps:
   - {fileID: 11400000, guid: ee22d2c4376c7ab4195e1ed507c105c7, type: 2}
+  - {fileID: 11400000, guid: 0e23951355588d840ad871e7b6c3296e, type: 2}
   - {fileID: 11400000, guid: 18443be857be8ab498d9b1a21a3b5855, type: 2}
   - {fileID: 11400000, guid: 3c7ec99037861244da6041834986db20, type: 2}
   mapSizes:

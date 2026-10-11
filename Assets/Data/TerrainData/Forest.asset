@@ -18,10 +18,10 @@ MonoBehaviour:
     \uC9C0\uD615. \uBC14\uC704\uC640 \uAE08\uC18D \uAD11\uB9E5\uC774 \uD769\uC5B4\uC838
     \uC788\uACE0 \uB2E4\uC591\uD55C \uBAAC\uC2A4\uD130\uAC00 \uC0B0\uB2E4."
   planeTexture: {fileID: 2800000, guid: df23628559924be44a291fa948983951, type: 3}
-  tilingScale: 1
+  tilingScale: 5
   blendRange: 1
   minThreshold: 0
-  maxThreshold: 1
+  maxThreshold: 0.7
   propSpawnTable:
   - propPrefab: {fileID: 5971007402934984497, guid: 13938be4caa5f6741a7acf89b8b5080e, type: 3}
     minCount: 15
@@ -65,6 +65,16 @@ MonoBehaviour:
       weight: 5
     minSpacing: 1
     clusterRadius: 8
+  - propPrefab: {fileID: 4672482584563935786, guid: 32af5dfbb465ca64b8045adcff7c5b47, type: 3}
+    minCount: 0
+    maxCount: 1
+    countWeights:
+    - count: 0
+      weight: 97
+    - count: 1
+      weight: 3
+    minSpacing: 1
+    clusterRadius: 8
   monsterSpawnTable:
   - monsterPrefab: {fileID: 2855152217180434087, guid: e2b8e5632850d34498a808e34d60eef5, type: 3}
     weight: 1
@@ -76,8 +86,10 @@ MonoBehaviour:
     weight: 2
   earthquakeTable:
   - propPrefab: {fileID: 5058150033251958606, guid: b6b44b7ae4c777643bf914eb58a63134, type: 3}
-    weight: 70
+    weight: 60
   - propPrefab: {fileID: 4672482584563935786, guid: 1ffa00c871a33dc49ab70d1d57ae92d7, type: 3}
     weight: 20
   - propPrefab: {fileID: 3541052992667228540, guid: b6fb0e1c0ea09614fb0939b3c2b12fc4, type: 3}
     weight: 10
+  - propPrefab: {fileID: 4672482584563935786, guid: 32af5dfbb465ca64b8045adcff7c5b47, type: 3}
+    weight: 2
