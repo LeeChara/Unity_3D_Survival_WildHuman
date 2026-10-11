@@ -280,6 +280,7 @@ GameObject:
   - component: {fileID: 809074950526099823}
   - component: {fileID: 5378677269464803943}
   - component: {fileID: 2170966314205511993}
+  - component: {fileID: 7413542281048627436}
   m_Layer: 10
   m_Name: Fence
   m_TagString: Untagged
@@ -389,6 +390,23 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SaveableEntity
   typeId: wooden_fence
+--- !u!114 &7413542281048627436
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2515706202527716380}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cb0e554126ccf9b4d9e7cd05f41f1295, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ShadowCaster
+  setting: {fileID: 11400000, guid: 8d5a7e0a7430e1847bb4c17cf63cfbf7, type: 2}
+  width: 2
+  height: 2.73
+  footOffset: {x: 0, y: 0, z: 0}
+  isStatic: 1
 --- !u!1 &2777141948266965274
 GameObject:
   m_ObjectHideFlags: 0

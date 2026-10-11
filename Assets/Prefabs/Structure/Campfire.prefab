@@ -89,6 +89,7 @@ GameObject:
   - component: {fileID: 383067987812429660}
   - component: {fileID: 3185461393435933156}
   - component: {fileID: 3108306591472112438}
+  - component: {fileID: 8511795394119211181}
   m_Layer: 10
   m_Name: Campfire
   m_TagString: Untagged
@@ -256,6 +257,23 @@ MonoBehaviour:
   - {fileID: 8854795130217030729}
   timerRoot: {fileID: 5804994723089522181}
   timerFill: {fileID: 5371178197278166979}
+--- !u!114 &8511795394119211181
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1727470311522946942}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cb0e554126ccf9b4d9e7cd05f41f1295, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ShadowCaster
+  setting: {fileID: 11400000, guid: 8d5a7e0a7430e1847bb4c17cf63cfbf7, type: 2}
+  width: 1.5
+  height: 2.08
+  footOffset: {x: -0.51, y: 0.16, z: -0.29}
+  isStatic: 1
 --- !u!1 &1821372604469262021
 GameObject:
   m_ObjectHideFlags: 0

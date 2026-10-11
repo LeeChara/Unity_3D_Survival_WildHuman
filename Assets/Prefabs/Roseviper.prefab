@@ -23,6 +23,7 @@ GameObject:
   - component: {fileID: 3463746125167841273}
   - component: {fileID: 6026583288865713398}
   - component: {fileID: 316193267035627802}
+  - component: {fileID: 4725839568703483838}
   m_Layer: 6
   m_Name: Roseviper
   m_TagString: Untagged
@@ -294,6 +295,23 @@ MonoBehaviour:
   reactions:
   - {fileID: 11400000, guid: 5d7e1590077520d44b533d99382da7a4, type: 2}
   indicator: {fileID: 3487564384097884240}
+--- !u!114 &4725839568703483838
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3698754605101644}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cb0e554126ccf9b4d9e7cd05f41f1295, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ShadowCaster
+  setting: {fileID: 11400000, guid: 8d5a7e0a7430e1847bb4c17cf63cfbf7, type: 2}
+  width: 4.1
+  height: 3.68
+  footOffset: {x: 0, y: -0.08, z: 0}
+  isStatic: 0
 --- !u!1 &1151314534724133345
 GameObject:
   m_ObjectHideFlags: 0

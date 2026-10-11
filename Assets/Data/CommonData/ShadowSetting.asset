@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d3b337d5163fcc442a244e34476a8a89, type: 3}
+  m_Name: ShadowSetting
+  m_EditorClassIdentifier: Assembly-CSharp::ShadowSetting
+  material: {fileID: 2100000, guid: 8f266fef1838caa4492fa08975b46b9d, type: 2}
+  alpha: 0.45
+  morningYaw: 300
+  eveningYaw: 150
+  lowSunLength: 1.4
+  highSunLength: 0.25
+  lightMaterial: {fileID: 2100000, guid: 20b52d7ce9c01214abf2633146f59f6e, type: 2}
+  lightAlpha: 0.85
+  nearLightLength: 0.3
+  farLightLength: 1.5
+  lift: 0.02

@@ -17,6 +17,7 @@ GameObject:
   - component: {fileID: 7603043299603333803}
   - component: {fileID: 5221534519765284842}
   - component: {fileID: 7135056181040804095}
+  - component: {fileID: 6320901631591451331}
   m_Layer: 8
   m_Name: ForestBush
   m_TagString: Untagged
@@ -152,6 +153,7 @@ MonoBehaviour:
   maxHealth: 20
   currentHealth: 0
   data: {fileID: 11400000, guid: 723403362231b5f4aa1fde1040329688, type: 2}
+  spawnGrace: 0.4
 --- !u!114 &7603043299603333803
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -205,3 +207,20 @@ CapsuleCollider:
   m_Height: 0.1
   m_Direction: 1
   m_Center: {x: 0, y: 0.05, z: 0.02}
+--- !u!114 &6320901631591451331
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3237151097076446163}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cb0e554126ccf9b4d9e7cd05f41f1295, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ShadowCaster
+  setting: {fileID: 11400000, guid: 8d5a7e0a7430e1847bb4c17cf63cfbf7, type: 2}
+  width: 2.2
+  height: 2.5
+  footOffset: {x: 0, y: -0.09, z: 0}
+  isStatic: 1

@@ -17,6 +17,7 @@ GameObject:
   - component: {fileID: 6065202040265556893}
   - component: {fileID: 3120644194117305970}
   - component: {fileID: 7895310597848388808}
+  - component: {fileID: 6420690445233848039}
   m_Layer: 8
   m_Name: ForestStump
   m_TagString: Untagged
@@ -152,6 +153,7 @@ MonoBehaviour:
   maxHealth: 30
   currentHealth: 0
   data: {fileID: 11400000, guid: 79dd7b2072974cc48a29e55e5adb36f6, type: 2}
+  spawnGrace: 0.4
 --- !u!114 &6065202040265556893
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -205,3 +207,20 @@ CapsuleCollider:
   m_Height: 0.5
   m_Direction: 1
   m_Center: {x: 0, y: 0.25, z: 0.06}
+--- !u!114 &6420690445233848039
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5971007402934984497}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cb0e554126ccf9b4d9e7cd05f41f1295, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ShadowCaster
+  setting: {fileID: 11400000, guid: 8d5a7e0a7430e1847bb4c17cf63cfbf7, type: 2}
+  width: 1.3
+  height: 1.6
+  footOffset: {x: 0, y: -0.32, z: 0}
+  isStatic: 1

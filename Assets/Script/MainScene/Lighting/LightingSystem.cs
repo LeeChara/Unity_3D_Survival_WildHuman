@@ -43,6 +43,9 @@ public class LightingSystem : MonoBehaviour
     // 현재 어둠 색 (흰색 = 낮)
     public Color Ambient { get; private set; } = Color.white;
 
+    // 등록된 모든 광원 (조명 그림자 등에서 읽기용)
+    public static IReadOnlyList<LightSource> Sources => sources;
+
     public static void Register(LightSource source)
     {
         if (!sources.Contains(source)) sources.Add(source);

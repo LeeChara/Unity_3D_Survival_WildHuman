@@ -1631,6 +1631,7 @@ GameObject:
   - component: {fileID: 6953231604298821222}
   - component: {fileID: 2605690474898844537}
   - component: {fileID: 8068290004047108271}
+  - component: {fileID: 1858023767431158337}
   m_Layer: 6
   m_Name: Stoneotter
   m_TagString: Untagged
@@ -1916,6 +1917,23 @@ MonoBehaviour:
   reactions:
   - {fileID: 11400000, guid: 5d7e1590077520d44b533d99382da7a4, type: 2}
   indicator: {fileID: 8592291600857064110}
+--- !u!114 &1858023767431158337
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7304474180741421677}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cb0e554126ccf9b4d9e7cd05f41f1295, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ShadowCaster
+  setting: {fileID: 11400000, guid: 8d5a7e0a7430e1847bb4c17cf63cfbf7, type: 2}
+  width: 1.3
+  height: 2.63
+  footOffset: {x: 0, y: -0.41, z: 0}
+  isStatic: 0
 --- !u!1 &7496706528041794792
 GameObject:
   m_ObjectHideFlags: 0

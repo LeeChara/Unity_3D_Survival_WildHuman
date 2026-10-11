@@ -17,12 +17,15 @@ public class LightSource : MonoBehaviour
 
     [Tooltip("어둠 판정에서 안전한 빛으로 칠지 (플레이어 기본 시야는 false)")]
     [SerializeField] private bool countsAsSafe = true;
+    [Tooltip("주변 오브젝트에 그림자를 드리울지 (플레이어 기본 시야처럼 실제 불빛이 아니면 끔)")]
+    [SerializeField] private bool castsShadows = true;
 
     // 광원마다 깜빡임이 겹치지 않도록 노이즈 시작점을 다르게 둠
     private float noiseSeed;
 
     public Color Color => color;
     public bool CountsAsSafe => countsAsSafe;
+    public bool CastsShadows => castsShadows;
     public Vector3 Position => transform.position;
 
     // -1 ~ 1

@@ -17,6 +17,7 @@ GameObject:
   - component: {fileID: 3246982819515879143}
   - component: {fileID: 8484404535405193676}
   - component: {fileID: 7777402817961816930}
+  - component: {fileID: 6754853124740932822}
   m_Layer: 8
   m_Name: ForestRock
   m_TagString: Untagged
@@ -152,6 +153,7 @@ MonoBehaviour:
   maxHealth: 50
   currentHealth: 0
   data: {fileID: 11400000, guid: 58be99af9c1930348bbe4abded9f006f, type: 2}
+  spawnGrace: 0.4
 --- !u!114 &3246982819515879143
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -205,3 +207,20 @@ CapsuleCollider:
   m_Height: 0.4
   m_Direction: 1
   m_Center: {x: 0, y: 0.1, z: 0.15}
+--- !u!114 &6754853124740932822
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5058150033251958606}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cb0e554126ccf9b4d9e7cd05f41f1295, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ShadowCaster
+  setting: {fileID: 11400000, guid: 8d5a7e0a7430e1847bb4c17cf63cfbf7, type: 2}
+  width: 3.5
+  height: 2.8
+  footOffset: {x: 0, y: -0.2, z: 0}
+  isStatic: 1

@@ -23,6 +23,7 @@ GameObject:
   - component: {fileID: 1862928623122252428}
   - component: {fileID: 4279633160349540282}
   - component: {fileID: 19478939387183164}
+  - component: {fileID: 8572051398187036162}
   m_Layer: 6
   m_Name: Shieldboar
   m_TagString: Untagged
@@ -295,6 +296,23 @@ MonoBehaviour:
   reactions:
   - {fileID: 11400000, guid: 5d7e1590077520d44b533d99382da7a4, type: 2}
   indicator: {fileID: 5651004419077790676}
+--- !u!114 &8572051398187036162
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3698754605101644}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cb0e554126ccf9b4d9e7cd05f41f1295, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ShadowCaster
+  setting: {fileID: 11400000, guid: 8d5a7e0a7430e1847bb4c17cf63cfbf7, type: 2}
+  width: 4.4
+  height: 3.44
+  footOffset: {x: 0, y: -0.68, z: 0}
+  isStatic: 0
 --- !u!1 &672703311291656100
 GameObject:
   m_ObjectHideFlags: 0

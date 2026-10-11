@@ -182,6 +182,7 @@ GameObject:
   - component: {fileID: 3120644194117305970}
   - component: {fileID: 7895310597848388808}
   - component: {fileID: 1679252233064169107}
+  - component: {fileID: 9093188902645643261}
   m_Layer: 8
   m_Name: ForestTree
   m_TagString: Untagged
@@ -398,6 +399,23 @@ MonoBehaviour:
   - {fileID: -1729847762, guid: 07853e3bc1123cc46b5345dd858d3704, type: 3}
   frameRate: 8
   flameColor: {r: 1, g: 1, b: 1, a: 0.85}
+--- !u!114 &9093188902645643261
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5971007402934984497}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cb0e554126ccf9b4d9e7cd05f41f1295, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ShadowCaster
+  setting: {fileID: 11400000, guid: 8d5a7e0a7430e1847bb4c17cf63cfbf7, type: 2}
+  width: 3.1
+  height: 5.9
+  footOffset: {x: 0, y: -0.32, z: 0}
+  isStatic: 1
 --- !u!1 &6907714202139529766
 GameObject:
   m_ObjectHideFlags: 0

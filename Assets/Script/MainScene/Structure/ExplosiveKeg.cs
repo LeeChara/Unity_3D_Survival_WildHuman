@@ -16,7 +16,7 @@ public class ExplosiveKeg : MonoBehaviour
     [SerializeField, Min(0f)] private float chainFuseTime = 0.25f;
 
     [Header("폭발")]
-    [SerializeField, Min(0f)] private float radius = 4f;
+    [SerializeField, Min(0f)] private float radius = 5f;
     [Tooltip("폭발 공격 (곡괭이 티어로 광맥을 부수고, 화염 속성으로 나무·화약통에 불을 붙임)")]
     [SerializeField] private AttackData blast = new AttackData
     {

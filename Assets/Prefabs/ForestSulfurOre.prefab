@@ -60,6 +60,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: ForestSulfurOre
       objectReference: {fileID: 0}
+    - target: {fileID: 6754853124740932822, guid: b6b44b7ae4c777643bf914eb58a63134, type: 3}
+      propertyPath: width
+      value: 3.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 6754853124740932822, guid: b6b44b7ae4c777643bf914eb58a63134, type: 3}
+      propertyPath: height
+      value: 2.6
+      objectReference: {fileID: 0}
+    - target: {fileID: 6754853124740932822, guid: b6b44b7ae4c777643bf914eb58a63134, type: 3}
+      propertyPath: footOffset.y
+      value: -0.08
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
