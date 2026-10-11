@@ -41,6 +41,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: dfc0e7eda5184804999121623d9f541f, type: 2}
   - {fileID: 11400000, guid: fd70b53152413f847aa8ed27128e3157, type: 2}
   - {fileID: 11400000, guid: d70a2825f3d4c3c41af45d4fdb09f2c0, type: 2}
+  - {fileID: 11400000, guid: c689a6281ae944842bf1067f12eb5c3d, type: 2}
   - {fileID: 11400000, guid: 76b2af717ed051443bd913f83a6d097f, type: 2}
   - {fileID: 11400000, guid: 0c75b1c16bcae44499fcbd60ef23dd40, type: 2}
   recipeBook: {fileID: 11400000, guid: c741f133a292f544eb7aa3ce5a9f1043, type: 2}
@@ -56,6 +57,7 @@ MonoBehaviour:
   - {fileID: 1755294285903418751, guid: 13938be4caa5f6741a7acf89b8b5080e, type: 3}
   structures:
   - {fileID: 130948604810500206, guid: accee2b0887b0c6498cd8215f1e35d4f, type: 3}
+  - {fileID: 130948604810500206, guid: 1811b933c42044f45b8d2b1993bba3c4, type: 3}
   - {fileID: 3003109801364211945, guid: dd4e93f1cc9abc241a875f4dadf15d81, type: 3}
   - {fileID: 130948604810500206, guid: 4de173c17ba48be47a09857dfaf8acd5, type: 3}
   monsters:

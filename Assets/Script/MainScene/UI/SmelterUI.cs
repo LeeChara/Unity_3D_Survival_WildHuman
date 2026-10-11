@@ -1,4 +1,3 @@
-using System;
 using System.Text;
 using TMPro;
 using UnityEngine;
@@ -25,7 +24,6 @@ public class SmelterUI : MonoBehaviour
     [SerializeField] private string idleText = "알맞은 재료를 넣으세요";
 
     public bool IsOpen => smelter != null;
-    public event Action<bool> OpenStateChanged;
 
     private Smelter smelter;
     private Transform player;
@@ -46,11 +44,13 @@ public class SmelterUI : MonoBehaviour
     private void OnEnable()
     {
         inventoryUI.OpenStateChanged += OnInventoryOpenStateChanged;
+        inventoryUI.ExternalChanged += OnExternalChanged;
     }
 
     private void OnDisable()
     {
         inventoryUI.OpenStateChanged -= OnInventoryOpenStateChanged;
+        inventoryUI.ExternalChanged -= OnExternalChanged;
     }
 
     public void Open(Smelter target, Transform from)
@@ -65,10 +65,9 @@ public class SmelterUI : MonoBehaviour
         BindSlots(inputSlotUIs, smelter.InputSlots, 0);
         BindSlots(outputSlotUIs, smelter.OutputSlots, smelter.InputSlots);
 
-        // 제작 창이 열림 상태를 보고 숨을 수 있도록 인벤토리를 열기 전에 상태를 바꿈
+        // 제작 창이 External을 보고 숨을 수 있도록 인벤토리를 열기 전에 연결
         panel.gameObject.SetActive(true);
         inventoryUI.SetExternal(smelter, panel);
-        OpenStateChanged?.Invoke(true);
         inventoryUI.SetOpen(true);
 
         hasShownRecipe = false;
@@ -80,13 +79,14 @@ public class SmelterUI : MonoBehaviour
         if (smelter == null && !panel.gameObject.activeSelf) return;
 
         // 부서진 재련기도 C# 객체는 남아 있으므로 이벤트 해제는 그대로 가능
+        Smelter closing = smelter;
         if ((object)smelter != null) smelter.SlotChanged -= RefreshSlot;
         smelter = null;
         player = null;
 
-        inventoryUI.SetExternal(null, null);
+        // 다른 창이 칸 묶음을 이어받아 닫히는 경우에는 그 연결을 건드리지 않음
+        if (inventoryUI.External == (ISlotContainer)closing) inventoryUI.SetExternal(null, null);
         panel.gameObject.SetActive(false);
-        OpenStateChanged?.Invoke(false);
     }
 
     private void Update()
@@ -104,6 +104,12 @@ public class SmelterUI : MonoBehaviour
     private void OnInventoryOpenStateChanged(bool open)
     {
         if (!open) Close();
+    }
+
+    // 다른 창(재련기·상자)이 인벤토리와 함께 열리면 이 창은 닫음
+    private void OnExternalChanged()
+    {
+        if ((object)smelter != null && inventoryUI.External != (ISlotContainer)smelter) Close();
     }
 
     private void BindSlots(InventorySlotUI[] slotUIs, int count, int offset)

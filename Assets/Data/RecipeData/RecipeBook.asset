@@ -35,6 +35,12 @@ MonoBehaviour:
     - item: {fileID: 11400000, guid: 3e08ef162b85784488af3fdac8201f5f, type: 2}
       count: 2
     requiredStation: {fileID: 0}
+  - result: {fileID: 11400000, guid: c689a6281ae944842bf1067f12eb5c3d, type: 2}
+    resultCount: 1
+    ingredients:
+    - item: {fileID: 11400000, guid: 99f39533a967d9b409e7885afb4eec06, type: 2}
+      count: 8
+    requiredStation: {fileID: 0}
   - result: {fileID: 11400000, guid: 0c75b1c16bcae44499fcbd60ef23dd40, type: 2}
     resultCount: 1
     ingredients:

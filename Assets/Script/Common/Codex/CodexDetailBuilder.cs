@@ -253,6 +253,12 @@ public class CodexDetailBuilder
             foreach (CodexDatabase.CookingLink link in links) CookingRow(link);
         }
 
+        if (entry.prefab.TryGetComponent(out StorageChest chest))
+        {
+            view.Section("보관");
+            view.Text($"우클릭해 창을 열고 아이템을 {Color($"{chest.SlotCount}칸", ValueColor)}에 보관. 부서지면 안의 아이템을 모두 떨어뜨림");
+        }
+
         view.Section("도구별 파괴");
         foreach (ToolItemData tool in db.Tools)
         {

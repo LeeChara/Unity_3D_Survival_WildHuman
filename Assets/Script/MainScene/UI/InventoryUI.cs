@@ -25,8 +25,10 @@ public class InventoryUI : MonoBehaviour, IScrollHandler
     // 열린 인벤토리 영역 위에서 휠을 굴림 (양수: 위로, 음수: 아래로). 제작 창 선택 이동용
     public event Action<float> Scrolled;
 
-    // 인벤토리와 함께 열린 다른 칸 묶음 (재련기 등, 없으면 null)과 그 창 영역
+    // 인벤토리와 함께 열린 다른 칸 묶음 (재련기·상자 등, 없으면 null)과 그 창 영역
     public ISlotContainer External { get; private set; }
+    // External이 바뀜 (제작 창은 다른 칸 묶음이 열려 있는 동안 숨음)
+    public event Action ExternalChanged;
     private RectTransform externalArea;
 
     // 드래그 중인 칸 묶음·칸 번호 (-1이면 드래그 중 아님)와 들고 있는 개수
@@ -102,13 +104,15 @@ public class InventoryUI : MonoBehaviour, IScrollHandler
         selectionHighlight.SetAsFirstSibling();
     }
 
-    // 재련기 창처럼 인벤토리와 함께 쓰는 칸 묶음을 연결 (null이면 해제)
+    // 재련기·상자 창처럼 인벤토리와 함께 쓰는 칸 묶음을 연결 (null이면 해제)
     // 영역 안에서 놓으면 던지지 않음. 해제할 때 그 묶음의 칸을 드래그 중이었으면 취소
     public void SetExternal(ISlotContainer container, RectTransform area)
     {
         if (dragFrom >= 0 && dragContainer == External && External != container) CancelDrag();
+        bool changed = External != container;
         External = container;
         externalArea = container != null ? area : null;
+        if (changed) ExternalChanged?.Invoke();
     }
 
     // 좌클릭 드래그는 전부, 우클릭 드래그는 절반(올림)을 들어 올림

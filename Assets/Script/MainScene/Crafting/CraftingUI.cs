@@ -12,8 +12,6 @@ public class CraftingUI : MonoBehaviour
     [SerializeField] private GameObject panel;
 
     [SerializeField] private InventoryUI inventoryUI;
-    [Tooltip("재련기 창이 열려 있는 동안에는 제작 창을 숨김 (없어도 됨)")]
-    [SerializeField] private SmelterUI smelterUI;
     [SerializeField] private PlayerCrafter crafter;
     [SerializeField] private RecipeBook recipeBook;
 
@@ -52,7 +50,7 @@ public class CraftingUI : MonoBehaviour
     private void OnEnable()
     {
         inventoryUI.OpenStateChanged += OnOpenStateChanged;
-        if (smelterUI != null) smelterUI.OpenStateChanged += OnOpenStateChanged;
+        inventoryUI.ExternalChanged += OnExternalChanged;
         inventoryUI.Scrolled += OnScrolled;
         crafter.Inventory.SlotChanged += OnSlotChanged;
         crafter.StationsChanged += Refresh;
@@ -62,7 +60,7 @@ public class CraftingUI : MonoBehaviour
     {
         // 재활성화 시 중복 등록되지 않도록 OnEnable과 짝을 맞춰 해제
         inventoryUI.OpenStateChanged -= OnOpenStateChanged;
-        if (smelterUI != null) smelterUI.OpenStateChanged -= OnOpenStateChanged;
+        inventoryUI.ExternalChanged -= OnExternalChanged;
         inventoryUI.Scrolled -= OnScrolled;
         crafter.Inventory.SlotChanged -= OnSlotChanged;
         crafter.StationsChanged -= Refresh;
@@ -91,12 +89,17 @@ public class CraftingUI : MonoBehaviour
         Redraw();
     }
 
-    // 인벤토리나 재련기 창의 열림 상태가 바뀌면 둘을 함께 보고 결정
+    // 인벤토리가 열려 있고 재련기·상자 같은 다른 칸 묶음 창이 없을 때만 표시
     private void OnOpenStateChanged(bool _)
     {
-        bool open = inventoryUI.IsOpen && (smelterUI == null || !smelterUI.IsOpen);
+        bool open = inventoryUI.IsOpen && inventoryUI.External == null;
         panel.SetActive(open);
         if (open) Refresh();
+    }
+
+    private void OnExternalChanged()
+    {
+        OnOpenStateChanged(inventoryUI.IsOpen);
     }
 
     // 휠을 아래로 굴리면 다음, 위로 굴리면 이전 (핫바와 같은 방향)
