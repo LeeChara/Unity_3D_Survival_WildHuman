@@ -1,8 +1,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-// 화염원: 일정 간격으로 맞닿은(CombustionSetting.spreadDistance 안) 대상에게 화염 속성 공격을 줌
-// 맞은 쪽이 탈 수 있으면(Combustible) 불이 붙고, 화약통은 도화선에 불이 붙음
+// 화염원: 일정 간격으로 맞닿은 대상 중 화염에 반응하는 대상(IFireReactive)에게 불을 옮김
+// 전이 거리는 대상마다 다름 (자원·설치물 objectSpreadDistance, 생물 entitySpreadDistance)
+// 가연물(Combustible)은 불이 붙고, 화약통은 도화선에 불이 붙음. 타지 않는 대상은 영향을 받지 않음 (피해·피격 반짝임 없음)
+// 생물에게 주는 접촉 피해는 FireHazard가 따로 담당
 // 모닥불은 항상 켜 두고, 불타는 대상은 Combustible이 타는 동안만 켬
 // 같은 오브젝트에 IHazardArea가 있으면(용암 호수) 모양 안이나 그 가장자리에 닿은 대상만 맞음
 // 트리거 대신 거리 검사를 쓰는 이유: 움직이지 않는 자원·설치물끼리는 트리거 이벤트가 오지 않음
@@ -13,8 +15,6 @@ public class FireSource : MonoBehaviour
     private const float SampleSpacing = 1.5f;
 
     [SerializeField] private CombustionSetting setting;
-    [Tooltip("닿은 대상에게 주는 직접 피해 (0이면 불만 붙임)")]
-    [SerializeField, Min(0)] private int damage;
     [Tooltip("이 화염원의 몸체 (비우면 자식까지 포함한 트리거가 아닌 콜라이더 전부)")]
     [SerializeField] private Collider[] body;
 
@@ -52,9 +52,10 @@ public class FireSource : MonoBehaviour
     {
         if (!TryGetBounds(out Bounds bounds)) return;
 
-        float reach = setting.spreadDistance;
-        // 몸체 상자를 전이 거리만큼 키운 범위에 닿은 대상 (모양이 있으면 대상 몸체 크기까지 여유를 두고 넓게 찾은 뒤 하나씩 확인)
-        Vector3 half = bounds.extents + Vector3.one * (area != null ? reach + 5f : reach);
+        // 가장 넓은 전이 거리로 후보를 찾은 뒤, 대상 종류에 맞는 거리로 하나씩 확인
+        // (모양이 있으면 대상 몸체 크기까지 여유를 두고 넓게 찾음)
+        float maxReach = setting.MaxSpreadDistance;
+        Vector3 half = bounds.extents + Vector3.one * (area != null ? maxReach + 5f : maxReach);
         int count = Physics.OverlapBoxNonAlloc(bounds.center, half, buffer, Quaternion.identity, setting.targetLayers, QueryTriggerInteraction.Ignore);
 
         hitTargets.Clear();
@@ -63,16 +64,25 @@ public class FireSource : MonoBehaviour
             Collider other = buffer[i];
             Health target = other.GetComponentInParent<Health>();
             if (target == null || target == self || target.IsDead || hitTargets.Contains(target)) continue;
-            if (area != null && !Touches(other.bounds, reach)) continue;
+            if (!target.TryGetComponent(out IFireReactive _)) continue;
+            float reach = setting.SpreadDistanceFor(other.gameObject.layer);
+            if (area != null ? !Touches(other.bounds, reach) : !Reaches(bounds, other.bounds, reach)) continue;
 
             hitTargets.Add(target);
         }
 
-        // 피해로 대상이 쓰러져 풀에 반환되면 콜라이더 목록이 바뀌므로 모은 뒤에 공격
+        // 반응 중에 대상이 쓰러지면(화약통 연쇄 등) 콜라이더 목록이 바뀔 수 있으므로 모은 뒤에 처리
         foreach (Health target in hitTargets)
         {
-            if (target != null && !target.IsDead) target.TakeHit(new AttackData { damage = damage, element = ElementType.Fire });
+            if (target != null && !target.IsDead && target.TryGetComponent(out IFireReactive reactive)) reactive.OnFireContact();
         }
+    }
+
+    // 몸체 상자를 reach만큼 키운 범위가 대상 몸체 상자에 닿았는지
+    private static bool Reaches(Bounds source, Bounds target, float reach)
+    {
+        source.Expand(reach * 2f);
+        return source.Intersects(target);
     }
 
     // 대상 몸체 상자를 reach만큼 키운 바닥 사각형 위의 격자점 중 한 곳이라도 모양 안이면 닿은 것
@@ -121,16 +131,24 @@ public class FireSource : MonoBehaviour
     }
 
 #if UNITY_EDITOR
-    // 선택하면 불이 옮겨붙는 범위를 표시 (모양이 있는 화염원은 몸체 범위만)
+    // 선택하면 불이 옮겨붙는 범위를 표시 (주황: 자원·설치물, 빨강: 생물. 모양이 있는 화염원은 몸체 범위만)
     private void OnDrawGizmosSelected()
     {
         if (setting == null) return;
         if (body == null || body.Length == 0) body = FindBody();
         if (!TryGetBounds(out Bounds bounds)) return;
 
-        Gizmos.color = new Color(1f, 0.45f, 0.1f, 0.8f);
-        float reach = GetComponent<IHazardArea>() != null ? 0f : setting.spreadDistance;
-        Gizmos.DrawWireCube(bounds.center, bounds.size + Vector3.one * (reach * 2f));
+        if (GetComponent<IHazardArea>() != null)
+        {
+            Gizmos.color = new Color(1f, 0.45f, 0.1f, 0.8f);
+            Gizmos.DrawWireCube(bounds.center, bounds.size);
+            return;
+        }
+
+        Gizmos.color = new Color(1f, 0.6f, 0.1f, 0.8f);
+        Gizmos.DrawWireCube(bounds.center, bounds.size + Vector3.one * (setting.objectSpreadDistance * 2f));
+        Gizmos.color = new Color(1f, 0.15f, 0.1f, 0.8f);
+        Gizmos.DrawWireCube(bounds.center, bounds.size + Vector3.one * (setting.entitySpreadDistance * 2f));
     }
 #endif
 }

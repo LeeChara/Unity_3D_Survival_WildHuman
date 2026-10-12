@@ -12,7 +12,7 @@ using UnityEngine;
 //   보관함 속 아이템은 한 개씩 일정 확률로 사라지고 남은 것만 구워짐 (StorageChest가 BurnStored 사용)
 // - 남은 연소 시간은 저장됨 (개체는 ISaveable, 자원은 PropSpawner가 청크 데이터에)
 [RequireComponent(typeof(Health), typeof(StatusEffectHost))]
-public class Combustible : MonoBehaviour, ISaveable
+public class Combustible : MonoBehaviour, ISaveable, IFireReactive
 {
     [SerializeField] private CombustionSetting setting;
     [Tooltip("불이 붙었을 때 걸리는 상태 (재질마다 지속 시간·피해가 다름)")]
@@ -101,6 +101,8 @@ public class Combustible : MonoBehaviour, ISaveable
     }
 
     public void Ignite() => Ignite(burn.duration);
+
+    public void OnFireContact() => Ignite();
 
     // 남은 시간을 지정해서 붙임 (저장된 상태 복원용)
     public void Ignite(float duration)

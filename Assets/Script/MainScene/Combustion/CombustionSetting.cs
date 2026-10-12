@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Serialization;
 using Random = UnityEngine.Random;
 
 // 연소 공용 규칙 (불이 옮겨붙는 거리·간격, 형태 변환표)
@@ -9,12 +10,22 @@ using Random = UnityEngine.Random;
 public class CombustionSetting : ScriptableObject
 {
     [Header("번짐")]
-    [Tooltip("불이 옮겨붙는 거리 (m, 화염원과 대상의 몸체 가장자리 사이 거리. 0이면 맞닿아야 옮겨붙음)")]
-    [Min(0f)] public float spreadDistance = 1f;
+    [Tooltip("자원·설치물에 불이 옮겨붙는 거리 (m, 화염원과 대상의 몸체 가장자리 사이 거리)")]
+    [FormerlySerializedAs("spreadDistance")]
+    [Min(0f)] public float objectSpreadDistance = 1f;
+    [Tooltip("생물(entityLayers)에 불이 옮겨붙는 거리 (m). 생물은 몸체끼리 겹치지 않으므로 맞닿음을 인정할 만큼만 둠. 모닥불·용암은 이와 별개로 화염 접촉 범위(FireHazard)에 들어오면 불이 붙음")]
+    [Min(0f)] public float entitySpreadDistance = 0.2f;
     [Tooltip("화염원이 주변에 불을 옮기는 간격 (초)")]
     [Min(0.1f)] public float spreadInterval = 1f;
     [Tooltip("불이 옮겨붙는 대상 레이어 (플레이어, 몬스터, 자원, 설치물)")]
     public LayerMask targetLayers;
+    [Tooltip("그중 생물 레이어 (플레이어, 몬스터). entitySpreadDistance를 씀")]
+    public LayerMask entityLayers;
+
+    public float MaxSpreadDistance => Mathf.Max(objectSpreadDistance, entitySpreadDistance);
+
+    // 대상 레이어에 맞는 전이 거리
+    public float SpreadDistanceFor(int layer) => (entityLayers.value & (1 << layer)) != 0 ? entitySpreadDistance : objectSpreadDistance;
 
     [Header("형태 변환")]
     [Tooltip("연소 중에 쓰러진 대상의 드랍을 바꾸는 표 (모닥불 굽기 레시피와 같음)")]

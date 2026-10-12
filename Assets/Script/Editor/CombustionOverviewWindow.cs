@@ -73,7 +73,7 @@ public class CombustionOverviewWindow : EditorWindow
         if (setting != null)
         {
             EditorGUILayout.BeginHorizontal();
-            EditorGUILayout.LabelField($"전이 거리 {setting.spreadDistance:0.##}m · 간격 {setting.spreadInterval:0.##}초");
+            EditorGUILayout.LabelField($"전이 거리 자원·설치물 {setting.objectSpreadDistance:0.##}m / 생물 {setting.entitySpreadDistance:0.##}m · 간격 {setting.spreadInterval:0.##}초");
             if (GUILayout.Button("설정 열기", GUILayout.Width(80f))) Selection.activeObject = setting;
             EditorGUILayout.EndHorizontal();
         }

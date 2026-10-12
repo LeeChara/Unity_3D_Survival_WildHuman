@@ -9,7 +9,7 @@ using UnityEngine;
 // 연소 규칙에서 화약통의 형태 변환은 "폭발" (불타는 대상·화염원에 닿아도 도화선에 불이 붙음)
 // 남은 도화선 시간은 저장됨
 [RequireComponent(typeof(StructureHealth))]
-public class ExplosiveKeg : MonoBehaviour, ISaveable
+public class ExplosiveKeg : MonoBehaviour, ISaveable, IFireReactive
 {
     [Header("도화선")]
     [Tooltip("화염 공격으로 점화된 뒤 터질 때까지의 시간 (초)")]
@@ -104,6 +104,8 @@ public class ExplosiveKeg : MonoBehaviour, ISaveable
         if (attack.element != ElementType.Fire) return;
         Ignite(fuseTime);
     }
+
+    public void OnFireContact() => Ignite(fuseTime);
 
     // 이미 타는 중이면 남은 시간이 더 짧은 쪽을 따름
     public void Ignite(float fuse)

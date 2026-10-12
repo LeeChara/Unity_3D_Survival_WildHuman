@@ -419,7 +419,9 @@ public class CodexDetailBuilder
         {
             ("상태", burn.displayName),
             ("지속 피해", $"{burn.tickInterval:0.##}초마다 {burn.tickDamage} · {burn.duration:0.#}초"),
-            ("번짐", combustible.Setting != null ? $"맞닿은 거리 {combustible.Setting.spreadDistance:0.##}m" : "-"),
+            ("번짐", combustible.Setting != null
+                ? $"자원·설치물 {combustible.Setting.objectSpreadDistance:0.##}m · 생물 {combustible.Setting.entitySpreadDistance:0.##}m"
+                : "-"),
         }));
         view.Text(entry.prefab.TryGetComponent(out StructureHealth _)
             ? "타는 중에 부서지면 제작 재료로 분해된 뒤 구운 형태로 떨어짐"
