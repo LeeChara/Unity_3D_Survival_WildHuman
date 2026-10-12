@@ -20,16 +20,8 @@ public class Combustible : MonoBehaviour, ISaveable, IFireReactive
     [Tooltip("타는 동안 켜지는 화염원 (처음에는 꺼 둠)")]
     [SerializeField] private FireSource fireSource;
 
-    [Header("표시 (선택)")]
-    [Tooltip("타는 동안 켜지는 불꽃 스프라이트 (생물은 StatusEffectHost의 아이콘을 쓰므로 비워 둠)")]
-    [SerializeField] private SpriteRenderer flame;
-    [SerializeField] private Sprite[] flameFrames;
-    [SerializeField, Min(0.1f)] private float frameRate = 8f;
-    [Tooltip("불꽃 색 (알파로 투명도 조절)")]
-    [SerializeField] private Color flameColor = new Color(1f, 1f, 1f, 0.85f);
-    [Tooltip("타는 동안 켜지는 광원 (처음에는 꺼 둠)")]
-    [SerializeField] private LightSource fireLight;
-    [Tooltip("그을림 색을 적용할 피격 반짝임 (비우면 그을리지 않음)")]
+    [Header("표시")]
+    [Tooltip("그을림 색을 적용할 피격 반짝임 (비우면 그을리지 않음). 불꽃·빛은 CombustionSetting.burnEffect가 대상 크기에 맞춰 덮음")]
     [SerializeField] private HitFlash hitFlash;
     [Tooltip("체력이 모두 탔을 때의 색 (깎인 체력만큼 흰색에서 이 색으로 바뀜)")]
     [SerializeField] private Color charredColor = new Color(0.3f, 0.25f, 0.22f);
@@ -38,7 +30,7 @@ public class Combustible : MonoBehaviour, ISaveable, IFireReactive
     private StatusEffectHost host;
     private bool shownBurning;
     private bool charred;
-    private float elapsed;
+    private BurnEffect effect;
 
     public CombustionSetting Setting => setting;
     public StatusEffectData Burn => burn;
@@ -52,7 +44,6 @@ public class Combustible : MonoBehaviour, ISaveable, IFireReactive
     {
         health = GetComponent<Health>();
         host = GetComponent<StatusEffectHost>();
-        if (flame != null) flame.color = flameColor;
     }
 
     // 풀에서 재사용될 때마다 불이 꺼진 원래 상태로 시작
@@ -80,12 +71,6 @@ public class Combustible : MonoBehaviour, ISaveable, IFireReactive
         bool burning = IsBurning;
         if (burning != shownBurning) SetShown(burning);
         if (!burning) return;
-
-        elapsed += Time.deltaTime;
-        if (flame != null && flameFrames != null && flameFrames.Length > 0)
-        {
-            flame.sprite = flameFrames[Mathf.FloorToInt(elapsed * frameRate) % flameFrames.Length];
-        }
 
         // 깎인 체력만큼 그을림 (불이 꺼져도 그을린 색은 남음)
         if (hitFlash != null && health.MaxHealth > 0f)
@@ -126,12 +111,27 @@ public class Combustible : MonoBehaviour, ISaveable, IFireReactive
     private void SetShown(bool burning)
     {
         shownBurning = burning;
-        elapsed = 0f;
-        if (flame != null) flame.enabled = burning;
-        if (fireLight != null) fireLight.enabled = burning;
         if (fireSource != null) fireSource.enabled = burning;
+        SetEffectVisible(burning);
         // 쓰러진 뒤에는 HitFlash가 사망 색을 유지하므로 그을림 색을 건드리지 않음
         if (!burning && !charred && hitFlash != null && !health.IsDead) hitFlash.SetBaseColor(Color.white);
+    }
+
+    // 불꽃 이펙트는 처음 탈 때 한 번 만들어 자식으로 두고 켜고 끔
+    private void SetEffectVisible(bool visible)
+    {
+        if (!visible)
+        {
+            if (effect != null) effect.Hide();
+            return;
+        }
+
+        if (effect == null)
+        {
+            if (setting.burnEffect == null) return;
+            effect = BurnEffect.Attach(setting.burnEffect, transform);
+        }
+        effect.Show(transform);
     }
 
     #region 형태 변환

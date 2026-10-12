@@ -33,6 +33,10 @@ public class StatusEffectHost : MonoBehaviour
     public bool HasAny => active.Count > 0;
     // 걸려 있지 않으면 0
     public float Remaining(StatusEffectData data) => Find(data)?.remaining ?? 0f;
+    // 걸린 상태 목록 (UI 표시용, 걸린 순서)
+    public int ActiveCount => active.Count;
+    public StatusEffectData ActiveData(int index) => active[index].data;
+    public float ActiveRemaining(int index) => active[index].remaining;
 
     private void Awake()
     {

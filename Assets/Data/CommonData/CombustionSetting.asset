@@ -21,6 +21,10 @@ MonoBehaviour:
   entityLayers:
     serializedVersion: 2
     m_Bits: 192
+  itemLayers:
+    serializedVersion: 2
+    m_Bits: 512
+  burnEffect: {fileID: 2661728965996709223, guid: ef3001182bcb99f478c34c39fe74d1da, type: 3}
   cookingBook: {fileID: 11400000, guid: eae2d086cccfb57439bba3c399f52094, type: 2}
   recipeBook: {fileID: 11400000, guid: c741f133a292f544eb7aa3ce5a9f1043, type: 2}
   burnYields:

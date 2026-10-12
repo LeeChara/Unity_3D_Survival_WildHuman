@@ -21,9 +21,5 @@ MonoBehaviour:
   duration: 6
   tickInterval: 1
   tickDamage: 10
-  indicatorFrames:
-  - {fileID: -62902793, guid: 07853e3bc1123cc46b5345dd858d3704, type: 3}
-  - {fileID: -1517311866, guid: 07853e3bc1123cc46b5345dd858d3704, type: 3}
-  - {fileID: -44766324, guid: 07853e3bc1123cc46b5345dd858d3704, type: 3}
-  - {fileID: -1729847762, guid: 07853e3bc1123cc46b5345dd858d3704, type: 3}
+  indicatorFrames: []
   frameRate: 8

@@ -21,11 +21,17 @@ public class CombustionSetting : ScriptableObject
     public LayerMask targetLayers;
     [Tooltip("그중 생물 레이어 (플레이어, 몬스터). entitySpreadDistance를 씀")]
     public LayerMask entityLayers;
+    [Tooltip("바닥 아이템 레이어 (트리거라 따로 찾음). 맞닿아야 타므로 entitySpreadDistance를 씀")]
+    public LayerMask itemLayers;
 
     public float MaxSpreadDistance => Mathf.Max(objectSpreadDistance, entitySpreadDistance);
 
-    // 대상 레이어에 맞는 전이 거리
-    public float SpreadDistanceFor(int layer) => (entityLayers.value & (1 << layer)) != 0 ? entitySpreadDistance : objectSpreadDistance;
+    // 대상 레이어에 맞는 전이 거리 (생물·바닥 아이템은 맞닿는 거리)
+    public float SpreadDistanceFor(int layer) => ((entityLayers.value | itemLayers.value) & (1 << layer)) != 0 ? entitySpreadDistance : objectSpreadDistance;
+
+    [Header("표시")]
+    [Tooltip("불타는 대상을 덮는 불꽃·빛 이펙트 (모든 가연물 공용, 바닥 아이템이 탈 때도 잠깐 씀)")]
+    public BurnEffect burnEffect;
 
     [Header("형태 변환")]
     [Tooltip("연소 중에 쓰러진 대상의 드랍을 바꾸는 표 (모닥불 굽기 레시피와 같음)")]
@@ -36,7 +42,7 @@ public class CombustionSetting : ScriptableObject
     [Header("소실")]
     [Tooltip("불에 타며 형태가 바뀔 때 일부가 재가 되는 재료와 남는 비율 (목록에 없으면 손실 없음, 예: 나무 0.5 → 숯이 절반)")]
     public List<BurnYield> burnYields = new();
-    [Tooltip("불타 부서진 보관함 속 아이템이 한 개씩 사라질 확률 (남은 것은 구워짐)")]
+    [Tooltip("불타 부서진 보관함 속 아이템과 불에 닿은 바닥 아이템이 한 개씩 사라질 확률 (남은 것은 구워짐)")]
     [Range(0f, 1f)] public float storedItemLossChance = 0.3f;
 
     [Serializable]

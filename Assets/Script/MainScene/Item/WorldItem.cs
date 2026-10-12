@@ -3,14 +3,18 @@ using UnityEngine;
 // 땅에 떨어진 아이템
 // 드랍 직후 포물선을 그리며 튀어 나가고, 일정 시간이 지나야 수집기가 끌어갈 수 있음
 // 끌려가는 이동은 ItemCollector가 담당하고, 여기서는 상태(데이터·개수·수명·선점)만 관리
-public class WorldItem : MonoBehaviour
+// 화염원에 맞닿으면 한 번 탐: 한 개씩 일정 확률로 사라지고 남은 것은 구워짐 (다시 타지 않음, 저장됨)
+public class WorldItem : MonoBehaviour, IFireReactive
 {
     [SerializeField] private SpriteRenderer spriteRenderer;
+    [SerializeField] private CombustionSetting combustion;
 
     public ItemData Data { get; private set; }
     public int Count { get; private set; }
     // 이 아이템을 끌어가고 있는 수집기 (한 아이템을 여러 수집기가 동시에 당기지 않도록 선점)
     public ItemCollector Collector { get; private set; }
+    // 이미 한 번 탔는지 (탄 아이템은 다시 타지 않음)
+    public bool Burnt { get; private set; }
 
     public bool CanBeClaimed => !isPopping && pickupTimer <= 0f && Collector == null;
     public float RemainingLifetime => lifetime;
@@ -33,10 +37,11 @@ public class WorldItem : MonoBehaviour
     }
 
     // 세이브에서 복원: 튀어 오르지 않고 그 자리에 놓이며, 남은 수명을 이어감
-    public void Restore(ItemData data, int count, Vector3 position, ItemRule rule, float remainingLifetime)
+    public void Restore(ItemData data, int count, Vector3 position, ItemRule rule, float remainingLifetime, bool burnt)
     {
         Setup(data, count, position, position, rule, 0f, remainingLifetime);
         isPopping = false;
+        Burnt = burnt;
     }
 
     private void Setup(ItemData data, int count, Vector3 start, Vector3 landing, ItemRule rule, float pickupDelay, float lifetime)
@@ -44,6 +49,7 @@ public class WorldItem : MonoBehaviour
         Data = data;
         Count = count;
         Collector = null;
+        Burnt = false;
         this.rule = rule;
 
         spriteRenderer.sprite = data.icon;
@@ -102,6 +108,26 @@ public class WorldItem : MonoBehaviour
         }
 
         pickupTimer = rule.pickupDelay;
+    }
+
+    // 튀어 오르는 중이거나 끌려가는 중에는 타지 않음 (내려앉은 아이템만)
+    public void OnFireContact()
+    {
+        if (Burnt || isPopping || Collector != null || combustion == null) return;
+
+        BurnEffect.PlayBurst(combustion.burnEffect, spriteRenderer.bounds);
+
+        int survived = combustion.SurvivingCount(Count);
+        if (survived <= 0)
+        {
+            Despawn();
+            return;
+        }
+
+        Data = combustion.Cook(Data);
+        Count = Mathf.Min(survived, Data.maxStack);
+        spriteRenderer.sprite = Data.icon;
+        Burnt = true;
     }
 
     private void Despawn()

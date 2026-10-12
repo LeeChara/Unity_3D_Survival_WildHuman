@@ -3,7 +3,8 @@ using UnityEngine;
 
 // 화염원: 일정 간격으로 맞닿은 대상 중 화염에 반응하는 대상(IFireReactive)에게 불을 옮김
 // 전이 거리는 대상마다 다름 (자원·설치물 objectSpreadDistance, 생물 entitySpreadDistance)
-// 가연물(Combustible)은 불이 붙고, 화약통은 도화선에 불이 붙음. 타지 않는 대상은 영향을 받지 않음 (피해·피격 반짝임 없음)
+// 가연물(Combustible)은 불이 붙고, 화약통은 도화선에 불이 붙고, 바닥 아이템(WorldItem)은 한 번 탐
+// 타지 않는 대상은 영향을 받지 않음 (피해·피격 반짝임 없음)
 // 생물에게 주는 접촉 피해는 FireHazard가 따로 담당
 // 모닥불은 항상 켜 두고, 불타는 대상은 Combustible이 타는 동안만 켬
 // 같은 오브젝트에 IHazardArea가 있으면(용암 호수) 모양 안이나 그 가장자리에 닿은 대상만 맞음
@@ -19,8 +20,8 @@ public class FireSource : MonoBehaviour
     [SerializeField] private Collider[] body;
 
     private static readonly Collider[] buffer = new Collider[BufferSize];
-    private readonly HashSet<Health> hitTargets = new();
-    private Health self;
+    private readonly List<IFireReactive> hitTargets = new();
+    private IFireReactive self;
     private IHazardArea area;
     private float timer;
 
@@ -28,7 +29,7 @@ public class FireSource : MonoBehaviour
 
     private void Awake()
     {
-        self = GetComponentInParent<Health>();
+        self = GetComponentInParent<IFireReactive>();
         area = GetComponent<IHazardArea>();
         if (body == null || body.Length == 0) body = FindBody();
     }
@@ -56,26 +57,43 @@ public class FireSource : MonoBehaviour
         // (모양이 있으면 대상 몸체 크기까지 여유를 두고 넓게 찾음)
         float maxReach = setting.MaxSpreadDistance;
         Vector3 half = bounds.extents + Vector3.one * (area != null ? maxReach + 5f : maxReach);
-        int count = Physics.OverlapBoxNonAlloc(bounds.center, half, buffer, Quaternion.identity, setting.targetLayers, QueryTriggerInteraction.Ignore);
 
         hitTargets.Clear();
+        // 생물·자원·설치물은 몸체(트리거 아님), 바닥 아이템은 트리거 콜라이더라 따로 찾음
+        Collect(bounds, half, setting.targetLayers, QueryTriggerInteraction.Ignore);
+        Collect(bounds, half, setting.itemLayers, QueryTriggerInteraction.Collide);
+
+        // 반응 중에 대상이 쓰러지면(화약통 연쇄 등) 콜라이더 목록이 바뀔 수 있으므로 모은 뒤에 처리
+        foreach (IFireReactive target in hitTargets)
+        {
+            if (IsAlive(target)) target.OnFireContact();
+        }
+    }
+
+    private void Collect(Bounds bounds, Vector3 half, LayerMask layers, QueryTriggerInteraction triggers)
+    {
+        if (layers.value == 0) return;
+
+        int count = Physics.OverlapBoxNonAlloc(bounds.center, half, buffer, Quaternion.identity, layers, triggers);
         for (int i = 0; i < count; i++)
         {
             Collider other = buffer[i];
-            Health target = other.GetComponentInParent<Health>();
-            if (target == null || target == self || target.IsDead || hitTargets.Contains(target)) continue;
-            if (!target.TryGetComponent(out IFireReactive _)) continue;
+            IFireReactive target = other.GetComponentInParent<IFireReactive>();
+            if (target == null || target == self || !IsAlive(target) || hitTargets.Contains(target)) continue;
+
             float reach = setting.SpreadDistanceFor(other.gameObject.layer);
             if (area != null ? !Touches(other.bounds, reach) : !Reaches(bounds, other.bounds, reach)) continue;
 
             hitTargets.Add(target);
         }
+    }
 
-        // 반응 중에 대상이 쓰러지면(화약통 연쇄 등) 콜라이더 목록이 바뀔 수 있으므로 모은 뒤에 처리
-        foreach (Health target in hitTargets)
-        {
-            if (target != null && !target.IsDead && target.TryGetComponent(out IFireReactive reactive)) reactive.OnFireContact();
-        }
+    // 파괴·비활성화된 대상이나 쓰러진 대상은 제외
+    private static bool IsAlive(IFireReactive target)
+    {
+        var component = target as MonoBehaviour;
+        if (component == null || !component.isActiveAndEnabled) return false;
+        return !component.TryGetComponent(out Health health) || !health.IsDead;
     }
 
     // 몸체 상자를 reach만큼 키운 범위가 대상 몸체 상자에 닿았는지

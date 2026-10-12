@@ -108,6 +108,7 @@ public class ItemDropper : MonoBehaviour, ISaveParticipant
                 ["count"] = item.Count,
                 ["lifetime"] = item.RemainingLifetime,
             };
+            if (item.Burnt) record.data["item"]["burnt"] = true;
             records.Add(record);
         }
         data.entities[SaveKey] = records;
@@ -122,7 +123,8 @@ public class ItemDropper : MonoBehaviour, ISaveParticipant
             ItemData item = SaveRegistry.Active.GetItem(saved.Value<string>("id"));
             if (item == null) continue;
 
-            pool.Get().Restore(item, saved.Value<int>("count"), record.Position(), gameSetting.item, saved.Value<float>("lifetime"));
+            pool.Get().Restore(item, saved.Value<int>("count"), record.Position(), gameSetting.item, saved.Value<float>("lifetime"),
+                saved.Value<bool?>("burnt") ?? false);
         }
     }
 

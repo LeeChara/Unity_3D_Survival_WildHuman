@@ -40,6 +40,8 @@ public static class GameOptions
     public static bool ShowHoverText { get; private set; }
     // 공격 범위를 보여주는 휘두르기 이펙트 (SwingEffect)
     public static bool ShowSwingEffect { get; private set; }
+    // 화면 가장자리 효과 (불타는 중 테두리 등)
+    public static bool ShowScreenEffects { get; private set; }
 
     private static AudioMixer mixer;
 
@@ -79,6 +81,7 @@ public static class GameOptions
         ScreenShake = PlayerPrefs.GetFloat(Prefix + "ScreenShake", 1f);
         ShowHoverText = GetBool("ShowHoverText", true);
         ShowSwingEffect = GetBool("ShowSwingEffect", true);
+        ShowScreenEffects = GetBool("ShowScreenEffects", true);
     }
 
     // ---- 화면 ----
@@ -157,6 +160,13 @@ public static class GameOptions
     {
         ShowSwingEffect = value;
         SetBool("ShowSwingEffect", value);
+        Save();
+    }
+
+    public static void SetShowScreenEffects(bool value)
+    {
+        ShowScreenEffects = value;
+        SetBool("ShowScreenEffects", value);
         Save();
     }
 

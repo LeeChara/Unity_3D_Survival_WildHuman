@@ -169,3 +169,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::WorldItem
   spriteRenderer: {fileID: 5104225095279638541}
+  combustion: {fileID: 11400000, guid: 077688a177b6c3c408c8b8fafd961038, type: 2}
