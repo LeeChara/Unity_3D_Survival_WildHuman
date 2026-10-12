@@ -3,7 +3,7 @@ using Newtonsoft.Json.Linq;
 using UnityEngine;
 
 // 아이템을 보관하는 상자. 우클릭하면 ChestUI 창이 인벤토리와 함께 열림
-// 칸에는 아무 아이템이나 놓을 수 있고, 부서지면 안의 아이템을 모두 떨어뜨림
+// 칸에는 아무 아이템이나 놓을 수 있고, 부서지면 안의 아이템을 모두 떨어뜨림 (불타 부서지면 일부가 사라지고 남은 것은 구운 형태로)
 public class StorageChest : MonoBehaviour, IInteractable, ISaveable, ISlotContainer
 {
     [SerializeField, Min(1)] private int slotCount = 20;
@@ -15,6 +15,7 @@ public class StorageChest : MonoBehaviour, IInteractable, ISaveable, ISlotContai
     public event Action<int> SlotChanged;
 
     private ItemStack[] slots;
+    private Combustible combustible;
 
     private void Awake()
     {
@@ -25,6 +26,7 @@ public class StorageChest : MonoBehaviour, IInteractable, ISaveable, ISlotContai
         }
 
         if (TryGetComponent(out Health health)) health.Died += OnDied;
+        combustible = GetComponent<Combustible>();
     }
 
     public ItemStack Get(int index) => slots[index];
@@ -56,7 +58,8 @@ public class StorageChest : MonoBehaviour, IInteractable, ISaveable, ISlotContai
             ItemStack slot = slots[i];
             if (slot.IsEmpty) continue;
 
-            if (ItemDropper.Instance != null) ItemDropper.Instance.Drop(slot.item, slot.count, transform.position);
+            var (item, count) = combustible != null ? combustible.BurnStored(slot.item, slot.count) : (slot.item, slot.count);
+            if (count > 0 && ItemDropper.Instance != null) ItemDropper.Instance.Drop(item, count, transform.position);
             slot.Clear();
             NotifyChanged(i);
         }

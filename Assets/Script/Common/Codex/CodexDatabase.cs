@@ -291,7 +291,6 @@ public class CodexDatabase : ScriptableObject
         {
             var prop = (PropData)entry.data;
             AddDrops(entry, prop.dropTable);
-            if (prop.flammable) AddDrops(entry, prop.burnDropTable, "다 타면");
         }
         foreach (CodexEntry entry in entries[CodexCategory.Structure]) AddDrops(entry, ((PlaceableItemData)entry.data).dropTable);
         foreach (CodexEntry entry in entries[CodexCategory.Monster]) AddDrops(entry, ((MonsterData)entry.data).dropTable);

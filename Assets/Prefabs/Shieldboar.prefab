@@ -24,6 +24,8 @@ GameObject:
   - component: {fileID: 4279633160349540282}
   - component: {fileID: 19478939387183164}
   - component: {fileID: 8572051398187036162}
+  - component: {fileID: 3608438432565245086}
+  - component: {fileID: 3948596245043167762}
   m_Layer: 6
   m_Name: Shieldboar
   m_TagString: Untagged
@@ -293,8 +295,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 78e51b4b1572b6049884506d0364c9d6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::StatusEffectHost
-  reactions:
-  - {fileID: 11400000, guid: 5d7e1590077520d44b533d99382da7a4, type: 2}
+  reactions: []
   indicator: {fileID: 5651004419077790676}
 --- !u!114 &8572051398187036162
 MonoBehaviour:
@@ -313,6 +314,43 @@ MonoBehaviour:
   height: 3.44
   footOffset: {x: 0, y: -0.68, z: 0}
   isStatic: 0
+--- !u!114 &3608438432565245086
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3698754605101644}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 77b79f71dc07dee42812da64a1db5b34, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Combustible
+  setting: {fileID: 11400000, guid: 077688a177b6c3c408c8b8fafd961038, type: 2}
+  burn: {fileID: 11400000, guid: 5d7e1590077520d44b533d99382da7a4, type: 2}
+  fireSource: {fileID: 3948596245043167762}
+  flame: {fileID: 0}
+  flameFrames: []
+  frameRate: 8
+  flameColor: {r: 1, g: 1, b: 1, a: 0.85}
+  fireLight: {fileID: 0}
+  hitFlash: {fileID: 0}
+  charredColor: {r: 0.3, g: 0.25, b: 0.22, a: 1}
+--- !u!114 &3948596245043167762
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3698754605101644}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f7d529e2933c4e34fb3cc6dde8182097, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::FireSource
+  setting: {fileID: 11400000, guid: 077688a177b6c3c408c8b8fafd961038, type: 2}
+  damage: 0
+  body: []
 --- !u!1 &672703311291656100
 GameObject:
   m_ObjectHideFlags: 0

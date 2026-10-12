@@ -195,19 +195,14 @@ public class CodexDetailBuilder
         }
 
         DropSection("드랍", prop.dropTable);
-        if (prop.flammable)
-        {
-            view.Section("불");
-            view.Text($"화염 속성 공격에 맞으면 불이 붙어 {Color($"{prop.burnDuration:0.#}초", ValueColor)} 뒤 다 타서 사라짐");
-            DropSection("다 탔을 때 드랍", prop.burnDropTable);
-        }
-        RegrowSection(prop);
+        CombustionSection(entry);
+        RegrowSection(entry, prop);
         HabitatSection(entry);
         EarthquakeSection(entry);
     }
 
     // 시간이 지나 바뀌는 것, 파괴 후 남는 것, 다른 곳에 다시 생기는 것
-    private void RegrowSection(PropData prop)
+    private void RegrowSection(CodexEntry entry, PropData prop)
     {
         view.Section("재생");
         bool any = false;
@@ -220,7 +215,8 @@ public class CodexDetailBuilder
         if (prop.leaveBehind != null)
         {
             any = true;
-            PropLink(prop.leaveBehind, target => $"파괴되면 그 자리에 {target}이(가) 남음" + (prop.flammable ? " (다 타면 남지 않음)" : ""));
+            bool combustible = entry.prefab != null && entry.prefab.GetComponent<Combustible>() != null;
+            PropLink(prop.leaveBehind, target => $"파괴되면 그 자리에 {target}이(가) 남음" + (combustible && ShowDevInfo ? " (타는 중에 쓰러지면 남지 않음)" : ""));
         }
         if (prop.regrowAs != null)
         {
@@ -335,6 +331,7 @@ public class CodexDetailBuilder
         }
 
         DropSection("파괴 시 드랍", item.dropTable);
+        CombustionSection(entry);
     }
 
     // ───────── 몬스터 ─────────
@@ -396,7 +393,37 @@ public class CodexDetailBuilder
         if (!any) view.Text("다른 몬스터와 싸우지 않음");
 
         DropSection("드랍", data.dropTable);
+        CombustionSection(entry);
         HabitatSection(entry);
+    }
+
+    // 연소 (개발용): 가연성은 플레이어에게 표시하지 않으므로 showDevInfo일 때만 보임
+    private void CombustionSection(CodexEntry entry)
+    {
+        if (!ShowDevInfo || entry.prefab == null) return;
+
+        view.Section("연소 (개발)");
+        if (entry.prefab.TryGetComponent(out ExplosiveKeg _))
+        {
+            view.Text("화염 속성에 맞으면 도화선에 불이 붙어 폭발");
+            return;
+        }
+        if (!entry.prefab.TryGetComponent(out Combustible combustible) || combustible.Burn == null)
+        {
+            view.Text(Color("타지 않음", BadColor));
+            return;
+        }
+
+        StatusEffectData burn = combustible.Burn;
+        view.Text(Stats(new List<(string, string)>
+        {
+            ("상태", burn.displayName),
+            ("지속 피해", $"{burn.tickInterval:0.##}초마다 {burn.tickDamage} · {burn.duration:0.#}초"),
+            ("번짐", combustible.Setting != null ? $"맞닿은 거리 {combustible.Setting.spreadDistance:0.##}m" : "-"),
+        }));
+        view.Text(entry.prefab.TryGetComponent(out StructureHealth _)
+            ? "타는 중에 부서지면 제작 재료로 분해된 뒤 구운 형태로 떨어짐"
+            : "타는 중에 쓰러지면 드랍이 구운 형태로 바뀜 (구울 수 없는 것은 그대로)");
     }
 
     // 하위 클래스(RoseviperData 등)에만 있는 공개 필드를 그대로 나열 (새 몬스터가 생겨도 자동 표시)

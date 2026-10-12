@@ -176,6 +176,12 @@ public class ChunkData
     public List<int> regenTypes = new();
     public List<float> regenAt = new();
 
+    // 불타던 자원의 번호(types 기준)·체력·남은 연소 시간
+    // 청크가 언로드되거나 저장될 때만 기록 (로드된 동안은 자원 오브젝트가 상태를 가짐). 언로드된 동안은 타지 않고 멈춤
+    public List<int> burnIndex = new();
+    public List<float> burnHp = new();
+    public List<float> burnLeft = new();
+
     public int PropCount() => types.Count;
 
     public int AddProp(int type, float x, float z)
@@ -197,6 +203,11 @@ public class ChunkData
         {
             if (growIndex[i] == index) RemoveGrowAt(i);
             else if (growIndex[i] > index) growIndex[i]--;
+        }
+        for (int i = burnIndex.Count - 1; i >= 0; i--)
+        {
+            if (burnIndex[i] == index) RemoveBurnAt(i);
+            else if (burnIndex[i] > index) burnIndex[i]--;
         }
     }
 
@@ -241,6 +252,48 @@ public class ChunkData
 
     #endregion
 
+    #region 불타는 자원
+
+    public void SetBurn(int index, float hp, float left)
+    {
+        int slot = burnIndex.IndexOf(index);
+        if (slot >= 0)
+        {
+            burnHp[slot] = hp;
+            burnLeft[slot] = left;
+            return;
+        }
+
+        burnIndex.Add(index);
+        burnHp.Add(hp);
+        burnLeft.Add(left);
+    }
+
+    // 기록이 있으면 꺼내고 지움
+    public bool TakeBurn(int index, out float hp, out float left)
+    {
+        int slot = burnIndex.IndexOf(index);
+        if (slot < 0)
+        {
+            hp = left = 0f;
+            return false;
+        }
+
+        hp = burnHp[slot];
+        left = burnLeft[slot];
+        RemoveBurnAt(slot);
+        return true;
+    }
+
+    private void RemoveBurnAt(int slot)
+    {
+        burnIndex.RemoveAt(slot);
+        burnHp.RemoveAt(slot);
+        burnLeft.RemoveAt(slot);
+    }
+
+    #endregion
+
     #region 다른 위치에 다시 생길 자원
 
     public void AddRegen(int type, float time)
@@ -271,6 +324,9 @@ public class ChunkData
             growAt = new List<float>(growAt),
             regenTypes = new List<int>(regenTypes),
             regenAt = new List<float>(regenAt),
+            burnIndex = new List<int>(burnIndex),
+            burnHp = new List<float>(burnHp),
+            burnLeft = new List<float>(burnLeft),
         };
     }
 }

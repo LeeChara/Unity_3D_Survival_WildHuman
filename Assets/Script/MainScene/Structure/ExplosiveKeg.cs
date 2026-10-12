@@ -1,13 +1,15 @@
 using System.Collections.Generic;
+using Newtonsoft.Json.Linq;
 using UnityEngine;
 
 // 화약통: 화염 속성 공격에 맞으면 도화선이 타들어 가다가 폭발함 (예: 랜턴 × 화약통)
 // 폭발은 반경 안의 모든 체력(플레이어 포함)에 곡괭이·화염 공격을 줌 → 광맥을 부수고 나무에 불을 붙임
 // 폭발에 휘말린 다른 화약통은 짧은 도화선으로 바로 이어서 터짐 (연쇄 폭발)
 // 점화된 화약통은 부서져도 재료를 돌려주지 않고 그 자리에서 터짐
-// 도화선 상태는 저장하지 않음 (불러오면 꺼진 화약통으로 돌아옴)
+// 연소 규칙에서 화약통의 형태 변환은 "폭발" (불타는 대상·화염원에 닿아도 도화선에 불이 붙음)
+// 남은 도화선 시간은 저장됨
 [RequireComponent(typeof(StructureHealth))]
-public class ExplosiveKeg : MonoBehaviour
+public class ExplosiveKeg : MonoBehaviour, ISaveable
 {
     [Header("도화선")]
     [Tooltip("화염 공격으로 점화된 뒤 터질 때까지의 시간 (초)")]
@@ -161,6 +163,23 @@ public class ExplosiveKeg : MonoBehaviour
             }
         }
     }
+
+    #region 저장
+
+    public string SaveKey => "fuse";
+
+    public JToken Save()
+    {
+        return IsLit && !exploded ? new JObject { ["left"] = fuseLeft, ["length"] = fuseLength } : null;
+    }
+
+    public void Load(JToken data)
+    {
+        Ignite(data.Value<float>("left"));
+        fuseLength = Mathf.Max(fuseLeft, data.Value<float>("length"));
+    }
+
+    #endregion
 
     private void OnDrawGizmosSelected()
     {

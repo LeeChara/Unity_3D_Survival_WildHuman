@@ -2,6 +2,7 @@ using UnityEngine;
 
 // Health가 0이 되는 시점(Died)에 드랍 테이블대로 아이템을 떨어뜨림
 // 자원 Prop, 설치물, 몬스터가 함께 사용 (각각 PropData, PlaceableItemData, MonsterData의 dropTable로 덮어씀)
+// 타는 중에 쓰러졌으면 Combustible이 구운 형태로 바꿔서 떨어뜨림
 [RequireComponent(typeof(Health))]
 public class ItemDropOnDeath : MonoBehaviour
 {
@@ -9,10 +10,12 @@ public class ItemDropOnDeath : MonoBehaviour
     [SerializeField] private DropTable dropTable;
 
     private Health health;
+    private Combustible combustible;
 
     private void Awake()
     {
         health = GetComponent<Health>();
+        combustible = GetComponent<Combustible>();
     }
 
     // 풀링되는 Prop은 재사용될 때마다 다시 구독됨
@@ -42,6 +45,7 @@ public class ItemDropOnDeath : MonoBehaviour
             return;
         }
 
-        ItemDropper.Instance.Drop(dropTable.Drops, transform.position);
+        if (combustible != null && combustible.DiedBurning) combustible.DropBurned(dropTable, transform.position);
+        else ItemDropper.Instance.Drop(dropTable.Drops, transform.position);
     }
 }

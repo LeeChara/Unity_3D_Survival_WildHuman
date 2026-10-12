@@ -7,8 +7,9 @@ public interface IHazardArea
     bool Contains(Vector3 worldPosition);
 }
 
-// 트리거 안에 들어온 생물에게 일정 간격으로 화염 속성 공격을 줌 (마그마, 모닥불, 타는 나무)
-// 화상은 맞은 쪽의 StatusEffectHost가 화염 속성을 보고 검
+// 트리거 안에 들어온 생물에게 일정 간격으로 화염 속성 피해를 줌 (용암, 모닥불)
+// 불이 붙는 것은 맞은 쪽의 Combustible이 화염 속성을 보고 처리
+// 자원·설치물에 불을 옮기는 것은 FireSource가 담당 (움직이지 않는 물체끼리는 트리거 이벤트가 오지 않음)
 // 가만히 서 있으면 Rigidbody가 잠들어 OnTriggerStay가 오지 않으므로 들어오고 나간 것만 추적하고 피해는 Update에서 줌
 // OnTrigger 메시지는 컴포넌트를 꺼도 오므로, 켜고 끌 때는 이 오브젝트를 비활성화할 것
 [RequireComponent(typeof(Collider))]

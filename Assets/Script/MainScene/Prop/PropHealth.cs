@@ -15,39 +15,28 @@ public class PropHealth : Health
     public event Action<PropHealth> Depleted;
 
     private ItemDropOnDeath dropOnDeath;
-    private PropBurner burner;
+    private Combustible combustible;
     private float spawnedAt;
 
     public PropData Data => data;
-    // 다 타서 쓰러졌는지 (밑동을 남기지 않는 등 일반 파괴와 구분)
-    public bool BurnedOut { get; private set; }
-    public override string DisplayName => burner != null && burner.IsBurning ? $"{data.displayName} (불타는 중)" : data.displayName;
+    // 타는 중에 쓰러졌는지 (밑동을 남기지 않는 등 일반 파괴와 구분)
+    public bool BurnedOut => combustible != null && combustible.DiedBurning;
+    public Combustible Combustible => combustible;
+    public override string DisplayName => combustible != null && combustible.IsBurning ? $"{data.displayName} (불타는 중)" : data.displayName;
 
     protected override void Awake()
     {
         base.Awake();
 
         dropOnDeath = GetComponent<ItemDropOnDeath>();
-        burner = GetComponent<PropBurner>();
+        combustible = GetComponent<Combustible>();
     }
 
-    // 다 타서 사라질 때 드랍 테이블을 바꿨을 수 있으므로 재사용될 때마다 원래대로 되돌림
     private void OnEnable()
     {
-        BurnedOut = false;
         spawnedAt = Time.time;
         Init(data.maxHealth);
         if (dropOnDeath != null) dropOnDeath.SetDropTable(data.dropTable);
-    }
-
-    // 다 타버림: 피해 없이 쓰러지고 원래 드랍 대신 burnDropTable을 떨어뜨림 (예: 나무 → 숯)
-    public void BurnOut()
-    {
-        if (IsDead) return;
-
-        if (dropOnDeath != null) dropOnDeath.SetDropTable(data.burnDropTable);
-        BurnedOut = true;
-        Kill();
     }
 
     // 요구 티어가 있으면 맞는 도구이면서 티어가 충분할 때만 채집 가능 (맨손·다른 도구·몬스터 공격은 불가)

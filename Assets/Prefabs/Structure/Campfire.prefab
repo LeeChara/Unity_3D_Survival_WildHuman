@@ -90,6 +90,7 @@ GameObject:
   - component: {fileID: 3185461393435933156}
   - component: {fileID: 3108306591472112438}
   - component: {fileID: 8511795394119211181}
+  - component: {fileID: 3293621871656106487}
   m_Layer: 10
   m_Name: Campfire
   m_TagString: Untagged
@@ -238,6 +239,7 @@ MonoBehaviour:
   flickerAmount: 0.08
   flickerSpeed: 3
   countsAsSafe: 1
+  castsShadows: 1
 --- !u!114 &3108306591472112438
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -274,6 +276,21 @@ MonoBehaviour:
   height: 2.08
   footOffset: {x: -0.51, y: 0.16, z: -0.29}
   isStatic: 1
+--- !u!114 &3293621871656106487
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1727470311522946942}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f7d529e2933c4e34fb3cc6dde8182097, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::FireSource
+  setting: {fileID: 11400000, guid: 077688a177b6c3c408c8b8fafd961038, type: 2}
+  damage: 0
+  body: []
 --- !u!1 &1821372604469262021
 GameObject:
   m_ObjectHideFlags: 0

@@ -7,7 +7,8 @@ using UnityEngine.Pool;
 // 경계 안은 월드 생성 때 정해져 저장된 목록, 경계 밖은 시드로 즉석 생성한 목록
 // 파괴된 자원은 청크 데이터에서도 지우므로 다시 불러와도 되살아나지 않음 (경계 밖은 언로드 시 버려져 원래대로)
 // 플레이 중 자원 추가·종류 변경(재생, 지진)도 여기서 청크 데이터와 배치된 오브젝트를 함께 바꿈
-public class PropSpawner : MonoBehaviour
+// 불타는 자원은 언로드·저장 시 체력과 남은 연소 시간을 청크 데이터에 적고, 다시 로드되면 이어서 탐 (언로드된 동안은 멈춤)
+public class PropSpawner : MonoBehaviour, ISaveParticipant
 {
     [SerializeField] private ChunkStreamer chunkStreamer;
     [SerializeField] private WorldState worldState;
@@ -54,7 +55,9 @@ public class PropSpawner : MonoBehaviour
 
         for (int i = 0; i < chunk.PropCount(); i++)
         {
-            props.Add(Spawn(coord, chunk.types[i], chunk.PropPosition(i)));
+            SpawnedProp prop = Spawn(coord, chunk.types[i], chunk.PropPosition(i));
+            if (chunk.TakeBurn(i, out float hp, out float left)) RestoreBurn(prop.instance, hp, left);
+            props.Add(prop);
         }
 
         spawnedProps[coord] = props;
@@ -113,12 +116,52 @@ public class PropSpawner : MonoBehaviour
     {
         if (!spawnedProps.TryGetValue(coord, out var props)) return;
 
+        CaptureBurns(props, worldState.GetChunk(coord));
         foreach (var prop in props)
         {
             Despawn(prop);
         }
         spawnedProps.Remove(coord);
     }
+
+    #region 불타는 자원
+
+    private static void RestoreBurn(GameObject instance, float hp, float left)
+    {
+        if (instance == null || !instance.TryGetComponent(out PropHealth health) || health.Combustible == null) return;
+
+        health.RestoreHealth(hp);
+        health.Combustible.Ignite(left);
+    }
+
+    // 지금 타고 있는 자원의 상태를 청크 데이터에 적음
+    private static void CaptureBurns(List<SpawnedProp> props, ChunkData chunk)
+    {
+        for (int i = 0; i < props.Count; i++)
+        {
+            GameObject instance = props[i].instance;
+            if (instance == null || !instance.TryGetComponent(out PropHealth health) || health.IsDead) continue;
+
+            Combustible combustible = health.Combustible;
+            if (combustible != null && combustible.IsBurning) chunk.SetBurn(i, health.CurrentHealth, combustible.Remaining);
+        }
+    }
+
+    // 저장 데이터의 맵(복사본)에 로드된 청크의 불타는 자원을 적음 (언로드된 청크는 이미 청크 데이터에 있음)
+    public void Capture(WorldSaveData data)
+    {
+        if (data.map == null) return;
+
+        foreach (var (coord, props) in spawnedProps)
+        {
+            if (data.map.TryGetChunk(coord, out ChunkData chunk)) CaptureBurns(props, chunk);
+        }
+    }
+
+    // 맵 데이터와 함께 불러오므로 따로 할 일 없음 (청크가 로드될 때 적용)
+    public void Restore(WorldSaveData data) { }
+
+    #endregion
 
     // 파괴된 자원을 풀에 반환하고 청크 데이터에서 지움 (언로드 시 중복 반환 방지)
     private void OnPropDepleted(PropHealth propHealth)

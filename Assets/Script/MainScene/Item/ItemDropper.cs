@@ -51,10 +51,7 @@ public class ItemDropper : MonoBehaviour, ISaveParticipant
         foreach (var drop in drops)
         {
             if (drop.item == null) continue;
-            if (Random.value > drop.chance) continue;
-
-            int maxCount = Mathf.Max(drop.minCount, drop.maxCount);
-            Drop(drop.item, Random.Range(drop.minCount, maxCount + 1), origin);
+            Drop(drop.item, drop.Roll(), origin);
         }
     }
 

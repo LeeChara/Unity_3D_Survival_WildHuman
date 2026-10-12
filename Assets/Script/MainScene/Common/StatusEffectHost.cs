@@ -2,10 +2,11 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-// 상태 이상을 받는 쪽 (플레이어, 몬스터)
-// 속성 공격에 맞으면 그 속성에 연결된 상태가 걸림 (예: 화염 → 화상), 같은 상태는 중첩 없이 지속 시간만 갱신
+// 상태 이상을 받는 쪽 (플레이어, 몬스터, 자원, 설치물)
+// 속성 공격에 맞으면 그 속성에 연결된 상태가 걸림, 같은 상태는 중첩 없이 지속 시간만 갱신
+// 연소는 Combustible이 직접 Apply로 걸고 저장도 맡음 (reactions에 넣지 않음)
 // 지속 피해는 TakeDamage로 주므로 피격 반짝임은 나오지만 다시 상태를 거는 연쇄는 없음
-// 사망·부활 시 모두 해제, 상태는 저장하지 않음
+// 사망·부활 시 모두 해제
 [RequireComponent(typeof(Health))]
 public class StatusEffectHost : MonoBehaviour
 {
@@ -29,6 +30,9 @@ public class StatusEffectHost : MonoBehaviour
     public event Action Changed;
 
     public bool Has(StatusEffectData data) => Find(data) != null;
+    public bool HasAny => active.Count > 0;
+    // 걸려 있지 않으면 0
+    public float Remaining(StatusEffectData data) => Find(data)?.remaining ?? 0f;
 
     private void Awake()
     {
@@ -93,16 +97,22 @@ public class StatusEffectHost : MonoBehaviour
 
     public void Apply(StatusEffectData data)
     {
-        if (data == null || health.IsDead) return;
+        if (data != null) Apply(data, data.duration);
+    }
+
+    // 남은 시간을 지정해서 검 (저장된 상태 복원용). 이미 걸려 있으면 남은 시간만 바꿈
+    public void Apply(StatusEffectData data, float duration)
+    {
+        if (data == null || health.IsDead || duration <= 0f) return;
 
         ActiveEffect effect = Find(data);
         if (effect != null)
         {
-            effect.remaining = data.duration;
+            effect.remaining = duration;
             return;
         }
 
-        active.Add(new ActiveEffect { data = data, remaining = data.duration, tickTimer = data.tickInterval });
+        active.Add(new ActiveEffect { data = data, remaining = duration, tickTimer = data.tickInterval });
         UpdateIndicator();
         Changed?.Invoke();
     }

@@ -26,6 +26,8 @@ public class Health : MonoBehaviour, ISaveable
     public event Action Revived;
     // 공격을 받은 시점을 속성 반응 등 외부 시스템에 알림 (피해 적용 후, 피해가 0이어도 호출)
     public event Action<AttackData> Hit;
+    // 쓰러지기 직전 (Died 구독자들이 상태를 정리하기 전에 사망 순간의 상태를 기록할 때 사용, 예: 연소 중 사망)
+    public event Action Dying;
     // 자식 클래스에서 재정의 시 반드시 base.Awake() 호출 (체력 초기화)
     protected virtual void Awake()
     {
@@ -66,6 +68,7 @@ public class Health : MonoBehaviour, ISaveable
         if (currentHealth <= 0)
         {
             isDead = true;
+            Dying?.Invoke();
             Die();
         }
     }
@@ -100,6 +103,7 @@ public class Health : MonoBehaviour, ISaveable
         currentHealth = 0;
         isDead = true;
         HealthChanged?.Invoke(currentHealth, maxHealth);
+        Dying?.Invoke();
         Die();
     }
 
@@ -121,7 +125,15 @@ public class Health : MonoBehaviour, ISaveable
     // 사망한 개체는 저장하지 않으므로 살아 있는 상태로만 복원
     public void Load(JToken data)
     {
-        currentHealth = Mathf.Clamp(data.Value<float>("hp"), 1f, maxHealth);
+        RestoreHealth(data.Value<float>("hp"));
+    }
+
+    // 저장된 체력으로 되돌림 (살아 있는 상태로만, 예: 불타던 자원을 청크 데이터에서 복원)
+    public void RestoreHealth(float hp)
+    {
+        if (isDead) return;
+
+        currentHealth = Mathf.Clamp(hp, 1f, maxHealth);
         HealthChanged?.Invoke(currentHealth, maxHealth);
     }
 

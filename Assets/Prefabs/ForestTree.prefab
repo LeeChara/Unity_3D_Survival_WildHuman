@@ -91,79 +91,6 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
---- !u!1 &4397267861760372885
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 866966668762955155}
-  - component: {fileID: 1147396034049275053}
-  - component: {fileID: 7951942771010180396}
-  m_Layer: 12
-  m_Name: FireHazard
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 0
---- !u!4 &866966668762955155
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4397267861760372885}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 5396938282067013434}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!136 &1147396034049275053
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4397267861760372885}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 1
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.15
-  m_Height: 0.5
-  m_Direction: 1
-  m_Center: {x: 0, y: 0.25, z: 0.06}
---- !u!114 &7951942771010180396
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4397267861760372885}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9a9733cf69ade23498d6dede59532358, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::FireHazard
-  damage: 2
-  interval: 1
-  targetLayers:
-    serializedVersion: 2
-    m_Bits: 192
 --- !u!1 &5971007402934984497
 GameObject:
   m_ObjectHideFlags: 0
@@ -181,8 +108,10 @@ GameObject:
   - component: {fileID: 6065202040265556893}
   - component: {fileID: 3120644194117305970}
   - component: {fileID: 7895310597848388808}
-  - component: {fileID: 1679252233064169107}
   - component: {fileID: 9093188902645643261}
+  - component: {fileID: 1353054409946927066}
+  - component: {fileID: 4490907049158338922}
+  - component: {fileID: 8219667712320972539}
   m_Layer: 8
   m_Name: ForestTree
   m_TagString: Untagged
@@ -205,7 +134,6 @@ Transform:
   m_Children:
   - {fileID: 3544933437256066110}
   - {fileID: 4938660715967136548}
-  - {fileID: 866966668762955155}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &4690171413081905736
@@ -375,30 +303,6 @@ CapsuleCollider:
   m_Height: 0.5
   m_Direction: 1
   m_Center: {x: 0, y: 0.25, z: 0.06}
---- !u!114 &1679252233064169107
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5971007402934984497}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9cae3b0cbdaa6ae489ef471b14310a87, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::PropBurner
-  flame: {fileID: 5447806504727894011}
-  fireLight: {fileID: 9152869043671063426}
-  fireHazard: {fileID: 4397267861760372885}
-  hitFlash: {fileID: 6065202040265556893}
-  charredColor: {r: 0.3, g: 0.25, b: 0.22, a: 1}
-  flameFrames:
-  - {fileID: -62902793, guid: 07853e3bc1123cc46b5345dd858d3704, type: 3}
-  - {fileID: -1517311866, guid: 07853e3bc1123cc46b5345dd858d3704, type: 3}
-  - {fileID: -44766324, guid: 07853e3bc1123cc46b5345dd858d3704, type: 3}
-  - {fileID: -1729847762, guid: 07853e3bc1123cc46b5345dd858d3704, type: 3}
-  frameRate: 8
-  flameColor: {r: 1, g: 1, b: 1, a: 0.85}
 --- !u!114 &9093188902645643261
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -416,6 +320,61 @@ MonoBehaviour:
   height: 5.9
   footOffset: {x: 0, y: -0.32, z: 0}
   isStatic: 1
+--- !u!114 &1353054409946927066
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5971007402934984497}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 78e51b4b1572b6049884506d0364c9d6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::StatusEffectHost
+  reactions: []
+  indicator: {fileID: 0}
+--- !u!114 &4490907049158338922
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5971007402934984497}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 77b79f71dc07dee42812da64a1db5b34, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Combustible
+  setting: {fileID: 11400000, guid: 077688a177b6c3c408c8b8fafd961038, type: 2}
+  burn: {fileID: 11400000, guid: abd80237abb46334fb1413d896d5546b, type: 2}
+  fireSource: {fileID: 8219667712320972539}
+  flame: {fileID: 5447806504727894011}
+  flameFrames:
+  - {fileID: -62902793, guid: 07853e3bc1123cc46b5345dd858d3704, type: 3}
+  - {fileID: -1517311866, guid: 07853e3bc1123cc46b5345dd858d3704, type: 3}
+  - {fileID: -44766324, guid: 07853e3bc1123cc46b5345dd858d3704, type: 3}
+  - {fileID: -1729847762, guid: 07853e3bc1123cc46b5345dd858d3704, type: 3}
+  frameRate: 8
+  flameColor: {r: 1, g: 1, b: 1, a: 0.85}
+  fireLight: {fileID: 9152869043671063426}
+  hitFlash: {fileID: 6065202040265556893}
+  charredColor: {r: 0.3, g: 0.25, b: 0.22, a: 1}
+--- !u!114 &8219667712320972539
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5971007402934984497}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f7d529e2933c4e34fb3cc6dde8182097, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::FireSource
+  setting: {fileID: 11400000, guid: 077688a177b6c3c408c8b8fafd961038, type: 2}
+  damage: 0
+  body: []
 --- !u!1 &6907714202139529766
 GameObject:
   m_ObjectHideFlags: 0
@@ -466,3 +425,4 @@ MonoBehaviour:
   flickerAmount: 0.15
   flickerSpeed: 5
   countsAsSafe: 1
+  castsShadows: 1
