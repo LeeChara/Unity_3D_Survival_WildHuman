@@ -1,8 +1,11 @@
 using UnityEngine;
 
-public class RoseviperAI : MonsterAI
+public class RoseviperAI : MonsterAI, IBurrowable
 {
     protected RoseviperData viperData;
+
+    // 목표를 감지하고 매복(Chase) 중일 때만 땅속에 숨은 것으로 봄 → 음파에 즉시 길게 기절
+    public bool IsBurrowed => state == State.Chase;
 
     protected override void Awake()
     {

@@ -2,7 +2,7 @@ using System;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
-public class MonsterAI : MonoBehaviour
+public class MonsterAI : MonoBehaviour, IStunnable
 {
     [SerializeField] protected GameObject hitbox;
     [SerializeField] protected HitboxController hitboxController;
@@ -15,7 +15,8 @@ public class MonsterAI : MonoBehaviour
     [Tooltip("행동 상태가 바뀔 때 애니메이션이 섞이는 시간(초)")]
     [SerializeField] private float animationFade = 0.1f;
     public MonsterData Data => data;
-    protected enum State { Idle, Chase, Windup, Attack, Recover }
+    // Stunned: 음파 등으로 기절 (애니메이터에 상태가 없으면 Idle 모션 사용)
+    protected enum State { Idle, Chase, Windup, Attack, Recover, Stunned }
 
     protected State state = State.Idle;
     protected float stateTime;
@@ -23,6 +24,8 @@ public class MonsterAI : MonoBehaviour
     // 플레이어 인식/인식 해제 시점을 이펙트 등 외부 시스템에 알림
     public event Action PlayerDetected;
     public event Action PlayerLost;
+    public bool IsStunned => state == State.Stunned;
+    private float stunRemaining;
 
     protected Rigidbody rb;
     protected Health health;
@@ -117,6 +120,9 @@ public class MonsterAI : MonoBehaviour
                 break;
             case State.Recover:
                 Recover();
+                break;
+            case State.Stunned:
+                Stunned();
                 break;
         }
         
@@ -370,6 +376,45 @@ public class MonsterAI : MonoBehaviour
         rb.linearVelocity = Vector3.zero;
     }
 
+    // 진행 중인 행동(공격 포함)을 끊고 제자리에 멈춤. 이미 기절 중이면 남은 시간과 새 시간 중 긴 쪽
+    public void Stun(float duration)
+    {
+        if (health.IsDead || duration <= 0f) return;
+
+        if (state == State.Stunned)
+        {
+            stunRemaining = Mathf.Max(stunRemaining, duration);
+        }
+        else
+        {
+            hitbox.SetActive(false);
+            state = State.Stunned;
+            stateTime = 0f;
+            stunRemaining = duration;
+
+            Vector3 velocity = rb.linearVelocity;
+            rb.linearVelocity = new Vector3(0f, velocity.y, 0f);
+
+            PlayAnimation(State.Stunned);
+        }
+    }
+
+    // 넉백 중에는 Update가 멈추므로 기절 시간은 밀려난 뒤부터 흐름
+    protected virtual void Stunned()
+    {
+        Vector3 velocity = rb.linearVelocity;
+        rb.linearVelocity = new Vector3(0f, velocity.y, 0f);
+
+        stunRemaining -= Time.deltaTime;
+        if (stunRemaining > 0f) return;
+
+        stunRemaining = 0f;
+        state = State.Idle;
+        stateTime = 0f;
+
+        PlayAnimation(State.Idle);
+    }
+
     private bool IsSuperArmor()
     {
         // 시체는 공격 상태로 멈춰 있어도 넉백되도록 슈퍼아머 해제
@@ -420,6 +465,12 @@ public class MonsterAI : MonoBehaviour
         foreach (State s in states)
         {
             int hash = Animator.StringToHash(prefix + s);
+            // 기절 모션이 따로 없으면 Idle 모션을 씀 (Idle이 먼저 채워져 있음)
+            if (s == State.Stunned && !animator.HasState(0, hash) && !animator.HasState(0, Animator.StringToHash(s.ToString())))
+            {
+                animationHashes[(int)s] = animationHashes[(int)State.Idle];
+                continue;
+            }
             if (!animator.HasState(0, hash))
             {
                 hash = Animator.StringToHash(s.ToString());

@@ -64,7 +64,7 @@ public class SwingEffect : MonoBehaviour
         if (!isPlaying) return;
 
         elapsed += Time.deltaTime;
-        float t = attack.attackDuration > 0f ? elapsed / attack.attackDuration : 1f;
+        float t = attack.ActiveDuration > 0f ? elapsed / attack.ActiveDuration : 1f;
         if (t >= 1f)
         {
             Stop();

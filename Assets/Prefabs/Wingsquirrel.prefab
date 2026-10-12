@@ -117,6 +117,8 @@ GameObject:
   - component: {fileID: 6134303157069155425}
   - component: {fileID: 4017803917868722101}
   - component: {fileID: 7937664184223242717}
+  - component: {fileID: 7238426587045088117}
+  - component: {fileID: 316235187751151978}
   m_Layer: 6
   m_Name: Wingsquirrel
   m_TagString: Untagged
@@ -425,13 +427,9 @@ MonoBehaviour:
   setting: {fileID: 11400000, guid: 077688a177b6c3c408c8b8fafd961038, type: 2}
   burn: {fileID: 11400000, guid: 5d7e1590077520d44b533d99382da7a4, type: 2}
   fireSource: {fileID: 7937664184223242717}
-  flame: {fileID: 0}
-  flameFrames: []
-  frameRate: 8
-  flameColor: {r: 1, g: 1, b: 1, a: 0.85}
-  fireLight: {fileID: 0}
   hitFlash: {fileID: 0}
   charredColor: {r: 0.3, g: 0.25, b: 0.22, a: 1}
+  coverIgnore: []
 --- !u!114 &7937664184223242717
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -445,8 +443,34 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::FireSource
   setting: {fileID: 11400000, guid: 077688a177b6c3c408c8b8fafd961038, type: 2}
-  damage: 0
   body: []
+--- !u!114 &7238426587045088117
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 48305459567241423}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 32feec377a050f841a2a3ced6e03e5e9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SoundReceiver
+--- !u!114 &316235187751151978
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 48305459567241423}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: adce2dbb6509548449f68f9a7309dc68, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::StunIndicator
+  effectPrefab: {fileID: 2099692420280195063, guid: ce6dda90562e518459c8e41696b3ec14, type: 3}
+  headroom: 0.15
+  sortingOrder: 500
 --- !u!1 &313815749097548721
 GameObject:
   m_ObjectHideFlags: 0
@@ -1500,6 +1524,7 @@ MonoBehaviour:
     toolType: 0
     toolTier: 0
     element: 0
+    strike: 0
 --- !u!1 &7304506979596487671
 GameObject:
   m_ObjectHideFlags: 0

@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PlaceableItemData
   id: powder_keg
   displayName: "\uD654\uC57D\uD1B5"
-  icon: {fileID: 21300000, guid: 0b0d4ae3f1ac6764b9e4ab32a588520d, type: 3}
+  icon: {fileID: -1744508324, guid: b323510ba85c324478346041e0d0b829, type: 3}
   description: "\uD654\uC57D\uC744 \uCC44\uC6B4 \uB098\uBB34\uD1B5. \uBD88\uC744
     \uBD99\uC774\uBA74 \uC7A0\uC2DC \uB4A4 \uD3ED\uBC1C\uD574 \uC8FC\uBCC0\uC758
     \uBC14\uC704\uC640 \uAD11\uB9E5\uC744 \uBD80\uC21C\uB2E4."

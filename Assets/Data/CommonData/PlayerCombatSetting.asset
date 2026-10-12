@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 53c294b41f8f01e4abc0e1bab7e3966a, type: 3}
+  m_Name: PlayerCombatSetting
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerCombatSetting
+  attackWindup: 0.2
+  attackActive: 0.3
+  attackRecover: 0.3
+  attackCooldown: 0
+  dodgeDistance: 5
+  dodgeDuration: 0.7
+  dodgeCooldown: 1.4
+  inputBufferDuration: 0.2
+  recoverMoveCancelAfter: 0.1
+  recoverAttackCancelAfter: 0.2
+  dodgeCancelsAttack: 1

@@ -21,7 +21,7 @@ MonoBehaviour:
   tilingScale: 5
   blendRange: 1
   minThreshold: 0
-  maxThreshold: 0.7
+  maxThreshold: 0.61
   propSpawnTable:
   - propPrefab: {fileID: 5971007402934984497, guid: 13938be4caa5f6741a7acf89b8b5080e, type: 3}
     minCount: 15
@@ -46,7 +46,9 @@ MonoBehaviour:
     maxCount: 4
     countWeights:
     - count: 0
-      weight: 80
+      weight: 65
+    - count: 2
+      weight: 15
     - count: 3
       weight: 10
     - count: 4

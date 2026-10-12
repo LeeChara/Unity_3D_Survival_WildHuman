@@ -165,6 +165,7 @@ MonoBehaviour:
   flickerAmount: 0.08
   flickerSpeed: 3
   countsAsSafe: 0
+  castsShadows: 1
 --- !u!114 &4965037224287532772
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -650,7 +651,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_MaskInteraction: 0
-  m_Sprite: {fileID: 21300000, guid: 1a697aa1f949fb645913234e61bb0a18, type: 3}
+  m_Sprite: {fileID: -1053336164, guid: b323510ba85c324478346041e0d0b829, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0

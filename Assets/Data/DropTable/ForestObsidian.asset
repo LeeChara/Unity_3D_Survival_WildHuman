@@ -17,3 +17,10 @@ MonoBehaviour:
     minCount: 1
     maxCount: 2
     chance: 0.6
+    countWeights:
+    - count: 0
+      weight: 20
+    - count: 1
+      weight: 50
+    - count: 2
+      weight: 30

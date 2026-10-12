@@ -88,6 +88,8 @@ public class Smelter : MonoBehaviour, IInteractable, ISaveable, ISlotContainer
         if (SmelterUI.Instance != null) SmelterUI.Instance.Open(this, inventory.transform);
     }
 
+    public string GetInteractPreview(PlayerHotbar hotbar) => "열기";
+
     // 위에서부터 지금 칸으로 할 수 있는 첫 레시피. 레시피가 바뀌면 진행도는 처음부터
     private void FindRecipe()
     {

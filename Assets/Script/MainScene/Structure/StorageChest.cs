@@ -50,6 +50,8 @@ public class StorageChest : MonoBehaviour, IInteractable, ISaveable, ISlotContai
         if (ChestUI.Instance != null) ChestUI.Instance.Open(this, inventory.transform);
     }
 
+    public string GetInteractPreview(PlayerHotbar hotbar) => "열기";
+
     // 설치물이 부서지면 칸에 있던 아이템을 모두 떨어뜨림
     private void OnDied()
     {

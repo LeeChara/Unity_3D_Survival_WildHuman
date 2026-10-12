@@ -13,12 +13,13 @@ MonoBehaviour:
   m_Name: SteelPickaxe
   m_EditorClassIdentifier: Assembly-CSharp::ToolItemData
   id: steel_pickaxe
-  displayName: "강철 곡괭이"
-  icon: {fileID: 21300000, guid: b98d0631b37143a6a260321085d4b426, type: 3}
+  displayName: "\uAC15\uCCA0 \uACE1\uAD2D\uC774"
+  icon: {fileID: 1005032694, guid: 3a05820ac71af1e49993d4578d06825d, type: 3}
   description: 
   maxStack: 1
   toolType: 2
   tier: 5
   damage: 11
   element: 0
-  heldSprite: {fileID: 21300000, guid: b98d0631b37143a6a260321085d4b426, type: 3}
+  strike: 0
+  heldSprite: {fileID: 1005032694, guid: 3a05820ac71af1e49993d4578d06825d, type: 3}

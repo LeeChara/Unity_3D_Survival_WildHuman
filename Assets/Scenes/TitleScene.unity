@@ -3513,10 +3513,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: SettingsPanel
       objectReference: {fileID: 0}
-    - target: {fileID: 7913443372939667572, guid: 294b72eda951cbf4dad94561a66a0288, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 8137642573148958349, guid: 294b72eda951cbf4dad94561a66a0288, type: 3}
       propertyPath: m_fontColor32.rgba
       value: 4290633970

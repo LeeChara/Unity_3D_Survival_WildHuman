@@ -25,12 +25,16 @@ public class Combustible : MonoBehaviour, ISaveable, IFireReactive
     [SerializeField] private HitFlash hitFlash;
     [Tooltip("체력이 모두 탔을 때의 색 (깎인 체력만큼 흰색에서 이 색으로 바뀜)")]
     [SerializeField] private Color charredColor = new Color(0.3f, 0.25f, 0.22f);
+    [Tooltip("불꽃 크기를 잴 때 빼는 그림 (예: 손에 든 장비)")]
+    [SerializeField] private SpriteRenderer[] coverIgnore;
 
     private Health health;
     private StatusEffectHost host;
     private bool shownBurning;
     private bool charred;
     private BurnEffect effect;
+    // 애니메이션으로 자세가 바뀌는 대상의 기본 자세 그림 범위 (대상 기준 로컬 중심, 월드 크기). 없으면 불붙을 때마다 잼
+    private Bounds? restCover;
 
     public CombustionSetting Setting => setting;
     public StatusEffectData Burn => burn;
@@ -44,6 +48,12 @@ public class Combustible : MonoBehaviour, ISaveable, IFireReactive
     {
         health = GetComponent<Health>();
         host = GetComponent<StatusEffectHost>();
+
+        // 생물(플레이어·몬스터)은 구르기·공격 자세에 따라 그림 범위가 바뀌므로 생성 시점의 기본 자세로 한 번만 잼
+        if (GetComponentInChildren<Animator>() != null && BurnEffect.TryMeasure(transform, null, coverIgnore, out Bounds cover))
+        {
+            restCover = new Bounds(transform.InverseTransformPoint(cover.center), cover.size);
+        }
     }
 
     // 풀에서 재사용될 때마다 불이 꺼진 원래 상태로 시작
@@ -131,7 +141,7 @@ public class Combustible : MonoBehaviour, ISaveable, IFireReactive
             if (setting.burnEffect == null) return;
             effect = BurnEffect.Attach(setting.burnEffect, transform);
         }
-        effect.Show(transform);
+        effect.Show(transform, restCover);
     }
 
     #region 형태 변환

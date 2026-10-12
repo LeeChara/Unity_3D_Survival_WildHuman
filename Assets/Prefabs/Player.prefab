@@ -135,6 +135,9 @@ GameObject:
   - component: {fileID: 5266327059796255902}
   - component: {fileID: 8384565475023335447}
   - component: {fileID: 1233313306093772683}
+  - component: {fileID: 80440029918507675}
+  - component: {fileID: 3692179862429377267}
+  - component: {fileID: 8816848221031962196}
   m_Layer: 7
   m_Name: Player
   m_TagString: Untagged
@@ -351,9 +354,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PlayerDodge
   playerState: {fileID: 3330602398864973997}
   animator: {fileID: 1689757010358613412}
-  dodgeDistance: 5
-  dodgeDuration: 0.7
-  dodgeCooldown: 1.4
+  setting: {fileID: 11400000, guid: 8c27a9d0fd2c17f40bca2efabb119b4d, type: 2}
+  inputBuffer: {fileID: 80440029918507675}
+  playerAttack: {fileID: 8510803292639760883}
+  playerMovement: {fileID: 4411395402821636930}
 --- !u!114 &8510803292639760883
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -374,10 +378,9 @@ MonoBehaviour:
   attackPivot: {fileID: 9200000000000002222}
   hotbar: {fileID: 5485155978177760989}
   bareHandDamage: 5
-  windupDuration: 0.2
-  attackDuration: 0.3
-  recoverDuration: 0.3
-  attackCooldown: 1
+  setting: {fileID: 11400000, guid: 8c27a9d0fd2c17f40bca2efabb119b4d, type: 2}
+  inputBuffer: {fileID: 80440029918507675}
+  playerMovement: {fileID: 4411395402821636930}
   cameraYAngle: 45
 --- !u!210 &3160840250680078519
 SortingGroup:
@@ -521,6 +524,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 1024
   interactRayDistance: 100
+  playerMovement: {fileID: 4411395402821636930}
 --- !u!114 &8526991879530310513
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -634,6 +638,7 @@ MonoBehaviour:
   maxDistance: 100
   itemHover: {fileID: 6460211273972572966}
   hotbar: {fileID: 5485155978177760989}
+  itemUser: {fileID: 2047506345014099351}
 --- !u!114 &9076175397589892311
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -739,13 +744,10 @@ MonoBehaviour:
   setting: {fileID: 11400000, guid: 077688a177b6c3c408c8b8fafd961038, type: 2}
   burn: {fileID: 11400000, guid: 5d7e1590077520d44b533d99382da7a4, type: 2}
   fireSource: {fileID: 1233313306093772683}
-  flame: {fileID: 0}
-  flameFrames: []
-  frameRate: 8
-  flameColor: {r: 1, g: 1, b: 1, a: 0.85}
-  fireLight: {fileID: 0}
   hitFlash: {fileID: 0}
   charredColor: {r: 0.3, g: 0.25, b: 0.22, a: 1}
+  coverIgnore:
+  - {fileID: 8231875583896415935}
 --- !u!114 &1233313306093772683
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -759,8 +761,47 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::FireSource
   setting: {fileID: 11400000, guid: 077688a177b6c3c408c8b8fafd961038, type: 2}
-  damage: 0
   body: []
+--- !u!114 &80440029918507675
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 956602779991621677}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 354da34984f786743be836efd2ca1205, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerInputBuffer
+  setting: {fileID: 11400000, guid: 8c27a9d0fd2c17f40bca2efabb119b4d, type: 2}
+--- !u!114 &3692179862429377267
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 956602779991621677}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 32feec377a050f841a2a3ced6e03e5e9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SoundReceiver
+--- !u!114 &8816848221031962196
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 956602779991621677}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: adce2dbb6509548449f68f9a7309dc68, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::StunIndicator
+  effectPrefab: {fileID: 2099692420280195063, guid: ce6dda90562e518459c8e41696b3ec14, type: 3}
+  headroom: 0.15
+  sortingOrder: 500
 --- !u!1 &2027391798678248913
 GameObject:
   m_ObjectHideFlags: 0
@@ -1018,6 +1059,7 @@ MonoBehaviour:
     toolType: 0
     toolTier: 0
     element: 0
+    strike: 0
 --- !u!1 &4765726116046431758
 GameObject:
   m_ObjectHideFlags: 0

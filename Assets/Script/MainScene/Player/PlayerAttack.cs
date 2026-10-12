@@ -14,10 +14,10 @@ public class PlayerAttack : MonoBehaviour
     [SerializeField] private PlayerHotbar hotbar; // 선택한 도구를 공격에 반영
     [SerializeField] private int bareHandDamage = 5; // 도구가 아닌 아이템을 들었거나 빈 손일 때의 피해량
 
-    public float windupDuration = 0.2f;
-    public float attackDuration = 0.5f;
-    public float recoverDuration = 0.1f;
-    public float attackCooldown = 1.5f;
+    [Tooltip("공격 타이밍·쿨다운·캔슬 구간")]
+    [SerializeField] private PlayerCombatSetting setting;
+    [SerializeField] private PlayerInputBuffer inputBuffer;
+    [SerializeField] private PlayerMovement playerMovement; // 경직 중 이동 입력 확인
 
     [SerializeField] private float cameraYAngle = 45f; // PlayerMovement/Billboard의 값과 반드시 일치해야함
     private Vector3 cameraRight;
@@ -36,6 +36,9 @@ public class PlayerAttack : MonoBehaviour
 
     // 이번 공격의 속성 (들고 있는 도구에서 정해지며, 휘두르기 이펙트가 모양을 고르는 데 사용)
     public ElementType CurrentElement { get; private set; }
+
+    // 판정이 켜져 있는 시간 (휘두르기 이펙트 재생 길이)
+    public float ActiveDuration => setting.attackActive;
 
     private Rigidbody rb;
 
@@ -59,9 +62,13 @@ public class PlayerAttack : MonoBehaviour
         {
             health.Died += CancelAttack;
         }
+
+        // 공격 도중 기절해도 같은 이유로 공격을 취소
+        playerState.StunStarted += CancelAttack;
     }
 
-    private void CancelAttack()
+    // 진행 중인 공격을 끊음 (넉백·사망·기절, 공격 중 회피). 상태 전환은 호출한 쪽이 처리
+    public void CancelAttack()
     {
         if (attackPhase == AttackPhase.None) return;
 
@@ -83,6 +90,14 @@ public class PlayerAttack : MonoBehaviour
 
     private void Update()
     {
+        // 선입력된 공격은 실행할 수 있게 되는 순간 실행 (회피·넉백 종료 직후, 경직 캔슬 구간 진입 시 등)
+        if (inputBuffer.Has(BufferedAction.Attack) && CanStartAttack())
+        {
+            inputBuffer.Clear();
+            StartAttack();
+            return;
+        }
+
         // Attack일 때만 실행 (다른 클래스와 배타적)
         if (playerState.CurrentState != PlayerActionState.Attack) return;
 
@@ -91,7 +106,7 @@ public class PlayerAttack : MonoBehaviour
         switch (attackPhase)
         {
             case AttackPhase.Windup:
-                if (phaseTime >= windupDuration)
+                if (phaseTime >= setting.attackWindup)
                 {
                     attackPhase = AttackPhase.Attack;
                     phaseTime = 0f;
@@ -103,7 +118,7 @@ public class PlayerAttack : MonoBehaviour
                 break;
 
             case AttackPhase.Attack:
-                if (phaseTime >= attackDuration)
+                if (phaseTime >= setting.attackActive)
                 {
                     attackPhase = AttackPhase.Recover;
                     phaseTime = 0f;
@@ -114,13 +129,26 @@ public class PlayerAttack : MonoBehaviour
                 break;
 
             case AttackPhase.Recover:
-                if (phaseTime >= recoverDuration)
+                // 경직이 끝났거나, 캔슬 구간에서 이동 입력이 들어오면 바로 이동 가능 상태로
+                bool moveCancel = phaseTime >= setting.recoverMoveCancelAfter && playerMovement.HasMoveInput;
+                if (phaseTime >= setting.attackRecover || moveCancel)
                 {
                     attackPhase = AttackPhase.None;
                     playerState.SetState(PlayerActionState.Normal);
                 }
                 break;
         }
+    }
+
+    // 평소 상태이거나, 공격 경직의 캔슬 구간이면 새 공격 가능 (쿨다운은 공통)
+    private bool CanStartAttack()
+    {
+        if (Time.time < lastAttackTime + setting.attackCooldown) return false;
+        if (playerState.CanAct) return true;
+
+        return playerState.CurrentState == PlayerActionState.Attack
+            && attackPhase == AttackPhase.Recover
+            && phaseTime >= setting.recoverAttackCancelAfter;
     }
 
     void OnPoint(InputValue value)
@@ -132,11 +160,19 @@ public class PlayerAttack : MonoBehaviour
     {
         // UI(인벤토리 칸 등) 위를 클릭한 경우 무시
         if (PointerUtil.IsOverUI(pointerScreenPos)) return;
-        // 회피 또는 공격 중에는 입력 무시
-        if (!playerState.CanAct) return;
-        // 쿨다운 중에는 입력 무시
-        if (Time.time < lastAttackTime + attackCooldown) return;
+        // 지금 공격할 수 없으면(회피·넉백·공격 중 등) 선입력으로 기억해 두고 Update에서 실행
+        if (!CanStartAttack())
+        {
+            inputBuffer.Push(BufferedAction.Attack);
+            return;
+        }
 
+        StartAttack();
+    }
+
+    // 방향은 실행 시점의 마우스 위치 기준 (선입력도 실행될 때 다시 조준)
+    private void StartAttack()
+    {
         Vector3 attackDir = ComputeAttackDirection();
         attackPivot.rotation = Quaternion.LookRotation(attackDir);
         playerFacing.UpdateFacing(attackDir, cameraRight, cameraForwardFlat);
@@ -146,11 +182,11 @@ public class PlayerAttack : MonoBehaviour
         CurrentElement = tool != null ? tool.element : ElementType.None;
         if (tool != null)
         {
-            hitboxController.SetWeapon(tool.damage, tool.toolType, tool.tier, CurrentElement);
+            hitboxController.SetWeapon(tool.damage, tool.toolType, tool.tier, CurrentElement, tool.strike);
         }
         else
         {
-            hitboxController.SetWeapon(bareHandDamage, ToolType.None, 0, CurrentElement);
+            hitboxController.SetWeapon(bareHandDamage, ToolType.None, 0, CurrentElement, StrikeType.None);
         }
 
         attackPhase = AttackPhase.Windup;
@@ -158,6 +194,9 @@ public class PlayerAttack : MonoBehaviour
         lastAttackTime = Time.time;
 
         playerState.SetState(PlayerActionState.Attack);
+        // 공격 모션은 이동 입력이 들어오면 걷기로 넘어가므로, 직전 이동 상태가 남아 바로 끊기지 않도록 정리
+        animator.SetBool("IsMoving", false);
+        animator.SetBool("IsSprinting", false);
         animator.SetTrigger("Attack");
     }
 

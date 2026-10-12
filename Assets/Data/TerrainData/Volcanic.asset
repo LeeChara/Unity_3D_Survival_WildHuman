@@ -20,7 +20,7 @@ MonoBehaviour:
   planeTexture: {fileID: 2800000, guid: f18fddce124bbf248a8243052c49bc40, type: 3}
   tilingScale: 5
   blendRange: 1
-  minThreshold: 0.7
+  minThreshold: 0.61
   maxThreshold: 1
   propSpawnTable:
   - propPrefab: {fileID: 5058150033251958606, guid: b6b44b7ae4c777643bf914eb58a63134, type: 3}

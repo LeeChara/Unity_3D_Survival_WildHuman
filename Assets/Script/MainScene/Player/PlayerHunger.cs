@@ -16,6 +16,7 @@ public class PlayerHunger : MonoBehaviour, ISaveable
     private Health health;
     private PlayerMovement playerMovement;
     private float starveTimer;
+    private float regenTimer;
 
     // 읽기 전용 프로퍼티
     public float MaxHunger => maxHunger;
@@ -56,6 +57,26 @@ public class PlayerHunger : MonoBehaviour, ISaveable
             // 음식으로 회복하면 다음 굶주림 때 처음부터 다시 카운트
             starveTimer = 0f;
         }
+
+        TickRegen();
+    }
+
+    // 허기가 기준 이상이면 일정 간격으로 체력 회복 (체력이 가득 찬 동안에는 타이머를 쌓지 않아 피격 직후 바로 회복되지 않음)
+    private void TickRegen()
+    {
+        bool canRegen = currentHunger >= maxHunger * Rule.regenThreshold && health.CurrentHealth < health.MaxHealth;
+        if (!canRegen)
+        {
+            regenTimer = 0f;
+            return;
+        }
+
+        regenTimer += Time.deltaTime;
+        if (regenTimer >= Rule.regenInterval)
+        {
+            regenTimer -= Rule.regenInterval;
+            health.Heal(Rule.regenAmount);
+        }
     }
 
     public void Eat(float amount)
@@ -67,6 +88,7 @@ public class PlayerHunger : MonoBehaviour, ISaveable
     public void Refill()
     {
         starveTimer = 0f;
+        regenTimer = 0f;
         SetHunger(maxHunger);
     }
 
@@ -81,6 +103,7 @@ public class PlayerHunger : MonoBehaviour, ISaveable
     public void Load(JToken data)
     {
         starveTimer = 0f;
+        regenTimer = 0f;
         SetHunger(data.Value<float>("value"));
     }
 

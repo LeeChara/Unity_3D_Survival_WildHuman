@@ -332,6 +332,7 @@ public class CodexDetailBuilder
 
         DropSection("파괴 시 드랍", item.dropTable);
         CombustionSection(entry);
+        SoundSection(entry);
     }
 
     // ───────── 몬스터 ─────────
@@ -394,7 +395,37 @@ public class CodexDetailBuilder
 
         DropSection("드랍", data.dropTable);
         CombustionSection(entry);
+        SoundSection(entry);
         HabitatSection(entry);
+    }
+
+    // 음파 (개발용): 금속 여부·음파 반응도 속성처럼 따로 표시하지 않으므로 showDevInfo일 때만 보임
+    private void SoundSection(CodexEntry entry)
+    {
+        if (!ShowDevInfo || entry.prefab == null) return;
+
+        if (entry.prefab.TryGetComponent(out Resonant resonant))
+        {
+            view.Section("음파 (개발)");
+            SoundWaveSetting s = resonant.Setting;
+            view.Text("금속: 강타에 맞으면 반대편으로 부채꼴 음파를 냄 (음파에 맞아도 다시 울림)");
+            if (s != null)
+            {
+                view.Text(Stats(new List<(string, string)>
+                {
+                    ("범위", $"{s.length:0.#}m · {s.angle:0}°"),
+                    ("연쇄", $"최대 {s.maxChain}회 · 단계마다 ×{s.chainDecay:0.##}"),
+                }));
+            }
+            return;
+        }
+
+        if (!entry.prefab.TryGetComponent(out SoundReceiver _)) return;
+
+        view.Section("음파 (개발)");
+        view.Text(entry.prefab.TryGetComponent(out IBurrowable _)
+            ? "매복(땅속) 중에 맞으면 즉시 길게 기절, 아니면 밀려나며 짧게 기절"
+            : "맞으면 밀려나며 짧게 기절");
     }
 
     // 연소 (개발용): 가연성은 플레이어에게 표시하지 않으므로 showDevInfo일 때만 보임
@@ -687,8 +718,10 @@ public class CodexDetailBuilder
 
     private static string DropText(ItemDrop drop)
     {
-        string text = $"{Range(drop.minCount, drop.maxCount)}개";
-        if (drop.chance < 1f) text += $" ({drop.chance * 100f:0.#}%)";
+        drop.GetCountRange(out int min, out int max);
+        float chance = drop.DropChance();
+        string text = $"{Range(min, max)}개";
+        if (chance < 1f) text += $" ({chance * 100f:0.#}%)";
         return text;
     }
 

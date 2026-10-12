@@ -35,6 +35,12 @@ public class HungerRule
     [Tooltip("굶주림 데미지 간격(초)")]
     public float starveInterval = 2f;
     public int starveDamage = 1;
+    [Tooltip("허기가 최대치의 이 비율 이상이면 체력 회복")]
+    [Range(0f, 1f)]
+    public float regenThreshold = 0.9f;
+    [Tooltip("체력 회복 간격(초)")]
+    public float regenInterval = 2f;
+    public float regenAmount = 1f;
 }
 
 [Serializable]

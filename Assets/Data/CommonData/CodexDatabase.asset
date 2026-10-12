@@ -36,8 +36,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: dcf2e16544ee3d743a046c1d2d2dee65, type: 2}
   - {fileID: 11400000, guid: efd56c1860badbb48b0a821ab37fcb92, type: 2}
   - {fileID: 11400000, guid: 78d8786a02dabd441937cea3a7b4c076, type: 2}
-  - {fileID: 11400000, guid: ef7f3ecaea4b5d74f95c10dc0d343cc2, type: 2}
   - {fileID: 11400000, guid: 62d8d0031646d9944956301c75f0ee50, type: 2}
+  - {fileID: 11400000, guid: ef7f3ecaea4b5d74f95c10dc0d343cc2, type: 2}
   - {fileID: 11400000, guid: 11aa11476e1c33643b48dd86b3cc8eb5, type: 2}
   - {fileID: 11400000, guid: b3462f24e611a834d9b53b02d8979c00, type: 2}
   - {fileID: 11400000, guid: dfc0e7eda5184804999121623d9f541f, type: 2}
@@ -47,6 +47,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 76b2af717ed051443bd913f83a6d097f, type: 2}
   - {fileID: 11400000, guid: 9365385851806b546bef0a7daa2386f7, type: 2}
   - {fileID: 11400000, guid: 0c75b1c16bcae44499fcbd60ef23dd40, type: 2}
+  - {fileID: 11400000, guid: d2b3dbc074b83214fba9d1c8ecbbfc62, type: 2}
   recipeBook: {fileID: 11400000, guid: c741f133a292f544eb7aa3ce5a9f1043, type: 2}
   cookingBooks:
   - {fileID: 11400000, guid: eae2d086cccfb57439bba3c399f52094, type: 2}
@@ -67,6 +68,7 @@ MonoBehaviour:
   - {fileID: 3003109801364211945, guid: dd4e93f1cc9abc241a875f4dadf15d81, type: 3}
   - {fileID: 130948604810500206, guid: d47cc962029623345ace33151b91c3e6, type: 3}
   - {fileID: 130948604810500206, guid: 4de173c17ba48be47a09857dfaf8acd5, type: 3}
+  - {fileID: 3003109801364211945, guid: f7811efd78c238441bee6c4c5f8e113a, type: 3}
   monsters:
   - {fileID: 2855152217180434087, guid: e2b8e5632850d34498a808e34d60eef5, type: 3}
   - {fileID: 5223719300316381313, guid: 7796c72efd61e79468c0267d6f3492fb, type: 3}

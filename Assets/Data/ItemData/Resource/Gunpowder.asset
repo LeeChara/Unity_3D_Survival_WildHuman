@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ItemData
   id: gunpowder
   displayName: "\uD654\uC57D"
-  icon: {fileID: 21300000, guid: 323688fa87442a847a494b506a629438, type: 3}
+  icon: {fileID: 1246365890, guid: d59cb77a7afcea64ebfec73511964a9d, type: 3}
   description: "\uC720\uD669\uACFC \uC22F\uC744 \uC11E\uC740 \uAC80\uC740 \uAC00\uB8E8.
     \uBD88\uC774 \uB2FF\uC73C\uBA74 \uC21C\uC2DD\uAC04\uC5D0 \uD0C0\uC624\uB978\uB2E4."
   maxStack: 99

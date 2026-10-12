@@ -14,6 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ItemData
   id: obsidian
   displayName: "\uD751\uC694\uC11D"
-  icon: {fileID: 21300000, guid: 356531b62e528e040b618643555b6190, type: 3}
+  icon: {fileID: -1165602115, guid: d59cb77a7afcea64ebfec73511964a9d, type: 3}
   description: 
   maxStack: 99

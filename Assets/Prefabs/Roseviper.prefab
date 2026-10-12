@@ -26,6 +26,8 @@ GameObject:
   - component: {fileID: 4725839568703483838}
   - component: {fileID: 7469732828021584221}
   - component: {fileID: 4028110444808872835}
+  - component: {fileID: 4699973012192096906}
+  - component: {fileID: 3434764022818068000}
   m_Layer: 6
   m_Name: Roseviper
   m_TagString: Untagged
@@ -328,13 +330,9 @@ MonoBehaviour:
   setting: {fileID: 11400000, guid: 077688a177b6c3c408c8b8fafd961038, type: 2}
   burn: {fileID: 11400000, guid: 5d7e1590077520d44b533d99382da7a4, type: 2}
   fireSource: {fileID: 4028110444808872835}
-  flame: {fileID: 0}
-  flameFrames: []
-  frameRate: 8
-  flameColor: {r: 1, g: 1, b: 1, a: 0.85}
-  fireLight: {fileID: 0}
   hitFlash: {fileID: 0}
   charredColor: {r: 0.3, g: 0.25, b: 0.22, a: 1}
+  coverIgnore: []
 --- !u!114 &4028110444808872835
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -348,8 +346,34 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::FireSource
   setting: {fileID: 11400000, guid: 077688a177b6c3c408c8b8fafd961038, type: 2}
-  damage: 0
   body: []
+--- !u!114 &4699973012192096906
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3698754605101644}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 32feec377a050f841a2a3ced6e03e5e9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SoundReceiver
+--- !u!114 &3434764022818068000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3698754605101644}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: adce2dbb6509548449f68f9a7309dc68, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::StunIndicator
+  effectPrefab: {fileID: 2099692420280195063, guid: ce6dda90562e518459c8e41696b3ec14, type: 3}
+  headroom: 0.15
+  sortingOrder: 500
 --- !u!1 &1151314534724133345
 GameObject:
   m_ObjectHideFlags: 0
@@ -894,6 +918,7 @@ MonoBehaviour:
     toolType: 0
     toolTier: 0
     element: 0
+    strike: 0
 --- !u!1 &3997864156695220494
 GameObject:
   m_ObjectHideFlags: 0

@@ -36,6 +36,13 @@ public class HitboxController : MonoBehaviour
             Debug.Log($"{other.name} 피격 - 현재 체력: {health.CurrentHealth} / {health.MaxHealth}");
         }
 
+        // 강타가 금속 물체에 닿으면 때린 쪽의 반대편으로 음파가 퍼짐
+        if (attack.strike == StrikeType.Blunt)
+        {
+            Resonant resonant = other.GetComponentInParent<Resonant>();
+            if (resonant != null) resonant.Strike(attacker.position, 1f, 0);
+        }
+
         if (other.TryGetComponent<Knockback>(out Knockback knockback))
         {
             Vector3 knockbackDir = other.transform.position - attacker.position;
@@ -53,13 +60,14 @@ public class HitboxController : MonoBehaviour
         this.attack = attack;
     }
 
-    // 들고 있는 도구에 따라 공격의 피해량과 도구 종류·티어만 교체 (넉백 등 나머지 수치는 유지)
-    public void SetWeapon(int damage, ToolType toolType, int toolTier, ElementType element)
+    // 들고 있는 도구에 따라 공격의 피해량과 도구 종류·티어·속성·타격 형태만 교체 (넉백 등 나머지 수치는 유지)
+    public void SetWeapon(int damage, ToolType toolType, int toolTier, ElementType element, StrikeType strike)
     {
         attack.damage = damage;
         attack.toolType = toolType;
         attack.toolTier = toolTier;
         attack.element = element;
+        attack.strike = strike;
     }
 
     // 새로운 공격을 시작할 때 초기화

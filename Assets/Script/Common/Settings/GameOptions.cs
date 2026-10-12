@@ -3,11 +3,16 @@ using UnityEngine;
 using UnityEngine.Audio;
 using UnityEngine.SceneManagement;
 
-// 플레이어가 설정 화면에서 바꾸는 값 (화면·사운드·게임플레이). 바꾸는 즉시 적용하고 PlayerPrefs에 저장
+// 플레이어가 설정 화면에서 바꾸는 값 (화면·사운드·게임플레이·언어). 바꾸는 즉시 적용하고 PlayerPrefs에 저장
 // 게임 밸런스 값(GameSetting 에셋)과는 별개. 키 설정은 InputBindings가 담당
 public static class GameOptions
 {
     public const float DefaultVolume = 0.8f;
+    // 지원 언어 코드. 번역은 아직 없고 한국어만 있음
+    public static readonly string[] Languages = { "ko" };
+    // 게임 HUD 배율 범위
+    public const float MinHudScale = 0.5f;
+    public const float MaxHudScale = 3f;
 
     // Resources 폴더 기준 경로. 노출 파라미터 이름은 아래 상수와 같아야 함
     private const string MixerPath = "Audio/MainMixer";
@@ -27,6 +32,8 @@ public static class GameOptions
     public static bool VSync { get; private set; }
     // 0이면 제한 없음
     public static int FrameLimit { get; private set; }
+    // 게임 HUD 배율 (HudScaler가 적용)
+    public static float HudScale { get; private set; }
 
     // 사운드 (0~1)
     public static float MasterVolume { get; private set; }
@@ -42,6 +49,9 @@ public static class GameOptions
     public static bool ShowSwingEffect { get; private set; }
     // 화면 가장자리 효과 (불타는 중 테두리 등)
     public static bool ShowScreenEffects { get; private set; }
+
+    // 언어 코드 (Languages 중 하나)
+    public static string Language { get; private set; }
 
     private static AudioMixer mixer;
 
@@ -73,6 +83,7 @@ public static class GameOptions
         ScreenMode = (FullScreenMode)PlayerPrefs.GetInt(Prefix + "ScreenMode", (int)Screen.fullScreenMode);
         VSync = GetBool("VSync", true);
         FrameLimit = PlayerPrefs.GetInt(Prefix + "FrameLimit", 0);
+        HudScale = Mathf.Clamp(PlayerPrefs.GetFloat(Prefix + "GuiScale", 1f), MinHudScale, MaxHudScale);
 
         MasterVolume = PlayerPrefs.GetFloat(Prefix + "MasterVolume", DefaultVolume);
         MusicVolume = PlayerPrefs.GetFloat(Prefix + "MusicVolume", DefaultVolume);
@@ -82,6 +93,9 @@ public static class GameOptions
         ShowHoverText = GetBool("ShowHoverText", true);
         ShowSwingEffect = GetBool("ShowSwingEffect", true);
         ShowScreenEffects = GetBool("ShowScreenEffects", true);
+
+        Language = PlayerPrefs.GetString(Prefix + "Language", Languages[0]);
+        if (Array.IndexOf(Languages, Language) < 0) Language = Languages[0];
     }
 
     // ---- 화면 ----
@@ -111,6 +125,13 @@ public static class GameOptions
         FrameLimit = Mathf.Max(0, value);
         PlayerPrefs.SetInt(Prefix + "FrameLimit", FrameLimit);
         ApplyFrameRate();
+        Save();
+    }
+
+    public static void SetHudScale(float value)
+    {
+        HudScale = Mathf.Clamp(value, MinHudScale, MaxHudScale);
+        PlayerPrefs.SetFloat(Prefix + "GuiScale", HudScale);
         Save();
     }
 
@@ -167,6 +188,17 @@ public static class GameOptions
     {
         ShowScreenEffects = value;
         SetBool("ShowScreenEffects", value);
+        Save();
+    }
+
+    // ---- 언어 ----
+
+    public static void SetLanguage(string code)
+    {
+        if (Array.IndexOf(Languages, code) < 0) return;
+
+        Language = code;
+        PlayerPrefs.SetString(Prefix + "Language", code);
         Save();
     }
 

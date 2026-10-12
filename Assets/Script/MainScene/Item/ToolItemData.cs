@@ -16,6 +16,9 @@ public class ToolItemData : ItemData
     [Tooltip("공격 속성 (None이 아니면 속성 공격 이펙트가 나가고 공격에 속성이 실림)")]
     public ElementType element;
 
+    [Tooltip("타격 형태 (강타면 금속 물체를 때릴 때 음파가 생김)")]
+    public StrikeType strike;
+
     [Tooltip("손에 들었을 때 표시할 스프라이트 (비워두면 아무것도 표시하지 않음)")]
     public Sprite heldSprite;
 
@@ -24,16 +27,25 @@ public class ToolItemData : ItemData
         return AppendElement($"티어 {tier} · {damage} 피해");
     }
 
-    // 속성이 있으면 툴팁 스탯 아래에 한 줄 추가
+    // 속성·타격 형태가 있으면 툴팁 스탯 아래에 한 줄씩 추가
     protected string AppendElement(string stats)
     {
         string element = ElementName(this.element);
-        return element.Length > 0 ? $"{stats}\n{element} 속성" : stats;
+        if (element.Length > 0) stats = $"{stats}\n{element} 속성";
+        string strike = StrikeName(this.strike);
+        if (strike.Length > 0) stats = $"{stats}\n{strike} 속성";
+        return stats;
     }
 
     public static string ElementName(ElementType element) => element switch
     {
         ElementType.Fire => "화염",
+        _ => string.Empty,
+    };
+
+    public static string StrikeName(StrikeType strike) => strike switch
+    {
+        StrikeType.Blunt => "강타",
         _ => string.Empty,
     };
 }

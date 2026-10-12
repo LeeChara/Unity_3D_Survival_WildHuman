@@ -12,4 +12,6 @@ public struct AttackData
     public int toolTier;
     // 공격 속성 (예: 랜턴 → 화염)
     public ElementType element;
+    // 타격 형태 (예: 강철 둔기 → 강타, 금속 물체를 때리면 음파 발생)
+    public StrikeType strike;
 }

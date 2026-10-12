@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1258f1ab5ba31e34eade60a7a06e02e6, type: 3}
+  m_Name: SteelFence
+  m_EditorClassIdentifier: Assembly-CSharp::PlaceableItemData
+  id: steel_fence
+  displayName: "\uAC15\uCCA0 \uC6B8\uD0C0\uB9AC"
+  icon: {fileID: -168403527, guid: d59cb77a7afcea64ebfec73511964a9d, type: 3}
+  description: "\uAC15\uCCA0\uB85C \uB9CC\uB4E0 \uC6B8\uD0C0\uB9AC. \uB2E8\uB2E8\uD558\uB2E4."
+  maxStack: 99
+  placedPrefab: {fileID: 2515706202527716380, guid: f7811efd78c238441bee6c4c5f8e113a, type: 3}
+  alignToPlayer: 1
+  placeRange: 3
+  maxHealth: 150
+  toolWeakness:
+    tool: 3
+    multiplier: 5
+  dropTable: {fileID: 11400000, guid: 92b3a052e5aa9a34a95ba10c1597f9f1, type: 2}

@@ -6,7 +6,7 @@ using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 // 화면 탭: 해상도·화면 모드는 고른 뒤 "적용"을 눌러야 바뀌고, 일정 시간 안에 유지를 누르지 않으면 되돌림
-// 수직 동기화·프레임 제한은 바로 적용
+// 수직 동기화·프레임 제한·GUI 크기는 바로 적용
 public class DisplaySettingsPage : SettingsPage
 {
     private static readonly FullScreenMode[] Modes =
@@ -24,6 +24,8 @@ public class DisplaySettingsPage : SettingsPage
     [SerializeField] private OptionSelector screenModeSelector;
     [SerializeField] private OptionSelector vSyncSelector;
     [SerializeField] private OptionSelector frameLimitSelector;
+    [Tooltip("게임 HUD 배율 (메뉴는 화면에 맞춰 자동)")]
+    [SerializeField] private OptionSlider hudScaleSlider;
     [Tooltip("아래 버튼 줄의 적용 버튼 (모든 탭에서 보임)")]
     [SerializeField] private Button applyButton;
 
@@ -48,6 +50,7 @@ public class DisplaySettingsPage : SettingsPage
     {
         vSyncSelector.ValueChanged += index => GameOptions.SetVSync(index == 1);
         frameLimitSelector.ValueChanged += index => GameOptions.SetFrameLimit(FrameLimits[index]);
+        hudScaleSlider.ValueChanged += GameOptions.SetHudScale;
         applyButton.onClick.AddListener(ApplyDisplay);
         keepButton.onClick.AddListener(Keep);
         revertButton.onClick.AddListener(Revert);
@@ -71,6 +74,7 @@ public class DisplaySettingsPage : SettingsPage
 
         int limitIndex = System.Array.IndexOf(FrameLimits, GameOptions.FrameLimit);
         frameLimitSelector.SetOptions(FrameLimits.Select(f => f > 0 ? $"{f}" : "제한 없음"), limitIndex >= 0 ? limitIndex : FrameLimits.Length - 1);
+        hudScaleSlider.SetValueWithoutNotify(GameOptions.HudScale);
     }
 
     public override void ResetToDefault()
@@ -78,6 +82,7 @@ public class DisplaySettingsPage : SettingsPage
         // 해상도·화면 모드는 모니터마다 다르므로 그대로 두고 바로 적용되는 항목만 초기화
         GameOptions.SetVSync(true);
         GameOptions.SetFrameLimit(0);
+        GameOptions.SetHudScale(1f);
         Refresh();
     }
 

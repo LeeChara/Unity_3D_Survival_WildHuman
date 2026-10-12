@@ -255,6 +255,7 @@ MonoBehaviour:
   cookingBook: {fileID: 11400000, guid: eae2d086cccfb57439bba3c399f52094, type: 2}
   capacity: 1
   range: 3
+  addVerb: "\uAD7D\uAE30"
   itemRenderers:
   - {fileID: 8854795130217030729}
   timerRoot: {fileID: 5804994723089522181}
@@ -289,7 +290,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::FireSource
   setting: {fileID: 11400000, guid: 077688a177b6c3c408c8b8fafd961038, type: 2}
-  damage: 0
   body: []
 --- !u!1 &1821372604469262021
 GameObject:

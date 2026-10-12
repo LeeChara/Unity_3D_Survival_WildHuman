@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ItemData
   id: sulfur
   displayName: "\uC720\uD669"
-  icon: {fileID: 21300000, guid: 1d2ad0c0e4da5fc47aa2fc965aaca330, type: 3}
+  icon: {fileID: 390561946, guid: d59cb77a7afcea64ebfec73511964a9d, type: 3}
   description: "\uBD88\uC5D0 \uC798 \uD0C0\uB294 \uB178\uB780 \uAD11\uBB3C. \uD3ED\uBC1C\uBB3C\uC758
     \uC7AC\uB8CC\uAC00 \uB41C\uB2E4."
   maxStack: 99

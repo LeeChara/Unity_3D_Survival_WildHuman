@@ -13,6 +13,8 @@ public class Cooker : MonoBehaviour, IInteractable, ISaveable
     [SerializeField, Min(1)] private int capacity = 1;
     [Tooltip("이 거리(수평) 안에 있으면 상호작용 가능")]
     [SerializeField, Min(0f)] private float range = 3f;
+    [Tooltip("재료를 올릴 때 마우스 프리뷰에 표시할 동작 이름 (예: 모닥불은 굽기)")]
+    [SerializeField] private string addVerb = "올리기";
 
     [Header("표시")]
     [Tooltip("올린 아이템을 그릴 스프라이트 (앞쪽부터 완성품, 그다음 대기 중인 재료 순서, capacity개)")]
@@ -65,36 +67,64 @@ public class Cooker : MonoBehaviour, IInteractable, ISaveable
 
     public void Interact(Inventory inventory, PlayerHotbar hotbar)
     {
-        if (done > 0)
+        switch (ResolveAction(hotbar, out CookingRecipe found))
         {
-            Give(inventory, recipe.result, done);
-            done = 0;
-        }
-        else if (!TryAdd(inventory, hotbar) && pending > 0)
-        {
-            Give(inventory, recipe.input, pending);
-            pending = 0;
-            remaining = 0f;
+            case CookerAction.Collect:
+                Give(inventory, recipe.result, done);
+                done = 0;
+                break;
+
+            case CookerAction.Add:
+                inventory.Remove(hotbar.SelectedIndex, 1);
+                recipe = found;
+                if (pending == 0) remaining = found.seconds;
+                pending++;
+                break;
+
+            case CookerAction.TakeBack:
+                Give(inventory, recipe.input, pending);
+                pending = 0;
+                remaining = 0f;
+                break;
         }
 
         if (pending == 0 && done == 0) recipe = null;
         Refresh();
     }
 
-    // 들고 있는 재료가 지금 올려 둔 것과 같고(또는 비어 있고) 자리가 남으면 1개 올림
-    private bool TryAdd(Inventory inventory, PlayerHotbar hotbar)
+    public string GetInteractPreview(PlayerHotbar hotbar)
     {
+        return ResolveAction(hotbar, out CookingRecipe found) switch
+        {
+            CookerAction.Collect => $"회수 ({recipe.result.displayName} ×{done})",
+            CookerAction.Add => $"{addVerb} ({found.input.displayName})",
+            CookerAction.TakeBack => $"꺼내기 ({recipe.input.displayName} ×{pending})",
+            _ => null,
+        };
+    }
+
+    private enum CookerAction { None, Collect, Add, TakeBack }
+
+    // 지금 우클릭하면 할 동작 (Interact와 마우스 프리뷰가 공유)
+    // 완성품 회수 → 들고 있는 재료 1개 올리기 → 대기 중인 재료 꺼내기 순서
+    private CookerAction ResolveAction(PlayerHotbar hotbar, out CookingRecipe found)
+    {
+        found = null;
+        if (done > 0) return CookerAction.Collect;
+        if (CanAdd(hotbar, out found)) return CookerAction.Add;
+        if (pending > 0) return CookerAction.TakeBack;
+        return CookerAction.None;
+    }
+
+    // 들고 있는 재료가 지금 올려 둔 것과 같고(또는 비어 있고) 자리가 남으면 올릴 수 있음
+    private bool CanAdd(PlayerHotbar hotbar, out CookingRecipe found)
+    {
+        found = null;
         ItemStack stack = hotbar.SelectedStack;
         if (stack.IsEmpty || pending + done >= capacity) return false;
 
-        CookingRecipe found = cookingBook.Find(stack.item);
-        if (found == null || (recipe != null && recipe != found)) return false;
-
-        inventory.Remove(hotbar.SelectedIndex, 1);
-        recipe = found;
-        if (pending == 0) remaining = found.seconds;
-        pending++;
-        return true;
+        found = cookingBook.Find(stack.item);
+        return found != null && (recipe == null || recipe == found);
     }
 
     private void Give(Inventory inventory, ItemData item, int count)
