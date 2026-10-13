@@ -8,14 +8,16 @@ public class SoundWaveSetting : ScriptableObject
 {
     [Header("범위")]
     [Tooltip("세기 1일 때 음파가 닿는 거리 (m, 세기에 비례)")]
-    [Min(0.1f)] public float length = 9f;
+    [Min(0.1f)] public float length = 15f;
     [Tooltip("부채꼴 각도 (도)")]
-    [Range(1f, 180f)] public float angle = 60f;
-    [Tooltip("끝까지 퍼지는 데 걸리는 시간 (초)")]
-    [Min(0.01f)] public float spreadTime = 0.3f;
+    [Range(1f, 180f)] public float angle = 90f;
+    [Tooltip("퍼지는 속도 (m/초, 세기와 관계없이 일정)")]
+    [Min(0.1f)] public float spreadSpeed = 15f;
+    [Tooltip("강타를 맞은 뒤 음파가 나가기까지의 시간 (초, 연쇄도 단계마다 적용)")]
+    [Min(0f)] public float strikeDelay = 0.5f;
     [Tooltip("반응을 일으키는 대상 레이어 (플레이어, 몬스터, 설치물)")]
     public LayerMask targetLayers;
-    [Tooltip("음파를 막는 레이어 (구조물). 파면이 닿으면 그 거리에서 음파 전체가 사라짐 (금속이면 연쇄)")]
+    [Tooltip("음파를 막는 레이어 (구조물). 파면이 닿으면 그 거리에서 음파 전체가 사라짐 (금속 물체는 막지 않고 연쇄만 일으킴)")]
     public LayerMask blockLayers;
 
     [Header("연쇄")]
@@ -33,6 +35,24 @@ public class SoundWaveSetting : ScriptableObject
     [Min(0f)] public float stunDuration = 0.5f;
     [Tooltip("세기 1일 때 밀려나는 거리 (m, 세기에 비례)")]
     [Min(0f)] public float knockbackDistance = 1.5f;
+
+    [Header("울림 (금속 물체)")]
+    [Tooltip("금속을 때렸을 때의 '땡' 소리 (강타면 크게, 아니면 작게)")]
+    public AudioClip ringClip;
+    [Tooltip("강타가 아닌 공격, 또는 연쇄하기엔 약한 음파에 닿았을 때의 볼륨")]
+    [Range(0f, 1f)] public float weakRingVolume = 0.35f;
+    [Tooltip("강타를 맞고 음파가 나가기 전까지 모이는 소리 (strikeDelay 길이에 맞춤)")]
+    public AudioClip chargeClip;
+    [Tooltip("음파가 나가는 소리")]
+    public AudioClip waveClip;
+    [Tooltip("약한 울림의 떨림 폭 (m, 화면 가로 방향)")]
+    [Min(0f)] public float weakShake = 0.02f;
+    [Tooltip("약한 울림의 떨림 시간 (초)")]
+    [Min(0f)] public float weakShakeTime = 0.2f;
+    [Tooltip("음파가 나가기 직전 최대 떨림 폭 (m, strikeDelay 동안 점점 커짐)")]
+    [Min(0f)] public float chargeShake = 0.05f;
+    [Tooltip("떨림이 좌우로 바뀌는 횟수 (초당)")]
+    [Min(1f)] public float shakeFrequency = 30f;
 
     [Header("표시")]
     [Tooltip("퍼지는 고리 색")]

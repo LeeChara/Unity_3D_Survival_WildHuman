@@ -2,9 +2,9 @@ using System.Collections.Generic;
 using UnityEngine;
 
 // 금속 물체(Resonant)에서 진행 방향으로 퍼지는 부채꼴 음파
-// spreadTime 동안 앞으로 퍼지며, 파면이 지나간 대상(ISoundReactive)마다 한 번씩 반응을 일으킴 (피해 없음)
-// 파면이 다른 구조물(blockLayers)에 닿으면 그 거리에서 음파 전체가 멈추고 사라짐
-// 닿은 구조물이 금속이면 음파를 받아 다시 울림 (연쇄)
+// spreadSpeed로 앞으로 퍼지며, 파면이 지나간 대상(ISoundReactive)마다 한 번씩 반응을 일으킴 (피해 없음)
+// 파면이 금속이 아닌 구조물(blockLayers)에 닿으면 그 거리에서 음파 전체가 멈추고 사라짐
+// 금속 물체는 음파를 막지 않고 받아서 다시 울림 (연쇄) → 지나가는 동안 여러 음파로 퍼짐
 public class SoundWave : MonoBehaviour
 {
     private const int FrameCount = 8;
@@ -19,6 +19,8 @@ public class SoundWave : MonoBehaviour
     public float Power { get; private set; }
     // 연쇄 단계 (첫 음파 0)
     public int Depth { get; private set; }
+    // 처음 강타에서 시작된 연쇄 번호 (같은 연쇄에서 금속 물체는 한 번만 울림)
+    public int ChainId { get; private set; }
     // 음파를 낸 물체 (자신에게는 반응·막힘을 적용하지 않음)
     public Transform Source { get; private set; }
 
@@ -41,7 +43,7 @@ public class SoundWave : MonoBehaviour
     private static readonly List<(Collider collider, float distance)> hits = new();
     private static readonly Dictionary<(int, int, int, byte), Sprite[]> frameCache = new();
 
-    public static SoundWave Spawn(SoundWaveSetting setting, Vector3 origin, Vector3 direction, float power, int depth, Transform source)
+    public static SoundWave Spawn(SoundWaveSetting setting, Vector3 origin, Vector3 direction, float power, int depth, int chainId, Transform source)
     {
         var go = new GameObject($"SoundWave (단계 {depth})");
         go.transform.position = origin;
@@ -52,6 +54,7 @@ public class SoundWave : MonoBehaviour
         wave.Direction = direction;
         wave.Power = power;
         wave.Depth = depth;
+        wave.ChainId = chainId;
         wave.Source = source;
         wave.CreateVisual();
         return wave;
@@ -69,7 +72,7 @@ public class SoundWave : MonoBehaviour
         }
 
         time += Time.deltaTime;
-        float progress = Mathf.Clamp01(time / Setting.spreadTime);
+        float progress = Mathf.Clamp01(time * Setting.spreadSpeed / Length);
         float reach = Length * progress;
 
         float stop = Propagate(reach);
@@ -85,7 +88,7 @@ public class SoundWave : MonoBehaviour
         if (progress >= 1f) Destroy(gameObject);
     }
 
-    // reach까지 퍼뜨리고, 구조물에 막혔으면 막힌 거리를 반환 (막히지 않았으면 무한대)
+    // reach까지 퍼뜨리고, 금속이 아닌 구조물에 막혔으면 막힌 거리를 반환 (막히지 않았으면 무한대)
     // 막힌 거리까지의 대상(막은 구조물 포함)에게만 반응을 일으킴
     private float Propagate(float reach)
     {
@@ -103,7 +106,7 @@ public class SoundWave : MonoBehaviour
             if (!TryGetDistanceInFan(c, reach, out float distance)) continue;
 
             hits.Add((c, distance));
-            if ((Setting.blockLayers.value & (1 << c.gameObject.layer)) != 0) stop = Mathf.Min(stop, distance);
+            if (Blocks(c)) stop = Mathf.Min(stop, distance);
         }
 
         float limit = Mathf.Min(reach, stop);
@@ -116,6 +119,13 @@ public class SoundWave : MonoBehaviour
             reactive.OnSoundWave(this);
         }
         return stop;
+    }
+
+    // 금속 물체는 막지 않고 다시 울리기만 함 → 음파 하나가 지나가며 여러 음파로 퍼짐
+    private bool Blocks(Collider c)
+    {
+        if ((Setting.blockLayers.value & (1 << c.gameObject.layer)) == 0) return false;
+        return c.GetComponentInParent<Resonant>() == null;
     }
 
     // 몸체에서 시작점에 가장 가까운 점, 그게 부채꼴 밖이면 중심으로 한 번 더 확인

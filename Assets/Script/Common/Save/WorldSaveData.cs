@@ -92,9 +92,14 @@ public class MapData
     public List<string> biomePalette = new();
     // PropData.id 목록
     public List<string> propPalette = new();
+    // WorldStructureData.id 목록
+    public List<string> structurePalette = new();
 
     // 인덱스 = (x + width/2) + (z + height/2) * width
     public ChunkData[] chunks;
+
+    // 월드 생성 때 정해진 구조물 (경계 안만, 구조물이 생기기 전에 만든 월드는 비어 있음)
+    public List<StructureSite> structures = new();
 
     public static MapData Create(int width, int height)
     {
@@ -144,14 +149,41 @@ public class MapData
             spawnZ = spawnZ,
             biomePalette = new List<string>(biomePalette),
             propPalette = new List<string>(propPalette),
+            structurePalette = new List<string>(structurePalette),
             chunks = new ChunkData[chunks.Length],
+            structures = new List<StructureSite>(structures.Count),
         };
 
         for (int i = 0; i < chunks.Length; i++)
         {
             copy.chunks[i] = chunks[i].Clone();
         }
+        foreach (var site in structures)
+        {
+            copy.structures.Add(site.Clone());
+        }
         return copy;
+    }
+}
+
+// 월드 구조물 하나 (종류·위치·회전과, 부품 상태)
+// 배치는 항상 프리팹에서 다시 만들고, state에는 바뀐 상태(상자 내용물, 사라진 부품, 퍼즐 진행 등)만 둠
+[Serializable]
+public class StructureSite
+{
+    // structurePalette 번호
+    public int type;
+    public float x;
+    public float z;
+    public float rotY;
+    // WorldStructure.Capture 결과 (한 번도 로드되지 않았으면 null)
+    public JObject state;
+
+    public Vector3 Position() => new(x, 0f, z);
+
+    public StructureSite Clone()
+    {
+        return new StructureSite { type = type, x = x, z = z, rotY = rotY, state = (JObject)state?.DeepClone() };
     }
 }
 

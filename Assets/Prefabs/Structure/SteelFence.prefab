@@ -437,6 +437,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Resonant
   setting: {fileID: 11400000, guid: 7fe4a7810d293244db27534d28ffbe2f, type: 2}
   direction: 1
+  visuals:
+  - {fileID: 6861676107636208194}
+  - {fileID: 4364290233626464268}
+  - {fileID: 5284658556707991665}
+  - {fileID: 1172242320234209759}
+  - {fileID: 7572226168426134591}
 --- !u!1 &2777141948266965274
 GameObject:
   m_ObjectHideFlags: 0

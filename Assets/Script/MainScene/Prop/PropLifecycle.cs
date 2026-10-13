@@ -160,6 +160,7 @@ public class PropLifecycle : MonoBehaviour
         if (!worldState.IsInside(position)) return false;
         if (requireHidden && IsVisible(position)) return false;
         if (HasPropNear(position, spacing)) return false;
+        if (worldState.IsInStructure(position)) return false;
 
         if (structureClearance > 0f &&
             Physics.CheckSphere(position, structureClearance, structureLayers, QueryTriggerInteraction.Ignore)) return false;

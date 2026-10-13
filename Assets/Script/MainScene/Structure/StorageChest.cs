@@ -9,6 +9,9 @@ public class StorageChest : MonoBehaviour, IInteractable, ISaveable, ISlotContai
     [SerializeField, Min(1)] private int slotCount = 20;
     [Tooltip("이 거리(수평) 안에 있으면 상호작용 가능 (창도 이 거리를 벗어나면 닫힘)")]
     [SerializeField, Min(0f)] private float range = 3f;
+    [Tooltip("창이 열려 있는 동안 쓸 스프라이트 (닫힌 스프라이트는 spriteRenderer에 처음 들어 있던 것)")]
+    [SerializeField] private SpriteRenderer spriteRenderer;
+    [SerializeField] private Sprite openSprite;
 
     public int SlotCount => slotCount;
 
@@ -16,6 +19,7 @@ public class StorageChest : MonoBehaviour, IInteractable, ISaveable, ISlotContai
 
     private ItemStack[] slots;
     private Combustible combustible;
+    private Sprite closedSprite;
 
     private void Awake()
     {
@@ -27,6 +31,15 @@ public class StorageChest : MonoBehaviour, IInteractable, ISaveable, ISlotContai
 
         if (TryGetComponent(out Health health)) health.Died += OnDied;
         combustible = GetComponent<Combustible>();
+
+        if (spriteRenderer != null) closedSprite = spriteRenderer.sprite;
+    }
+
+    // ChestUI가 창을 열고 닫을 때 호출
+    public void SetOpen(bool open)
+    {
+        if (spriteRenderer == null || openSprite == null) return;
+        spriteRenderer.sprite = open ? openSprite : closedSprite;
     }
 
     public ItemStack Get(int index) => slots[index];

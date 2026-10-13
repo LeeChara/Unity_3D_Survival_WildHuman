@@ -57,6 +57,8 @@ public class PlacementManager : MonoBehaviour, ISaveParticipant
         if (offset.sqrMagnitude > item.placeRange * item.placeRange) return false;
         // 맵 경계 밖에는 설치 불가
         if (WorldState.Instance != null && !WorldState.Instance.IsInside(position)) return false;
+        // 월드 구조물 자리에는 설치 불가 (퍼즐 우회 방지)
+        if (WorldState.Instance != null && WorldState.Instance.IsInStructure(position)) return false;
 
         // 콜라이더가 없는 설치물은 겹침 검사 없이 설치
         BoxCollider box = FindBodyCollider(prefab);

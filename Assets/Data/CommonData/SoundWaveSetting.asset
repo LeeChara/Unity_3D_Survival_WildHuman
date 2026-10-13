@@ -12,9 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 843f69850a2f8c74b91c8a267e234c74, type: 3}
   m_Name: SoundWaveSetting
   m_EditorClassIdentifier: Assembly-CSharp::SoundWaveSetting
-  length: 9
-  angle: 60
-  spreadTime: 0.3
+  length: 15
+  angle: 90
+  spreadSpeed: 15
+  strikeDelay: 0.5
   targetLayers:
     serializedVersion: 2
     m_Bits: 1216
@@ -27,6 +28,14 @@ MonoBehaviour:
   burrowedStunDuration: 3
   stunDuration: 0.5
   knockbackDistance: 1.5
+  ringClip: {fileID: 8300000, guid: 9aea93c8f37bef44cb6e54a27145be11, type: 3}
+  weakRingVolume: 0.35
+  chargeClip: {fileID: 8300000, guid: e2ec2b91fab890543b987af5d9c1a0a0, type: 3}
+  waveClip: {fileID: 8300000, guid: 0e55c3837f9f80f46b95e0d0fe677707, type: 3}
+  weakShake: 0.02
+  weakShakeTime: 0.2
+  chargeShake: 0.05
+  shakeFrequency: 30
   waveColor: {r: 0.85, g: 0.95, b: 1, a: 0.8}
   pixelRadius: 24
   ringThickness: 3

@@ -121,6 +121,15 @@ public class WorldGenContext
 
     public GameObject GetPropPrefab(int type) => Resolve(type, map.propPalette, propsById, propCache);
 
+    public int StructureIndex(WorldStructureData data) => PaletteIndex(map.structurePalette, data.id);
+
+    // 세이브에 있지만 지금은 없는 종류면 null
+    public WorldStructureData GetStructure(StructureSite site)
+    {
+        if (site == null || site.type < 0 || site.type >= map.structurePalette.Count) return null;
+        return config.structureDatabase != null ? config.structureDatabase.Get(map.structurePalette[site.type]) : null;
+    }
+
     private static int PaletteIndex(List<string> palette, string id)
     {
         int index = palette.IndexOf(id);

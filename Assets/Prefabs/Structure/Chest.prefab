@@ -162,6 +162,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::StorageChest
   slotCount: 20
   range: 3
+  spriteRenderer: {fileID: 5074421549249570146}
+  openSprite: {fileID: -1010139253, guid: b323510ba85c324478346041e0d0b829, type: 3}
 --- !u!114 &3830686102515893929
 MonoBehaviour:
   m_ObjectHideFlags: 0

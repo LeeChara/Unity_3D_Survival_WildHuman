@@ -109,6 +109,25 @@ public class WorldState : MonoBehaviour
     // 자원 프리팹의 이름표 번호 (처음 보는 종류면 이름표에 추가)
     public int GetPropType(GameObject prefab) => context.PropIndex(prefab);
 
+    // 세이브에 있지만 지금은 없는 종류면 null
+    public WorldStructureData GetStructure(StructureSite site) => context.GetStructure(site);
+
+    // 구조물 점유 반경(+margin) 안인지 (자원 재생·지진·설치를 막는 데 사용, 구조물은 맵 전체에 수십 개라 전부 확인)
+    public bool IsInStructure(Vector3 position, float margin = 0f)
+    {
+        foreach (var site in Map.structures)
+        {
+            WorldStructureData data = context.GetStructure(site);
+            if (data == null) continue;
+
+            float dx = site.x - position.x;
+            float dz = site.z - position.z;
+            float limit = data.radius + margin;
+            if (dx * dx + dz * dz < limit * limit) return true;
+        }
+        return false;
+    }
+
     public Vector2Int WorldToChunk(Vector3 position) => context.WorldToChunk(position);
 
     public Vector3 ChunkOrigin(Vector2Int coord) => context.ChunkOrigin(coord);

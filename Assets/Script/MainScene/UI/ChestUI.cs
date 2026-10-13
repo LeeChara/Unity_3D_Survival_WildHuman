@@ -49,6 +49,7 @@ public class ChestUI : MonoBehaviour
         chest = target;
         player = from;
         chest.SlotChanged += RefreshSlot;
+        chest.SetOpen(true);
 
         for (int i = 0; i < slotUIs.Length; i++)
         {
@@ -73,6 +74,7 @@ public class ChestUI : MonoBehaviour
         // 부서진 상자도 C# 객체는 남아 있으므로 이벤트 해제는 그대로 가능
         StorageChest closing = chest;
         if ((object)chest != null) chest.SlotChanged -= RefreshSlot;
+        if (chest != null) chest.SetOpen(false);
         chest = null;
         player = null;
 

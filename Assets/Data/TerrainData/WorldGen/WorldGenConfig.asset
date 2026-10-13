@@ -12,14 +12,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d530d22e9eb98a94db4cfc99e1177709, type: 3}
   m_Name: WorldGenConfig
   m_EditorClassIdentifier: Assembly-CSharp::WorldGenConfig
-  genVersion: 1
+  genVersion: 2
   biomeDatabase: {fileID: 11400000, guid: 76cdb14d1d30bec4d86cb2fc0be9d2f6, type: 2}
   grid: {fileID: 11400000, guid: 7ac0c01c2e66ea24e894c03af32eeafa, type: 2}
+  structureDatabase: {fileID: 11400000, guid: 16de455b376c5fb419918ccfa2a647d5, type: 2}
   steps:
   - {fileID: 11400000, guid: ee22d2c4376c7ab4195e1ed507c105c7, type: 2}
   - {fileID: 11400000, guid: 0e23951355588d840ad871e7b6c3296e, type: 2}
   - {fileID: 11400000, guid: 18443be857be8ab498d9b1a21a3b5855, type: 2}
   - {fileID: 11400000, guid: 3c7ec99037861244da6041834986db20, type: 2}
+  - {fileID: 11400000, guid: 31bc3d8fca2439e448db600066e0007f, type: 2}
   mapSizes:
   - id: small
     displayName: "\uC791\uAC8C"

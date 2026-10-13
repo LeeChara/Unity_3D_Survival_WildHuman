@@ -185,6 +185,28 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
+      name: Chest_1
+      rect:
+        serializedVersion: 2
+        x: 36
+        y: 160
+        width: 24
+        height: 36
+      alignment: 9
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4c8e2f1a7b3d4e5f9a0b1c2d3e4f5a6b
+      internalID: -1010139253
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
       name: Smelter_0
       rect:
         serializedVersion: 2
@@ -243,6 +265,7 @@ TextureImporter:
       entries: []
     nameFileIdTable:
       Chest_0: -1010139254
+      Chest_1: -1010139253
       Fence_0: -748887913
       Fence_1: -669220527
       Fence_2: 2036927560

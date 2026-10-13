@@ -11,6 +11,8 @@ public class WorldGenConfig : ScriptableObject
 
     public BiomeDatabase biomeDatabase;
     public BiomeGridSetting grid;
+    [Tooltip("월드 구조물 종류 (생성과 세이브의 종류 찾기에 사용)")]
+    public WorldStructureDatabase structureDatabase;
 
     [Tooltip("위에서부터 순서대로 실행 (청크마다 GenerateChunk → 맵 전체 GenerateMap)")]
     public WorldGenStep[] steps;
