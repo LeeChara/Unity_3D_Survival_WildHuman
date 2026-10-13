@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -15,14 +16,31 @@ public class Resonant : MonoBehaviour, ISoundReactive
         AwayFromHit,
         // 설치 방향의 앞(로컬 Z)·뒤 중 강타가 들어온 반대쪽으로 (울타리처럼 길게 뻗은 물체, 대각선이면 대각선)
         Facing,
+        // 중심에서 사방(360도)으로 (매달린 종 등)
+        AllAround,
     }
 
     [SerializeField] private SoundWaveSetting setting;
     [SerializeField] private WaveDirection direction = WaveDirection.AwayFromHit;
     [Tooltip("울릴 때 떨리는 그림 (화면 가로 방향으로 흔들림)")]
     [SerializeField] private Transform[] visuals;
+    [Tooltip("울림 음높이 배율 (작을수록 낮고 묵직함, 물체마다 조금씩 다른 변화는 그대로 더해짐)")]
+    [SerializeField, Range(0.3f, 2f)] private float pitchScale = 1f;
+    [Tooltip("이 물체가 내는 음파의 거리 배율 (연쇄로 울린 다른 물체의 음파에는 적용되지 않음)")]
+    [SerializeField, Min(0.1f)] private float rangeScale = 1f;
+    [Tooltip("이 물체가 내는 음파의 속도 배율 (연쇄로 울린 다른 물체의 음파에는 적용되지 않음)")]
+    [SerializeField, Min(0.05f)] private float speedScale = 1f;
+    [Tooltip("한 연쇄에서 울릴 수 있는 횟수 (2면 다른 금속이 되돌려 보낸 음파에 한 번 더 울림)")]
+    [SerializeField, Min(1)] private int ringsPerChain = 1;
+    [Tooltip("강타를 맞은 뒤 음파가 나가기까지의 시간 (초). 음수면 SoundWaveSetting.strikeDelay (예: 흔들림으로 이미 예고하는 종은 짧게)")]
+    [SerializeField] private float strikeDelay = -1f;
 
     public SoundWaveSetting Setting => setting;
+
+    private float StrikeDelay => strikeDelay >= 0f ? strikeDelay : setting.strikeDelay;
+
+    // 음파를 모으기 시작한 순간 (공격·음파·자동 울림 모두, 예: 종이 크게 흔들림)
+    public event Action Struck;
 
     // 연쇄 하나는 금방 끝나므로 최근 것만 기억해도 충분
     private const int RememberedChains = 8;
@@ -35,8 +53,10 @@ public class Resonant : MonoBehaviour, ISoundReactive
     private Collider[] body;
     // 강타를 맞고 음파를 내기까지 기다리는 중 (그동안의 강타는 무시, 여러 기둥이 같이 맞아도 한 번만 울림)
     private bool pending;
-    // 이미 울린 연쇄 번호 (같은 연쇄 안에서는 한 번만 울림, 음파가 금속을 지나가며 겹쳐 닿아도 중복으로 울리지 않음)
+    // 이미 울린 연쇄 번호 (같은 연쇄 안에서는 ringsPerChain번까지만 울림, 음파가 금속을 지나가며 겹쳐 닿아도 그 이상 울리지 않음)
     private readonly Queue<int> rungChains = new();
+    // 연쇄 번호별로 울린 횟수 (rungChains에 있는 번호만)
+    private readonly Dictionary<int, int> rungCounts = new();
 
     private float pitch;
     private Vector3[] visualBase;
@@ -49,7 +69,7 @@ public class Resonant : MonoBehaviour, ISoundReactive
     private void Awake()
     {
         body = FindBody();
-        pitch = 1f + Random.Range(-PitchVariance, PitchVariance);
+        pitch = pitchScale * (1f + UnityEngine.Random.Range(-PitchVariance, PitchVariance));
 
         if (visuals == null) visuals = new Transform[0];
         visualBase = new Vector3[visuals.Length];
@@ -66,10 +86,16 @@ public class Resonant : MonoBehaviour, ISoundReactive
         Ring();
     }
 
+    // 공격 없이 스스로 울림 (예: 흔들리는 종), 새 연쇄를 시작. 음파를 모으는 중이면 false
+    public bool StrikeSelf(float power)
+    {
+        return Strike(transform.position, power, 0, ++lastChainId);
+    }
+
     public void OnSoundWave(SoundWave wave)
     {
         // 같은 연쇄의 음파가 다시 닿은 것은 조용히 무시
-        if (setting == null || rungChains.Contains(wave.ChainId)) return;
+        if (setting == null || !CanRingIn(wave.ChainId)) return;
         if (!Strike(wave.Origin, wave.Power * setting.chainDecay, wave.Depth + 1, wave.ChainId)) Ring();
     }
 
@@ -79,14 +105,13 @@ public class Resonant : MonoBehaviour, ISoundReactive
     {
         if (setting == null) return false;
         if (depth > setting.maxChain || power < setting.minPower) return false;
-        if (pending || rungChains.Contains(chainId)) return false;
+        if (pending || !CanRingIn(chainId)) return false;
 
         // 방향·시작점은 맞은 순간 기준 (기다리는 동안 공격자가 움직여도 그대로)
         Vector3 center = GetBounds().center;
         if (!TryGetDirection(center, from, out Vector3 dir)) return false;
 
-        rungChains.Enqueue(chainId);
-        if (rungChains.Count > RememberedChains) rungChains.Dequeue();
+        RecordRing(chainId);
 
         float volume = Mathf.Lerp(0.5f, 1f, power);
         Sfx.Play(setting.ringClip, center, volume, pitch);
@@ -94,8 +119,29 @@ public class Resonant : MonoBehaviour, ISoundReactive
 
         pending = true;
         chargeElapsed = 0f;
-        StartCoroutine(Emit(EdgePoint(center, dir), dir, power, depth, chainId));
+        // 사방으로 퍼지면 중심(바닥 높이)에서 시작
+        Vector3 origin = direction == WaveDirection.AllAround ? new Vector3(center.x, transform.position.y, center.z) : EdgePoint(center, dir);
+        StartCoroutine(Emit(origin, dir, power, depth, chainId));
+        Struck?.Invoke();
         return true;
+    }
+
+    private bool CanRingIn(int chainId)
+    {
+        return !rungCounts.TryGetValue(chainId, out int count) || count < ringsPerChain;
+    }
+
+    private void RecordRing(int chainId)
+    {
+        if (rungCounts.TryGetValue(chainId, out int count))
+        {
+            rungCounts[chainId] = count + 1;
+            return;
+        }
+
+        rungCounts[chainId] = 1;
+        rungChains.Enqueue(chainId);
+        if (rungChains.Count > RememberedChains) rungCounts.Remove(rungChains.Dequeue());
     }
 
     // 작은 '땡'과 짧은 떨림 (음파 없음)
@@ -110,11 +156,12 @@ public class Resonant : MonoBehaviour, ISoundReactive
     // 기다리는 동안 부서지면 코루틴도 멈춰서 음파가 나가지 않음
     private IEnumerator Emit(Vector3 origin, Vector3 dir, float power, int depth, int chainId)
     {
-        if (setting.strikeDelay > 0f) yield return new WaitForSeconds(setting.strikeDelay);
+        if (StrikeDelay > 0f) yield return new WaitForSeconds(StrikeDelay);
 
         pending = false;
         Sfx.Play(setting.waveClip, origin, Mathf.Lerp(0.5f, 1f, power), pitch);
-        SoundWave.Spawn(setting, origin, dir, power, depth, chainId, transform);
+        float angle = direction == WaveDirection.AllAround ? 360f : -1f;
+        SoundWave.Spawn(setting, origin, dir, power, depth, chainId, transform, angle, rangeScale, speedScale);
     }
 
     // 꺼졌다 켜지면 멈춘 코루틴이 남긴 대기 상태를 풀어 둠
@@ -140,7 +187,7 @@ public class Resonant : MonoBehaviour, ISoundReactive
         if (pending)
         {
             chargeElapsed += Time.deltaTime;
-            float t = setting.strikeDelay > 0f ? Mathf.Clamp01(chargeElapsed / setting.strikeDelay) : 1f;
+            float t = StrikeDelay > 0f ? Mathf.Clamp01(chargeElapsed / StrikeDelay) : 1f;
             amplitude = Mathf.Max(amplitude, Mathf.Lerp(setting.weakShake, setting.chargeShake, t));
         }
 
@@ -182,6 +229,13 @@ public class Resonant : MonoBehaviour, ISoundReactive
                 dir = Vector3.Dot(incoming, normal) >= 0f ? normal : -normal;
                 return true;
             }
+        }
+
+        // 사방으로 퍼지면 방향은 고리 그림을 돌리는 데만 쓰이므로 어느 쪽이든 괜찮음 (스스로 울릴 때는 들어온 방향이 없음)
+        if (direction == WaveDirection.AllAround)
+        {
+            dir = incoming.sqrMagnitude > 0.0001f ? incoming.normalized : Vector3.forward;
+            return true;
         }
 
         dir = incoming;
@@ -277,11 +331,11 @@ public class Resonant : MonoBehaviour, ISoundReactive
             normal.Normalize();
             foreach (Vector3 dir in new[] { normal, -normal })
             {
-                SoundWave.DrawFanGizmo(EdgePoint(bounds.center, dir), dir, setting.angle, setting.length);
+                SoundWave.DrawFanGizmo(EdgePoint(bounds.center, dir), dir, setting.angle, setting.length * rangeScale);
             }
             return;
         }
 
-        SoundWave.DrawCircleGizmo(new Vector3(bounds.center.x, transform.position.y, bounds.center.z), setting.length + Mathf.Max(bounds.extents.x, bounds.extents.z));
+        SoundWave.DrawCircleGizmo(new Vector3(bounds.center.x, transform.position.y, bounds.center.z), setting.length * rangeScale + Mathf.Max(bounds.extents.x, bounds.extents.z));
     }
 }

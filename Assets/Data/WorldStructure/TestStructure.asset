@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::WorldStructureData
   id: test_structure
   prefab: {fileID: 6949109385386111350, guid: 996ddfbac44eed84b812186ad868413b, type: 3}
-  enabled: 1
+  enabled: 0
   radius: 6
   biomes: []
   randomRotation: 1

@@ -19,9 +19,6 @@ MonoBehaviour:
   targetLayers:
     serializedVersion: 2
     m_Bits: 1216
-  blockLayers:
-    serializedVersion: 2
-    m_Bits: 1024
   maxChain: 3
   chainDecay: 0.6
   minPower: 0.2

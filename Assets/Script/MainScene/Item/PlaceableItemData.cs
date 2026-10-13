@@ -14,6 +14,8 @@ public class PlaceableItemData : ItemData
     [Min(0f)] public float placeRange = 3f;
 
     [Header("설치물")]
+    [Tooltip("켜면 어떤 공격에도 부서지지 않음 (망치 철거 불가, 체력 표시 없음). 월드 구조물 부품용")]
+    public bool indestructible;
     [Min(1)] public float maxHealth = 1000f;
     public ToolWeakness toolWeakness = new ToolWeakness { tool = ToolType.Hammer, multiplier = 100f };
     [Tooltip("부서질 때 떨어뜨릴 아이템")]

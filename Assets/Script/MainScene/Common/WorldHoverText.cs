@@ -72,7 +72,8 @@ public class WorldHoverText : MonoBehaviour
         if (target != null)
         {
             string suffix = blocked ? " (채굴 불가능)" : string.Empty;
-            info = $"{target.DisplayName}{suffix} {current}/{max}";
+            // 부서지지 않는 대상은 이름만
+            info = target.IsInvulnerable ? $"{target.DisplayName}{suffix}" : $"{target.DisplayName}{suffix} {current}/{max}";
         }
 
         if (preview == null) return info;

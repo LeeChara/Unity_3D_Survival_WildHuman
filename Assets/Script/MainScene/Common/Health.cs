@@ -15,6 +15,8 @@ public class Health : MonoBehaviour, ISaveable
     public bool IsDead => isDead;
     // 마우스를 올렸을 때 표시할 이름 (빈 문자열이면 표시하지 않음, 종류별로 데이터에서 읽도록 재정의)
     public virtual string DisplayName => string.Empty;
+    // 피해를 받지 않음 (예: 월드 구조물의 종). 피격 반짝임·체력 표시도 없음
+    public virtual bool IsInvulnerable => false;
 
     // 사망 시점을 스포너 등 외부 시스템에 알림
     public event Action Died;
@@ -59,7 +61,7 @@ public class Health : MonoBehaviour, ISaveable
     public void TakeDamage(int damage)
     {
         // Destroy는 프레임 끝에 처리되므로 같은 프레임의 추가 피격으로 Die가 중복 호출되는 것을 방지
-        if (isDead) return;
+        if (isDead || IsInvulnerable) return;
 
         currentHealth = Mathf.Max(0, currentHealth - damage);
         Damaged?.Invoke();

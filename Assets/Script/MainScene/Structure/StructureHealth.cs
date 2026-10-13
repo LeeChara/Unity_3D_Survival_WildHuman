@@ -11,6 +11,7 @@ public class StructureHealth : Health
 
     public PlaceableItemData SourceItem => sourceItem;
     public override string DisplayName => sourceItem.displayName;
+    public override bool IsInvulnerable => sourceItem.indestructible;
 
     // 파괴 처리가 모두 끝난 시점을 PlacementManager에 알림 (목록 제거용)
     public event Action<StructureHealth> Destroyed;

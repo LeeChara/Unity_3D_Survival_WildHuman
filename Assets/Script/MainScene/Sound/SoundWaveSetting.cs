@@ -17,8 +17,6 @@ public class SoundWaveSetting : ScriptableObject
     [Min(0f)] public float strikeDelay = 0.5f;
     [Tooltip("반응을 일으키는 대상 레이어 (플레이어, 몬스터, 설치물)")]
     public LayerMask targetLayers;
-    [Tooltip("음파를 막는 레이어 (구조물). 파면이 닿으면 그 거리에서 음파 전체가 사라짐 (금속 물체는 막지 않고 연쇄만 일으킴)")]
-    public LayerMask blockLayers;
 
     [Header("연쇄")]
     [Tooltip("첫 음파 이후 다시 울릴 수 있는 횟수")]

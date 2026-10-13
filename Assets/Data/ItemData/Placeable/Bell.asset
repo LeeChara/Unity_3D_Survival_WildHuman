@@ -1,0 +1,29 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1258f1ab5ba31e34eade60a7a06e02e6, type: 3}
+  m_Name: Bell
+  m_EditorClassIdentifier: Assembly-CSharp::PlaceableItemData
+  id: bell
+  displayName: "\uC885"
+  icon: {fileID: -610199985, guid: d59cb77a7afcea64ebfec73511964a9d, type: 3}
+  description: "\uC624\uB798\uB41C \uAE08\uC18D \uC885. \uAC15\uD558\uAC8C \uCE58\uBA74
+    \uBA40\uB9AC\uAE4C\uC9C0 \uC6B8\uB824 \uD37C\uC9C4\uB2E4."
+  maxStack: 1
+  placedPrefab: {fileID: 3137965448615950565, guid: 424d620852671944b9d8071ae491cdb2, type: 3}
+  alignToPlayer: 0
+  placeRange: 3
+  indestructible: 1
+  maxHealth: 1000
+  toolWeakness:
+    tool: 3
+    multiplier: 100
+  dropTable: {fileID: 0}

@@ -11,8 +11,10 @@ GameObject:
   - component: {fileID: 1043677638544298584}
   - component: {fileID: 2984513753448536688}
   - component: {fileID: 7215221977509081511}
+  - component: {fileID: 8868120964961491663}
+  - component: {fileID: 2681885387073224730}
   m_Layer: 10
-  m_Name: AncientPillar
+  m_Name: IronPillar
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -68,6 +70,37 @@ MonoBehaviour:
   direction: 0
   visuals:
   - {fileID: 513871946507690650}
+  pitchScale: 1
+  rangeScale: 1
+  ringsPerChain: 1
+--- !u!114 &8868120964961491663
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 981713158363344521}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7d12f26b17747b04dab55ad139c8173e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::StructureHealth
+  maxHealth: 100
+  currentHealth: 0
+  sourceItem: {fileID: 11400000, guid: 577adca4625181a40b15aff8dfbb94cf, type: 2}
+--- !u!114 &2681885387073224730
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 981713158363344521}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fde1371e74b3d94488a71531f2b028bf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SaveableEntity
+  typeId: iron_pillar
 --- !u!1 &5828830525210081484
 GameObject:
   m_ObjectHideFlags: 0

@@ -3,13 +3,10 @@ using UnityEngine;
 
 // 금속 물체(Resonant)에서 진행 방향으로 퍼지는 부채꼴 음파
 // spreadSpeed로 앞으로 퍼지며, 파면이 지나간 대상(ISoundReactive)마다 한 번씩 반응을 일으킴 (피해 없음)
-// 파면이 금속이 아닌 구조물(blockLayers)에 닿으면 그 거리에서 음파 전체가 멈추고 사라짐
-// 금속 물체는 음파를 막지 않고 받아서 다시 울림 (연쇄) → 지나가는 동안 여러 음파로 퍼짐
+// 무엇에도 막히지 않고 끝까지 퍼짐. 금속 물체는 음파를 받아서 다시 울림 (연쇄) → 지나가는 동안 여러 음파로 퍼짐
 public class SoundWave : MonoBehaviour
 {
     private const int FrameCount = 8;
-    // 구조물에 막혀 사라지는 데 걸리는 시간 (초)
-    private const float BlockedFadeTime = 0.12f;
 
     public SoundWaveSetting Setting { get; private set; }
     public Vector3 Origin { get; private set; }
@@ -21,29 +18,28 @@ public class SoundWave : MonoBehaviour
     public int Depth { get; private set; }
     // 처음 강타에서 시작된 연쇄 번호 (같은 연쇄에서 금속 물체는 한 번만 울림)
     public int ChainId { get; private set; }
-    // 음파를 낸 물체 (자신에게는 반응·막힘을 적용하지 않음)
+    // 부채꼴 각도 (360이면 사방으로 퍼지는 원, 예: 종)
+    public float Angle { get; private set; }
+    // 보낸 물체의 거리 배율 (예: 종은 더 멀리 퍼짐)
+    public float LengthScale { get; private set; } = 1f;
+    // 보낸 물체의 속도 배율 (예: 종은 천천히 퍼짐)
+    public float SpeedScale { get; private set; } = 1f;
+    // 음파를 낸 물체 (자신에게는 반응을 일으키지 않음)
     public Transform Source { get; private set; }
 
     // 세기를 반영한 최대 거리
-    public float Length => Setting.length * Power;
+    public float Length => Setting.length * Power * LengthScale;
 
     private float time;
     private readonly HashSet<ISoundReactive> reached = new();
     private SpriteRenderer ring;
     private Sprite[] frames;
 
-    // 구조물에 막힌 뒤 사라지는 중이면 남은 시간 (막히지 않았으면 음수)
-    private float blockedFade = -1f;
-    private float blockedAlpha;
-    // 지금 표시 중인 진하기 (세기 반영 전)
-    private float alpha;
-
     // 반응 중에 새 음파가 생겨도 조회는 다음 프레임부터라 공용 버퍼를 덮어쓰지 않음
     private static readonly Collider[] overlapBuffer = new Collider[128];
-    private static readonly List<(Collider collider, float distance)> hits = new();
     private static readonly Dictionary<(int, int, int, byte), Sprite[]> frameCache = new();
 
-    public static SoundWave Spawn(SoundWaveSetting setting, Vector3 origin, Vector3 direction, float power, int depth, int chainId, Transform source)
+    public static SoundWave Spawn(SoundWaveSetting setting, Vector3 origin, Vector3 direction, float power, int depth, int chainId, Transform source, float angle = -1f, float lengthScale = 1f, float speedScale = 1f)
     {
         var go = new GameObject($"SoundWave (단계 {depth})");
         go.transform.position = origin;
@@ -55,6 +51,10 @@ public class SoundWave : MonoBehaviour
         wave.Power = power;
         wave.Depth = depth;
         wave.ChainId = chainId;
+        // 음수면 설정의 기본 각도
+        wave.Angle = angle > 0f ? Mathf.Min(angle, 360f) : setting.angle;
+        wave.LengthScale = Mathf.Max(0.01f, lengthScale);
+        wave.SpeedScale = Mathf.Max(0.01f, speedScale);
         wave.Source = source;
         wave.CreateVisual();
         return wave;
@@ -62,70 +62,31 @@ public class SoundWave : MonoBehaviour
 
     private void Update()
     {
-        // 막힌 뒤에는 멈춘 자리에서 빠르게 흐려짐
-        if (blockedFade >= 0f)
-        {
-            blockedFade -= Time.deltaTime;
-            SetAlpha(blockedAlpha * Mathf.Clamp01(blockedFade / BlockedFadeTime));
-            if (blockedFade <= 0f) Destroy(gameObject);
-            return;
-        }
-
         time += Time.deltaTime;
-        float progress = Mathf.Clamp01(time * Setting.spreadSpeed / Length);
+        float progress = Mathf.Clamp01(time * Setting.spreadSpeed * SpeedScale / Length);
         float reach = Length * progress;
 
-        float stop = Propagate(reach);
-        if (stop < reach)
-        {
-            ShowReach(stop);
-            blockedAlpha = alpha;
-            blockedFade = BlockedFadeTime;
-            return;
-        }
-
+        Propagate(reach);
         ShowReach(reach);
         if (progress >= 1f) Destroy(gameObject);
     }
 
-    // reach까지 퍼뜨리고, 금속이 아닌 구조물에 막혔으면 막힌 거리를 반환 (막히지 않았으면 무한대)
-    // 막힌 거리까지의 대상(막은 구조물 포함)에게만 반응을 일으킴
-    private float Propagate(float reach)
+    // reach까지 퍼뜨리며 파면이 처음 지나간 대상에게 반응을 일으킴
+    private void Propagate(float reach)
     {
-        if (reach <= 0f) return float.PositiveInfinity;
+        if (reach <= 0f) return;
 
-        int mask = Setting.targetLayers.value | Setting.blockLayers.value;
-        int count = Physics.OverlapSphereNonAlloc(Origin, reach, overlapBuffer, mask, QueryTriggerInteraction.Ignore);
-
-        hits.Clear();
-        float stop = float.PositiveInfinity;
+        int count = Physics.OverlapSphereNonAlloc(Origin, reach, overlapBuffer, Setting.targetLayers.value, QueryTriggerInteraction.Ignore);
         for (int i = 0; i < count; i++)
         {
             Collider c = overlapBuffer[i];
             if (Source != null && c.transform.IsChildOf(Source)) continue;
-            if (!TryGetDistanceInFan(c, reach, out float distance)) continue;
-
-            hits.Add((c, distance));
-            if (Blocks(c)) stop = Mathf.Min(stop, distance);
-        }
-
-        float limit = Mathf.Min(reach, stop);
-        foreach (var (c, distance) in hits)
-        {
-            if (distance > limit + 0.01f) continue;
+            if (!TryGetDistanceInFan(c, reach, out _)) continue;
 
             ISoundReactive reactive = c.GetComponentInParent<ISoundReactive>();
             if (reactive == null || !reached.Add(reactive)) continue;
             reactive.OnSoundWave(this);
         }
-        return stop;
-    }
-
-    // 금속 물체는 막지 않고 다시 울리기만 함 → 음파 하나가 지나가며 여러 음파로 퍼짐
-    private bool Blocks(Collider c)
-    {
-        if ((Setting.blockLayers.value & (1 << c.gameObject.layer)) == 0) return false;
-        return c.GetComponentInParent<Resonant>() == null;
     }
 
     // 몸체에서 시작점에 가장 가까운 점, 그게 부채꼴 밖이면 중심으로 한 번 더 확인
@@ -144,7 +105,7 @@ public class SoundWave : MonoBehaviour
         if (distance > reach) return false;
         // 시작점과 겹치면 방향을 따질 수 없으므로 닿은 것으로 봄
         if (distance < 0.01f) return true;
-        return Vector3.Angle(Direction, to) <= Setting.angle * 0.5f;
+        return Angle >= 360f || Vector3.Angle(Direction, to) <= Angle * 0.5f;
     }
 
     #region 표시
@@ -152,7 +113,7 @@ public class SoundWave : MonoBehaviour
     // 바닥에 눕힌 부채꼴 고리 (도트 그림을 코드로 생성, 퍼진 거리에 따라 프레임 교체)
     private void CreateVisual()
     {
-        frames = GetFrames(Setting);
+        frames = GetFrames(Setting, Angle);
 
         var go = new GameObject("Ring");
         go.transform.SetParent(transform, false);
@@ -183,7 +144,6 @@ public class SoundWave : MonoBehaviour
     // 연쇄로 약해진 음파일수록 옅게
     private void SetAlpha(float value)
     {
-        alpha = value;
         if (ring == null) return;
 
         Color color = Setting.waveColor;
@@ -191,19 +151,21 @@ public class SoundWave : MonoBehaviour
         ring.color = color;
     }
 
-    // 1 유닛 = 반지름 1 (Length로 스케일), 피벗은 부채꼴의 꼭짓점
-    private static Sprite[] GetFrames(SoundWaveSetting setting)
+    // 1 유닛 = 반지름 1 (Length로 스케일), 피벗은 부채꼴의 꼭짓점 (원이면 중심)
+    private static Sprite[] GetFrames(SoundWaveSetting setting, float waveAngle)
     {
         int radius = setting.pixelRadius;
         int thickness = setting.ringThickness;
-        int angle = Mathf.RoundToInt(setting.angle);
+        int angle = Mathf.RoundToInt(waveAngle);
+        // 사방으로 퍼지면 원 전체를 그리고 피벗을 가운데로 (부채꼴은 위쪽 반원 안에만 그림)
+        bool full = angle >= 360;
         byte fill = (byte)Mathf.RoundToInt(setting.fillAlpha * 255f);
         var key = (radius, thickness, angle, fill);
         if (frameCache.TryGetValue(key, out Sprite[] cached) && cached[0] != null) return cached;
 
         float halfAngle = angle * 0.5f;
         int width = radius * 2 + 1;
-        int height = radius + 1;
+        int height = full ? radius * 2 + 1 : radius + 1;
         var result = new Sprite[FrameCount];
 
         for (int f = 0; f < FrameCount; f++)
@@ -222,9 +184,10 @@ public class SoundWave : MonoBehaviour
                 for (int x = 0; x < width; x++)
                 {
                     float px = x - radius;
-                    float py = y + 0.5f;
+                    float py = full ? y - radius : y + 0.5f;
                     float d = Mathf.Sqrt(px * px + py * py);
-                    if (d > outer || Mathf.Abs(Mathf.Atan2(px, py) * Mathf.Rad2Deg) > halfAngle) continue;
+                    if (d > outer) continue;
+                    if (!full && Mathf.Abs(Mathf.Atan2(px, py) * Mathf.Rad2Deg) > halfAngle) continue;
 
                     // 바깥 고리는 진하게, 안쪽은 지나간 자리로 옅게
                     byte alpha = d >= outer - thickness ? (byte)255 : fill;
@@ -234,7 +197,7 @@ public class SoundWave : MonoBehaviour
 
             tex.SetPixels32(pixels);
             tex.Apply(false, true);
-            var pivot = new Vector2((radius + 0.5f) / width, 0f);
+            var pivot = new Vector2((radius + 0.5f) / width, full ? (radius + 0.5f) / height : 0f);
             result[f] = Sprite.Create(tex, new Rect(0, 0, width, height), pivot, radius, 0, SpriteMeshType.FullRect);
         }
 
@@ -247,7 +210,8 @@ public class SoundWave : MonoBehaviour
     private void OnDrawGizmos()
     {
         if (Setting == null) return;
-        DrawFanGizmo(Origin, Direction, Setting.angle, Length);
+        if (Angle >= 360f) DrawCircleGizmo(Origin, Length);
+        else DrawFanGizmo(Origin, Direction, Angle, Length);
     }
 
     public static void DrawFanGizmo(Vector3 origin, Vector3 direction, float angle, float length)
