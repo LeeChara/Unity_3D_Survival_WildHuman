@@ -25,6 +25,8 @@ public class MonsterAI : MonoBehaviour, IStunnable
     public event Action PlayerDetected;
     public event Action PlayerLost;
     public bool IsStunned => state == State.Stunned;
+    // 피해를 받지 않는 상태 (MonsterHealth가 읽음, 예: 기절 중에만 맞는 문지기)
+    public virtual bool IsInvulnerable => false;
     private float stunRemaining;
 
     protected Rigidbody rb;
@@ -377,7 +379,7 @@ public class MonsterAI : MonoBehaviour, IStunnable
     }
 
     // 진행 중인 행동(공격 포함)을 끊고 제자리에 멈춤. 이미 기절 중이면 남은 시간과 새 시간 중 긴 쪽
-    public void Stun(float duration)
+    public virtual void Stun(float duration)
     {
         if (health.IsDead || duration <= 0f) return;
 
@@ -396,8 +398,12 @@ public class MonsterAI : MonoBehaviour, IStunnable
             rb.linearVelocity = new Vector3(0f, velocity.y, 0f);
 
             PlayAnimation(State.Stunned);
+            OnStunStarted();
         }
     }
+
+    protected virtual void OnStunStarted() { }
+    protected virtual void OnStunEnded() { }
 
     // 넉백 중에는 Update가 멈추므로 기절 시간은 밀려난 뒤부터 흐름
     protected virtual void Stunned()
@@ -413,6 +419,7 @@ public class MonsterAI : MonoBehaviour, IStunnable
         stateTime = 0f;
 
         PlayAnimation(State.Idle);
+        OnStunEnded();
     }
 
     private bool IsSuperArmor()

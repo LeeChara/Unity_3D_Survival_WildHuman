@@ -44,7 +44,8 @@ public class WorldStructure : MonoBehaviour
         var piecesState = new JObject();
         foreach (var (key, entity) in pieces)
         {
-            if (entity == null)
+            // 쓰러져 시체로 남아 있는 부품(몬스터)도 사라진 것으로 기록
+            if (entity == null || (entity.TryGetComponent(out Health health) && health.IsDead))
             {
                 piecesState[key] = JValue.CreateNull();
                 continue;

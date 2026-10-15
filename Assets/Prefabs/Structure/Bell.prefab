@@ -318,7 +318,7 @@ MonoBehaviour:
   visuals:
   - {fileID: 1235485702506433894}
   pitchScale: 0.7
-  rangeScale: 2
+  rangeScale: 1
   speedScale: 0.5
   ringsPerChain: 1
   strikeDelay: 0.25

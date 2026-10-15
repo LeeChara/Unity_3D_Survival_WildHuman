@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cfe35a1362b542148ae8c3dc8a74f508, type: 3}
+  m_Name: ThornPass
+  m_EditorClassIdentifier: Assembly-CSharp::WorldStructureData
+  id: thorn_pass
+  prefab: {fileID: 1804242992641108659, guid: f2ce92db77071644cb421bc6a5ba1790, type: 3}
+  enabled: 1
+  radius: 11
+  biomes: []
+  randomRotation: 0
+  priority: 0
+  count: {x: 3, y: 5}
+  distanceBand: {x: 0, y: 0}
+  sameTypeSpacing: 500
+  guaranteeNear: 0
+  nearBand: {x: 200, y: 400}

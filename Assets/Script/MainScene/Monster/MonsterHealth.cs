@@ -16,6 +16,7 @@ public class MonsterHealth : Health
     private MonsterAI ai;
 
     public override string DisplayName => ai != null && ai.Data != null ? ai.Data.displayName : string.Empty;
+    public override bool IsInvulnerable => ai != null && ai.IsInvulnerable;
 
     // 시체가 남아 있고 남은 시간
     private float corpseTimer;

@@ -1,0 +1,30 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1258f1ab5ba31e34eade60a7a06e02e6, type: 3}
+  m_Name: RoseBush
+  m_EditorClassIdentifier: Assembly-CSharp::PlaceableItemData
+  id: rose_bush
+  displayName: "\uC7A5\uBBF8 \uB364\uBD88"
+  icon: {fileID: -987203430, guid: ade482520d0844c4594db691aae97401, type: 3}
+  description: "\uAC00\uC2DC\uAC00 \uBE7D\uBE7D\uD55C \uC7A5\uBBF8 \uB364\uBD88.
+    \uB2FF\uC73C\uBA74 \uCC14\uB824\uC11C \uBC00\uB824\uB09C\uB2E4. \uAC00\uC2DC\uAF43\uC0B4\uBAA8\uC0AC\uAC00
+    \uC228\uC5B4 \uC9C0\uB0B4\uB294 \uACF3\uC774\uB2E4."
+  maxStack: 1
+  placedPrefab: {fileID: 6754650917470773616, guid: d5d47844052150f459bdb67e791ba9f5, type: 3}
+  alignToPlayer: 0
+  placeRange: 3
+  indestructible: 1
+  maxHealth: 1000
+  toolWeakness:
+    tool: 3
+    multiplier: 100
+  dropTable: {fileID: 0}
