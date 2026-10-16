@@ -119,6 +119,8 @@ GameObject:
   - component: {fileID: 7937664184223242717}
   - component: {fileID: 7238426587045088117}
   - component: {fileID: 316235187751151978}
+  - component: {fileID: 7582540983591694916}
+  - component: {fileID: 9151158542766226144}
   m_Layer: 6
   m_Name: Wingsquirrel
   m_TagString: Untagged
@@ -471,6 +473,34 @@ MonoBehaviour:
   effectPrefab: {fileID: 2099692420280195063, guid: ce6dda90562e518459c8e41696b3ec14, type: 3}
   headroom: 0.15
   sortingOrder: 500
+--- !u!114 &7582540983591694916
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 48305459567241423}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8abff934eae78fc4096e2bdc643b89f9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Wettable
+  setting: {fileID: 11400000, guid: b75368e149c56444db0a699f03b0dcff, type: 2}
+  duration: 0
+  hitFlash: {fileID: 0}
+--- !u!114 &9151158542766226144
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 48305459567241423}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 667e9229e0f46f143b4491173fe212d7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::WaterWader
+  setting: {fileID: 11400000, guid: b75368e149c56444db0a699f03b0dcff, type: 2}
 --- !u!1 &313815749097548721
 GameObject:
   m_ObjectHideFlags: 0

@@ -35,11 +35,11 @@ public class StoneotterAI : MonsterAI
 
         if (targetDistance > data.windupRange)
         {
-            rb.linearVelocity = targetDirection * data.chaseSpeed;
+            rb.linearVelocity = targetDirection * data.chaseSpeed * MoveScale;
             transform.rotation = Quaternion.LookRotation(targetDirection);
         }
         else if (targetDistance < otterData.windupMinRange) {
-            rb.linearVelocity = -targetDirection * data.chaseSpeed;
+            rb.linearVelocity = -targetDirection * data.chaseSpeed * MoveScale;
             transform.rotation = Quaternion.LookRotation(-targetDirection);
         }
         else

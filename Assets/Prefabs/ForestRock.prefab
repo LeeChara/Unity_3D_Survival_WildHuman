@@ -18,6 +18,8 @@ GameObject:
   - component: {fileID: 8484404535405193676}
   - component: {fileID: 7777402817961816930}
   - component: {fileID: 6754853124740932822}
+  - component: {fileID: 1625346032940741378}
+  - component: {fileID: 6516641504146654159}
   m_Layer: 8
   m_Name: ForestRock
   m_TagString: Untagged
@@ -224,3 +226,32 @@ MonoBehaviour:
   height: 2.8
   footOffset: {x: 0, y: -0.2, z: 0}
   isStatic: 1
+--- !u!114 &1625346032940741378
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5058150033251958606}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 78e51b4b1572b6049884506d0364c9d6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::StatusEffectHost
+  reactions: []
+  indicator: {fileID: 0}
+--- !u!114 &6516641504146654159
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5058150033251958606}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8abff934eae78fc4096e2bdc643b89f9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Wettable
+  setting: {fileID: 11400000, guid: b75368e149c56444db0a699f03b0dcff, type: 2}
+  duration: 0
+  hitFlash: {fileID: 0}

@@ -32,6 +32,7 @@ public class MonsterAI : MonoBehaviour, IStunnable
     protected Rigidbody rb;
     protected Health health;
     protected Knockback knockback;
+    private WaterWader waterWader;
     protected Transform target;
     private Health targetHealth;
     private bool isTargetPlayer;
@@ -50,6 +51,9 @@ public class MonsterAI : MonoBehaviour, IStunnable
     // State 순서대로 애니메이터 상태 해시
     private int[] animationHashes;
 
+    // 평소 이동(배회·추적·후퇴) 속도 배율 (물 위면 느려짐, 공격 돌진에는 쓰지 않음)
+    protected float MoveScale => waterWader != null ? waterWader.SpeedMultiplier : 1f;
+
     protected virtual void Awake()
     {
         rb = GetComponent<Rigidbody>();
@@ -58,6 +62,7 @@ public class MonsterAI : MonoBehaviour, IStunnable
         hitbox.SetActive(false);
 
         knockback = GetComponent<Knockback>();
+        waterWader = GetComponent<WaterWader>();
         if (knockback != null)
         {
             knockback.IsImmune = IsSuperArmor;
@@ -275,7 +280,7 @@ public class MonsterAI : MonoBehaviour, IStunnable
         }
 
         Vector3 wanderDirection = wanderDistance.normalized;
-        rb.linearVelocity = wanderDirection * data.moveSpeed;
+        rb.linearVelocity = wanderDirection * data.moveSpeed * MoveScale;
         transform.rotation = Quaternion.LookRotation(wanderDirection);
     }
 
@@ -303,7 +308,7 @@ public class MonsterAI : MonoBehaviour, IStunnable
 
     protected virtual void ChaseBehavior()
     {
-        rb.linearVelocity = targetDirection * data.chaseSpeed;
+        rb.linearVelocity = targetDirection * data.chaseSpeed * MoveScale;
         transform.rotation = Quaternion.LookRotation(targetDirection);
     }
 

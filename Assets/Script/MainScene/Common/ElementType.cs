@@ -2,5 +2,6 @@
 public enum ElementType
 {
     None,
-    Fire
+    Fire,
+    Water
 }

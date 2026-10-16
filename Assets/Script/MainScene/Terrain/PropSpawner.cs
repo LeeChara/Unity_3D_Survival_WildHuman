@@ -57,6 +57,7 @@ public class PropSpawner : MonoBehaviour, ISaveParticipant
         {
             SpawnedProp prop = Spawn(coord, chunk.types[i], chunk.PropPosition(i));
             if (chunk.TakeBurn(i, out float hp, out float left)) RestoreBurn(prop.instance, hp, left);
+            if (chunk.TakeWet(i, out float wetLeft)) RestoreWet(prop.instance, wetLeft);
             props.Add(prop);
         }
 
@@ -124,7 +125,7 @@ public class PropSpawner : MonoBehaviour, ISaveParticipant
         spawnedProps.Remove(coord);
     }
 
-    #region 불타는 자원
+    #region 불타는·젖은 자원
 
     private static void RestoreBurn(GameObject instance, float hp, float left)
     {
@@ -134,7 +135,12 @@ public class PropSpawner : MonoBehaviour, ISaveParticipant
         health.Combustible.Ignite(left);
     }
 
-    // 지금 타고 있는 자원의 상태를 청크 데이터에 적음
+    private static void RestoreWet(GameObject instance, float left)
+    {
+        if (instance != null && instance.TryGetComponent(out Wettable wettable)) wettable.Soak(left);
+    }
+
+    // 지금 타고 있거나 젖은 자원의 상태를 청크 데이터에 적음
     private static void CaptureBurns(List<SpawnedProp> props, ChunkData chunk)
     {
         for (int i = 0; i < props.Count; i++)
@@ -144,10 +150,11 @@ public class PropSpawner : MonoBehaviour, ISaveParticipant
 
             Combustible combustible = health.Combustible;
             if (combustible != null && combustible.IsBurning) chunk.SetBurn(i, health.CurrentHealth, combustible.Remaining);
+            if (instance.TryGetComponent(out Wettable wettable) && wettable.IsWet) chunk.SetWet(i, wettable.Remaining);
         }
     }
 
-    // 저장 데이터의 맵(복사본)에 로드된 청크의 불타는 자원을 적음 (언로드된 청크는 이미 청크 데이터에 있음)
+    // 저장 데이터의 맵(복사본)에 로드된 청크의 불타는·젖은 자원을 적음 (언로드된 청크는 이미 청크 데이터에 있음)
     public void Capture(WorldSaveData data)
     {
         if (data.map == null) return;

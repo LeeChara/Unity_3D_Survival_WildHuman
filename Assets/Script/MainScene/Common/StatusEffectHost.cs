@@ -74,6 +74,8 @@ public class StatusEffectHost : MonoBehaviour
             while (effect.tickTimer <= 0f)
             {
                 effect.tickTimer += effect.data.tickInterval;
+                // 피해가 없는 상태(예: 젖음)는 피격 반짝임이 나지 않도록 건너뜀
+                if (effect.data.tickDamage <= 0) continue;
                 health.TakeDamage(effect.data.tickDamage);
                 // 지속 피해로 쓰러지면 Died에서 모두 해제됨
                 if (health.IsDead) return;
@@ -119,6 +121,18 @@ public class StatusEffectHost : MonoBehaviour
         active.Add(new ActiveEffect { data = data, remaining = duration, tickTimer = data.tickInterval });
         UpdateIndicator();
         Changed?.Invoke();
+    }
+
+    // 걸린 상태를 바로 해제 (예: 물에 젖어 불이 꺼짐). 걸려 있지 않았으면 false
+    public bool Remove(StatusEffectData data)
+    {
+        ActiveEffect effect = Find(data);
+        if (effect == null) return false;
+
+        active.Remove(effect);
+        UpdateIndicator();
+        Changed?.Invoke();
+        return true;
     }
 
     private void ClearAll()

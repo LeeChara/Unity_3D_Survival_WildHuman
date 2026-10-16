@@ -32,7 +32,7 @@ public class StructureStep : WorldGenStep
     private const int RelaxLevels = 3;
 
     // 후보점마다 용암 호수(여유 범위 포함)까지 남은 거리 (배정 중 반복 계산하지 않도록 한 번만 구함)
-    private float[] lavaClearance;
+    private float[] lakeClearance;
 
     public override void GenerateMap(WorldGenContext ctx)
     {
@@ -58,10 +58,10 @@ public class StructureStep : WorldGenStep
         var used = new bool[candidates.Count];
         float maxRadius = 0f;
         foreach (var data in types) maxRadius = Mathf.Max(maxRadius, data.radius);
-        lavaClearance = new float[candidates.Count];
+        lakeClearance = new float[candidates.Count];
         for (int i = 0; i < candidates.Count; i++)
         {
-            lavaClearance[i] = LavaClearance(ctx, candidates[i], maxRadius);
+            lakeClearance[i] = LakeClearance(ctx, candidates[i], maxRadius);
         }
         var placements = new List<Placement>();
 
@@ -123,7 +123,7 @@ public class StructureStep : WorldGenStep
 
             float distance = Vector3.Distance(position, spawn);
             if (distance < band.x || (band.y > 0f && distance > band.y)) continue;
-            if (lavaClearance[i] < data.radius) continue;
+            if (lakeClearance[i] < data.radius) continue;
             if (!IsFreeSpot(ctx, data, position, placements, sameSpacing)) continue;
             eligible.Add(i);
         }
@@ -166,9 +166,9 @@ public class StructureStep : WorldGenStep
                position.z >= zMin + inset && position.z <= zMax - inset;
     }
 
-    // 용암 호수(자원 중 LavaLake)의 여유 범위 가장자리까지 남은 거리 (구조물 반경이 이보다 크면 닿음)
+    // 호수(자원 중 TileLake: 용암·물)의 여유 범위 가장자리까지 남은 거리 (구조물 반경이 이보다 크면 닿음)
     // maxRadius보다 먼 호수는 어느 구조물에도 닿지 않으므로 그 너머는 보지 않음
-    private static float LavaClearance(WorldGenContext ctx, Vector3 position, float maxRadius)
+    private static float LakeClearance(WorldGenContext ctx, Vector3 position, float maxRadius)
     {
         float clearance = float.PositiveInfinity;
         Vector3 reach = new(maxRadius + PropFootprint.MaxRadius, 0f, maxRadius + PropFootprint.MaxRadius);
@@ -183,7 +183,7 @@ public class StructureStep : WorldGenStep
                 for (int i = 0; i < chunk.PropCount(); i++)
                 {
                     GameObject prefab = ctx.GetPropPrefab(chunk.types[i]);
-                    if (prefab == null || !prefab.TryGetComponent(out LavaLake _)) continue;
+                    if (prefab == null || !prefab.TryGetComponent(out TileLake _)) continue;
 
                     Vector3 prop = chunk.PropPosition(i);
                     clearance = Mathf.Min(clearance, Vector3.Distance(prop, position) - PropFootprint.RadiusOf(prefab, prop));

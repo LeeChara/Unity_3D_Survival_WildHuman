@@ -1,42 +1,42 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-// 용암 호수(소형·중형·거대)를 배치하는 단계 (자원 배치 단계보다 앞에 둘 것)
+// 호수(소형·중형·거대)를 한 바이옴에 배치하는 단계 (용암·물 호수가 각자 에셋을 가짐, 자원 배치 단계보다 앞에 둘 것)
 // 어느 청크든 생성 순서와 상관없이 같은 결과를 내도록, 배치는 시드와 좌표만으로 계산
 // - 소형·중형: 자기 청크 안에 다 들어가게 놓음 (청크 경계를 넘지 않음)
 // - 거대: 청크 3×3 묶음 안에 다 들어가게 묶음마다 최대 하나, 덮는 청크가 모두 대상 바이옴일 때만
 // 그래서 한 청크에 걸치는 호수는 "자기 청크의 호수 + 자기 묶음의 거대 호수"뿐이고, PropStep은 이것만 피하면 됨
-[CreateAssetMenu(fileName = "LavaStep", menuName = "World/Gen/LavaStep")]
-public class LavaStep : WorldGenStep, IFootprintProvider
+[CreateAssetMenu(fileName = "LakeStep", menuName = "World/Gen/LakeStep")]
+public class LakeStep : WorldGenStep, IFootprintProvider
 {
     private const int GroupChunks = 3;
 
     [Tooltip("이웃 청크의 바이옴을 계산할 때 쓰는 바이옴 단계")]
     [SerializeField] private BiomeStep biomeStep;
-    [Tooltip("용암 호수가 생기는 바이옴")]
+    [Tooltip("호수가 생기는 바이옴")]
     [SerializeField] private BiomeData biome;
     [Tooltip("호수 가장자리끼리 띄울 최소 거리 (m)")]
     [SerializeField, Min(0f)] private float gap = 6f;
 
     [Header("거대")]
-    [SerializeField] private LavaLake giantPrefab;
+    [SerializeField] private TileLake giantPrefab;
     [Tooltip("청크 3×3 묶음마다 거대 호수를 시도할 확률 (덮는 청크가 모두 대상 바이옴이어야 실제로 생김)")]
     [SerializeField, Range(0f, 1f)] private float giantChance = 1f;
 
     [Header("중형")]
-    [SerializeField] private LavaLake mediumPrefab;
+    [SerializeField] private TileLake mediumPrefab;
     [Tooltip("청크마다 중형 호수가 생길 확률")]
     [SerializeField, Range(0f, 1f)] private float mediumChance = 0.2f;
 
     [Header("소형")]
-    [SerializeField] private LavaLake smallPrefab;
+    [SerializeField] private TileLake smallPrefab;
     [Tooltip("청크마다 소형 호수 개수 범위")]
     [SerializeField] private Vector2Int smallCount = new Vector2Int(0, 2);
     [SerializeField, Min(1)] private int placementAttempts = 10;
 
     private struct Planned
     {
-        public LavaLake prefab;
+        public TileLake prefab;
         public Vector3 position;
         public float radius;
     }
@@ -96,7 +96,7 @@ public class LavaStep : WorldGenStep, IFootprintProvider
     }
 
     // 청크 안쪽에 다 들어가는 위치 중 다른 호수와 겹치지 않는 곳
-    private void TryPlace(WorldGenContext ctx, System.Random prng, Vector2Int coord, LavaLake prefab, Planned? giant, List<Planned> lakes)
+    private void TryPlace(WorldGenContext ctx, System.Random prng, Vector2Int coord, TileLake prefab, Planned? giant, List<Planned> lakes)
     {
         Vector3 origin = ctx.ChunkOrigin(coord);
         float inset = prefab.MaxRadius;

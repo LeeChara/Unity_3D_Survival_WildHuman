@@ -39,6 +39,8 @@ public static class GameOptions
     public static float MasterVolume { get; private set; }
     public static float MusicVolume { get; private set; }
     public static float SfxVolume { get; private set; }
+    // 환경음 (빗소리 등). 믹서 그룹이 없어서 재생하는 쪽이 직접 곱함 (RainAudio)
+    public static float AmbientVolume { get; private set; }
 
     // 게임플레이
     // 화면 흔들림 세기 배율 (0~1). 흔들림 기능을 만들 때 이 값을 곱해서 사용
@@ -49,6 +51,8 @@ public static class GameOptions
     public static bool ShowSwingEffect { get; private set; }
     // 화면 가장자리 효과 (불타는 중 테두리 등)
     public static bool ShowScreenEffects { get; private set; }
+    // 비가 올 때 화면 빗줄기 (RainOverlayUI). 꺼도 비 오는 날의 어두워짐은 남음
+    public static bool ShowRainEffect { get; private set; }
 
     // 언어 코드 (Languages 중 하나)
     public static string Language { get; private set; }
@@ -88,11 +92,13 @@ public static class GameOptions
         MasterVolume = PlayerPrefs.GetFloat(Prefix + "MasterVolume", DefaultVolume);
         MusicVolume = PlayerPrefs.GetFloat(Prefix + "MusicVolume", DefaultVolume);
         SfxVolume = PlayerPrefs.GetFloat(Prefix + "SfxVolume", DefaultVolume);
+        AmbientVolume = PlayerPrefs.GetFloat(Prefix + "AmbientVolume", DefaultVolume);
 
         ScreenShake = PlayerPrefs.GetFloat(Prefix + "ScreenShake", 1f);
         ShowHoverText = GetBool("ShowHoverText", true);
         ShowSwingEffect = GetBool("ShowSwingEffect", true);
         ShowScreenEffects = GetBool("ShowScreenEffects", true);
+        ShowRainEffect = GetBool("ShowRainEffect", true);
 
         Language = PlayerPrefs.GetString(Prefix + "Language", Languages[0]);
         if (Array.IndexOf(Languages, Language) < 0) Language = Languages[0];
@@ -161,6 +167,13 @@ public static class GameOptions
         Save();
     }
 
+    public static void SetAmbientVolume(float value)
+    {
+        AmbientVolume = Mathf.Clamp01(value);
+        PlayerPrefs.SetFloat(Prefix + "AmbientVolume", AmbientVolume);
+        Save();
+    }
+
     // ---- 게임플레이 ----
 
     public static void SetScreenShake(float value)
@@ -188,6 +201,13 @@ public static class GameOptions
     {
         ShowScreenEffects = value;
         SetBool("ShowScreenEffects", value);
+        Save();
+    }
+
+    public static void SetShowRainEffect(bool value)
+    {
+        ShowRainEffect = value;
+        SetBool("ShowRainEffect", value);
         Save();
     }
 

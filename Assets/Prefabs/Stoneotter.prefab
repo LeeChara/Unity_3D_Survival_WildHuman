@@ -1637,6 +1637,8 @@ GameObject:
   - component: {fileID: 8027285264790669893}
   - component: {fileID: 8117384103984058393}
   - component: {fileID: 4284635527705369958}
+  - component: {fileID: 8105434005250605665}
+  - component: {fileID: 3578238302133487958}
   m_Layer: 6
   m_Name: Stoneotter
   m_TagString: Untagged
@@ -1997,6 +1999,34 @@ MonoBehaviour:
   effectPrefab: {fileID: 2099692420280195063, guid: ce6dda90562e518459c8e41696b3ec14, type: 3}
   headroom: 0.15
   sortingOrder: 500
+--- !u!114 &8105434005250605665
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7304474180741421677}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8abff934eae78fc4096e2bdc643b89f9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Wettable
+  setting: {fileID: 11400000, guid: b75368e149c56444db0a699f03b0dcff, type: 2}
+  duration: 0
+  hitFlash: {fileID: 0}
+--- !u!114 &3578238302133487958
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7304474180741421677}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 667e9229e0f46f143b4491173fe212d7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::WaterWader
+  setting: {fileID: 11400000, guid: b75368e149c56444db0a699f03b0dcff, type: 2}
 --- !u!1 &7496706528041794792
 GameObject:
   m_ObjectHideFlags: 0

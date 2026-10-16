@@ -189,11 +189,18 @@ public class BurnEffect : MonoBehaviour
         }
     }
 
-    // 대상이 SortingGroup 안이면 그 안에서 가장 앞, 아니면(울타리처럼 파츠마다 그룹, 바닥 아이템) 깊이로 계산해 한 칸 앞
     private void UpdateSorting(Transform target, Bounds cover)
+    {
+        SortOver(sortingGroup, target, cover);
+    }
+
+    // 대상을 덮는 이펙트의 그리기 순서 (젖음 이펙트도 같이 씀)
+    // 대상이 SortingGroup 안이면 그 안에서 가장 앞, 아니면(울타리처럼 파츠마다 그룹, 바닥 아이템) 깊이로 계산해 한 칸 앞
+    public static void SortOver(SortingGroup sortingGroup, Transform target, Bounds cover)
     {
         if (sortingGroup == null) return;
 
+        Transform transform = sortingGroup.transform;
         SortingGroup parentGroup = transform.parent != null ? transform.parent.GetComponentInParent<SortingGroup>() : null;
         if (parentGroup != null)
         {

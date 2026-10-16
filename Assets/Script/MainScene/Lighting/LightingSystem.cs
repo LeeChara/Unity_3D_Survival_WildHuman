@@ -3,7 +3,7 @@ using UnityEngine;
 using UnityEngine.Rendering;
 
 // 조명 오버레이 관리
-// 시간대에 맞는 어둠 색과 카메라 근처 광원 목록을 셰이더 전역값으로 넘기고 (LightingOverlay.shader가 화면에 곱함)
+// 시간대·날씨에 맞는 어둠 색과 카메라 근처 광원 목록을 셰이더 전역값으로 넘기고 (LightingOverlay.shader가 화면에 곱함)
 // 같은 계산으로 월드 위치의 밝기를 조회할 수 있게 함 (어둠 패널티, 몬스터 습성 등에서 사용)
 public class LightingSystem : MonoBehaviour
 {
@@ -107,6 +107,9 @@ public class LightingSystem : MonoBehaviour
     private void LateUpdate()
     {
         Ambient = setting.darknessGradient.Evaluate(dayNightCycle.NightFactor);
+        // 비가 오면 조금 더 어둡고 푸르게 (밤 어둠과 곱해짐)
+        WeatherSystem weather = WeatherSystem.Instance;
+        if (weather != null && weather.RainFactor > 0f) Ambient *= Color.Lerp(Color.white, weather.Setting.rainTint, weather.RainFactor);
     }
 
     // 카메라 이동(LateUpdate)이 끝난 뒤 그리기 직전에 넘겨서 빛이 한 프레임 밀리지 않게 함

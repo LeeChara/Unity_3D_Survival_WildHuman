@@ -1,12 +1,12 @@
 using UnityEngine;
 
-// 용암 호수 타일맵에 쓰는 그림 (칸마다 꽉 찬 용암만 쓰는 사각형 방식)
+// 호수(용암·물) 타일맵에 쓰는 그림 (칸마다 꽉 찬 사각형 방식)
 // 원본 그리는 법 (interiorSheet):
 // - 한 프레임 = (pattern × tilePixels) 정사각형, 위·아래·좌·우가 이어지게 (이 크기마다 반복)
 // - 프레임을 가로로 나란히 (예: 64×64 4프레임 → 256×64)
 // 실행 중에 칸 크기로 잘라 쓰므로 베이크나 슬라이스는 필요 없음 (임포트 설정은 Point 필터만 맞추면 됨)
-[CreateAssetMenu(fileName = "LavaTileSet", menuName = "Prop/LavaTileSet")]
-public class LavaTileSet : ScriptableObject
+[CreateAssetMenu(fileName = "LakeTileSet", menuName = "Prop/LakeTileSet")]
+public class LakeTileSet : ScriptableObject
 {
     public Texture2D interiorSheet;
     [Min(1)] public int frameCount = 4;
@@ -50,7 +50,7 @@ public class LavaTileSet : ScriptableObject
                 var rect = new Rect(frame * patternPixels + x, y, tilePixels, tilePixels);
                 // 타일맵 기본 앵커(칸 중심)에 맞게 피벗도 중심
                 Sprite sprite = Sprite.Create(interiorSheet, rect, new Vector2(0.5f, 0.5f), pixelsPerUnit, 0, SpriteMeshType.FullRect);
-                sprite.name = $"Lava_{sub}_{frame}";
+                sprite.name = $"{name}_{sub}_{frame}";
                 sprites[sub * frameCount + frame] = sprite;
             }
         }

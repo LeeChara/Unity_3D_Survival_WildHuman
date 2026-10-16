@@ -65,6 +65,6 @@ public class RoseviperAI : MonsterAI, IBurrowable
     // 기습공격 이후 빠르게 거리를 벌림
     protected override void RecoverBehavior()
     {
-        rb.linearVelocity = target != null ? -targetDirection * viperData.retreatSpeed : Vector3.zero;
+        rb.linearVelocity = target != null ? -targetDirection * viperData.retreatSpeed * MoveScale : Vector3.zero;
     }
 }

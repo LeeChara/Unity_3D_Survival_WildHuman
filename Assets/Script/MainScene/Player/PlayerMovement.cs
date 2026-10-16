@@ -14,6 +14,7 @@ public class PlayerMovement : MonoBehaviour
     private Vector2 inputVec;
     private bool isSprintPressed;
     private PlayerHunger playerHunger;
+    private WaterWader waterWader;
 
     // 실제로 달리고 있는지 여부 (달리기 입력 + 이동 중 + 굶주림 아님)
     public bool IsSprinting { get; private set; }
@@ -44,6 +45,7 @@ public class PlayerMovement : MonoBehaviour
     {
         rb = GetComponent<Rigidbody>();
         playerHunger = GetComponent<PlayerHunger>();
+        waterWader = GetComponent<WaterWader>();
 
         cameraRotation = Quaternion.Euler(0, cameraYAngle, 0);
         cameraRight = cameraRotation * Vector3.right;
@@ -77,6 +79,8 @@ public class PlayerMovement : MonoBehaviour
         IsSprinting = isSprintPressed && moveVec.sqrMagnitude > 0.01f && !isStarving;
 
         moveVec *= moveSpeed;
+        // 물 위에서는 느려짐
+        if (waterWader != null) moveVec *= waterWader.SpeedMultiplier;
         if (IsSprinting) moveVec *= sprintMultiplier;
 
         rb.linearVelocity = moveVec;

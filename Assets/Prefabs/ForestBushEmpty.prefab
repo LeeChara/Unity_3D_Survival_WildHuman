@@ -21,6 +21,7 @@ GameObject:
   - component: {fileID: 8079231355457493309}
   - component: {fileID: 8387532239115375125}
   - component: {fileID: 8042746173083048951}
+  - component: {fileID: 3891799651845240774}
   m_Layer: 8
   m_Name: ForestBushEmpty
   m_TagString: Untagged
@@ -258,6 +259,7 @@ MonoBehaviour:
   fireSource: {fileID: 8042746173083048951}
   hitFlash: {fileID: 7603043299603333803}
   charredColor: {r: 0.3, g: 0.25, b: 0.22, a: 1}
+  coverIgnore: []
 --- !u!114 &8042746173083048951
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -272,3 +274,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::FireSource
   setting: {fileID: 11400000, guid: 077688a177b6c3c408c8b8fafd961038, type: 2}
   body: []
+--- !u!114 &3891799651845240774
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3237151097076446163}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8abff934eae78fc4096e2bdc643b89f9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Wettable
+  setting: {fileID: 11400000, guid: b75368e149c56444db0a699f03b0dcff, type: 2}
+  duration: 0
+  hitFlash: {fileID: 0}

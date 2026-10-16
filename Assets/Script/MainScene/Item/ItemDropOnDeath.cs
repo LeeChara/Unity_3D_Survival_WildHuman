@@ -29,6 +29,8 @@ public class ItemDropOnDeath : MonoBehaviour
         health.Died -= OnDied;
     }
 
+    public DropTable DropTable => dropTable;
+
     public void SetDropTable(DropTable dropTable)
     {
         this.dropTable = dropTable;

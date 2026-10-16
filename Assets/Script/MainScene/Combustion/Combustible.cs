@@ -10,6 +10,7 @@ using UnityEngine;
 //   설치물은 자기 자신 대신 제작 재료로 분해된 뒤 구워짐 (예: 울타리 → 나무 → 숯)
 //   일부 재료는 바뀌면서 개수가 줄어듦 (CombustionSetting.burnYields, 예: 나무 → 숯 절반)
 //   보관함 속 아이템은 한 개씩 일정 확률로 사라지고 남은 것만 구워짐 (StorageChest가 BurnStored 사용)
+// - 젖은 대상(Wettable)은 불이 닿아도 붙지 않고 젖음만 마름. 타는 중에 젖으면 불이 꺼짐
 // - 남은 연소 시간은 저장됨 (개체는 ISaveable, 자원은 PropSpawner가 청크 데이터에)
 [RequireComponent(typeof(Health), typeof(StatusEffectHost))]
 public class Combustible : MonoBehaviour, ISaveable, IFireReactive
@@ -30,6 +31,7 @@ public class Combustible : MonoBehaviour, ISaveable, IFireReactive
 
     private Health health;
     private StatusEffectHost host;
+    private Wettable wettable;
     private bool shownBurning;
     private bool charred;
     private BurnEffect effect;
@@ -48,6 +50,7 @@ public class Combustible : MonoBehaviour, ISaveable, IFireReactive
     {
         health = GetComponent<Health>();
         host = GetComponent<StatusEffectHost>();
+        wettable = GetComponent<Wettable>();
 
         // 생물(플레이어·몬스터)은 구르기·공격 자세에 따라 그림 범위가 바뀌므로 생성 시점의 기본 자세로 한 번만 잼
         if (GetComponentInChildren<Animator>() != null && BurnEffect.TryMeasure(transform, null, coverIgnore, out Bounds cover))
@@ -92,12 +95,25 @@ public class Combustible : MonoBehaviour, ISaveable, IFireReactive
 
     private void OnHit(AttackData attack)
     {
-        if (attack.element == ElementType.Fire) Ignite();
+        if (attack.element == ElementType.Fire) CatchFire();
     }
 
     public void Ignite() => Ignite(burn.duration);
 
-    public void OnFireContact() => Ignite();
+    public void OnFireContact() => CatchFire();
+
+    // 불이 닿음: 젖어 있으면 붙지 않고 젖음만 마름
+    private void CatchFire()
+    {
+        if (wettable != null && wettable.TryDry()) return;
+        Ignite();
+    }
+
+    // 불을 끔 (예: 타는 중에 젖음)
+    public void Extinguish()
+    {
+        if (host.Remove(burn)) SetShown(false);
+    }
 
     // 남은 시간을 지정해서 붙임 (저장된 상태 복원용)
     public void Ignite(float duration)

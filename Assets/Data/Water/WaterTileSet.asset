@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f0ea0f3751185384380b0a97428ed6a7, type: 3}
+  m_Name: WaterTileSet
+  m_EditorClassIdentifier: Assembly-CSharp::LavaTileSet
+  interiorSheet: {fileID: 2800000, guid: 383145046d0bcd64fae9738769ff9522, type: 3}
+  frameCount: 4
+  tilePixels: 16
+  pattern: 4
+  metersPerPixel: 0.1
+  framesPerSecond: 2

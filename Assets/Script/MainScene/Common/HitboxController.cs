@@ -36,9 +36,12 @@ public class HitboxController : MonoBehaviour
             Debug.Log($"{other.name} 피격 - 현재 체력: {health.CurrentHealth} / {health.MaxHealth}");
         }
 
+        // 피해 없는 속성 공격(물 등)은 울림·넉백 없음
+        if (attack.IsHarmless) return;
+
         // 금속 물체에 닿으면 울림. 강타면 때린 쪽의 반대편으로 음파가 퍼짐
         Resonant resonant = other.GetComponentInParent<Resonant>();
-        if (resonant != null) resonant.OnAttackHit(attacker.position, attack.strike == StrikeType.Blunt);
+        if (resonant != null) resonant.OnAttackHit(attacker.position, attack.strike == StrikeType.Smash);
 
         if (other.TryGetComponent<Knockback>(out Knockback knockback))
         {

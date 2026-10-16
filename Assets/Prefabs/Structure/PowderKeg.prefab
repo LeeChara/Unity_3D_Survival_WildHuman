@@ -19,6 +19,8 @@ GameObject:
   - component: {fileID: 1563843281040306773}
   - component: {fileID: 476618787801386977}
   - component: {fileID: 8344436340054316054}
+  - component: {fileID: 6520774044650501298}
+  - component: {fileID: 8795592416279341821}
   m_Layer: 10
   m_Name: PowderKeg
   m_TagString: Untagged
@@ -219,6 +221,35 @@ MonoBehaviour:
   height: 2.24
   footOffset: {x: -0.74, y: 0.08, z: -0.06}
   isStatic: 1
+--- !u!114 &6520774044650501298
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1727470311522946942}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 78e51b4b1572b6049884506d0364c9d6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::StatusEffectHost
+  reactions: []
+  indicator: {fileID: 0}
+--- !u!114 &8795592416279341821
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1727470311522946942}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8abff934eae78fc4096e2bdc643b89f9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Wettable
+  setting: {fileID: 11400000, guid: b75368e149c56444db0a699f03b0dcff, type: 2}
+  duration: 0
+  hitFlash: {fileID: 0}
 --- !u!1 &2921128210236080249
 GameObject:
   m_ObjectHideFlags: 0

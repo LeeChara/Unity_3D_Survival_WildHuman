@@ -138,6 +138,9 @@ GameObject:
   - component: {fileID: 80440029918507675}
   - component: {fileID: 3692179862429377267}
   - component: {fileID: 8816848221031962196}
+  - component: {fileID: 3944938606397056227}
+  - component: {fileID: 1128364054616790143}
+  - component: {fileID: 4117846275009401372}
   m_Layer: 7
   m_Name: Player
   m_TagString: Untagged
@@ -802,6 +805,51 @@ MonoBehaviour:
   effectPrefab: {fileID: 2099692420280195063, guid: ce6dda90562e518459c8e41696b3ec14, type: 3}
   headroom: 0.15
   sortingOrder: 500
+--- !u!114 &3944938606397056227
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 956602779991621677}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8abff934eae78fc4096e2bdc643b89f9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Wettable
+  setting: {fileID: 11400000, guid: b75368e149c56444db0a699f03b0dcff, type: 2}
+  duration: 0
+  hitFlash: {fileID: 0}
+--- !u!114 &1128364054616790143
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 956602779991621677}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 667e9229e0f46f143b4491173fe212d7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::WaterWader
+  setting: {fileID: 11400000, guid: b75368e149c56444db0a699f03b0dcff, type: 2}
+--- !u!114 &4117846275009401372
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 956602779991621677}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fa31354915187d54e8691e3fdd413007, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerBucketPour
+  attack: {fileID: 8510803292639760883}
+  hotbar: {fileID: 5485155978177760989}
+  inventory: {fileID: 2004002038596902290}
+  hitbox: {fileID: 2205031760763008646}
+  waterSetting: {fileID: 11400000, guid: b75368e149c56444db0a699f03b0dcff, type: 2}
 --- !u!1 &2027391798678248913
 GameObject:
   m_ObjectHideFlags: 0
@@ -1355,6 +1403,10 @@ MonoBehaviour:
   - element: 1
     frames:
     - {fileID: -893570074, guid: 07853e3bc1123cc46b5345dd858d3704, type: 3}
+    color: {r: 1, g: 1, b: 1, a: 1}
+  - element: 2
+    frames:
+    - {fileID: -1461566697, guid: 07853e3bc1123cc46b5345dd858d3704, type: 3}
     color: {r: 1, g: 1, b: 1, a: 1}
   sizeMultiplier: {x: 1, y: 1}
   heightOffset: 0.01

@@ -1,12 +1,12 @@
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
-// 용암 칸 하나 (타일 세트마다 LavaLake가 실행 중에 하나 만들어 모든 용암 칸에 씀)
+// 호수 칸 하나 (타일 세트마다 TileLake가 실행 중에 하나 만들어 모든 호수 칸에 씀)
 // 칸 위치로 무늬의 어느 부분인지 정해서, 이웃 칸끼리 무늬가 이어지게 함
 // 모든 칸이 같은 시각에 같은 프레임을 재생해야 무늬가 끊기지 않으므로 시작 시각은 모두 0
-public class LavaTile : TileBase
+public class LakeTile : TileBase
 {
-    public LavaTileSet set;
+    public LakeTileSet set;
 
     private Sprite[][] framesBySub;
 

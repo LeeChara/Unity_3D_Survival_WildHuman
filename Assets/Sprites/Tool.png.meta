@@ -404,6 +404,50 @@ TextureImporter:
       indices: 
       edges: []
       weights: []
+    - serializedVersion: 2
+      name: BucketHeld_0
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 192
+        width: 32
+        height: 32
+      alignment: 9
+      pivot: {x: 0.5, y: 0.2}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 37035167b0f27b84ea6a2c5e10dc6e3d
+      internalID: -880693989
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: WaterBucketHeld_0
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 192
+        width: 32
+        height: 32
+      alignment: 9
+      pivot: {x: 0.5, y: 0.2}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a49dd1b0a61f5eb41b80aec6c0fa277a
+      internalID: -4897431
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
     customData: 
     physicsShape: []
@@ -418,6 +462,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
+      BucketHeld_0: -880693989
       LanternHeld_0: -776778725
       Tool_0: 930297127
       Tool_1: 1244216888
@@ -433,6 +478,7 @@ TextureImporter:
       Tool_7: -991457719
       Tool_8: 57466625
       Tool_9: -421935169
+      WaterBucketHeld_0: -4897431
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

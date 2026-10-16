@@ -7,6 +7,7 @@ using UnityEngine;
 // 폭발에 휘말린 다른 화약통은 짧은 도화선으로 바로 이어서 터짐 (연쇄 폭발)
 // 점화된 화약통은 부서져도 재료를 돌려주지 않고 그 자리에서 터짐
 // 연소 규칙에서 화약통의 형태 변환은 "폭발" (불타는 대상·화염원에 닿아도 도화선에 불이 붙음)
+// 젖은 화약통은 불이 닿아도 점화되지 않고 젖음만 마름, 도화선이 타는 중에 젖으면 꺼짐
 // 남은 도화선 시간은 저장됨
 [RequireComponent(typeof(StructureHealth))]
 public class ExplosiveKeg : MonoBehaviour, ISaveable, IFireReactive
@@ -50,6 +51,9 @@ public class ExplosiveKeg : MonoBehaviour, ISaveable, IFireReactive
 
     private StructureHealth health;
     private ItemDropOnDeath dropOnDeath;
+    private Wettable wettable;
+    // 점화 전의 드랍 (도화선이 꺼지면 되돌림)
+    private DropTable refundTable;
     private float fuseLeft;
     private float fuseLength;
     private float elapsed;
@@ -61,6 +65,7 @@ public class ExplosiveKeg : MonoBehaviour, ISaveable, IFireReactive
     {
         health = GetComponent<StructureHealth>();
         dropOnDeath = GetComponent<ItemDropOnDeath>();
+        wettable = GetComponent<Wettable>();
         spark.enabled = false;
         if (fuseLight != null) fuseLight.enabled = false;
     }
@@ -102,10 +107,29 @@ public class ExplosiveKeg : MonoBehaviour, ISaveable, IFireReactive
     private void OnHit(AttackData attack)
     {
         if (attack.element != ElementType.Fire) return;
-        Ignite(fuseTime);
+        CatchFire(fuseTime);
     }
 
-    public void OnFireContact() => Ignite(fuseTime);
+    public void OnFireContact() => CatchFire(fuseTime);
+
+    // 불이 닿음: 젖어 있으면 점화되지 않고 젖음만 마름
+    private void CatchFire(float fuse)
+    {
+        if (wettable != null && wettable.TryDry()) return;
+        Ignite(fuse);
+    }
+
+    // 도화선을 끔 (예: 젖음). 다시 불이 닿으면 처음부터 탐
+    public void Defuse()
+    {
+        if (!IsLit || exploded) return;
+
+        IsLit = false;
+        spark.enabled = false;
+        if (fuseLight != null) fuseLight.enabled = false;
+        if (hitFlash != null) hitFlash.SetBaseColor(Color.white);
+        if (dropOnDeath != null) dropOnDeath.SetDropTable(refundTable);
+    }
 
     // 이미 타는 중이면 남은 시간이 더 짧은 쪽을 따름
     public void Ignite(float fuse)
@@ -125,7 +149,11 @@ public class ExplosiveKeg : MonoBehaviour, ISaveable, IFireReactive
         spark.enabled = true;
         if (fuseLight != null) fuseLight.enabled = true;
         // 불붙은 화약통은 부서져도 재료를 돌려주지 않음
-        if (dropOnDeath != null) dropOnDeath.SetDropTable(null);
+        if (dropOnDeath != null)
+        {
+            refundTable = dropOnDeath.DropTable;
+            dropOnDeath.SetDropTable(null);
+        }
     }
 
     // 도화선이 다 타서 Kill되었거나, 타는 중에 부서진 경우 그 자리에서 폭발
@@ -153,7 +181,7 @@ public class ExplosiveKeg : MonoBehaviour, ISaveable, IFireReactive
             // 다른 화약통은 부수지 않고 짧은 도화선으로 이어서 터뜨림
             if (target.TryGetComponent(out ExplosiveKeg keg))
             {
-                keg.Ignite(chainFuseTime);
+                keg.CatchFire(chainFuseTime);
                 continue;
             }
 

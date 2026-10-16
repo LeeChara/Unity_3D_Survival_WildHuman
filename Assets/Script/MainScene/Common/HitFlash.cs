@@ -17,6 +17,8 @@ public class HitFlash : MonoBehaviour
     private float timer;
     // 반짝임이 끝나면 돌아갈 색 (보통 흰색, 불에 그을린 나무처럼 다른 컴포넌트가 바꿀 수 있음)
     private Color baseColor = Color.white;
+    // 평소 색에 곱해지는 색 (예: 젖으면 어두워짐). 그을림·깜빡임 같은 평소 색과 따로 관리해서 겹쳐도 서로 덮어쓰지 않음
+    private Color tint = Color.white;
 
     private Color FlashColor => type == HitFlashType.Resource ? setting.resourceColor : setting.color;
 
@@ -68,14 +70,21 @@ public class HitFlash : MonoBehaviour
     private void EndFlash()
     {
         timer = 0f;
-        SetColor(baseColor);
+        SetColor(baseColor * tint);
     }
 
     // 평소 색을 바꿈 (반짝이는 중이면 반짝임이 끝난 뒤 적용)
     public void SetBaseColor(Color color)
     {
         baseColor = color;
-        if (timer <= 0f && !health.IsDead) SetColor(color);
+        if (timer <= 0f && !health.IsDead) SetColor(baseColor * tint);
+    }
+
+    // 평소 색에 곱할 색을 바꿈 (흰색이면 원래대로)
+    public void SetTint(Color color)
+    {
+        tint = color;
+        if (timer <= 0f && !health.IsDead) SetColor(baseColor * tint);
     }
 
     // SpriteRenderer.color는 원래 색에 곱해지므로 흰색이면 원래 색 그대로

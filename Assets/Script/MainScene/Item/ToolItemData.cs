@@ -19,6 +19,9 @@ public class ToolItemData : ItemData
     [Tooltip("타격 형태 (강타면 금속 물체를 때릴 때 음파가 생김)")]
     public StrikeType strike;
 
+    [Tooltip("공격 범위 배율 (x: 좌우 폭, y: 앞쪽 길이). 휘두르기 이펙트도 같이 커짐")]
+    public Vector2 rangeScale = Vector2.one;
+
     [Tooltip("손에 들었을 때 표시할 스프라이트 (비워두면 아무것도 표시하지 않음)")]
     public Sprite heldSprite;
 
@@ -40,12 +43,13 @@ public class ToolItemData : ItemData
     public static string ElementName(ElementType element) => element switch
     {
         ElementType.Fire => "화염",
+        ElementType.Water => "물",
         _ => string.Empty,
     };
 
     public static string StrikeName(StrikeType strike) => strike switch
     {
-        StrikeType.Blunt => "강타",
+        StrikeType.Smash => "강타",
         _ => string.Empty,
     };
 }

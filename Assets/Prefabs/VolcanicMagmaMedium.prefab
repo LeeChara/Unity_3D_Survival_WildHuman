@@ -263,6 +263,7 @@ MonoBehaviour:
   trigger: {fileID: 1792893267582404436}
   diameterRange: {x: 50, y: 70}
   blobCount: {x: 5, y: 8}
+  footprintMargin: 6
   maxLights: 6
   lightSpacing: 20
   lightRadius: 14
@@ -283,5 +284,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::FireSource
   setting: {fileID: 11400000, guid: 077688a177b6c3c408c8b8fafd961038, type: 2}
-  damage: 0
   body: []

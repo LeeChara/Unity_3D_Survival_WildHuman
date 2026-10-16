@@ -214,6 +214,10 @@ public class ChunkData
     public List<float> burnHp = new();
     public List<float> burnLeft = new();
 
+    // 젖은 자원의 번호(types 기준)·남은 젖음 시간 (연소와 같은 방식으로 언로드·저장 때만 기록)
+    public List<int> wetIndex = new();
+    public List<float> wetLeft = new();
+
     public int PropCount() => types.Count;
 
     public int AddProp(int type, float x, float z)
@@ -240,6 +244,11 @@ public class ChunkData
         {
             if (burnIndex[i] == index) RemoveBurnAt(i);
             else if (burnIndex[i] > index) burnIndex[i]--;
+        }
+        for (int i = wetIndex.Count - 1; i >= 0; i--)
+        {
+            if (wetIndex[i] == index) RemoveWetAt(i);
+            else if (wetIndex[i] > index) wetIndex[i]--;
         }
     }
 
@@ -326,6 +335,44 @@ public class ChunkData
 
     #endregion
 
+    #region 젖은 자원
+
+    public void SetWet(int index, float left)
+    {
+        int slot = wetIndex.IndexOf(index);
+        if (slot >= 0)
+        {
+            wetLeft[slot] = left;
+            return;
+        }
+
+        wetIndex.Add(index);
+        wetLeft.Add(left);
+    }
+
+    // 기록이 있으면 꺼내고 지움
+    public bool TakeWet(int index, out float left)
+    {
+        int slot = wetIndex.IndexOf(index);
+        if (slot < 0)
+        {
+            left = 0f;
+            return false;
+        }
+
+        left = wetLeft[slot];
+        RemoveWetAt(slot);
+        return true;
+    }
+
+    private void RemoveWetAt(int slot)
+    {
+        wetIndex.RemoveAt(slot);
+        wetLeft.RemoveAt(slot);
+    }
+
+    #endregion
+
     #region 다른 위치에 다시 생길 자원
 
     public void AddRegen(int type, float time)
@@ -359,6 +406,8 @@ public class ChunkData
             burnIndex = new List<int>(burnIndex),
             burnHp = new List<float>(burnHp),
             burnLeft = new List<float>(burnLeft),
+            wetIndex = new List<int>(wetIndex),
+            wetLeft = new List<float>(wetLeft),
         };
     }
 }

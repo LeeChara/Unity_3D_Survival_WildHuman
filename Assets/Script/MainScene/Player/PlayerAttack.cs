@@ -41,10 +41,20 @@ public class PlayerAttack : MonoBehaviour
     public float ActiveDuration => setting.attackActive;
 
     private Rigidbody rb;
+    // 도구마다 공격 범위를 바꾸기 위한 히트박스 원래 크기
+    private BoxCollider hitboxBox;
+    private Vector3 hitboxBaseSize;
+    private Vector3 hitboxBaseCenter;
 
     private void Awake()
     {
         rb = GetComponent<Rigidbody>();
+        hitboxBox = hitboxObject.GetComponent<BoxCollider>();
+        if (hitboxBox != null)
+        {
+            hitboxBaseSize = hitboxBox.size;
+            hitboxBaseCenter = hitboxBox.center;
+        }
         hitboxObject.SetActive(false);
 
         Quaternion cameraRotation = Quaternion.Euler(0, cameraYAngle, 0);
@@ -188,6 +198,7 @@ public class PlayerAttack : MonoBehaviour
         {
             hitboxController.SetWeapon(bareHandDamage, ToolType.None, 0, CurrentElement, StrikeType.None);
         }
+        ApplyRange(tool != null ? tool.rangeScale : Vector2.one);
 
         attackPhase = AttackPhase.Windup;
         phaseTime = 0f;
@@ -198,6 +209,17 @@ public class PlayerAttack : MonoBehaviour
         animator.SetBool("IsMoving", false);
         animator.SetBool("IsSprinting", false);
         animator.SetTrigger("Attack");
+    }
+
+    // 히트박스를 도구의 범위 배율만큼 키움 (x: 좌우, y: 앞쪽). 몸 쪽 가장자리는 그대로 두고 앞으로 늘림
+    private void ApplyRange(Vector2 scale)
+    {
+        if (hitboxBox == null) return;
+
+        float nearEdge = hitboxBaseCenter.z - hitboxBaseSize.z * 0.5f;
+        var size = new Vector3(hitboxBaseSize.x * scale.x, hitboxBaseSize.y, hitboxBaseSize.z * scale.y);
+        hitboxBox.size = size;
+        hitboxBox.center = new Vector3(hitboxBaseCenter.x, hitboxBaseCenter.y, nearEdge + size.z * 0.5f);
     }
 
     private Vector3 ComputeAttackDirection()

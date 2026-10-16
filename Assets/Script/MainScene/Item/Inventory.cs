@@ -153,6 +153,17 @@ public class Inventory : MonoBehaviour, IItemReceiver, ISaveable, ISlotContainer
         return count - remaining;
     }
 
+    // 칸의 아이템 종류만 바꿈 (개수 유지, 예: 빈 양동이 ↔ 물 양동이)
+    public void Replace(int index, ItemData item)
+    {
+        ItemStack slot = slots[index];
+        if (slot.IsEmpty || item == null) return;
+
+        slot.item = item;
+        slot.count = Mathf.Min(slot.count, item.maxStack);
+        SlotChanged?.Invoke(index);
+    }
+
     // 실제로 뺀 개수를 반환
     public int Remove(int index, int count)
     {

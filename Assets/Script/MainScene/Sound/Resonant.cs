@@ -80,9 +80,9 @@ public class Resonant : MonoBehaviour, ISoundReactive
     }
 
     // 공격에 맞음. 강타면 새 연쇄를 시작하고, 아니면(또는 음파를 모으는 중이면) 작게 울림. from: 공격자 위치
-    public void OnAttackHit(Vector3 from, bool blunt)
+    public void OnAttackHit(Vector3 from, bool smash)
     {
-        if (blunt && Strike(from, 1f, 0, ++lastChainId)) return;
+        if (smash && Strike(from, 1f, 0, ++lastChainId)) return;
         Ring();
     }
 

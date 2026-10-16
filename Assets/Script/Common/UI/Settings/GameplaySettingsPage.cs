@@ -1,6 +1,6 @@
 using UnityEngine;
 
-// 게임플레이 탭: 언어, 화면 흔들림 세기, 마우스 오버 글자 표시, 공격 범위 이펙트 표시, 화면 효과 표시
+// 게임플레이 탭: 언어, 화면 흔들림 세기, 마우스 오버 글자 표시, 공격 범위 이펙트 표시, 화면 효과 표시, 비 효과 표시
 public class GameplaySettingsPage : SettingsPage
 {
     private static readonly string[] OnOff = { "끄기", "켜기" };
@@ -12,6 +12,7 @@ public class GameplaySettingsPage : SettingsPage
     [SerializeField] private OptionSelector hoverTextSelector;
     [SerializeField] private OptionSelector swingEffectSelector;
     [SerializeField] private OptionSelector screenEffectSelector;
+    [SerializeField] private OptionSelector rainEffectSelector;
 
     private void Awake()
     {
@@ -20,6 +21,7 @@ public class GameplaySettingsPage : SettingsPage
         hoverTextSelector.ValueChanged += index => GameOptions.SetShowHoverText(index == 1);
         swingEffectSelector.ValueChanged += index => GameOptions.SetShowSwingEffect(index == 1);
         screenEffectSelector.ValueChanged += index => GameOptions.SetShowScreenEffects(index == 1);
+        rainEffectSelector.ValueChanged += index => GameOptions.SetShowRainEffect(index == 1);
     }
 
     public override void Refresh()
@@ -29,6 +31,7 @@ public class GameplaySettingsPage : SettingsPage
         hoverTextSelector.SetOptions(OnOff, GameOptions.ShowHoverText ? 1 : 0);
         swingEffectSelector.SetOptions(OnOff, GameOptions.ShowSwingEffect ? 1 : 0);
         screenEffectSelector.SetOptions(OnOff, GameOptions.ShowScreenEffects ? 1 : 0);
+        rainEffectSelector.SetOptions(OnOff, GameOptions.ShowRainEffect ? 1 : 0);
     }
 
     public override void ResetToDefault()
@@ -38,6 +41,7 @@ public class GameplaySettingsPage : SettingsPage
         GameOptions.SetShowHoverText(true);
         GameOptions.SetShowSwingEffect(true);
         GameOptions.SetShowScreenEffects(true);
+        GameOptions.SetShowRainEffect(true);
         Refresh();
     }
 }

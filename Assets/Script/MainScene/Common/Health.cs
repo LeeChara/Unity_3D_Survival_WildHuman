@@ -46,9 +46,10 @@ public class Health : MonoBehaviour, ISaveable
     }
 
     // 공격 정보(도구 종류 등)에 따라 피해량을 보정한 뒤 적용
+    // 피해 없는 속성 공격(IsHarmless)은 피해 처리(반짝임 등)를 건너뛰고 속성 반응만 알림
     public void TakeHit(AttackData attack)
     {
-        TakeDamage(CalculateDamage(attack));
+        if (!attack.IsHarmless) TakeDamage(CalculateDamage(attack));
         Hit?.Invoke(attack);
     }
 

@@ -3,5 +3,5 @@
 public enum StrikeType
 {
     None,
-    Blunt
+    Smash
 }

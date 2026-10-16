@@ -28,6 +28,8 @@ GameObject:
   - component: {fileID: 4028110444808872835}
   - component: {fileID: 4699973012192096906}
   - component: {fileID: 3434764022818068000}
+  - component: {fileID: 9138128935252453729}
+  - component: {fileID: 6725858201938960778}
   m_Layer: 6
   m_Name: Roseviper
   m_TagString: Untagged
@@ -374,6 +376,34 @@ MonoBehaviour:
   effectPrefab: {fileID: 2099692420280195063, guid: ce6dda90562e518459c8e41696b3ec14, type: 3}
   headroom: 0.15
   sortingOrder: 500
+--- !u!114 &9138128935252453729
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3698754605101644}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8abff934eae78fc4096e2bdc643b89f9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Wettable
+  setting: {fileID: 11400000, guid: b75368e149c56444db0a699f03b0dcff, type: 2}
+  duration: 0
+  hitFlash: {fileID: 0}
+--- !u!114 &6725858201938960778
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3698754605101644}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 667e9229e0f46f143b4491173fe212d7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::WaterWader
+  setting: {fileID: 11400000, guid: b75368e149c56444db0a699f03b0dcff, type: 2}
 --- !u!1 &1151314534724133345
 GameObject:
   m_ObjectHideFlags: 0

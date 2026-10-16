@@ -91,6 +91,8 @@ GameObject:
   - component: {fileID: 3108306591472112438}
   - component: {fileID: 8511795394119211181}
   - component: {fileID: 3293621871656106487}
+  - component: {fileID: 2842046498291437596}
+  - component: {fileID: 3251064436778173694}
   m_Layer: 10
   m_Name: Campfire
   m_TagString: Untagged
@@ -291,6 +293,35 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::FireSource
   setting: {fileID: 11400000, guid: 077688a177b6c3c408c8b8fafd961038, type: 2}
   body: []
+--- !u!114 &2842046498291437596
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1727470311522946942}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 78e51b4b1572b6049884506d0364c9d6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::StatusEffectHost
+  reactions: []
+  indicator: {fileID: 0}
+--- !u!114 &3251064436778173694
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1727470311522946942}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8abff934eae78fc4096e2bdc643b89f9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Wettable
+  setting: {fileID: 11400000, guid: b75368e149c56444db0a699f03b0dcff, type: 2}
+  duration: 0
+  hitFlash: {fileID: 0}
 --- !u!1 &1821372604469262021
 GameObject:
   m_ObjectHideFlags: 0
