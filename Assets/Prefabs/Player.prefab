@@ -143,6 +143,7 @@ GameObject:
   - component: {fileID: 4117846275009401372}
   - component: {fileID: 3088046948984962030}
   - component: {fileID: 9042166541969861635}
+  - component: {fileID: 7580494285560551218}
   m_Layer: 7
   m_Name: Player
   m_TagString: Untagged
@@ -428,6 +429,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Knockback
   deceleration: 50
   resistance: 0
+  impactLayers:
+    serializedVersion: 2
+    m_Bits: 3328
 --- !u!114 &7265801469490413988
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -768,6 +772,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::FireSource
   setting: {fileID: 11400000, guid: 077688a177b6c3c408c8b8fafd961038, type: 2}
   body: []
+  ignoreLayers:
+    serializedVersion: 2
+    m_Bits: 0
 --- !u!114 &80440029918507675
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -883,6 +890,18 @@ MonoBehaviour:
   stride: 0.7
   sideOffset: 0.18
   mirrorAlternate: 1
+--- !u!114 &7580494285560551218
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 956602779991621677}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 59274964778e9254fb145b96d91735a0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerEquipment
 --- !u!1 &2027391798678248913
 GameObject:
   m_ObjectHideFlags: 0
@@ -1137,11 +1156,13 @@ MonoBehaviour:
   attack:
     damage: 10
     knockbackDistance: 1
+    impactStun: 0
     toolType: 0
     toolTier: 0
     element: 0
     strike: 0
     isWeapon: 0
+    tier: 0
 --- !u!1 &4765726116046431758
 GameObject:
   m_ObjectHideFlags: 0

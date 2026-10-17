@@ -76,7 +76,7 @@ public class StatusEffectHost : MonoBehaviour
                 effect.tickTimer += effect.data.tickInterval;
                 // 피해가 없는 상태(예: 젖음)는 피격 반짝임이 나지 않도록 건너뜀
                 if (effect.data.tickDamage <= 0) continue;
-                health.TakeDamage(effect.data.tickDamage);
+                health.TakeStatusDamage(effect.data.tickDamage, effect.data.appliedBy);
                 // 지속 피해로 쓰러지면 Died에서 모두 해제됨
                 if (health.IsDead) return;
             }

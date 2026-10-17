@@ -95,7 +95,7 @@ public class FireHazard : MonoBehaviour
             if (nextHitAt.TryGetValue(target, out float next) && now < next) continue;
 
             nextHitAt[target] = now + interval;
-            target.TakeHit(new AttackData { damage = damage, element = ElementType.Fire });
+            target.TakeHit(new AttackData { damage = damage, element = ElementType.Fire, environmental = true });
             Push(target);
         }
     }

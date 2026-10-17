@@ -59,6 +59,19 @@ public class Health : MonoBehaviour, ISaveable
         return attack.damage;
     }
 
+    // 상태이상의 지속 피해 (예: 화상). 속성 저항 등 대상별 보정 후 0이면 피해 처리(반짝임 등)를 건너뜀
+    public void TakeStatusDamage(int damage, ElementType element)
+    {
+        damage = CalculateStatusDamage(damage, element);
+        if (damage > 0) TakeDamage(damage);
+    }
+
+    // 지속 피해 보정이 필요하면 자식 클래스에서 재정의 (예: 플레이어 장비의 속성 저항)
+    protected virtual int CalculateStatusDamage(int damage, ElementType element)
+    {
+        return damage;
+    }
+
     public void TakeDamage(int damage)
     {
         // Destroy는 프레임 끝에 처리되므로 같은 프레임의 추가 피격으로 Die가 중복 호출되는 것을 방지

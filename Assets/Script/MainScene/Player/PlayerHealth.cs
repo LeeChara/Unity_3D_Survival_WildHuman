@@ -21,6 +21,7 @@ public class PlayerHealth : Health
     private Knockback knockback;
     private PlayerInput playerInput;
     private PlayerHunger hunger;
+    private PlayerEquipment equipment;
 
     // 부활 위치 (월드 시작 지점)
     private Vector3 spawnPoint;
@@ -38,6 +39,19 @@ public class PlayerHealth : Health
         knockback = GetComponent<Knockback>();
         playerInput = GetComponent<PlayerInput>();
         hunger = GetComponent<PlayerHunger>();
+        equipment = GetComponent<PlayerEquipment>();
+    }
+
+    // 장비의 방어력 배율·속성 저항·특수효과를 적용 (환경 피해는 속성 저항만)
+    protected override int CalculateDamage(AttackData attack)
+    {
+        return equipment != null ? equipment.CalculateHitDamage(attack) : base.CalculateDamage(attack);
+    }
+
+    // 지속 피해에는 장비의 속성 저항만 적용
+    protected override int CalculateStatusDamage(int damage, ElementType element)
+    {
+        return equipment != null ? equipment.CalculateStatusDamage(damage, element) : damage;
     }
 
     // 월드 생성 시 정해진 시작 지점에서 시작 (높이는 씬에 배치된 값 유지)
@@ -151,6 +165,16 @@ public class PlayerHealth : Health
 
             ItemDropper.Instance.Drop(slot.item, slot.count, transform.position);
             inventory.Remove(i, slot.count);
+        }
+
+        if (equipment == null) return;
+        for (int i = 0; i < equipment.SlotCount; i++)
+        {
+            ItemStack slot = equipment.Get(i);
+            if (slot.IsEmpty) continue;
+
+            ItemDropper.Instance.Drop(slot.item, slot.count, transform.position);
+            SlotTransfer.Remove(equipment, i, slot.count);
         }
     }
 }

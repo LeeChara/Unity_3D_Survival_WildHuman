@@ -185,7 +185,10 @@ public class ExplosiveKeg : MonoBehaviour, ISaveable, IFireReactive
                 continue;
             }
 
-            target.TakeHit(blast);
+            // 프리팹에 저장된 값과 관계없이 폭발은 항상 환경 피해
+            AttackData attack = blast;
+            attack.environmental = true;
+            target.TakeHit(attack);
 
             if (target.TryGetComponent(out Knockback knockback))
             {

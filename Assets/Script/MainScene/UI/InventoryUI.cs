@@ -13,6 +13,9 @@ public class InventoryUI : MonoBehaviour, IScrollHandler
     [SerializeField] private PlayerHotbar hotbar;
     [Tooltip("인벤토리 슬롯 순서와 같게 배치 (0~9 핫바, 10~39 가방)")]
     [SerializeField] private InventorySlotUI[] slotUIs;
+    [SerializeField] private PlayerEquipment equipment;
+    [Tooltip("장비 칸 순서와 같게 배치 (0 머리, 1 몸, 2 유물). 장비 패널도 inventoryAreas에 넣어야 놓을 때 던지지 않음")]
+    [SerializeField] private InventorySlotUI[] equipmentSlotUIs;
     [Tooltip("선택된 핫바 칸으로 옮겨 다니는 강조 표시 (아이콘 뒤에 그려짐)")]
     [SerializeField] private RectTransform selectionHighlight;
     [Tooltip("드래그 중 마우스를 따라다니는 칸 (Canvas 맨 아래에 두어 가장 위에 그려지게 함, 레이캐스트 차단 끔)")]
@@ -53,6 +56,10 @@ public class InventoryUI : MonoBehaviour, IScrollHandler
         {
             slotUIs[i].Bind(this, inventory, i);
         }
+        for (int i = 0; i < equipmentSlotUIs.Length; i++)
+        {
+            equipmentSlotUIs[i].Bind(this, equipment, i);
+        }
 
         // 시작 시 닫힌 상태로 통일
         SetOpen(false);
@@ -61,6 +68,7 @@ public class InventoryUI : MonoBehaviour, IScrollHandler
     private void OnEnable()
     {
         inventory.SlotChanged += RefreshSlot;
+        equipment.SlotChanged += RefreshEquipmentSlot;
         hotbar.SelectionChanged += MoveHighlight;
     }
 
@@ -68,6 +76,7 @@ public class InventoryUI : MonoBehaviour, IScrollHandler
     {
         // 재활성화 시 중복 등록되지 않도록 OnEnable과 짝을 맞춰 해제
         inventory.SlotChanged -= RefreshSlot;
+        equipment.SlotChanged -= RefreshEquipmentSlot;
         hotbar.SelectionChanged -= MoveHighlight;
     }
 
@@ -77,6 +86,10 @@ public class InventoryUI : MonoBehaviour, IScrollHandler
         for (int i = 0; i < slotUIs.Length; i++)
         {
             RefreshSlot(i);
+        }
+        for (int i = 0; i < equipmentSlotUIs.Length; i++)
+        {
+            RefreshEquipmentSlot(i);
         }
         MoveHighlight(hotbar.SelectedIndex);
     }
@@ -119,6 +132,10 @@ public class InventoryUI : MonoBehaviour, IScrollHandler
         {
             slot.SetTooltipEnabled(open);
         }
+        foreach (var slot in equipmentSlotUIs)
+        {
+            slot.SetTooltipEnabled(open);
+        }
         OpenStateChanged?.Invoke(open);
     }
 
@@ -126,6 +143,12 @@ public class InventoryUI : MonoBehaviour, IScrollHandler
     {
         if (index >= slotUIs.Length) return;
         slotUIs[index].Set(inventory.Get(index));
+    }
+
+    private void RefreshEquipmentSlot(int index)
+    {
+        if (index >= equipmentSlotUIs.Length) return;
+        equipmentSlotUIs[index].Set(equipment.Get(index));
     }
 
     // 강조 표시를 선택 칸의 자식 맨 앞으로 옮겨 칸 크기에 맞추고 아이콘 뒤에 그려지게 함
@@ -285,6 +308,7 @@ public class InventoryUI : MonoBehaviour, IScrollHandler
     }
 
     // Shift+클릭: 함께 열린 칸 묶음이 있으면 인벤토리 ↔ 그 묶음, 없으면 핫바 ↔ 가방으로 묶음 전체를 옮김
+    // 함께 열린 칸 묶음이 없을 때 인벤토리의 장비는 맞는 장비 칸에 장착 (이미 있으면 맞바꿈), 장비 칸은 인벤토리로 뺌
     public void QuickMove(InventorySlotUI slot)
     {
         if (!IsOpen || dragFrom >= 0 || slot.Container == null) return;
@@ -293,6 +317,10 @@ public class InventoryUI : MonoBehaviour, IScrollHandler
         if (slot.Container != (ISlotContainer)inventory)
         {
             SlotTransfer.QuickMove(slot.Container, slot.Index, inventory, 0, inventory.SlotCount);
+        }
+        else if (External == null && slot.Container.Get(slot.Index).item is EquipmentItemData gear)
+        {
+            SlotTransfer.Move(inventory, slot.Index, equipment, (int)gear.slot, 1);
         }
         else if (External != null)
         {

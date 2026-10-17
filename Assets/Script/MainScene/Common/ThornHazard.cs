@@ -67,7 +67,7 @@ public class ThornHazard : MonoBehaviour
             if (nextHitAt.TryGetValue(target, out float next) && now < next) continue;
 
             nextHitAt[target] = now + interval;
-            target.TakeHit(new AttackData { damage = damage });
+            target.TakeHit(new AttackData { damage = damage, environmental = true });
             if (target.TryGetComponent(out Knockback knockback)) knockback.Apply(target.transform.position - transform.position, knockbackDistance);
         }
     }
