@@ -7,6 +7,9 @@ public class ToolItemData : ItemData
 {
     public ToolType toolType;
 
+    [Tooltip("무기인지 (켜면 자원에 주는 피해가 줄어듦, 예: 창·둔기)")]
+    public bool isWeapon;
+
     [Tooltip("도구 티어 (자원의 요구 티어 이상이어야 채집 가능, 예: 1 = 나무, 2 = 돌, 3 = 흑요석)")]
     [Min(0)] public int tier = 1;
 

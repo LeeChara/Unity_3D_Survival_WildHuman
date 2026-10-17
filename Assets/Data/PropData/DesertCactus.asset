@@ -23,6 +23,7 @@ MonoBehaviour:
     tool: 1
     multiplier: 1.5
   requiredTier: 0
+  reduceWeaponDamage: 1
   dropTable: {fileID: 11400000, guid: 64731ccad8c712041b5d26cc98abfe9f, type: 2}
   destroyEffectPrefab: {fileID: 0}
   growInto: {fileID: 0}

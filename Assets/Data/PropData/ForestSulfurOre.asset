@@ -17,11 +17,12 @@ MonoBehaviour:
   description: "\uB178\uB780 \uACB0\uC815\uC774 \uBC15\uD78C \uAD11\uB9E5. \uD751\uC694\uC11D
     \uACE1\uAD2D\uC774 \uC774\uC0C1\uC758 \uACE1\uAD2D\uC774\uB85C\uB9CC \uCE98 \uC218
     \uC788\uB2E4."
-  maxHealth: 120
+  maxHealth: 50
   toolWeakness:
     tool: 2
     multiplier: 2
   requiredTier: 3
+  reduceWeaponDamage: 1
   dropTable: {fileID: 11400000, guid: 51a16cf0c456f16468e2689afb0a83e2, type: 2}
   destroyEffectPrefab: {fileID: 0}
   growInto: {fileID: 0}

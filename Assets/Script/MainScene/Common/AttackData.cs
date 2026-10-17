@@ -14,6 +14,8 @@ public struct AttackData
     public ElementType element;
     // 타격 형태 (예: 강철 둔기 → 강타, 금속 물체를 때리면 음파 발생)
     public StrikeType strike;
+    // 무기(창·둔기 등)로 공격했는지 (자원에 주는 피해가 줄어듦)
+    public bool isWeapon;
 
     // 피해 없이 속성만 실린 공격 (예: 물 양동이 → 젖음만). 피격 반짝임·넉백·금속 울림 없이 속성 반응만 일어남
     public bool IsHarmless => damage <= 0 && element != ElementType.None;

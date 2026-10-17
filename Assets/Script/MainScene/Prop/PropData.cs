@@ -14,6 +14,8 @@ public class PropData : ScriptableObject
     public ToolWeakness toolWeakness = new ToolWeakness { tool = ToolType.None, multiplier = 5f };
     [Tooltip("채집에 필요한 도구 티어 (0이면 제한 없음, 1 이상이면 toolWeakness의 도구로 이 티어 이상이어야 피해를 받음)")]
     [Min(0)] public int requiredTier = 0;
+    [Tooltip("무기로 공격받을 때 피해 감소를 적용할지 (끄면 무기 피해를 그대로 받음, 예: 덤불)")]
+    public bool reduceWeaponDamage = true;
     [Tooltip("파괴될 때 떨어뜨릴 아이템")]
     public DropTable dropTable;
     [Tooltip("파괴될 때 생성할 이펙트 (비워두면 생성하지 않음)")]

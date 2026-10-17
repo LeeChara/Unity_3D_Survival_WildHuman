@@ -14,6 +14,9 @@ public class PropHealth : Health
     // Died 구독자(HitFlash 등)가 모두 처리된 뒤에 호출되어야 비활성화 이후 색이 덮어써지지 않음
     public event Action<PropHealth> Depleted;
 
+    // 무기로 자원을 때릴 때 피해 배율 (무기가 채집 도구보다 강해지지 않도록)
+    private const float WeaponDamageScale = 0.2f;
+
     private ItemDropOnDeath dropOnDeath;
     private Combustible combustible;
     private float spawnedAt;
@@ -49,7 +52,9 @@ public class PropHealth : Health
     {
         if (Time.time - spawnedAt < spawnGrace) return 0;
         if (!CanHarvest(attack.toolType, attack.toolTier)) return 0;
-        return data.toolWeakness.CalculateDamage(attack);
+        int damage = data.toolWeakness.CalculateDamage(attack);
+        if (attack.isWeapon && data.reduceWeaponDamage) damage = Mathf.RoundToInt(damage * WeaponDamageScale);
+        return damage;
     }
 
     protected override void Die()

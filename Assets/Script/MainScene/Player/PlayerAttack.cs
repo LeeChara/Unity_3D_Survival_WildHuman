@@ -220,11 +220,11 @@ public class PlayerAttack : MonoBehaviour
         CurrentElement = tool != null ? tool.element : ElementType.None;
         if (tool != null)
         {
-            hitboxController.SetWeapon(tool.damage, tool.toolType, tool.tier, CurrentElement, tool.strike);
+            hitboxController.SetWeapon(tool.damage, tool.toolType, tool.tier, CurrentElement, tool.strike, tool.isWeapon);
         }
         else
         {
-            hitboxController.SetWeapon(bareHandDamage, ToolType.None, 0, CurrentElement, StrikeType.None);
+            hitboxController.SetWeapon(bareHandDamage, ToolType.None, 0, CurrentElement, StrikeType.None, false);
         }
         ApplyRange(tool != null ? tool.rangeScale : Vector2.one);
 
