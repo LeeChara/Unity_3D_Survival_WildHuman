@@ -6,11 +6,20 @@ public class RoseviperAI : MonsterAI, IBurrowable
 
     // 목표를 감지하고 매복(Chase) 중일 때만 땅속에 숨은 것으로 봄 → 음파에 즉시 길게 기절
     public virtual bool IsBurrowed => state == State.Chase;
+    // 땅속에 있으면 피해를 받지 않음 (음파로 기절시킨 뒤에야 맞음)
+    public override bool IsInvulnerable => IsBurrowed && !IsStunned;
 
     protected override void Awake()
     {
         base.Awake();
         viperData = (RoseviperData)data;
+
+        // 땅속에 있으면 넉백도 받지 않음 (시체는 일반 몬스터처럼 넉백)
+        if (knockback != null)
+        {
+            var baseImmune = knockback.IsImmune;
+            knockback.IsImmune = () => (IsBurrowed && !health.IsDead) || (baseImmune != null && baseImmune());
+        }
     }
 
     protected override void Update()

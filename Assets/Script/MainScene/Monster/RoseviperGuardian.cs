@@ -18,7 +18,6 @@ public class RoseviperGuardian : RoseviperAI
     private bool restorePending;
 
     public override bool IsBurrowed => true;
-    public override bool IsInvulnerable => !IsStunned;
 
     protected override void Awake()
     {
