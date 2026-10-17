@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!221 &22100000
+AnimatorOverrideController:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: DesertRoseviper
+  m_Controller: {fileID: 9100000, guid: fb2487dc74020214d8fbcc43b0cc9548, type: 2}
+  m_Clips:
+  - m_OriginalClip: {fileID: 7400000, guid: f8d2238d5a707bd40b1ccb235b693cc3, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: ece010adc0bfd754db6f5a7fabde0d11, type: 2}
+  - m_OriginalClip: {fileID: 7400000, guid: 2d7d047e7dd7eb94b86f670d464e0e1c, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: 4f361a6100ede6c42bc6b6667f701df4, type: 2}
+  - m_OriginalClip: {fileID: 7400000, guid: c63c71b8600b0d548a3a404dde3ad69e, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: c8618c993c9d551489560e97b5add7e1, type: 2}
+  - m_OriginalClip: {fileID: 7400000, guid: 1d82ed1db8f2258458524de0b7c27590, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: f4cddc1edb1def5479f9aac38101eca9, type: 2}
+  - m_OriginalClip: {fileID: 7400000, guid: 98523c2877122ce4ba24b9990236cac5, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: 018c3d349ab3d504db1caf26327f8e23, type: 2}
+  - m_OriginalClip: {fileID: 7400000, guid: 9d406421335d0374eb9b4dce8e490075, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: c6eb43e891965a943859ab16babc8c46, type: 2}
+  - m_OriginalClip: {fileID: 7400000, guid: e3ddca1dc86a98945a884a42778ff83c, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: a51f8182b55f3cb44a383ff230d919b8, type: 2}

@@ -91,13 +91,13 @@ MonoBehaviour:
     minSpacing: 1
     clusterRadius: 8
   monsterSpawnTable:
-  - monsterPrefab: {fileID: 2855152217180434087, guid: e2b8e5632850d34498a808e34d60eef5, type: 3}
+  - monsterPrefab: {fileID: 5549298006972681680, guid: 7b2611a206b2b984fa3ef1918c24874c, type: 3}
     weight: 1
-  - monsterPrefab: {fileID: 5223719300316381313, guid: 7796c72efd61e79468c0267d6f3492fb, type: 3}
+  - monsterPrefab: {fileID: 527406648780897787, guid: 7994cb32cc61266468f599dc16cae1aa, type: 3}
     weight: 1
-  - monsterPrefab: {fileID: 909642921054426830, guid: 2d811b3e2425f154caf93e94ce34eb93, type: 3}
+  - monsterPrefab: {fileID: 5515338399658812188, guid: 7b0c2371e19d0c54fac5cff675535a26, type: 3}
     weight: 2
-  - monsterPrefab: {fileID: 8212119383527421846, guid: b7c2edd5481861741a49adfa724df037, type: 3}
+  - monsterPrefab: {fileID: 8033607305466001208, guid: afb03612a0440da48ae0de9ed3c3a410, type: 3}
     weight: 2
   earthquakeTable:
   - propPrefab: {fileID: 5058150033251958606, guid: b6b44b7ae4c777643bf914eb58a63134, type: 3}

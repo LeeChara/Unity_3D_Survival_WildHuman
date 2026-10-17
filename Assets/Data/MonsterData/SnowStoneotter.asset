@@ -1,0 +1,62 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9049640348c66bc48b01403814ec4f85, type: 3}
+  m_Name: SnowStoneotter
+  m_EditorClassIdentifier: Assembly-CSharp::StoneotterData
+  monsterName: SnowStoneotter
+  displayName: "\uC124\uC6D0 \uB3CC\uBA69\uC774\uC218\uB2EC"
+  description: "\uAC70\uB9AC\uB97C \uC720\uC9C0\uD558\uBA70 \uB3CC\uBA69\uC774\uB97C
+    \uC5F0\uB2EC\uC544 \uB358\uC9C0\uB294 \uC218\uB2EC. \uB108\uBB34 \uAC00\uAE4C\uC774
+    \uB2E4\uAC00\uAC00\uBA74 \uB4A4\uB85C \uBB3C\uB7EC\uB09C\uB2E4. \uBC29\uD328\uBA67\uB3FC\uC9C0\uC640
+    \uB0A0\uAC1C\uB2E4\uB78C\uC950\uB97C \uB178\uB9B0\uB2E4. \uC124\uC6D0\uC5D0 \uC0AC\uB294
+    \uBCC0\uC885\uC73C\uB85C \uD138\uBE5B\uC774 \uD76C\uACE0 \uC232\uC758 \uAC1C\uCCB4\uBCF4\uB2E4
+    \uD2BC\uD2BC\uD558\uACE0 \uC0AC\uB0A9\uB2E4."
+  portrait: {fileID: 1571345359, guid: 62f5110670e64e24ad11300de036590c, type: 3}
+  species: {fileID: 11400000, guid: 941874a914eaffa4faa4639e90170418, type: 2}
+  hostileTargets:
+  - {fileID: 11400000, guid: 4eb1b38810d8744448d5e7c4fa8abb5b, type: 2}
+  - {fileID: 11400000, guid: ef0f350da93ecf941a6afe8a421b989a, type: 2}
+  maxHealth: 38
+  lowHealthRatio: 0.3
+  moveSpeed: 4.2
+  wanderRange: 4
+  wanderCooldown: 2
+  chaseSpeed: 5.25
+  chaseRange: 15
+  chaseGiveUpRange: 20
+  windupRange: 10
+  windupDuration: 1
+  attackSpeed: 6
+  attackDuration: 2
+  attack:
+    damage: 6
+    knockbackDistance: 1
+    toolType: 0
+    toolTier: 0
+    element: 0
+    strike: 0
+  recoverDuration: 1
+  knockbackResistance: 0
+  superArmorWhileAttacking: 0
+  dropTable: {fileID: 11400000, guid: cb94b897e2f793a4f84d6552d4a4e84a, type: 2}
+  windupMinRange: 7
+  stonePrefab: {fileID: 166747625551737325, guid: f27478d3334a03a4f8e100a9c476a1d4, type: 3}
+  projectile:
+    damage: 6
+    knockbackDistance: 0.5
+    toolType: 0
+    toolTier: 0
+    element: 0
+    strike: 0
+  stoneSpeed: 10
+  throwInterval: 0.5
+  throwCount: 3

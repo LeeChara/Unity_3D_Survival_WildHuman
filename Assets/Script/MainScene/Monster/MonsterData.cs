@@ -11,7 +11,12 @@ public class MonsterData : ScriptableObject
     [Tooltip("도감 등 UI에 표시할 전신 이미지 (몬스터 프리팹은 부위별 스프라이트로 나뉘어 있음)")]
     public Sprite portrait;
 
+    [Header("변종")]
+    [Tooltip("바이옴 변종이면 원본 종 (비워두면 자기 자신이 원본). 적대 관계는 원본 종 기준으로 판정")]
+    public MonsterData species;
+
     [Header("적대 대상")]
+    [Tooltip("원본 종으로 지정 (그 종의 변종도 모두 적대 대상이 됨)")]
     public MonsterData[] hostileTargets;
 
     [Header("기본 능력치")]
@@ -52,6 +57,21 @@ public class MonsterData : ScriptableObject
     [Header("Drop")]
     [Tooltip("사망 시 드랍 (ItemDropOnDeath가 있는 프리팹에만 적용)")]
     public DropTable dropTable;
+
+    public MonsterData Species => species != null ? species : this;
+
+    // 변종끼리도 원본 종이 같으면 같은 대상으로 봄
+    public bool IsHostileTo(MonsterData other)
+    {
+        if (other == null || hostileTargets == null) return false;
+
+        MonsterData otherSpecies = other.Species;
+        foreach (MonsterData hostileTarget in hostileTargets)
+        {
+            if (hostileTarget != null && hostileTarget.Species == otherSpecies) return true;
+        }
+        return false;
+    }
 
     private void OnValidate()
     {

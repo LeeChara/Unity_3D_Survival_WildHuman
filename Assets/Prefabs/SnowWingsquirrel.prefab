@@ -1,0 +1,115 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1001 &2200664096788496558
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 48305459567241423, guid: b7c2edd5481861741a49adfa724df037, type: 3}
+      propertyPath: m_Name
+      value: SnowWingsquirrel
+      objectReference: {fileID: 0}
+    - target: {fileID: 95070646546943709, guid: b7c2edd5481861741a49adfa724df037, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: -1859316720, guid: 51f76d8ce9884095a45f93d6630dbc1f, type: 3}
+    - target: {fileID: 143967369130053415, guid: b7c2edd5481861741a49adfa724df037, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 1025964872, guid: 51f76d8ce9884095a45f93d6630dbc1f, type: 3}
+    - target: {fileID: 1035891137015041403, guid: b7c2edd5481861741a49adfa724df037, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1035891137015041403, guid: b7c2edd5481861741a49adfa724df037, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1035891137015041403, guid: b7c2edd5481861741a49adfa724df037, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1035891137015041403, guid: b7c2edd5481861741a49adfa724df037, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1035891137015041403, guid: b7c2edd5481861741a49adfa724df037, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1035891137015041403, guid: b7c2edd5481861741a49adfa724df037, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1035891137015041403, guid: b7c2edd5481861741a49adfa724df037, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1035891137015041403, guid: b7c2edd5481861741a49adfa724df037, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1035891137015041403, guid: b7c2edd5481861741a49adfa724df037, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1035891137015041403, guid: b7c2edd5481861741a49adfa724df037, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1138480886712725741, guid: b7c2edd5481861741a49adfa724df037, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 1778636578, guid: 51f76d8ce9884095a45f93d6630dbc1f, type: 3}
+    - target: {fileID: 3241515018317755223, guid: b7c2edd5481861741a49adfa724df037, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: -1644704712, guid: 51f76d8ce9884095a45f93d6630dbc1f, type: 3}
+    - target: {fileID: 3504934915928013328, guid: b7c2edd5481861741a49adfa724df037, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 1377982502, guid: 51f76d8ce9884095a45f93d6630dbc1f, type: 3}
+    - target: {fileID: 4693204002027555802, guid: b7c2edd5481861741a49adfa724df037, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: -1725029171, guid: 51f76d8ce9884095a45f93d6630dbc1f, type: 3}
+    - target: {fileID: 5179131748261902715, guid: b7c2edd5481861741a49adfa724df037, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 2004172240, guid: 51f76d8ce9884095a45f93d6630dbc1f, type: 3}
+    - target: {fileID: 5807142307977050937, guid: b7c2edd5481861741a49adfa724df037, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 920422298, guid: 51f76d8ce9884095a45f93d6630dbc1f, type: 3}
+    - target: {fileID: 6317324968070425150, guid: b7c2edd5481861741a49adfa724df037, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 452409798, guid: 51f76d8ce9884095a45f93d6630dbc1f, type: 3}
+    - target: {fileID: 7167745756431020336, guid: b7c2edd5481861741a49adfa724df037, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 2108772217, guid: 51f76d8ce9884095a45f93d6630dbc1f, type: 3}
+    - target: {fileID: 8014798267541578969, guid: b7c2edd5481861741a49adfa724df037, type: 3}
+      propertyPath: typeId
+      value: snow_wingsquirrel
+      objectReference: {fileID: 0}
+    - target: {fileID: 8212119383527421846, guid: b7c2edd5481861741a49adfa724df037, type: 3}
+      propertyPath: data
+      value: 
+      objectReference: {fileID: 11400000, guid: 4f7bb054d95d4324e951cd97b0389877, type: 2}
+    - target: {fileID: 8689983187801015101, guid: b7c2edd5481861741a49adfa724df037, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: -638250939, guid: 51f76d8ce9884095a45f93d6630dbc1f, type: 3}
+    - target: {fileID: 8709537423809064750, guid: b7c2edd5481861741a49adfa724df037, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 443843997, guid: 51f76d8ce9884095a45f93d6630dbc1f, type: 3}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: b7c2edd5481861741a49adfa724df037, type: 3}

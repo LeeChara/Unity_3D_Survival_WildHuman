@@ -1,0 +1,50 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 61e32631cec2afe41ba488cea45296f7, type: 3}
+  m_Name: SnowRoseviper
+  m_EditorClassIdentifier: Assembly-CSharp::RoseviperData
+  monsterName: SnowRoseviper
+  displayName: "\uC124\uC6D0 \uAC00\uC2DC\uAF43\uC0B4\uBAA8\uC0AC"
+  description: "\uC7A5\uBBF8 \uB364\uBD88 \uC18D\uC5D0 \uC228\uC5B4 \uC9C0\uB0B4\uB294
+    \uBC40. \uAC00\uAE4C\uC774 \uB2E4\uAC00\uC62C \uB54C\uAE4C\uC9C0 \uC6C0\uC9C1\uC774\uC9C0
+    \uC54A\uB2E4\uAC00 \uAE30\uC2B5\uD55C \uB4A4 \uC7AC\uBE68\uB9AC \uBB3C\uB7EC\uB09C\uB2E4.
+    \uACF5\uACA9 \uC911\uC5D0\uB294 \uB9DE\uC544\uB3C4 \uBA48\uCD94\uC9C0 \uC54A\uB294\uB2E4.
+    \uC124\uC6D0\uC5D0 \uC0AC\uB294 \uBCC0\uC885\uC73C\uB85C \uD138\uBE5B\uC774 \uD76C\uACE0
+    \uC232\uC758 \uAC1C\uCCB4\uBCF4\uB2E4 \uD2BC\uD2BC\uD558\uACE0 \uC0AC\uB0A9\uB2E4."
+  portrait: {fileID: 1535209438, guid: 40f5775cf7b14d63930011e92b9038e8, type: 3}
+  species: {fileID: 11400000, guid: bd1de504da0575740a18bf9b373fed84, type: 2}
+  hostileTargets: []
+  maxHealth: 50
+  lowHealthRatio: 0.3
+  moveSpeed: 3.1499999
+  wanderRange: 10
+  wanderCooldown: 7
+  chaseSpeed: 5.25
+  chaseRange: 30
+  chaseGiveUpRange: 40
+  windupRange: 3
+  windupDuration: 1
+  attackSpeed: 1
+  attackDuration: 2
+  attack:
+    damage: 12
+    knockbackDistance: 3
+    toolType: 0
+    toolTier: 0
+    element: 0
+    strike: 0
+  recoverDuration: 1
+  knockbackResistance: 0
+  superArmorWhileAttacking: 1
+  dropTable: {fileID: 11400000, guid: 1b0fffb99a958144eb828ed7af4a1c7b, type: 2}
+  attackHitDuration: 1
+  retreatSpeed: 15.749999

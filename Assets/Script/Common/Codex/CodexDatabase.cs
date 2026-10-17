@@ -128,8 +128,7 @@ public class CodexDatabase : ScriptableObject
         foreach (CodexEntry entry in GetEntries(CodexCategory.Monster))
         {
             var data = (MonsterData)entry.data;
-            if (data.hostileTargets == null) continue;
-            if (System.Array.IndexOf(data.hostileTargets, target) >= 0) yield return entry;
+            if (data.IsHostileTo(target)) yield return entry;
         }
     }
 

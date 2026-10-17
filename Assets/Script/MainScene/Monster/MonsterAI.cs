@@ -201,7 +201,7 @@ public class MonsterAI : MonoBehaviour, IStunnable
             if (c.transform == transform) continue;
 
             MonsterAI otherAI = c.GetComponent<MonsterAI>();
-            if (otherAI == null || !IsInHostileTargets(otherAI.Data)) continue;
+            if (otherAI == null || !data.IsHostileTo(otherAI.Data)) continue;
             // 시체는 피격 판정을 위해 콜라이더가 남아 있으므로 탐지 단계에서 제외
             if (c.TryGetComponent(out Health otherHealth) && otherHealth.IsDead) continue;
 
@@ -216,14 +216,6 @@ public class MonsterAI : MonoBehaviour, IStunnable
         return closest;
     }
 
-    private bool IsInHostileTargets(MonsterData otherData)
-    {
-        foreach (MonsterData hostileTarget in data.hostileTargets)
-        {
-            if (hostileTarget == otherData) return true;
-        }
-        return false;
-    }
     private void SetTarget(Transform detectedTarget)
     {
         target = detectedTarget;
