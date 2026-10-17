@@ -64,6 +64,7 @@ MonoBehaviour:
   smeltingBooks:
   - {fileID: 11400000, guid: f6c10ce3202494645b6510b3cf9bc2d7, type: 2}
   props:
+  - {fileID: 2205830226485285651, guid: bca5fcccbc03e6f4f8dfd8201d07e36c, type: 3}
   - {fileID: 787357670917811557, guid: 8ce0fb361fc491541a5ef95c47c4e1cd, type: 3}
   - {fileID: 2320462754870765523, guid: cb16ea17beeef31479bf316d75cfdd88, type: 3}
   - {fileID: 2320462754870765523, guid: 4c4014153208cd94cb554beb3d6f6fed, type: 3}
@@ -73,6 +74,8 @@ MonoBehaviour:
   - {fileID: 1755294285903418751, guid: a6bfafb7774d3f049817de54bf4856e4, type: 3}
   - {fileID: 787357670917811557, guid: 32af5dfbb465ca64b8045adcff7c5b47, type: 3}
   - {fileID: 1755294285903418751, guid: 13938be4caa5f6741a7acf89b8b5080e, type: 3}
+  - {fileID: 1559174030942640653, guid: 7be2b2200ec14234bbc2a334aa73969d, type: 3}
+  - {fileID: 7152036034989895168, guid: 1a3fe2fe6890c4041803a3ebc61ad364, type: 3}
   structures:
   - {fileID: 3531795527907821383, guid: 424d620852671944b9d8071ae491cdb2, type: 3}
   - {fileID: 130948604810500206, guid: accee2b0887b0c6498cd8215f1e35d4f, type: 3}
@@ -90,5 +93,7 @@ MonoBehaviour:
   - {fileID: 909642921054426830, guid: 2d811b3e2425f154caf93e94ce34eb93, type: 3}
   - {fileID: 8212119383527421846, guid: b7c2edd5481861741a49adfa724df037, type: 3}
   biomes:
+  - {fileID: 11400000, guid: 033b66f39a6f6144fa742b01e0d952fc, type: 2}
   - {fileID: 11400000, guid: c21e4b334491fea4b9ddfe5771ab5cc7, type: 2}
+  - {fileID: 11400000, guid: de70995c3d76c41469ddc8e6249f9337, type: 2}
   - {fileID: 11400000, guid: bd9ab688d73694f43856b0a5a477a455, type: 2}

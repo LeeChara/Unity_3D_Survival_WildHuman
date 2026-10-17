@@ -1,0 +1,106 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 54bff54710e235148969b485c5de088d, type: 3}
+  m_Name: Desert
+  m_EditorClassIdentifier: Assembly-CSharp::BiomeData
+  id: desert
+  biomeName: "\uC0AC\uB9C9"
+  description: "\uBAA8\uB798\uC640 \uBC14\uC704\uBFD0\uC778 \uBA54\uB9C8\uB978 \uB545.
+    \uB098\uBB34\uC640 \uB364\uBD88\uC740 \uC790\uB77C\uC9C0 \uC54A\uACE0 \uC120\uC778\uC7A5\uB9CC
+    \uB4DC\uBB38\uB4DC\uBB38 \uC11C \uC788\uB2E4. \uD751\uC694\uC11D\uC744 \uBE44\uB86F\uD55C
+    \uAD11\uB9E5\uC774 \uD754\uD558\uAC8C \uB4DC\uB7EC\uB098 \uC788\uACE0 \uC232\uBCF4\uB2E4
+    \uC0AC\uB098\uC6B4 \uBAAC\uC2A4\uD130\uAC00 \uC0B0\uB2E4."
+  planeTexture: {fileID: 2800000, guid: 97c27742f1756c4449669a4d0bb4bc25, type: 3}
+  tilingScale: 5
+  blendRange: 1
+  mapColor: {r: 0.86, g: 0.75, b: 0.5, a: 1}
+  minThreshold: 0.52
+  maxThreshold: 0.63
+  propSpawnTable:
+  - propPrefab: {fileID: 6061255373339793757, guid: bca5fcccbc03e6f4f8dfd8201d07e36c, type: 3}
+    minCount: 6
+    maxCount: 12
+    countWeights: []
+    minSpacing: 4
+    clusterRadius: 0
+  - propPrefab: {fileID: 5058150033251958606, guid: b6b44b7ae4c777643bf914eb58a63134, type: 3}
+    minCount: 8
+    maxCount: 14
+    countWeights: []
+    minSpacing: 4
+    clusterRadius: 0
+  - propPrefab: {fileID: 3541052992667228540, guid: b6fb0e1c0ea09614fb0939b3c2b12fc4, type: 3}
+    minCount: 0
+    maxCount: 4
+    countWeights:
+    - count: 0
+      weight: 20
+    - count: 2
+      weight: 30
+    - count: 3
+      weight: 30
+    - count: 4
+      weight: 20
+    minSpacing: 1
+    clusterRadius: 10
+  - propPrefab: {fileID: 4672482584563935786, guid: 1ffa00c871a33dc49ab70d1d57ae92d7, type: 3}
+    minCount: 0
+    maxCount: 2
+    countWeights:
+    - count: 0
+      weight: 45
+    - count: 1
+      weight: 35
+    - count: 2
+      weight: 20
+    minSpacing: 1
+    clusterRadius: 8
+  - propPrefab: {fileID: 4672482584563935786, guid: 32af5dfbb465ca64b8045adcff7c5b47, type: 3}
+    minCount: 0
+    maxCount: 1
+    countWeights:
+    - count: 0
+      weight: 85
+    - count: 1
+      weight: 15
+    minSpacing: 1
+    clusterRadius: 8
+  - propPrefab: {fileID: 4672482584563935786, guid: 8ce0fb361fc491541a5ef95c47c4e1cd, type: 3}
+    minCount: 0
+    maxCount: 1
+    countWeights:
+    - count: 0
+      weight: 75
+    - count: 1
+      weight: 25
+    minSpacing: 1
+    clusterRadius: 8
+  monsterSpawnTable:
+  - monsterPrefab: {fileID: 2855152217180434087, guid: e2b8e5632850d34498a808e34d60eef5, type: 3}
+    weight: 1
+  - monsterPrefab: {fileID: 5223719300316381313, guid: 7796c72efd61e79468c0267d6f3492fb, type: 3}
+    weight: 1
+  - monsterPrefab: {fileID: 909642921054426830, guid: 2d811b3e2425f154caf93e94ce34eb93, type: 3}
+    weight: 2
+  - monsterPrefab: {fileID: 8212119383527421846, guid: b7c2edd5481861741a49adfa724df037, type: 3}
+    weight: 2
+  earthquakeTable:
+  - propPrefab: {fileID: 5058150033251958606, guid: b6b44b7ae4c777643bf914eb58a63134, type: 3}
+    weight: 40
+  - propPrefab: {fileID: 4672482584563935786, guid: 1ffa00c871a33dc49ab70d1d57ae92d7, type: 3}
+    weight: 25
+  - propPrefab: {fileID: 3541052992667228540, guid: b6fb0e1c0ea09614fb0939b3c2b12fc4, type: 3}
+    weight: 20
+  - propPrefab: {fileID: 4672482584563935786, guid: 8ce0fb361fc491541a5ef95c47c4e1cd, type: 3}
+    weight: 10
+  - propPrefab: {fileID: 4672482584563935786, guid: 32af5dfbb465ca64b8045adcff7c5b47, type: 3}
+    weight: 5

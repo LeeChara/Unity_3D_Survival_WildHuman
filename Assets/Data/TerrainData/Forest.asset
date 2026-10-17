@@ -21,8 +21,8 @@ MonoBehaviour:
   tilingScale: 5
   blendRange: 1
   mapColor: {r: 0.33174023, g: 0.5887867, b: 0.24950986, a: 1}
-  minThreshold: 0
-  maxThreshold: 0.61
+  minThreshold: 0.314
+  maxThreshold: 0.52
   propSpawnTable:
   - propPrefab: {fileID: 5971007402934984497, guid: 13938be4caa5f6741a7acf89b8b5080e, type: 3}
     minCount: 15

@@ -1,0 +1,112 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 54bff54710e235148969b485c5de088d, type: 3}
+  m_Name: Snow
+  m_EditorClassIdentifier: Assembly-CSharp::BiomeData
+  id: snow
+  biomeName: "\uC124\uC6D0"
+  description: "\uB208\uC73C\uB85C \uB4A4\uB36E\uC778 \uCD94\uC6B4 \uB545. \uAC78\uC73C\uBA74
+    \uBC1C\uC790\uAD6D\uC774 \uB0A8\uACE0 \uD638\uC218\uB294 \uC5BC\uC5B4\uBD99\uC5B4
+    \uBBF8\uB044\uB7EC\uC6B4 \uBE59\uD310\uC774 \uB41C\uB2E4. \uC5F4\uB9E4 \uB364\uBD88\uC774
+    \uB9CE\uC740 \uD3B8\uC774\uC9C0\uB9CC \uC232\uBCF4\uB2E4 \uBAAC\uC2A4\uD130\uAC00
+    \uAC15\uD558\uB2E4."
+  planeTexture: {fileID: 2800000, guid: 1132c30c95631ed44a6082d2f86dec2a, type: 3}
+  tilingScale: 5
+  blendRange: 1
+  mapColor: {r: 0.9, g: 0.94, b: 0.98, a: 1}
+  minThreshold: 0
+  maxThreshold: 0.314
+  propSpawnTable:
+  - propPrefab: {fileID: 3008522903051084878, guid: 1a3fe2fe6890c4041803a3ebc61ad364, type: 3}
+    minCount: 15
+    maxCount: 25
+    countWeights: []
+    minSpacing: 6
+    clusterRadius: 0
+  - propPrefab: {fileID: 3237151097076446163, guid: cb16ea17beeef31479bf316d75cfdd88, type: 3}
+    minCount: 26
+    maxCount: 36
+    countWeights: []
+    minSpacing: 3
+    clusterRadius: 0
+  - propPrefab: {fileID: 5058150033251958606, guid: b6b44b7ae4c777643bf914eb58a63134, type: 3}
+    minCount: 5
+    maxCount: 10
+    countWeights: []
+    minSpacing: 4
+    clusterRadius: 0
+  - propPrefab: {fileID: 3541052992667228540, guid: b6fb0e1c0ea09614fb0939b3c2b12fc4, type: 3}
+    minCount: 0
+    maxCount: 4
+    countWeights:
+    - count: 0
+      weight: 65
+    - count: 2
+      weight: 15
+    - count: 3
+      weight: 10
+    - count: 4
+      weight: 10
+    minSpacing: 1
+    clusterRadius: 10
+  - propPrefab: {fileID: 4672482584563935786, guid: 1ffa00c871a33dc49ab70d1d57ae92d7, type: 3}
+    minCount: 0
+    maxCount: 2
+    countWeights:
+    - count: 0
+      weight: 80
+    - count: 1
+      weight: 15
+    - count: 2
+      weight: 5
+    minSpacing: 1
+    clusterRadius: 8
+  - propPrefab: {fileID: 4672482584563935786, guid: 32af5dfbb465ca64b8045adcff7c5b47, type: 3}
+    minCount: 0
+    maxCount: 1
+    countWeights:
+    - count: 0
+      weight: 97
+    - count: 1
+      weight: 3
+    minSpacing: 1
+    clusterRadius: 8
+  - propPrefab: {fileID: 4672482584563935786, guid: 8ce0fb361fc491541a5ef95c47c4e1cd, type: 3}
+    minCount: 0
+    maxCount: 1
+    countWeights:
+    - count: 0
+      weight: 92
+    - count: 1
+      weight: 8
+    minSpacing: 1
+    clusterRadius: 8
+  monsterSpawnTable:
+  - monsterPrefab: {fileID: 2855152217180434087, guid: e2b8e5632850d34498a808e34d60eef5, type: 3}
+    weight: 1
+  - monsterPrefab: {fileID: 5223719300316381313, guid: 7796c72efd61e79468c0267d6f3492fb, type: 3}
+    weight: 1
+  - monsterPrefab: {fileID: 909642921054426830, guid: 2d811b3e2425f154caf93e94ce34eb93, type: 3}
+    weight: 2
+  - monsterPrefab: {fileID: 8212119383527421846, guid: b7c2edd5481861741a49adfa724df037, type: 3}
+    weight: 2
+  earthquakeTable:
+  - propPrefab: {fileID: 5058150033251958606, guid: b6b44b7ae4c777643bf914eb58a63134, type: 3}
+    weight: 60
+  - propPrefab: {fileID: 4672482584563935786, guid: 1ffa00c871a33dc49ab70d1d57ae92d7, type: 3}
+    weight: 20
+  - propPrefab: {fileID: 3541052992667228540, guid: b6fb0e1c0ea09614fb0939b3c2b12fc4, type: 3}
+    weight: 10
+  - propPrefab: {fileID: 4672482584563935786, guid: 32af5dfbb465ca64b8045adcff7c5b47, type: 3}
+    weight: 2
+  - propPrefab: {fileID: 4672482584563935786, guid: 8ce0fb361fc491541a5ef95c47c4e1cd, type: 3}
+    weight: 3

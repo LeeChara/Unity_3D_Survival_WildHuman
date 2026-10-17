@@ -13,5 +13,7 @@ MonoBehaviour:
   m_Name: BiomeDatabase
   m_EditorClassIdentifier: Assembly-CSharp::BiomeDatabase
   biomes:
+  - {fileID: 11400000, guid: de70995c3d76c41469ddc8e6249f9337, type: 2}
   - {fileID: 11400000, guid: c21e4b334491fea4b9ddfe5771ab5cc7, type: 2}
+  - {fileID: 11400000, guid: 033b66f39a6f6144fa742b01e0d952fc, type: 2}
   - {fileID: 11400000, guid: bd9ab688d73694f43856b0a5a477a455, type: 2}
