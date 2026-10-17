@@ -1,0 +1,67 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2478d349cc1a951418dbfb7542f41db7, type: 3}
+  m_Name: SunBear
+  m_EditorClassIdentifier: Assembly-CSharp::BossData
+  monsterName: SunBear
+  displayName: "\uD0DC\uC591\uACF0"
+  description: "\uAC00\uC2B4\uC5D0 \uCD08\uC2B9\uB2EC \uBB34\uB2AC\uAC00 \uC788\uB294
+    \uAC70\uB300\uD55C \uACF0. \uB465\uC9C0\uB97C \uC9C0\uD0A4\uBA70, \uB2E4\uAC00\uC624\uB294
+    \uAC83\uC740 \uBB34\uC5C7\uC774\uB4E0 \uD560\uD034\uACE0 \uB0B4\uB824\uCC0D\uB294\uB2E4."
+  portrait: {fileID: 0}
+  species: {fileID: 0}
+  hostileTargets: []
+  maxHealth: 2500
+  lowHealthRatio: 0.3
+  moveSpeed: 1.5
+  wanderRange: 4
+  wanderCooldown: 4
+  chaseSpeed: 4
+  chaseRange: 14
+  chaseGiveUpRange: 35
+  windupRange: 2
+  windupDuration: 1
+  attackSpeed: 6
+  attackDuration: 0.5
+  attack:
+    damage: 10
+    knockbackDistance: 1
+    impactStun: 0
+    toolType: 0
+    toolTier: 0
+    element: 0
+    strike: 0
+    isWeapon: 0
+  recoverDuration: 1
+  knockbackResistance: 1
+  superArmorWhileAttacking: 0
+  dropTable: {fileID: 0}
+  phase2HealthRatio: 0.3
+  patternGap: 0.5
+  patterns:
+  - {fileID: 11400000, guid: 71bcf1c5e4282494aa3d60c88aa73d12, type: 2}
+  - {fileID: 11400000, guid: 5a41b566216c612488f35cb731b65dd9, type: 2}
+  - {fileID: 11400000, guid: 3403497180fc82f4a9ca31b62b807e62, type: 2}
+  - {fileID: 11400000, guid: 00169453615051a4bb1851e725a0c98f, type: 2}
+  - {fileID: 11400000, guid: 2dc6e1bf01cffb54299268992e63e5f6, type: 2}
+  - {fileID: 11400000, guid: 56a26662cded3e44eb38e4765fbd021f, type: 2}
+  roarPattern: {fileID: 11400000, guid: 2c15b02cb2b92b4448fd33820621a611, type: 2}
+  bodyFlame: {fileID: 2661728965996709223, guid: ef3001182bcb99f478c34c39fe74d1da, type: 3}
+  groundFlame: {fileID: 4357220923188999264, guid: de44839328c608e4cbf9ec945bf69a08, type: 3}
+  fireRingRadius: 20
+  fireRingGap: 40
+  fireRingSpacing: 2
+  fireRingLightEvery: 4
+  fireRingKnockback: 3
+  nightMoveScale: 0.85
+  nightGapScale: 1.5
+  nightDamageScale: 0.85

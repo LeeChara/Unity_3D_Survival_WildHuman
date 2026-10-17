@@ -18,6 +18,8 @@ public class FireSource : MonoBehaviour
     [SerializeField] private CombustionSetting setting;
     [Tooltip("이 화염원의 몸체 (비우면 자식까지 포함한 트리거가 아닌 콜라이더 전부)")]
     [SerializeField] private Collider[] body;
+    [Tooltip("불을 옮기지 않는 레이어 (예: 2페이즈 보스의 몸 불은 플레이어에게 옮지 않음)")]
+    [SerializeField] private LayerMask ignoreLayers;
 
     private static readonly Collider[] buffer = new Collider[BufferSize];
     private readonly List<IFireReactive> hitTargets = new();
@@ -78,6 +80,7 @@ public class FireSource : MonoBehaviour
         for (int i = 0; i < count; i++)
         {
             Collider other = buffer[i];
+            if ((ignoreLayers.value & (1 << other.gameObject.layer)) != 0) continue;
             IFireReactive target = other.GetComponentInParent<IFireReactive>();
             if (target == null || target == self || !IsAlive(target) || hitTargets.Contains(target)) continue;
 

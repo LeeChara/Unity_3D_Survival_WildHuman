@@ -75,30 +75,5 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 5058150033251958606, guid: b6b44b7ae4c777643bf914eb58a63134, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1970689687010799102}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b6b44b7ae4c777643bf914eb58a63134, type: 3}
---- !u!1 &4672482584563935786 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 5058150033251958606, guid: b6b44b7ae4c777643bf914eb58a63134, type: 3}
-  m_PrefabInstance: {fileID: 497039180493034852}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &1970689687010799102
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4672482584563935786}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cb0e554126ccf9b4d9e7cd05f41f1295, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::ShadowCaster
-  setting: {fileID: 11400000, guid: 8d5a7e0a7430e1847bb4c17cf63cfbf7, type: 2}
-  width: 4.6
-  height: 4.4
-  footOffset: {x: 0, y: -1.18, z: 0}
-  isStatic: 1

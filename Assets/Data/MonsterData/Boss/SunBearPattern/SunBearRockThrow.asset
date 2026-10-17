@@ -1,0 +1,45 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d6191a06cbe7bf442acd15f009148dc8, type: 3}
+  m_Name: SunBearRockThrow
+  m_EditorClassIdentifier: Assembly-CSharp::RockThrowPattern
+  displayName: "\uBC14\uC704 \uB358\uC9C0\uAE30"
+  usableInPhase1: 0
+  usableInPhase2: 1
+  minRange: 6
+  maxRange: 20
+  cooldown: 7
+  weight: 2
+  invulnerable: 0
+  pull: 1
+  flightTime: 0.8
+  height: 5
+  holdHeight: 3
+  landShape:
+    kind: 0
+    radius: 3.5
+    innerRadius: 0
+    angle: 360
+    width: 0
+    length: 0
+  attack:
+    damage: 35
+    knockbackDistance: 4
+    impactStun: 0.8
+    toolType: 0
+    toolTier: 0
+    element: 0
+    strike: 0
+    isWeapon: 0
+  rockPrefab: {fileID: 6621876431101705771, guid: e011e3f0d8887814c8895b00e8c84887, type: 3}
+  maxRocks: 3
+  recover: 0.8

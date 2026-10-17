@@ -16,6 +16,6 @@ public class LanternItemData : ToolItemData
 
     public override string GetStatText()
     {
-        return AppendElement($"빛 반경 {lightRadius:0.#} · {damage} 피해");
+        return AppendElement($"빛 반경 {lightRadius:0.#}\n{damage} 피해");
     }
 }

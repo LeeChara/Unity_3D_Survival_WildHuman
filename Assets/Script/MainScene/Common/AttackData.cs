@@ -6,6 +6,8 @@ public struct AttackData
 {
     public int damage;
     public float knockbackDistance;
+    // 넉백으로 밀려나다 벽에 부딪히면 기절하는 시간 (0이면 없음)
+    public float impactStun;
     // 도구 장비로 공격할 때 설정 (맞는 자원에 배율 적용)
     public ToolType toolType;
     // 도구 티어 (맨손·몬스터는 0, 자원의 요구 티어와 비교)

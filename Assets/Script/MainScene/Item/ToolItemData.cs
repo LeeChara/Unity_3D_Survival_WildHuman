@@ -30,7 +30,7 @@ public class ToolItemData : ItemData
 
     public override string GetStatText()
     {
-        return AppendElement($"티어 {tier} · {damage} 피해");
+        return AppendElement($"티어 {tier}\n{damage} 피해");
     }
 
     // 속성·타격 형태가 있으면 툴팁 스탯 아래에 한 줄씩 추가

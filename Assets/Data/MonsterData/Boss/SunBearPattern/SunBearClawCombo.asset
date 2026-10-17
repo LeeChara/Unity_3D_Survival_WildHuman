@@ -1,0 +1,87 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 398a2e6d56c2fa440a7a2bd95f430854, type: 3}
+  m_Name: SunBearClawCombo
+  m_EditorClassIdentifier: Assembly-CSharp::ClawComboPattern
+  displayName: "3\uC5F0\uC18D \uD560\uD034\uAE30"
+  usableInPhase1: 1
+  usableInPhase2: 1
+  minRange: 0
+  maxRange: 3.5
+  cooldown: 0
+  weight: 3
+  invulnerable: 0
+  strikes:
+  - motion: ClawLeft
+    shape:
+      kind: 1
+      radius: 3.5
+      innerRadius: 0
+      angle: 120
+      width: 0
+      length: 0
+    windup: 0.5
+    after: 0.15
+    step: 0.5
+    attack:
+      damage: 12
+      knockbackDistance: 0.5
+      impactStun: 0
+      toolType: 0
+      toolTier: 0
+      element: 0
+      strike: 0
+      isWeapon: 0
+    phase2Damage: 15
+  - motion: ClawRight
+    shape:
+      kind: 1
+      radius: 3.5
+      innerRadius: 0
+      angle: 120
+      width: 0
+      length: 0
+    windup: 0.3
+    after: 0.15
+    step: 0.5
+    attack:
+      damage: 12
+      knockbackDistance: 0.5
+      impactStun: 0
+      toolType: 0
+      toolTier: 0
+      element: 0
+      strike: 0
+      isWeapon: 0
+    phase2Damage: 15
+  - motion: ClawBoth
+    shape:
+      kind: 1
+      radius: 4
+      innerRadius: 0
+      angle: 160
+      width: 0
+      length: 0
+    windup: 0.5
+    after: 0
+    step: 0.8
+    attack:
+      damage: 18
+      knockbackDistance: 2.5
+      impactStun: 0
+      toolType: 0
+      toolTier: 0
+      element: 0
+      strike: 0
+      isWeapon: 0
+    phase2Damage: 22
+  recover: 1

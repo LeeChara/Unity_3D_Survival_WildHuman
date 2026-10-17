@@ -54,7 +54,7 @@ public class Projectile : MonoBehaviour
         // 투사체는 날아가던 방향으로 밀어냄
         if (other.TryGetComponent<Knockback>(out Knockback knockback))
         {
-            knockback.Apply(direction, attack.knockbackDistance);
+            knockback.Apply(direction, attack.knockbackDistance, attack.impactStun);
         }
 
         Destroy(gameObject);

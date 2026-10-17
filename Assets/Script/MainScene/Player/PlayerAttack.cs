@@ -84,8 +84,9 @@ public class PlayerAttack : MonoBehaviour
             health.Died += CancelAttack;
         }
 
-        // 공격 도중 기절해도 같은 이유로 공격을 취소
+        // 공격 도중 기절하거나 잡혀도 같은 이유로 공격을 취소
         playerState.StunStarted += CancelAttack;
+        playerState.GrabStarted += CancelAttack;
     }
 
     // 진행 중인 공격을 끊음 (넉백·사망·기절, 공격 중 회피). 상태 전환은 호출한 쪽이 처리

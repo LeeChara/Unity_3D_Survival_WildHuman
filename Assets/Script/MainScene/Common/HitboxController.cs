@@ -50,7 +50,7 @@ public class HitboxController : MonoBehaviour
             // 공격자와 위치가 겹치면 히트박스가 바라보는 방향으로 밀어냄
             if (knockbackDir.sqrMagnitude < 0.0001f) knockbackDir = transform.forward;
 
-            knockback.Apply(knockbackDir, attack.knockbackDistance);
+            knockback.Apply(knockbackDir, attack.knockbackDistance, attack.impactStun);
         }
     }
 

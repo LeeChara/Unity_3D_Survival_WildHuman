@@ -207,3 +207,13 @@ MonoBehaviour:
     - item: {fileID: 11400000, guid: c703e2d1b4e5f2f4fb3396ce1a4f262e, type: 2}
       count: 2
     requiredStation: {fileID: 0}
+  - result: {fileID: 11400000, guid: 98821198969c29a48baf9ba574c00ba3, type: 2}
+    resultCount: 1
+    ingredients:
+    - item: {fileID: 11400000, guid: 63df4c0f8fc8739468fdde4c0cf1ea10, type: 2}
+      count: 5
+    - item: {fileID: 11400000, guid: 6695b7eb42a75104c928dfa8f9c9a77d, type: 2}
+      count: 5
+    - item: {fileID: 11400000, guid: e5d2bf8128bd87d4481c168b097373f8, type: 2}
+      count: 1
+    requiredStation: {fileID: 0}

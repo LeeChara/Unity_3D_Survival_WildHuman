@@ -4,6 +4,7 @@ using Random = UnityEngine.Random;
 
 public class MonsterAI : MonoBehaviour, IStunnable
 {
+    [Tooltip("공격 판정 (보스처럼 패턴이 직접 판정하면 비워둠)")]
     [SerializeField] protected GameObject hitbox;
     [SerializeField] protected HitboxController hitboxController;
     [SerializeField] protected LayerMask playerLayer;
@@ -63,7 +64,7 @@ public class MonsterAI : MonoBehaviour, IStunnable
         rb = GetComponent<Rigidbody>();
         health = GetComponent<Health>();
         health.Died += OnDied;
-        hitbox.SetActive(false);
+        if (hitbox != null) hitbox.SetActive(false);
 
         knockback = GetComponent<Knockback>();
         waterWader = GetComponent<WaterWader>();
@@ -164,11 +165,11 @@ public class MonsterAI : MonoBehaviour, IStunnable
             ClearTarget();
         }
 
-        // 추격 중인 목표물이 추격 범위보다 멀어지면 추격 포기
+        // 추격 중인 목표물이 추격 범위보다 멀어지거나 더 쫓을 수 없는 곳으로 가면 추격 포기
         if (target != null)
         {
             float distance = Vector3.Distance(transform.position, target.position);
-            if (distance > data.chaseGiveUpRange)
+            if (distance > data.chaseGiveUpRange || !CanTarget(target))
             {
                 ClearTarget();
             }
@@ -190,8 +191,15 @@ public class MonsterAI : MonoBehaviour, IStunnable
     private Transform FindPlayerInRange()
     {
         Collider[] hits = Physics.OverlapSphere(transform.position, data.chaseRange, playerLayer);
-        return hits.Length > 0 ? hits[0].transform : null;
+        foreach (Collider hit in hits)
+        {
+            if (CanTarget(hit.transform)) return hit.transform;
+        }
+        return null;
     }
+
+    // 이 대상을 쫓을 수 있는지 (예: 보스는 둥지 밖으로 나간 대상을 쫓지 않음)
+    protected virtual bool CanTarget(Transform candidate) => true;
     private Transform FindHostileTargetInRange()
     {
         Collider[] hits = Physics.OverlapSphere(transform.position, data.chaseRange, monsterLayer);
@@ -203,7 +211,7 @@ public class MonsterAI : MonoBehaviour, IStunnable
             if (c.transform == transform) continue;
 
             MonsterAI otherAI = c.GetComponent<MonsterAI>();
-            if (otherAI == null || !data.IsHostileTo(otherAI.Data)) continue;
+            if (otherAI == null || !data.IsHostileTo(otherAI.Data) || !CanTarget(c.transform)) continue;
             // 시체는 피격 판정을 위해 콜라이더가 남아 있으므로 탐지 단계에서 제외
             if (c.TryGetComponent(out Health otherHealth) && otherHealth.IsDead) continue;
 
@@ -377,7 +385,7 @@ public class MonsterAI : MonoBehaviour, IStunnable
 
             PlayAnimation(State.Recover);
 
-            hitbox.SetActive(false);
+            if (hitbox != null) hitbox.SetActive(false);
         }
     }
 
@@ -414,7 +422,7 @@ public class MonsterAI : MonoBehaviour, IStunnable
         }
         else
         {
-            hitbox.SetActive(false);
+            if (hitbox != null) hitbox.SetActive(false);
             state = State.Stunned;
             stateTime = 0f;
             stunRemaining = duration;
@@ -460,7 +468,7 @@ public class MonsterAI : MonoBehaviour, IStunnable
         if (health.IsDead) return;
         if (state != State.Windup && state != State.Attack) return;
 
-        hitbox.SetActive(false);
+        if (hitbox != null) hitbox.SetActive(false);
         state = State.Idle;
         stateTime = 0f;
 
@@ -471,7 +479,7 @@ public class MonsterAI : MonoBehaviour, IStunnable
     // 시체 유지, 제거는 MonsterHealth가 담당
     protected virtual void OnDied()
     {
-        hitbox.SetActive(false);
+        if (hitbox != null) hitbox.SetActive(false);
 
         Vector3 velocity = rb.linearVelocity;
         rb.linearVelocity = new Vector3(0f, velocity.y, 0f);

@@ -25,6 +25,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: c703e2d1b4e5f2f4fb3396ce1a4f262e, type: 2}
   - {fileID: 11400000, guid: 3e08ef162b85784488af3fdac8201f5f, type: 2}
   - {fileID: 11400000, guid: 557b72a7be4af5b47816d1c6c0487dad, type: 2}
+  - {fileID: 11400000, guid: 98821198969c29a48baf9ba574c00ba3, type: 2}
   - {fileID: 11400000, guid: 99f39533a967d9b409e7885afb4eec06, type: 2}
   - {fileID: 11400000, guid: 0db4ae6882b2a7f46aaaaf35de4cc446, type: 2}
   - {fileID: 11400000, guid: 6695b7eb42a75104c928dfa8f9c9a77d, type: 2}
@@ -58,12 +59,15 @@ MonoBehaviour:
   - {fileID: 11400000, guid: d498f1e5cc69d094b858900883d324ab, type: 2}
   - {fileID: 11400000, guid: 0c75b1c16bcae44499fcbd60ef23dd40, type: 2}
   - {fileID: 11400000, guid: d2b3dbc074b83214fba9d1c8ecbbfc62, type: 2}
+  - {fileID: 11400000, guid: 52acbe8f37c739b48b71d85ee0ef4893, type: 2}
+  - {fileID: 11400000, guid: b5110d303f6df6a49b90dc01971efbc8, type: 2}
   recipeBook: {fileID: 11400000, guid: c741f133a292f544eb7aa3ce5a9f1043, type: 2}
   cookingBooks:
   - {fileID: 11400000, guid: eae2d086cccfb57439bba3c399f52094, type: 2}
   smeltingBooks:
   - {fileID: 11400000, guid: f6c10ce3202494645b6510b3cf9bc2d7, type: 2}
   props:
+  - {fileID: 867109096770320385, guid: e011e3f0d8887814c8895b00e8c84887, type: 3}
   - {fileID: 2205830226485285651, guid: bca5fcccbc03e6f4f8dfd8201d07e36c, type: 3}
   - {fileID: 787357670917811557, guid: 8ce0fb361fc491541a5ef95c47c4e1cd, type: 3}
   - {fileID: 2320462754870765523, guid: cb16ea17beeef31479bf316d75cfdd88, type: 3}
@@ -85,8 +89,11 @@ MonoBehaviour:
   - {fileID: 130948604810500206, guid: d47cc962029623345ace33151b91c3e6, type: 3}
   - {fileID: 130948604810500206, guid: 4de173c17ba48be47a09857dfaf8acd5, type: 3}
   - {fileID: 3003109801364211945, guid: f7811efd78c238441bee6c4c5f8e113a, type: 3}
+  - {fileID: 8868120964961491663, guid: 069120562da77a142ad40f09d2d4f8d6, type: 3}
+  - {fileID: 8868120964961491663, guid: bab99936d6edf5645b21022da887a642, type: 3}
   - {fileID: 2445530808771038101, guid: d5d47844052150f459bdb67e791ba9f5, type: 3}
   monsters:
+  - {fileID: 606867690770778890, guid: 245bf97cc5b3e114d8f3a3c220c31c67, type: 3}
   - {fileID: 6939443850232970121, guid: 4ffabd5dfa033e84cb8585de9f01ae1f, type: 3}
   - {fileID: 1757877573756653619, guid: eaeb86b57dd139a49b9a2e84ab6657d8, type: 3}
   - {fileID: 5137011584780185239, guid: 2d320187b2b5ace4da8e56a041aeefe9, type: 3}

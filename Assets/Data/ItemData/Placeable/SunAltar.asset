@@ -1,0 +1,31 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1258f1ab5ba31e34eade60a7a06e02e6, type: 3}
+  m_Name: SunAltar
+  m_EditorClassIdentifier: Assembly-CSharp::PlaceableItemData
+  id: sun_altar
+  displayName: "\uD0DC\uC591 \uC81C\uB2E8"
+  icon: {fileID: -1007502021, guid: b323510ba85c324478346041e0d0b829, type: 3}
+  description: "\uD0DC\uC591\uACF0 \uB465\uC9C0\uC758 \uC81C\uB2E8. \uB465\uC9C0\uAC00
+    \uBE44\uC5B4 \uC788\uC744 \uB54C \uD0DC\uC591 \uACF5\uBB3C\uC744 \uBC14\uCE58\uBA74
+    \uD0DC\uC591\uACF0\uC774 \uB2E4\uC2DC \uB098\uD0C0\uB09C\uB2E4."
+  maxStack: 99
+  placedPrefab: {fileID: 981713158363344521, guid: bab99936d6edf5645b21022da887a642, type: 3}
+  alignToPlayer: 0
+  placeRange: 3
+  indestructible: 1
+  maxHealth: 1000
+  toolWeakness:
+    tool: 3
+    multiplier: 100
+  dropTable: {fileID: 0}
+  mapColor: {r: 1, g: 0.7, b: 0.25, a: 1}

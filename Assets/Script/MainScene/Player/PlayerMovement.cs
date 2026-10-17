@@ -60,11 +60,14 @@ public class PlayerMovement : MonoBehaviour
         if (playerState.CurrentState != PlayerActionState.Normal)
         {
             IsSprinting = false;
-            // 기절 중에는 제자리에 멈춤 (몸체 마찰이 0이라 넉백 후 남은 속도로 미끄러지지 않도록)
-            if (playerState.CurrentState == PlayerActionState.Stunned)
+            // 기절·잡힘 중에는 제자리에 멈춤 (몸체 마찰이 0이라 넉백 후 남은 속도로 미끄러지지 않도록)
+            if (playerState.CurrentState == PlayerActionState.Stunned || playerState.CurrentState == PlayerActionState.Grabbed)
             {
-                Vector3 velocity = rb.linearVelocity;
-                rb.linearVelocity = new Vector3(0f, velocity.y, 0f);
+                if (!rb.isKinematic)
+                {
+                    Vector3 velocity = rb.linearVelocity;
+                    rb.linearVelocity = new Vector3(0f, velocity.y, 0f);
+                }
                 animator.SetBool("IsMoving", false);
                 animator.SetBool("IsSprinting", false);
             }

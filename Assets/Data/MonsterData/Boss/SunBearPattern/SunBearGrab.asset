@@ -1,0 +1,45 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a7d89d0c8243b684d9fe3dc39a06691f, type: 3}
+  m_Name: SunBearGrab
+  m_EditorClassIdentifier: Assembly-CSharp::GrabPattern
+  displayName: "\uC7A1\uAE30"
+  usableInPhase1: 1
+  usableInPhase2: 1
+  minRange: 0
+  maxRange: 3.5
+  cooldown: 10
+  weight: 0.7
+  invulnerable: 0
+  windup: 0.8
+  shape:
+    kind: 1
+    radius: 3.5
+    innerRadius: 0
+    angle: 70
+    width: 0
+    length: 0
+  holdDistance: 2
+  holdDuration: 1.75
+  tickInterval: 0.25
+  tickDamage: 8
+  throwAttack:
+    damage: 15
+    knockbackDistance: 8
+    impactStun: 0.8
+    toolType: 0
+    toolTier: 0
+    element: 0
+    strike: 0
+    isWeapon: 0
+  recover: 0.8
+  missRecover: 1.2
