@@ -14,6 +14,9 @@ public class HitboxController : MonoBehaviour
 
     public bool HasHit => hitTargets.Count > 0;
 
+    // 넉백 거리 배율 (예: 플레이어 장비의 주는 넉백 증가)
+    public float KnockbackScale { get; set; } = 1f;
+
     private void Awake()
     {
         Rigidbody attackerRb = GetComponentInParent<Rigidbody>();
@@ -50,7 +53,7 @@ public class HitboxController : MonoBehaviour
             // 공격자와 위치가 겹치면 히트박스가 바라보는 방향으로 밀어냄
             if (knockbackDir.sqrMagnitude < 0.0001f) knockbackDir = transform.forward;
 
-            knockback.Apply(knockbackDir, attack.knockbackDistance, attack.impactStun);
+            knockback.Apply(knockbackDir, attack.knockbackDistance * KnockbackScale, attack.impactStun);
         }
     }
 

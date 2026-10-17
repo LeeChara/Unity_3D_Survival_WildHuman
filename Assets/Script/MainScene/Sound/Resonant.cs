@@ -79,6 +79,9 @@ public class Resonant : MonoBehaviour, ISoundReactive
         }
     }
 
+    // 금속 물체가 아닌 곳에서 새 연쇄를 시작할 때 쓸 번호 (예: 플레이어 장비가 내는 음파)
+    public static int NewChainId() => ++lastChainId;
+
     // 공격에 맞음. 강타면 새 연쇄를 시작하고, 아니면(또는 음파를 모으는 중이면) 작게 울림. from: 공격자 위치
     public void OnAttackHit(Vector3 from, bool smash)
     {

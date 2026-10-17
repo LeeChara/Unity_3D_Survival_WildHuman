@@ -32,7 +32,7 @@ MonoBehaviour:
     width: 0
     length: 0
   attack:
-    damage: 25
+    damage: 62
     knockbackDistance: 4
     impactStun: 0.8
     toolType: 0
@@ -40,4 +40,5 @@ MonoBehaviour:
     element: 0
     strike: 0
     isWeapon: 0
+    environmental: 0
   recover: 1

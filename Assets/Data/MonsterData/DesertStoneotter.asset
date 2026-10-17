@@ -38,12 +38,15 @@ MonoBehaviour:
   attackSpeed: 6
   attackDuration: 2
   attack:
-    damage: 7
+    damage: 18
     knockbackDistance: 1
+    impactStun: 0
     toolType: 0
     toolTier: 0
     element: 0
     strike: 0
+    isWeapon: 0
+    environmental: 0
   recoverDuration: 1
   knockbackResistance: 0
   superArmorWhileAttacking: 0
@@ -51,12 +54,15 @@ MonoBehaviour:
   windupMinRange: 7
   stonePrefab: {fileID: 166747625551737325, guid: f27478d3334a03a4f8e100a9c476a1d4, type: 3}
   projectile:
-    damage: 7
+    damage: 18
     knockbackDistance: 0.5
+    impactStun: 0
     toolType: 0
     toolTier: 0
     element: 0
     strike: 0
+    isWeapon: 0
+    environmental: 0
   stoneSpeed: 10
   throwInterval: 0.5
   throwCount: 3

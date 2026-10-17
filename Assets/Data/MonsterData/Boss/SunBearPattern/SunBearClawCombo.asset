@@ -33,7 +33,7 @@ MonoBehaviour:
     after: 0.15
     step: 0.5
     attack:
-      damage: 12
+      damage: 30
       knockbackDistance: 0.5
       impactStun: 0
       toolType: 0
@@ -41,7 +41,8 @@ MonoBehaviour:
       element: 0
       strike: 0
       isWeapon: 0
-    phase2Damage: 15
+      environmental: 0
+    phase2Damage: 38
   - motion: ClawRight
     shape:
       kind: 1
@@ -54,7 +55,7 @@ MonoBehaviour:
     after: 0.15
     step: 0.5
     attack:
-      damage: 12
+      damage: 30
       knockbackDistance: 0.5
       impactStun: 0
       toolType: 0
@@ -62,7 +63,8 @@ MonoBehaviour:
       element: 0
       strike: 0
       isWeapon: 0
-    phase2Damage: 15
+      environmental: 0
+    phase2Damage: 38
   - motion: ClawBoth
     shape:
       kind: 1
@@ -75,7 +77,7 @@ MonoBehaviour:
     after: 0
     step: 0.8
     attack:
-      damage: 18
+      damage: 45
       knockbackDistance: 2.5
       impactStun: 0
       toolType: 0
@@ -83,5 +85,6 @@ MonoBehaviour:
       element: 0
       strike: 0
       isWeapon: 0
-    phase2Damage: 22
+      environmental: 0
+    phase2Damage: 55
   recover: 1

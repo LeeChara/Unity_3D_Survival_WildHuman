@@ -36,12 +36,15 @@ MonoBehaviour:
   attackSpeed: 15
   attackDuration: 1.5
   attack:
-    damage: 14
+    damage: 35
     knockbackDistance: 8
+    impactStun: 0
     toolType: 0
     toolTier: 0
     element: 0
     strike: 0
+    isWeapon: 0
+    environmental: 0
   recoverDuration: 2
   knockbackResistance: 0
   superArmorWhileAttacking: 0

@@ -14,6 +14,7 @@ public class PlayerAttack : MonoBehaviour
     [SerializeField] private PlayerHotbar hotbar; // 선택한 도구를 공격에 반영
     [SerializeField] private InventoryUI inventoryUI; // 아이템을 들고 있을 때의 월드 클릭은 던지기이므로 공격하지 않음
     [SerializeField] private int bareHandDamage = 5; // 도구가 아닌 아이템을 들었거나 빈 손일 때의 피해량
+    [SerializeField] private PlayerEquipment equipment; // 장비의 공격 속성·주는 넉백을 공격에 반영
 
     [Tooltip("공격 타이밍·쿨다운·캔슬 구간")]
     [SerializeField] private PlayerCombatSetting setting;
@@ -39,7 +40,7 @@ public class PlayerAttack : MonoBehaviour
     public event Action AttackStarted;
     public event Action AttackEnded;
 
-    // 이번 공격의 속성 (들고 있는 도구에서 정해지며, 휘두르기 이펙트가 모양을 고르는 데 사용)
+    // 이번 공격의 속성 (들고 있는 도구, 없으면 장비에서 정해지며, 휘두르기 이펙트가 모양을 고르는 데 사용)
     public ElementType CurrentElement { get; private set; }
 
     // 판정이 켜져 있는 시간 (휘두르기 이펙트 재생 길이)
@@ -219,6 +220,9 @@ public class PlayerAttack : MonoBehaviour
         // 핫바에서 고른 아이템이 도구면 그 도구로, 아니면 맨손으로 공격 (손에 든 외형은 PlayerHeldItemVisual이 담당)
         ToolItemData tool = hotbar.SelectedStack.IsEmpty ? null : hotbar.SelectedStack.item as ToolItemData;
         CurrentElement = tool != null ? tool.element : ElementType.None;
+        // 도구에 속성이 없으면 장비의 공격 속성을 씀
+        if (CurrentElement == ElementType.None && equipment != null) CurrentElement = equipment.AttackElement;
+        hitboxController.KnockbackScale = equipment != null ? equipment.KnockbackScale : 1f;
         if (tool != null)
         {
             hitboxController.SetWeapon(tool.damage, tool.toolType, tool.tier, CurrentElement, tool.strike, tool.isWeapon);

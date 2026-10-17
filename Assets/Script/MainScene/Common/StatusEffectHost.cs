@@ -29,6 +29,9 @@ public class StatusEffectHost : MonoBehaviour
     // 상태가 걸리거나 풀린 시점을 UI 등 외부 시스템에 알림
     public event Action Changed;
 
+    // true를 돌려주는 상태는 걸리지 않음 (소유 스크립트가 지정, 예: 플레이어 장비의 젖음 면역)
+    public Func<StatusEffectData, bool> IsImmune;
+
     public bool Has(StatusEffectData data) => Find(data) != null;
     public bool HasAny => active.Count > 0;
     // 걸려 있지 않으면 0
@@ -110,6 +113,7 @@ public class StatusEffectHost : MonoBehaviour
     public void Apply(StatusEffectData data, float duration)
     {
         if (data == null || health.IsDead || duration <= 0f) return;
+        if (IsImmune != null && IsImmune(data)) return;
 
         ActiveEffect effect = Find(data);
         if (effect != null)

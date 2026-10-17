@@ -2,26 +2,77 @@ using System;
 using Newtonsoft.Json.Linq;
 using UnityEngine;
 
-// 플레이어 장비 칸 (0 머리, 1 몸, 2 유물). 칸 이동은 인벤토리와 같은 SlotTransfer를 씀
-// 받는 피해 계산(방어력 배율·속성 저항·특수효과)을 PlayerHealth에 제공
+// 플레이어 장비 칸 (0 머리, 1 몸, 2~4 유물). 칸 이동은 인벤토리와 같은 SlotTransfer를 씀
+// 받는 피해 계산(방어력 배율·속성 저항·특수효과)을 PlayerHealth에, 공격 속성·주는 넉백을 PlayerAttack에 제공
+// 받는 넉백 감소는 같은 오브젝트의 Knockback에 직접 연결
 public class PlayerEquipment : MonoBehaviour, ISlotContainer, ISaveable
 {
-    private readonly ItemStack[] slots = { new(), new(), new() };
+    public const int HeadIndex = 0;
+    public const int BodyIndex = 1;
+    public const int RelicStart = 2;
+    public const int RelicCount = 3;
+
+    private readonly ItemStack[] slots = { new(), new(), new(), new(), new() };
     // 칸별로 특수효과의 OnEquipped를 호출한 장비 (바뀌었을 때 OnUnequipped를 부를 대상)
-    private readonly EquipmentItemData[] equipped = new EquipmentItemData[3];
+    private readonly EquipmentItemData[] equipped = new EquipmentItemData[RelicStart + RelicCount];
 
     private Health health;
 
     public int SlotCount => slots.Length;
 
-    // 머리·몸 방어력의 합
+    // 장착한 모든 장비의 방어력 합
     public int Defense { get; private set; }
+    // 공격에 실릴 속성 (앞쪽 칸의 장비 우선, 들고 있는 도구에 속성이 있으면 PlayerAttack이 도구 쪽을 씀)
+    public ElementType AttackElement { get; private set; }
+    // 받는 넉백 감소 비율 (곱으로 합침)
+    public float KnockbackResistance { get; private set; }
+    // 주는 넉백 배율 (증가 비율을 더한 뒤 1을 더함)
+    public float KnockbackScale { get; private set; } = 1f;
 
     public event Action<int> SlotChanged;
+
+    // 허기 감소 속도 배율 (HungerRateEffect를 곱으로 합침)
+    public float HungerRate { get; private set; } = 1f;
 
     private void Awake()
     {
         health = GetComponent<Health>();
+        if (TryGetComponent(out Knockback knockback)) knockback.ResistanceProvider = () => KnockbackResistance;
+        if (TryGetComponent(out StatusEffectHost host)) host.IsImmune = IsImmuneTo;
+    }
+
+    // 다른 컴포넌트가 Awake에서 정한 빙판 예외(구르기 등)를 유지한 채 장비 조건을 덧붙임
+    private void Start()
+    {
+        if (!TryGetComponent(out IceSlider iceSlider)) return;
+        System.Func<bool> baseBypass = iceSlider.Bypass;
+        iceSlider.Bypass = () => (baseBypass != null && baseBypass()) || HasEffect<IceGripEffect>();
+    }
+
+    public bool HasEffect<T>() where T : EquipmentEffect
+    {
+        foreach (EquipmentItemData item in equipped)
+        {
+            if (item == null || item.effects == null) continue;
+            foreach (EquipmentEffect effect in item.effects)
+            {
+                if (effect is T) return true;
+            }
+        }
+        return false;
+    }
+
+    private bool IsImmuneTo(StatusEffectData data)
+    {
+        foreach (EquipmentItemData item in equipped)
+        {
+            if (item == null || item.effects == null) continue;
+            foreach (EquipmentEffect effect in item.effects)
+            {
+                if (effect is StatusImmunityEffect immunity && immunity.Blocks(data)) return true;
+            }
+        }
+        return false;
     }
 
     private void OnEnable()
@@ -36,10 +87,46 @@ public class PlayerEquipment : MonoBehaviour, ISlotContainer, ISaveable
 
     public ItemStack Get(int index) => slots[index];
 
-    public EquipmentItemData GetEquipped(EquipmentSlot slot) => slots[(int)slot].item as EquipmentItemData;
+    // 칸 번호의 칸 종류
+    public static EquipmentSlot SlotTypeOf(int index) => index switch
+    {
+        HeadIndex => EquipmentSlot.Head,
+        BodyIndex => EquipmentSlot.Body,
+        _ => EquipmentSlot.Relic,
+    };
 
-    // 칸 종류가 맞는 장비만 놓을 수 있음
-    public bool CanPlace(int index, ItemData item) => item is EquipmentItemData equipment && (int)equipment.slot == index;
+    // 칸 종류가 맞는 장비만 놓을 수 있음 (랜턴은 유물 칸에 넣으면 손에 들지 않아도 빛을 냄)
+    public bool CanPlace(int index, ItemData item)
+    {
+        if (item is LanternItemData) return SlotTypeOf(index) == EquipmentSlot.Relic;
+        return item is EquipmentItemData equipment && equipment.slot == SlotTypeOf(index);
+    }
+
+    // 유물 칸에 낀 첫 랜턴 (없으면 null)
+    public LanternItemData EquippedLantern
+    {
+        get
+        {
+            for (int i = RelicStart; i < RelicStart + RelicCount; i++)
+            {
+                if (!slots[i].IsEmpty && slots[i].item is LanternItemData lantern) return lantern;
+            }
+            return null;
+        }
+    }
+
+    // 이 장비를 바로 장착할 칸 (유물은 앞쪽 빈칸, 모두 차 있으면 첫 유물 칸과 맞바꿈)
+    public int SlotIndexFor(EquipmentItemData item)
+    {
+        if (item.slot == EquipmentSlot.Head) return HeadIndex;
+        if (item.slot == EquipmentSlot.Body) return BodyIndex;
+
+        for (int i = RelicStart; i < RelicStart + RelicCount; i++)
+        {
+            if (slots[i].IsEmpty) return i;
+        }
+        return RelicStart;
+    }
 
     public void NotifyChanged(int index)
     {
@@ -58,13 +145,36 @@ public class PlayerEquipment : MonoBehaviour, ISlotContainer, ISaveable
         equipped[index] = current;
         if (current != null) ForEachEffect(current, effect => effect.OnEquipped(this));
 
-        Defense = DefenseOf(EquipmentSlot.Head) + DefenseOf(EquipmentSlot.Body);
+        RecalculateStats();
     }
 
-    private int DefenseOf(EquipmentSlot slot)
+    private void RecalculateStats()
     {
-        EquipmentItemData item = equipped[(int)slot];
-        return item != null ? item.defense : 0;
+        int defense = 0;
+        ElementType element = ElementType.None;
+        float keep = 1f;
+        float bonus = 0f;
+        float hunger = 1f;
+
+        foreach (EquipmentItemData item in equipped)
+        {
+            if (item == null) continue;
+            defense += item.defense;
+            if (element == ElementType.None) element = item.attackElement;
+            keep *= 1f - item.knockbackResistance;
+            bonus += item.knockbackBonus;
+            if (item.effects == null) continue;
+            foreach (EquipmentEffect effect in item.effects)
+            {
+                if (effect is HungerRateEffect rate) hunger *= rate.multiplier;
+            }
+        }
+        HungerRate = hunger;
+
+        Defense = defense;
+        AttackElement = element;
+        KnockbackResistance = 1f - keep;
+        KnockbackScale = 1f + bonus;
     }
 
     #region 피해 계산

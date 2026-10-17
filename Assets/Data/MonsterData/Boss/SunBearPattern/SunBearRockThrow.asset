@@ -32,7 +32,7 @@ MonoBehaviour:
     width: 0
     length: 0
   attack:
-    damage: 35
+    damage: 88
     knockbackDistance: 4
     impactStun: 0.8
     toolType: 0
@@ -40,6 +40,7 @@ MonoBehaviour:
     element: 0
     strike: 0
     isWeapon: 0
+    environmental: 0
   rockPrefab: {fileID: 6621876431101705771, guid: e011e3f0d8887814c8895b00e8c84887, type: 3}
   maxRocks: 3
   recover: 0.8

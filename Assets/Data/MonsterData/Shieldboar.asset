@@ -18,6 +18,7 @@ MonoBehaviour:
     \uB3CC\uC9C4\uC5D0 \uB9DE\uC73C\uBA74 \uBA40\uB9AC \uBC00\uB824\uB09C\uB2E4.
     \uB0A0\uAC1C\uB2E4\uB78C\uC950\uB97C \uC0AC\uB0E5\uD55C\uB2E4."
   portrait: {fileID: -1874664336, guid: 6e2b20fd95546194a9b6e25ce4b037ae, type: 3}
+  species: {fileID: 0}
   hostileTargets:
   - {fileID: 11400000, guid: ef0f350da93ecf941a6afe8a421b989a, type: 2}
   maxHealth: 50
@@ -33,10 +34,15 @@ MonoBehaviour:
   attackSpeed: 15
   attackDuration: 1.5
   attack:
-    damage: 10
+    damage: 25
     knockbackDistance: 8
+    impactStun: 0
     toolType: 0
     toolTier: 0
+    element: 0
+    strike: 0
+    isWeapon: 0
+    environmental: 0
   recoverDuration: 2
   knockbackResistance: 0
   superArmorWhileAttacking: 0

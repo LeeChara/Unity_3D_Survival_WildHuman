@@ -385,6 +385,7 @@ MonoBehaviour:
   hotbar: {fileID: 5485155978177760989}
   inventoryUI: {fileID: 0}
   bareHandDamage: 5
+  equipment: {fileID: 7580494285560551218}
   setting: {fileID: 11400000, guid: 8c27a9d0fd2c17f40bca2efabb119b4d, type: 2}
   inputBuffer: {fileID: 80440029918507675}
   playerMovement: {fileID: 4411395402821636930}
@@ -707,6 +708,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PlayerHeldLight
   hotbar: {fileID: 5485155978177760989}
   inventory: {fileID: 2004002038596902290}
+  equipment: {fileID: 7580494285560551218}
   heldLight: {fileID: 4267150792089683220}
 --- !u!114 &5508549548470309118
 MonoBehaviour:
@@ -1162,7 +1164,7 @@ MonoBehaviour:
     element: 0
     strike: 0
     isWeapon: 0
-    tier: 0
+    environmental: 0
 --- !u!1 &4765726116046431758
 GameObject:
   m_ObjectHideFlags: 0

@@ -1,6 +1,6 @@
 using UnityEngine;
 
-// 핫바에서 골라 손에 들고 있는 동안 플레이어 주변을 밝히는 도구 (빛은 PlayerHeldLight가 켜고 끔)
+// 핫바에서 골라 손에 들거나 유물 칸에 끼고 있는 동안 플레이어 주변을 밝히는 도구 (빛은 PlayerHeldLight가 켜고 끔)
 // 공격 수치와 손에 든 스프라이트는 일반 도구와 같이 사용
 [CreateAssetMenu(fileName = "LanternItemData", menuName = "Item/LanternItemData")]
 public class LanternItemData : ToolItemData

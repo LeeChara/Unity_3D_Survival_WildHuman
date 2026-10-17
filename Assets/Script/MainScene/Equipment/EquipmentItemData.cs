@@ -2,7 +2,7 @@ using System;
 using System.Text;
 using UnityEngine;
 
-// 장비 칸 종류 (PlayerEquipment의 칸 번호와 같은 순서)
+// 장비 칸 종류 (칸 번호와의 대응은 PlayerEquipment.SlotTypeOf)
 public enum EquipmentSlot
 {
     Head,
@@ -20,27 +20,33 @@ public struct ElementResist
 }
 
 // 플레이어가 머리·몸·유물 칸에 장착하는 아이템
-// 머리·몸은 방어력으로 받는 피해를 줄이고(EquipmentDefense), 유물은 방어 없이 특수효과만 가짐
+// 장착한 모든 장비의 방어력 합으로 받는 피해를 줄이고(EquipmentDefense), 부가 능력·특수효과를 더함
 [CreateAssetMenu(fileName = "EquipmentItemData", menuName = "Item/EquipmentItemData")]
 public class EquipmentItemData : ItemData
 {
     public EquipmentSlot slot;
 
-    [Tooltip("방어력 (머리·몸의 합을 공격 피해와 비교해 받는 피해 배율이 정해짐, 같으면 20%를 받음. 유물은 사용하지 않음)")]
+    [Tooltip("방어력 (장착한 모든 장비의 합을 공격 피해와 비교해 받는 피해 배율이 정해짐, 피해의 60%까지는 그만큼 빼고 그 뒤로는 점점 덜 줄어듦)")]
     [Min(0)] public int defense;
 
     [Tooltip("속성 피해 저항 (몬스터 공격·환경 피해·상태이상 지속 피해에 모두 적용)")]
     public ElementResist[] resists;
 
+    [Header("부가 능력")]
+    [Tooltip("공격 속성 (들고 있는 도구에 속성이 없을 때 공격에 실림)")]
+    public ElementType attackElement;
+    [Tooltip("받는 넉백 거리 감소 비율 (여러 장비는 곱으로 합쳐짐)")]
+    [Range(0f, 1f)] public float knockbackResistance;
+    [Tooltip("주는 넉백 거리 증가 비율 (여러 장비는 더해짐, 0.5 = 50% 증가)")]
+    [Min(0f)] public float knockbackBonus;
+
     [Tooltip("특수효과")]
     public EquipmentEffect[] effects;
-
-    public bool HasArmor => slot != EquipmentSlot.Relic;
 
     public override string GetStatText()
     {
         var sb = new StringBuilder(SlotName(slot));
-        if (HasArmor) sb.Append($"\n방어 {defense}");
+        if (defense > 0 || slot != EquipmentSlot.Relic) sb.Append($"\n방어 {defense}");
 
         if (resists != null)
         {
@@ -51,6 +57,11 @@ public class EquipmentItemData : ItemData
                 sb.Append($"\n{element} 저항 {Mathf.RoundToInt(resist.reduction * 100f)}%");
             }
         }
+
+        string attack = ToolItemData.ElementName(attackElement);
+        if (attack.Length > 0) sb.Append($"\n공격에 {attack} 속성");
+        if (knockbackResistance > 0f) sb.Append($"\n받는 넉백 {Mathf.RoundToInt(knockbackResistance * 100f)}% 감소");
+        if (knockbackBonus > 0f) sb.Append($"\n주는 넉백 {Mathf.RoundToInt(knockbackBonus * 100f)}% 증가");
 
         if (effects != null)
         {

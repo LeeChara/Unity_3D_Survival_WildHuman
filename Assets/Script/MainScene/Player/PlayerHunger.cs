@@ -15,6 +15,7 @@ public class PlayerHunger : MonoBehaviour, ISaveable
 
     private Health health;
     private PlayerMovement playerMovement;
+    private PlayerEquipment equipment;
     private float starveTimer;
     private float regenTimer;
 
@@ -30,6 +31,7 @@ public class PlayerHunger : MonoBehaviour, ISaveable
     {
         health = GetComponent<Health>();
         playerMovement = GetComponent<PlayerMovement>();
+        equipment = GetComponent<PlayerEquipment>();
 
         currentHunger = maxHunger;
     }
@@ -40,6 +42,7 @@ public class PlayerHunger : MonoBehaviour, ISaveable
 
         float decayPerSecond = maxHunger / Rule.timeToEmpty;
         if (playerMovement != null && playerMovement.IsSprinting) decayPerSecond *= Rule.sprintDecayMultiplier;
+        if (equipment != null) decayPerSecond *= equipment.HungerRate;
 
         SetHunger(currentHunger - decayPerSecond * Time.deltaTime);
 

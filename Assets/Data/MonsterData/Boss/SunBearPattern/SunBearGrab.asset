@@ -31,9 +31,9 @@ MonoBehaviour:
   holdDistance: 2
   holdDuration: 1.75
   tickInterval: 0.25
-  tickDamage: 8
+  tickDamage: 20
   throwAttack:
-    damage: 15
+    damage: 38
     knockbackDistance: 8
     impactStun: 0.8
     toolType: 0
@@ -41,5 +41,6 @@ MonoBehaviour:
     element: 0
     strike: 0
     isWeapon: 0
+    environmental: 0
   recover: 0.8
   missRecover: 1.2

@@ -16,6 +16,8 @@ public class InventorySlotUI : MonoBehaviour, IBeginDragHandler, IDragHandler, I
     [SerializeField] private TMP_Text[] countOutlines;
     [Tooltip("마우스를 올리면 아이템 정보 표시 (드래그 미리보기 칸은 비워 둠)")]
     [SerializeField] private ItemTooltipTrigger tooltip;
+    [Tooltip("칸이 비어 있을 때 가운데에 표시할 칸 종류 아이콘 (예: 장비 칸의 투구 모양, 비워두면 없음)")]
+    [SerializeField] private Image emptyIcon;
 
     private InventoryUI owner;
 
@@ -36,6 +38,7 @@ public class InventorySlotUI : MonoBehaviour, IBeginDragHandler, IDragHandler, I
 
         icon.enabled = hasItem;
         icon.sprite = hasItem ? stack.item.icon : null;
+        if (emptyIcon != null) emptyIcon.enabled = !hasItem;
 
         // 1개일 때는 개수를 표시하지 않음
         string count = hasItem && stack.count > 1 ? stack.count.ToString() : string.Empty;

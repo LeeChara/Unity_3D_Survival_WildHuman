@@ -19,6 +19,7 @@ MonoBehaviour:
   maxRange: 5.5
   cooldown: 4
   weight: 2
+  invulnerable: 0
   shape:
     kind: 0
     radius: 6
@@ -28,7 +29,7 @@ MonoBehaviour:
     length: 0
   windup: 1.2
   attack:
-    damage: 30
+    damage: 75
     knockbackDistance: 6
     impactStun: 0.8
     toolType: 0
@@ -36,6 +37,7 @@ MonoBehaviour:
     element: 0
     strike: 0
     isWeapon: 0
+    environmental: 0
   followUpShape:
     kind: 2
     radius: 10
@@ -45,7 +47,7 @@ MonoBehaviour:
     length: 0
   followUpWindup: 0.6
   followUpAttack:
-    damage: 20
+    damage: 50
     knockbackDistance: 3
     impactStun: 0
     toolType: 0
@@ -53,4 +55,5 @@ MonoBehaviour:
     element: 0
     strike: 0
     isWeapon: 0
+    environmental: 0
   recover: 1.2

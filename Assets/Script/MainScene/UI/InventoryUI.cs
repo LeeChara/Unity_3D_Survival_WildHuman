@@ -14,7 +14,7 @@ public class InventoryUI : MonoBehaviour, IScrollHandler
     [Tooltip("인벤토리 슬롯 순서와 같게 배치 (0~9 핫바, 10~39 가방)")]
     [SerializeField] private InventorySlotUI[] slotUIs;
     [SerializeField] private PlayerEquipment equipment;
-    [Tooltip("장비 칸 순서와 같게 배치 (0 머리, 1 몸, 2 유물). 장비 패널도 inventoryAreas에 넣어야 놓을 때 던지지 않음")]
+    [Tooltip("장비 칸 순서와 같게 배치 (0 머리, 1 몸, 2~4 유물). 장비 패널도 inventoryAreas에 넣어야 놓을 때 던지지 않음")]
     [SerializeField] private InventorySlotUI[] equipmentSlotUIs;
     [Tooltip("선택된 핫바 칸으로 옮겨 다니는 강조 표시 (아이콘 뒤에 그려짐)")]
     [SerializeField] private RectTransform selectionHighlight;
@@ -320,7 +320,7 @@ public class InventoryUI : MonoBehaviour, IScrollHandler
         }
         else if (External == null && slot.Container.Get(slot.Index).item is EquipmentItemData gear)
         {
-            SlotTransfer.Move(inventory, slot.Index, equipment, (int)gear.slot, 1);
+            SlotTransfer.Move(inventory, slot.Index, equipment, equipment.SlotIndexFor(gear), 1);
         }
         else if (External != null)
         {

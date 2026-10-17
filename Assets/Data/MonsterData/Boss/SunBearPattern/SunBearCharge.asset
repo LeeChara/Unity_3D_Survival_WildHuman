@@ -31,7 +31,7 @@ MonoBehaviour:
   speed: 16
   hitRadius: 2.5
   attack:
-    damage: 25
+    damage: 62
     knockbackDistance: 5
     impactStun: 0.8
     toolType: 0
@@ -39,7 +39,10 @@ MonoBehaviour:
     element: 0
     strike: 0
     isWeapon: 0
+    environmental: 0
   blockLayers:
     serializedVersion: 2
     m_Bits: 3328
+  trailSpacing: 1.5
+  trailLifetime: 6
   recover: 1.2
