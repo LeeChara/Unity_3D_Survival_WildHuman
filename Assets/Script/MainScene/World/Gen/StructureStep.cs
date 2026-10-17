@@ -4,7 +4,9 @@ using UnityEngine;
 // 월드 구조물을 배치하는 단계 (시작 지점 단계 뒤, 맨 마지막에 둘 것)
 // 경계 안 맵 전체가 채워진 뒤(GenerateMap) 한 번만 정해서 저장 (경계 밖에는 생기지 않음)
 // 1. 후보점: 맵 전체에 서로 candidateSpacing 이상 떨어진 점을 고르게 채움 (Poisson disk) → 몰림·빈 지역이 없음
+//    기준점(BiomeStep anchor)을 쓰는 종류가 있으면 그 기준점을 먼저 후보로 넣고 나머지를 채움
 // 2. 배정: 우선순위가 높은 종류부터 조건(시작 지점과의 거리 띠, 바이옴, 같은 종류 간격, 용암)에 맞는 후보를 차지
+//    기준점이 있는 종류는 기준점 반경 안에서 가장 가까운 후보부터 차지
 //    발견 보장(guaranteeNear)이면 시작 지점 근처 띠에서 하나를 먼저 놓고, 자리가 모자라면 조건을 단계적으로 완화
 // 3. 놓인 구조물 반경 안의 자원은 지움 (용암 호수는 피하므로 지워지지 않음)
 [CreateAssetMenu(fileName = "StructureStep", menuName = "World/Gen/StructureStep")]
@@ -21,6 +23,8 @@ public class StructureStep : WorldGenStep
     [SerializeField, Min(0f)] private float borderMargin = 20f;
     [Tooltip("시작 지점과 구조물 가장자리 사이 최소 거리 (m, 모든 종류 공통)")]
     [SerializeField, Min(0f)] private float spawnClearance = 60f;
+    [Tooltip("구조물 기준점(anchor)을 계산하는 바이옴 단계")]
+    [SerializeField] private BiomeStep biomeStep;
 
     private class Placement
     {
@@ -54,7 +58,22 @@ public class StructureStep : WorldGenStep
         Vector3 spawn = new(ctx.map.spawnX, 0f, ctx.map.spawnZ);
         float areaScale = Mathf.Max(1f, ctx.map.width * ctx.map.height / (float)BaseMapChunks);
 
-        List<Vector3> candidates = PoissonCandidates(ctx, prng);
+        // 기준점 (예전 월드이거나 없는 id면 기준점 없이 배치)
+        var anchors = new Dictionary<WorldStructureData, Vector3>();
+        var seeds = new List<Vector3>();
+        foreach (var data in types)
+        {
+            if (string.IsNullOrEmpty(data.anchor) || biomeStep == null) continue;
+            if (!biomeStep.TryGetAnchor(ctx, data.anchor, out Vector3 anchor))
+            {
+                Debug.LogWarning($"[StructureStep] '{data.id}'의 기준점 '{data.anchor}'이 BiomeStep에 없음");
+                continue;
+            }
+            anchors[data] = anchor;
+            if (IsInsideMap(ctx, anchor, data.radius + borderMargin)) seeds.Add(anchor);
+        }
+
+        List<Vector3> candidates = PoissonCandidates(ctx, prng, seeds);
         var used = new bool[candidates.Count];
         float maxRadius = 0f;
         foreach (var data in types) maxRadius = Mathf.Max(maxRadius, data.radius);
@@ -67,22 +86,23 @@ public class StructureStep : WorldGenStep
 
         foreach (var data in types)
         {
-            int target = RollCount(prng, data, areaScale);
+            int target = RollCount(prng, data, data.scaleCountWithMap ? areaScale : 1f);
             int placed = 0;
+            Vector3? anchor = anchors.TryGetValue(data, out Vector3 found) ? found : null;
 
             if (data.guaranteeNear && target > 0)
             {
                 // 보장 띠에서도 완화 단계를 거치며 찾음 (띠 자체는 지킴)
                 for (int relax = 0; relax < RelaxLevels - 1 && placed == 0; relax++)
                 {
-                    if (TryAssign(ctx, prng, data, candidates, used, placements, spawn, data.nearBand, relax)) placed++;
+                    if (TryAssign(ctx, prng, data, candidates, used, placements, spawn, data.nearBand, relax, anchor)) placed++;
                 }
             }
 
             for (int relax = 0; relax < RelaxLevels && placed < target; relax++)
             {
                 Vector2 band = relax >= 2 ? Vector2.zero : data.distanceBand;
-                while (placed < target && TryAssign(ctx, prng, data, candidates, used, placements, spawn, band, relax)) placed++;
+                while (placed < target && TryAssign(ctx, prng, data, candidates, used, placements, spawn, band, relax, anchor)) placed++;
             }
 
             if (placed < target) Debug.Log($"[StructureStep] '{data.id}' {target}개 중 {placed}개만 배치 (조건에 맞는 자리 부족)");
@@ -109,9 +129,9 @@ public class StructureStep : WorldGenStep
         return prng.Next(min, max + 1);
     }
 
-    // 조건에 맞는 후보 중 하나를 무작위로 차지
+    // 조건에 맞는 후보 중 하나를 차지 (기준점이 있으면 가장 가까운 것, 없으면 무작위)
     private bool TryAssign(WorldGenContext ctx, System.Random prng, WorldStructureData data, List<Vector3> candidates,
-        bool[] used, List<Placement> placements, Vector3 spawn, Vector2 band, int relax)
+        bool[] used, List<Placement> placements, Vector3 spawn, Vector2 band, int relax, Vector3? anchor)
     {
         float sameSpacing = relax >= 1 ? data.sameTypeSpacing * 0.5f : data.sameTypeSpacing;
 
@@ -123,6 +143,7 @@ public class StructureStep : WorldGenStep
 
             float distance = Vector3.Distance(position, spawn);
             if (distance < band.x || (band.y > 0f && distance > band.y)) continue;
+            if (anchor != null && (position - anchor.Value).sqrMagnitude > data.anchorRadius * data.anchorRadius) continue;
             if (lakeClearance[i] < data.radius) continue;
             if (!IsFreeSpot(ctx, data, position, placements, sameSpacing)) continue;
             eligible.Add(i);
@@ -130,6 +151,13 @@ public class StructureStep : WorldGenStep
         if (eligible.Count == 0) return false;
 
         int chosen = eligible[prng.Next(eligible.Count)];
+        if (anchor != null)
+        {
+            foreach (int i in eligible)
+            {
+                if ((candidates[i] - anchor.Value).sqrMagnitude < (candidates[chosen] - anchor.Value).sqrMagnitude) chosen = i;
+            }
+        }
         used[chosen] = true;
         placements.Add(new Placement { data = data, position = candidates[chosen] });
         return true;
@@ -194,7 +222,8 @@ public class StructureStep : WorldGenStep
     }
 
     // 맵 전체를 서로 candidateSpacing 이상 떨어진 점으로 고르게 채움 (Bridson의 Poisson disk 샘플링)
-    private List<Vector3> PoissonCandidates(WorldGenContext ctx, System.Random prng)
+    // seeds(월드 좌표)를 먼저 넣고 시작 (서로 너무 가까운 것은 뒤의 것을 버림)
+    private List<Vector3> PoissonCandidates(WorldGenContext ctx, System.Random prng, List<Vector3> seeds)
     {
         Vector2Int minCoord = ctx.map.MinCoord();
         float originX = minCoord.x * ctx.ChunkSize, originZ = minCoord.y * ctx.ChunkSize;
@@ -231,7 +260,12 @@ public class StructureStep : WorldGenStep
             return true;
         }
 
-        Add(new Vector2((float)prng.NextDouble() * width, (float)prng.NextDouble() * height));
+        foreach (Vector3 seed in seeds)
+        {
+            var point = new Vector2(seed.x - originX, seed.z - originZ);
+            if (Fits(point)) Add(point);
+        }
+        if (points.Count == 0) Add(new Vector2((float)prng.NextDouble() * width, (float)prng.NextDouble() * height));
         while (active.Count > 0)
         {
             int slot = prng.Next(active.Count);

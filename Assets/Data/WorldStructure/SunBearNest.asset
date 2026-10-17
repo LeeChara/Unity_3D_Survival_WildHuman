@@ -16,12 +16,18 @@ MonoBehaviour:
   prefab: {fileID: 135020652329522941, guid: c54b40f14404d8e47ad02d078c196423, type: 3}
   enabled: 1
   radius: 26
-  biomes: []
+  biomes:
+  - {fileID: 11400000, guid: c21e4b334491fea4b9ddfe5771ab5cc7, type: 2}
+  - {fileID: 11400000, guid: de70995c3d76c41469ddc8e6249f9337, type: 2}
+  - {fileID: 11400000, guid: 033b66f39a6f6144fa742b01e0d952fc, type: 2}
   randomRotation: 1
   mapColor: {r: 1, g: 0.55, b: 0.15, a: 1}
   priority: 10
-  count: {x: 1, y: 2}
-  distanceBand: {x: 500, y: 0}
+  count: {x: 1, y: 1}
+  scaleCountWithMap: 0
+  distanceBand: {x: 0, y: 0}
   sameTypeSpacing: 600
-  guaranteeNear: 1
+  anchor: boss_south
+  anchorRadius: 600
+  guaranteeNear: 0
   nearBand: {x: 450, y: 700}

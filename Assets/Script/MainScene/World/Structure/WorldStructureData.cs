@@ -30,10 +30,18 @@ public class WorldStructureData : ScriptableObject
     public int priority;
     [Tooltip("작은 맵(16×16 청크) 기준 개수 범위. 맵이 크면 범위가 넓이에 비례해서 늘어난 뒤 그 안에서 고름")]
     public Vector2Int count = new(1, 2);
+    [Tooltip("켜면 맵이 커질수록 개수 범위를 넓이에 비례해서 늘림 (끄면 맵 크기와 관계없이 count 그대로)")]
+    public bool scaleCountWithMap = true;
     [Tooltip("시작 지점에서의 거리 범위 (m). y가 0이면 상한 없음")]
     public Vector2 distanceBand = new(0f, 0f);
     [Tooltip("같은 종류끼리 최소 거리 (중심 기준, m)")]
     [Min(0f)] public float sameTypeSpacing = 400f;
+
+    [Header("기준점")]
+    [Tooltip("BiomeStep 기준점 id (비우면 사용 안 함). 정하면 기준점에 가장 가까운 자리부터 차지하고, anchorRadius 밖에는 놓지 않음")]
+    public string anchor;
+    [Tooltip("기준점에서 벗어날 수 있는 최대 거리 (m)")]
+    [Min(0f)] public float anchorRadius = 400f;
 
     [Header("발견 보장")]
     [Tooltip("시작 지점 근처 거리 띠(nearBand) 안에 최소 하나를 먼저 놓음")]

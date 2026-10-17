@@ -8,6 +8,8 @@ public class WorldGenContext
     public readonly WorldGenConfig config;
     public readonly int seed;
     public readonly MapData map;
+    // 이 월드를 만든 생성 로직 버전 (예전 월드는 경계 밖도 예전 방식으로 생성)
+    public readonly int genVersion;
 
     private readonly Dictionary<string, BiomeData> biomesById = new();
     private readonly Dictionary<string, GameObject> propsById = new();
@@ -19,11 +21,12 @@ public class WorldGenContext
     public float ChunkSize => config.grid.chunkSize;
     public BiomeDatabase Biomes => config.biomeDatabase;
 
-    public WorldGenContext(WorldGenConfig config, int seed, MapData map)
+    public WorldGenContext(WorldGenConfig config, int seed, MapData map, int genVersion)
     {
         this.config = config;
         this.seed = seed;
         this.map = map;
+        this.genVersion = genVersion;
 
         foreach (var biome in config.biomeDatabase.biomes)
         {

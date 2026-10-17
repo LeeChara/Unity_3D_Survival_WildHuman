@@ -13,4 +13,48 @@ MonoBehaviour:
   m_Name: BiomeStep
   m_EditorClassIdentifier: Assembly-CSharp::BiomeStep
   key: 
+  layoutSinceVersion: 3
+  regions:
+  - biome: {fileID: 11400000, guid: bd9ab688d73694f43856b0a5a477a455, type: 2}
+    positions:
+    - {x: 0, y: 0}
+    sameSpotAs: 3
+    radius: 0.2
+    minRadiusChunks: 2
+  - biome: {fileID: 11400000, guid: c21e4b334491fea4b9ddfe5771ab5cc7, type: 2}
+    positions:
+    - {x: 0, y: 0}
+    sameSpotAs: -1
+    radius: 0.28
+    minRadiusChunks: 2.5
+  - biome: {fileID: 11400000, guid: de70995c3d76c41469ddc8e6249f9337, type: 2}
+    positions:
+    - {x: 0, y: 0.66}
+    sameSpotAs: -1
+    radius: 0.5
+    minRadiusChunks: 3.5
+  - biome: {fileID: 11400000, guid: 033b66f39a6f6144fa742b01e0d952fc, type: 2}
+    positions:
+    - {x: 0.66, y: 0}
+    - {x: -0.66, y: 0}
+    - {x: 0, y: -0.66}
+    sameSpotAs: -1
+    radius: 0.42
+    minRadiusChunks: 3.5
+  randomRotation: 1
+  edgeWarp: 0.12
+  edgeNoiseScale: 0.15
+  smallBiomes:
+  - biome: {fileID: 11400000, guid: c21e4b334491fea4b9ddfe5771ab5cc7, type: 2}
+    weight: 1.2
+  - biome: {fileID: 11400000, guid: de70995c3d76c41469ddc8e6249f9337, type: 2}
+    weight: 1
+  - biome: {fileID: 11400000, guid: 033b66f39a6f6144fa742b01e0d952fc, type: 2}
+    weight: 1
+  - biome: {fileID: 11400000, guid: bd9ab688d73694f43856b0a5a477a455, type: 2}
+    weight: 0.4
+  cellChunks: 3
+  anchors:
+  - id: boss_south
+    position: {x: 0, y: -0.72}
   noiseScale: 0.1

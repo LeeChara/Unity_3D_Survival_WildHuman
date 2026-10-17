@@ -15,3 +15,4 @@ MonoBehaviour:
   key: 
   placementAttempts: 60
   borderMargin: 20
+  biomeStep: {fileID: 11400000, guid: ee22d2c4376c7ab4195e1ed507c105c7, type: 2}

@@ -10,7 +10,7 @@ public static class WorldGenerator
 
         int size = config.GetMapSize(settings.mapSize).chunks;
         MapData map = MapData.Create(size, size);
-        var ctx = new WorldGenContext(config, settings.seed, map);
+        var ctx = new WorldGenContext(config, settings.seed, map, config.genVersion);
 
         // 청크 단계: 청크마다 모든 단계를 순서대로 (각 청크는 자기 난수만 쓰므로 순서와 무관하게 같은 결과)
         int propCount = 0;

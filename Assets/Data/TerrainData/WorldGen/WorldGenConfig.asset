@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d530d22e9eb98a94db4cfc99e1177709, type: 3}
   m_Name: WorldGenConfig
   m_EditorClassIdentifier: Assembly-CSharp::WorldGenConfig
-  genVersion: 2
+  genVersion: 3
   biomeDatabase: {fileID: 11400000, guid: 76cdb14d1d30bec4d86cb2fc0be9d2f6, type: 2}
   grid: {fileID: 11400000, guid: 7ac0c01c2e66ea24e894c03af32eeafa, type: 2}
   structureDatabase: {fileID: 11400000, guid: 16de455b376c5fb419918ccfa2a647d5, type: 2}

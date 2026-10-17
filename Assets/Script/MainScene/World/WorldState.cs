@@ -49,7 +49,8 @@ public class WorldState : MonoBehaviour
             Map = WorldGenerator.Generate(config, Settings);
         }
 
-        context = new WorldGenContext(config, Settings.seed, Map);
+        int genVersion = WorldSession.HasWorld ? WorldSession.Meta.genVersion : config.genVersion;
+        context = new WorldGenContext(config, Settings.seed, Map, genVersion);
     }
 
     private void OnEnable()
