@@ -12,6 +12,7 @@ public class PlayerAttack : MonoBehaviour
     [SerializeField] private Facing playerFacing;
     [SerializeField] private Transform attackPivot; // Hitbox(및 추후 검기 이펙트)를 클릭 방향으로 회전시키는 피벗
     [SerializeField] private PlayerHotbar hotbar; // 선택한 도구를 공격에 반영
+    [SerializeField] private InventoryUI inventoryUI; // 아이템을 들고 있을 때의 월드 클릭은 던지기이므로 공격하지 않음
     [SerializeField] private int bareHandDamage = 5; // 도구가 아닌 아이템을 들었거나 빈 손일 때의 피해량
 
     [Tooltip("공격 타이밍·쿨다운·캔슬 구간")]
@@ -24,6 +25,10 @@ public class PlayerAttack : MonoBehaviour
     private Vector3 cameraForwardFlat;
 
     private Vector2 pointerScreenPos;
+
+    // 누르고 있으면 공격 가능해지는 순간마다 자동으로 다음 공격 (SendMessages는 누른 순간에만 OnAttack을 보내므로 직접 확인)
+    private InputAction attackAction;
+    private bool holdAttack; // UI 밖에서 누르기 시작했을 때만 켜짐 (UI 드래그 중 공격 방지)
 
     private enum AttackPhase { None, Windup, Attack, Recover }
     private AttackPhase attackPhase = AttackPhase.None;
@@ -56,6 +61,12 @@ public class PlayerAttack : MonoBehaviour
             hitboxBaseCenter = hitboxBox.center;
         }
         hitboxObject.SetActive(false);
+
+        PlayerInput playerInput = GetComponentInParent<PlayerInput>();
+        if (playerInput != null)
+        {
+            attackAction = playerInput.actions.FindAction("Attack");
+        }
 
         Quaternion cameraRotation = Quaternion.Euler(0, cameraYAngle, 0);
         cameraRight = cameraRotation * Vector3.right;
@@ -106,6 +117,21 @@ public class PlayerAttack : MonoBehaviour
             inputBuffer.Clear();
             StartAttack();
             return;
+        }
+
+        // 공격 버튼을 누르고 있는 동안에는 공격할 수 있게 되는 순간 다음 공격을 실행
+        if (holdAttack)
+        {
+            if (attackAction == null || !attackAction.IsPressed())
+            {
+                holdAttack = false;
+            }
+            else if (CanStartAttack() && !PointerUtil.IsOverUI(pointerScreenPos))
+            {
+                inputBuffer.Clear();
+                StartAttack();
+                return;
+            }
         }
 
         // Attack일 때만 실행 (다른 클래스와 배타적)
@@ -170,6 +196,8 @@ public class PlayerAttack : MonoBehaviour
     {
         // UI(인벤토리 칸 등) 위를 클릭한 경우 무시
         if (PointerUtil.IsOverUI(pointerScreenPos)) return;
+        if (inventoryUI != null && inventoryUI.IsHoldingItem) return;
+        holdAttack = true;
         // 지금 공격할 수 없으면(회피·넉백·공격 중 등) 선입력으로 기억해 두고 Update에서 실행
         if (!CanStartAttack())
         {

@@ -14,6 +14,10 @@ public class BiomeData : ScriptableObject
     public float tilingScale = 1f;
     public float blendRange = 1f;
 
+    [Header("지도")]
+    [Tooltip("지도·미니맵에 칠할 색")]
+    public Color mapColor = new Color(0.4f, 0.55f, 0.3f);
+
     [Header("바이옴 판정 임계값")]
     [Range(0f, 1f)] public float minThreshold;
     [Range(0f, 1f)] public float maxThreshold;

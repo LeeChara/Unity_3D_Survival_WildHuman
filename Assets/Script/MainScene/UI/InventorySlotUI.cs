@@ -5,9 +5,10 @@ using UnityEngine.InputSystem;
 using UnityEngine.UI;
 
 // 인벤토리 한 칸의 표시 (아이콘 + 개수)
-// 마우스 드래그·Shift+클릭 이벤트는 받아서 InventoryUI에 자기 자신(칸 묶음 + 칸 번호)과 함께 넘기기만 함
+// 마우스 드래그·클릭·올림 이벤트는 받아서 InventoryUI에 자기 자신(칸 묶음 + 칸 번호)과 함께 넘기기만 함
 // 이벤트를 받으려면 루트에 Raycast Target이 켜진 Graphic(투명 Image)이 있어야 함
-public class InventorySlotUI : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler, IDropHandler, IPointerClickHandler
+public class InventorySlotUI : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler, IDropHandler,
+    IPointerClickHandler, IPointerEnterHandler, IPointerExitHandler
 {
     [SerializeField] private Image icon;
     [SerializeField] private TMP_Text countText;
@@ -59,10 +60,28 @@ public class InventorySlotUI : MonoBehaviour, IBeginDragHandler, IDragHandler, I
     public void OnDrop(PointerEventData eventData) => owner.Drop(this, eventData);
 
     // Shift+좌클릭: 묶음 전체를 반대편(재련기 ↔ 인벤토리, 또는 핫바 ↔ 가방)으로 옮김
+    // 그 외 좌·우클릭: 커서에 들거나, 들고 있던 아이템을 이 칸에 놓음
     public void OnPointerClick(PointerEventData eventData)
     {
-        if (eventData.button != PointerEventData.InputButton.Left || owner == null) return;
-        if (Keyboard.current == null || !Keyboard.current.shiftKey.isPressed) return;
-        owner.QuickMove(this);
+        if (owner == null) return;
+
+        bool shift = Keyboard.current != null && Keyboard.current.shiftKey.isPressed;
+        if (shift && eventData.button == PointerEventData.InputButton.Left)
+        {
+            owner.QuickMove(this);
+            return;
+        }
+        owner.Click(this, eventData);
+    }
+
+    // 숫자키로 핫바에 옮길 칸을 알기 위해 마우스가 올라간 칸을 알림
+    public void OnPointerEnter(PointerEventData eventData)
+    {
+        if (owner != null) owner.SetHovered(this);
+    }
+
+    public void OnPointerExit(PointerEventData eventData)
+    {
+        if (owner != null) owner.ClearHovered(this);
     }
 }

@@ -13,6 +13,8 @@ MonoBehaviour:
   m_Name: CodexDatabase
   m_EditorClassIdentifier: Assembly-CSharp::CodexDatabase
   items:
+  - {fileID: 11400000, guid: 256b000eac938134b9858dd9fc0332ae, type: 2}
+  - {fileID: 11400000, guid: e5d2bf8128bd87d4481c168b097373f8, type: 2}
   - {fileID: 11400000, guid: 2a6cd0d6fd44a5b439222b1730b9fc7f, type: 2}
   - {fileID: 11400000, guid: 94cb79e2408d3d248b1efca9f7d3600b, type: 2}
   - {fileID: 11400000, guid: 731a55263738a544a962dcfeeda3ff4f, type: 2}
@@ -28,6 +30,10 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 6695b7eb42a75104c928dfa8f9c9a77d, type: 2}
   - {fileID: 11400000, guid: 63df4c0f8fc8739468fdde4c0cf1ea10, type: 2}
   - {fileID: 11400000, guid: 55d352c4ae168d342ab579a95211a7c2, type: 2}
+  - {fileID: 11400000, guid: 95b6aaf6598f78740af3d1ace66bac0c, type: 2}
+  - {fileID: 11400000, guid: f1f6b01cf7126614d8fae53e548815ac, type: 2}
+  - {fileID: 11400000, guid: acab2562c4496164395dc00d2a40766e, type: 2}
+  - {fileID: 11400000, guid: e712b270331b6cc44b6accd86135c658, type: 2}
   - {fileID: 11400000, guid: 858a09fa2cbff0143a2cf57d65642062, type: 2}
   - {fileID: 11400000, guid: 80a3634aaf41aec4c976d2359ad50b31, type: 2}
   - {fileID: 11400000, guid: 2fcf5a8a8a799eb44b5b1284c5f2780d, type: 2}
@@ -41,6 +47,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 11aa11476e1c33643b48dd86b3cc8eb5, type: 2}
   - {fileID: 11400000, guid: b3462f24e611a834d9b53b02d8979c00, type: 2}
   - {fileID: 11400000, guid: dfc0e7eda5184804999121623d9f541f, type: 2}
+  - {fileID: 11400000, guid: a0619cba904dd8342b34112e35d6fda7, type: 2}
   - {fileID: 11400000, guid: fd70b53152413f847aa8ed27128e3157, type: 2}
   - {fileID: 11400000, guid: e18d36fd361d3fc41be180bf82807a41, type: 2}
   - {fileID: 11400000, guid: d70a2825f3d4c3c41af45d4fdb09f2c0, type: 2}
@@ -48,6 +55,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 76b2af717ed051443bd913f83a6d097f, type: 2}
   - {fileID: 11400000, guid: 577adca4625181a40b15aff8dfbb94cf, type: 2}
   - {fileID: 11400000, guid: 9365385851806b546bef0a7daa2386f7, type: 2}
+  - {fileID: 11400000, guid: d498f1e5cc69d094b858900883d324ab, type: 2}
   - {fileID: 11400000, guid: 0c75b1c16bcae44499fcbd60ef23dd40, type: 2}
   - {fileID: 11400000, guid: d2b3dbc074b83214fba9d1c8ecbbfc62, type: 2}
   recipeBook: {fileID: 11400000, guid: c741f133a292f544eb7aa3ce5a9f1043, type: 2}
@@ -56,6 +64,7 @@ MonoBehaviour:
   smeltingBooks:
   - {fileID: 11400000, guid: f6c10ce3202494645b6510b3cf9bc2d7, type: 2}
   props:
+  - {fileID: 787357670917811557, guid: 8ce0fb361fc491541a5ef95c47c4e1cd, type: 3}
   - {fileID: 2320462754870765523, guid: cb16ea17beeef31479bf316d75cfdd88, type: 3}
   - {fileID: 2320462754870765523, guid: 4c4014153208cd94cb554beb3d6f6fed, type: 3}
   - {fileID: 787357670917811557, guid: 1ffa00c871a33dc49ab70d1d57ae92d7, type: 3}
@@ -73,8 +82,10 @@ MonoBehaviour:
   - {fileID: 130948604810500206, guid: d47cc962029623345ace33151b91c3e6, type: 3}
   - {fileID: 130948604810500206, guid: 4de173c17ba48be47a09857dfaf8acd5, type: 3}
   - {fileID: 3003109801364211945, guid: f7811efd78c238441bee6c4c5f8e113a, type: 3}
+  - {fileID: 2445530808771038101, guid: d5d47844052150f459bdb67e791ba9f5, type: 3}
   monsters:
   - {fileID: 2855152217180434087, guid: e2b8e5632850d34498a808e34d60eef5, type: 3}
+  - {fileID: 6053830818568069316, guid: 33db179f4a32a4548b743030979ed268, type: 3}
   - {fileID: 5223719300316381313, guid: 7796c72efd61e79468c0267d6f3492fb, type: 3}
   - {fileID: 909642921054426830, guid: 2d811b3e2425f154caf93e94ce34eb93, type: 3}
   - {fileID: 8212119383527421846, guid: b7c2edd5481861741a49adfa724df037, type: 3}

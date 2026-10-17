@@ -18,6 +18,7 @@ MonoBehaviour:
   radius: 11
   biomes: []
   randomRotation: 0
+  mapColor: {r: 0.75, g: 0.85, b: 1, a: 1}
   priority: 0
   count: {x: 3, y: 5}
   distanceBand: {x: 0, y: 0}

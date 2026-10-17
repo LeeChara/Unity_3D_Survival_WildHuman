@@ -1,6 +1,7 @@
 using System;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.InputSystem;
 
 // 같은 Canvas의 UI 위에서 굴린 휠은 부모를 타고 올라와 여기(IScrollHandler)로 들어옴
 public class InventoryUI : MonoBehaviour, IScrollHandler
@@ -31,12 +32,20 @@ public class InventoryUI : MonoBehaviour, IScrollHandler
     public event Action ExternalChanged;
     private RectTransform externalArea;
 
-    // 드래그 중인 칸 묶음·칸 번호 (-1이면 드래그 중 아님)와 들고 있는 개수
+    // 들고 있는 칸 묶음·칸 번호 (-1이면 들고 있지 않음)와 들고 있는 개수
+    // 드래그로 들었는지, 클릭으로 커서에 들었는지(heldByClick)에 따라 놓는 방식만 다름
     private ISlotContainer dragContainer;
     private int dragFrom = -1;
     private int dragAmount;
     private bool droppedOnSlot;
+    private bool heldByClick;
     private readonly ItemStack previewStack = new();
+
+    // 마우스가 올라가 있는 칸 (숫자키로 핫바에 옮길 때, 클릭이 칸 밖인지 확인할 때 사용)
+    private InventorySlotUI hovered;
+
+    // 드래그 또는 클릭으로 아이템을 들고 있음 (이때 월드 클릭은 공격 대신 던지기)
+    public bool IsHoldingItem => dragFrom >= 0;
 
     private void Awake()
     {
@@ -72,6 +81,24 @@ public class InventoryUI : MonoBehaviour, IScrollHandler
         MoveHighlight(hotbar.SelectedIndex);
     }
 
+    // 클릭으로 든 아이템은 드래그 이벤트가 없으므로 직접 커서를 따라가게 하고, 칸 밖 클릭을 처리
+    // 칸 위 클릭은 그 칸의 OnPointerClick이 처리하므로 여기서는 칸 밖일 때만 처리
+    private void Update()
+    {
+        if (!heldByClick || Pointer.current == null) return;
+
+        Vector2 pointerPos = Pointer.current.position.ReadValue();
+        dragPreview.transform.position = pointerPos;
+
+        if (Mouse.current == null) return;
+        bool released = Mouse.current.leftButton.wasReleasedThisFrame || Mouse.current.rightButton.wasReleasedThisFrame;
+        if (!released || IsHoveringSlot()) return;
+
+        // 인벤토리 영역 밖이면 들고 있던 만큼 던지고, 안쪽 빈 곳이면 내려놓기 취소
+        if (!IsOverInventoryArea(pointerPos)) ThrowHeld(pointerPos);
+        CancelDrag();
+    }
+
     public void Toggle()
     {
         SetOpen(!IsOpen);
@@ -80,7 +107,11 @@ public class InventoryUI : MonoBehaviour, IScrollHandler
     public void SetOpen(bool open)
     {
         // 가방 칸을 드래그하던 중 닫히면 칸이 비활성화되어 EndDrag가 오지 않으므로 직접 취소
-        if (!open) CancelDrag();
+        if (!open)
+        {
+            CancelDrag();
+            hovered = null;
+        }
 
         IsOpen = open;
         panel.SetActive(open);
@@ -122,17 +153,51 @@ public class InventoryUI : MonoBehaviour, IScrollHandler
         bool validButton = eventData.button == PointerEventData.InputButton.Left
             || eventData.button == PointerEventData.InputButton.Right;
 
-        if (stack == null || stack.IsEmpty || !validButton)
+        // 클릭으로 이미 들고 있으면 드래그는 시작하지 않음 (놓는 것은 클릭으로 처리)
+        if (stack == null || stack.IsEmpty || !validButton || dragFrom >= 0)
         {
             // 드래그 자체를 취소해 Drag·Drop·EndDrag가 오지 않게 함
             eventData.pointerDrag = null;
             return;
         }
 
+        PickUp(slot, stack, eventData.button, eventData.position, false);
+    }
+
+    // 클릭: 들고 있지 않으면 커서에 들고, 들고 있으면 이 칸에 놓음 (원래 칸이면 내려놓기 취소)
+    // 드래그를 원래 칸에서 놓아도 클릭이 먼저 오므로, 드래그로 든 경우는 무시하고 EndDrag에 맡김
+    public void Click(InventorySlotUI slot, PointerEventData eventData)
+    {
+        if (!IsOpen || slot.Container == null) return;
+
+        if (dragFrom < 0)
+        {
+            ItemStack stack = slot.Container.Get(slot.Index);
+            bool validButton = eventData.button == PointerEventData.InputButton.Left
+                || eventData.button == PointerEventData.InputButton.Right;
+            if (stack.IsEmpty || !validButton) return;
+
+            PickUp(slot, stack, eventData.button, eventData.position, true);
+            return;
+        }
+
+        if (!heldByClick) return;
+
+        if (slot.Container != dragContainer || slot.Index != dragFrom)
+        {
+            SlotTransfer.Move(dragContainer, dragFrom, slot.Container, slot.Index, dragAmount);
+        }
+        CancelDrag();
+    }
+
+    // 좌클릭은 전부, 우클릭은 절반(올림)을 들어 올림
+    private void PickUp(InventorySlotUI slot, ItemStack stack, PointerEventData.InputButton button, Vector2 position, bool byClick)
+    {
         dragContainer = slot.Container;
         dragFrom = slot.Index;
         droppedOnSlot = false;
-        dragAmount = eventData.button == PointerEventData.InputButton.Left
+        heldByClick = byClick;
+        dragAmount = button == PointerEventData.InputButton.Left
             ? stack.count
             : (stack.count + 1) / 2;
 
@@ -143,23 +208,57 @@ public class InventoryUI : MonoBehaviour, IScrollHandler
         // 원래 칸과 같은 크기로 표시
         var previewRect = (RectTransform)dragPreview.transform;
         previewRect.sizeDelta = ((RectTransform)slot.transform).rect.size;
-        previewRect.position = eventData.position;
+        previewRect.position = position;
         dragPreview.gameObject.SetActive(true);
 
-        // 드래그 중에는 툴팁을 숨기고, 끝나면 그때 커서 아래 칸의 툴팁이 다시 보임
+        // 들고 있는 동안에는 툴팁을 숨기고, 끝나면 그때 커서 아래 칸의 툴팁이 다시 보임
         if (ItemTooltipUI.Instance != null) ItemTooltipUI.Instance.SetSuppressed(true);
+    }
+
+    public void SetHovered(InventorySlotUI slot) => hovered = slot;
+
+    public void ClearHovered(InventorySlotUI slot)
+    {
+        if (hovered == slot) hovered = null;
+    }
+
+    // 닫힌 창의 칸은 Exit 없이 꺼질 수 있으므로 활성 상태까지 확인
+    private bool IsHoveringSlot() => hovered != null && hovered.isActiveAndEnabled && hovered.Container != null;
+
+    // 인벤토리가 열린 채 칸 위에서 숫자키: 그 칸과 해당 핫바 칸의 아이템을 옮기거나 맞바꿈
+    // 처리했으면 true (이때 핫바 선택은 바꾸지 않음)
+    public bool TryHotkeyMove(int hotbarIndex)
+    {
+        if (!IsOpen || dragFrom >= 0 || !IsHoveringSlot()) return false;
+        if (hotbarIndex < 0 || hotbarIndex >= inventory.SlotCount) return false;
+
+        ISlotContainer container = hovered.Container;
+        int index = hovered.Index;
+        ItemStack stack = container.Get(index);
+
+        // 올린 칸이 비었으면 핫바 칸의 아이템을 이 칸으로 가져옴
+        if (stack.IsEmpty)
+        {
+            ItemStack hotbarStack = inventory.Get(hotbarIndex);
+            if (!hotbarStack.IsEmpty) SlotTransfer.Move(inventory, hotbarIndex, container, index, hotbarStack.count);
+        }
+        else
+        {
+            SlotTransfer.Move(container, index, inventory, hotbarIndex, stack.count);
+        }
+        return true;
     }
 
     public void Drag(PointerEventData eventData)
     {
-        if (dragFrom < 0) return;
+        if (dragFrom < 0 || heldByClick) return;
         dragPreview.transform.position = eventData.position;
     }
 
     // Drop은 놓은 칸에서 EndDrag보다 먼저 호출됨
     public void Drop(InventorySlotUI slot, PointerEventData eventData)
     {
-        if (dragFrom < 0 || slot.Container == null) return;
+        if (dragFrom < 0 || heldByClick || slot.Container == null) return;
         droppedOnSlot = true;
         SlotTransfer.Move(dragContainer, dragFrom, slot.Container, slot.Index, dragAmount);
     }
@@ -167,14 +266,22 @@ public class InventoryUI : MonoBehaviour, IScrollHandler
     // 칸에 놓이지 않았을 때: 인벤토리 영역 안이면 취소, 밖이면 들고 있던 만큼 던짐
     public void EndDrag(PointerEventData eventData)
     {
+        // 클릭으로 든 상태에서 끝난 드래그(시작 직후 취소된 경우 등)는 들고 있는 상태를 건드리지 않음
+        if (heldByClick) return;
+
         if (dragFrom >= 0 && !droppedOnSlot && !IsOverInventoryArea(eventData.position))
         {
-            ItemData item = dragContainer.Get(dragFrom).item;
-            int removed = SlotTransfer.Remove(dragContainer, dragFrom, dragAmount);
-            if (removed > 0) thrower.Throw(item, removed, eventData.position);
+            ThrowHeld(eventData.position);
         }
 
         CancelDrag();
+    }
+
+    private void ThrowHeld(Vector2 screenPos)
+    {
+        ItemData item = dragContainer.Get(dragFrom).item;
+        int removed = SlotTransfer.Remove(dragContainer, dragFrom, dragAmount);
+        if (removed > 0) thrower.Throw(item, removed, screenPos);
     }
 
     // Shift+클릭: 함께 열린 칸 묶음이 있으면 인벤토리 ↔ 그 묶음, 없으면 핫바 ↔ 가방으로 묶음 전체를 옮김
@@ -229,6 +336,7 @@ public class InventoryUI : MonoBehaviour, IScrollHandler
         dragFrom = -1;
         dragAmount = 0;
         droppedOnSlot = false;
+        heldByClick = false;
         if (dragPreview != null) dragPreview.gameObject.SetActive(false);
         if (ItemTooltipUI.Instance != null) ItemTooltipUI.Instance.SetSuppressed(false);
     }

@@ -20,6 +20,7 @@ MonoBehaviour:
   planeTexture: {fileID: 2800000, guid: f18fddce124bbf248a8243052c49bc40, type: 3}
   tilingScale: 5
   blendRange: 1
+  mapColor: {r: 0.29901966, g: 0.25606617, b: 0.24644615, a: 1}
   minThreshold: 0.61
   maxThreshold: 1
   propSpawnTable:
@@ -53,6 +54,16 @@ MonoBehaviour:
       weight: 5
     minSpacing: 1
     clusterRadius: 8
+  - propPrefab: {fileID: 4672482584563935786, guid: 8ce0fb361fc491541a5ef95c47c4e1cd, type: 3}
+    minCount: 0
+    maxCount: 1
+    countWeights:
+    - count: 0
+      weight: 92
+    - count: 1
+      weight: 8
+    minSpacing: 1
+    clusterRadius: 8
   monsterSpawnTable:
   - monsterPrefab: {fileID: 909642921054426830, guid: 2d811b3e2425f154caf93e94ce34eb93, type: 3}
     weight: 1
@@ -65,3 +76,5 @@ MonoBehaviour:
     weight: 20
   - propPrefab: {fileID: 4672482584563935786, guid: 1ffa00c871a33dc49ab70d1d57ae92d7, type: 3}
     weight: 10
+  - propPrefab: {fileID: 4672482584563935786, guid: 8ce0fb361fc491541a5ef95c47c4e1cd, type: 3}
+    weight: 5

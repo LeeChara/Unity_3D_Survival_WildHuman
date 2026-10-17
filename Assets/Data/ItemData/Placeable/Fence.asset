@@ -15,12 +15,15 @@ MonoBehaviour:
   id: wooden_fence
   displayName: "\uB098\uBB34 \uC6B8\uD0C0\uB9AC"
   icon: {fileID: 185053557, guid: d59cb77a7afcea64ebfec73511964a9d, type: 3}
+  description: 
   maxStack: 99
   placedPrefab: {fileID: 2515706202527716380, guid: dd4e93f1cc9abc241a875f4dadf15d81, type: 3}
   alignToPlayer: 1
   placeRange: 3
+  indestructible: 0
   maxHealth: 50
   toolWeakness:
     tool: 3
     multiplier: 5
   dropTable: {fileID: 11400000, guid: 290620d9af39f414e9e6655e309be567, type: 2}
+  mapColor: {r: 0.55, g: 0.4, b: 0.25, a: 1}

@@ -21,6 +21,10 @@ public class PlaceableItemData : ItemData
     [Tooltip("부서질 때 떨어뜨릴 아이템")]
     public DropTable dropTable;
 
+    [Header("지도")]
+    [Tooltip("지도·미니맵에 찍을 점 색 (알파 0이면 표시하지 않음)")]
+    public Color mapColor = new Color(0.95f, 0.55f, 0.25f);
+
     public override bool TryUse(ItemUseContext context)
     {
         PlacementManager manager = PlacementManager.Instance;

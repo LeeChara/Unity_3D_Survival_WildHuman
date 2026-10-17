@@ -22,8 +22,10 @@ MonoBehaviour:
   placedPrefab: {fileID: 1727470311522946942, guid: d47cc962029623345ace33151b91c3e6, type: 3}
   alignToPlayer: 0
   placeRange: 3
+  indestructible: 0
   maxHealth: 30
   toolWeakness:
     tool: 3
     multiplier: 5
   dropTable: {fileID: 11400000, guid: dba9f97db3850e54b90ff1d9f6aa4926, type: 2}
+  mapColor: {r: 0.65, g: 0.2, b: 0.2, a: 1}

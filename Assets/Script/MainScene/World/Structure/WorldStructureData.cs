@@ -21,6 +21,10 @@ public class WorldStructureData : ScriptableObject
     [Tooltip("회전을 90도 단위로 무작위로 정함 (끄면 항상 0도)")]
     public bool randomRotation = true;
 
+    [Header("지도")]
+    [Tooltip("지도·미니맵에 찍을 점 색 (알파 0이면 표시하지 않음, 탐색한 곳에서만 보임)")]
+    public Color mapColor = new Color(0.85f, 0.75f, 0.35f);
+
     [Header("개수·분포")]
     [Tooltip("자리를 먼저 차지하는 순서 (높을수록 먼저). 꼭 있어야 하는 구조물을 높게")]
     public int priority;

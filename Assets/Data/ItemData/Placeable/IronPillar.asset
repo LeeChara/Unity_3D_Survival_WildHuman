@@ -27,3 +27,4 @@ MonoBehaviour:
     tool: 3
     multiplier: 100
   dropTable: {fileID: 0}
+  mapColor: {r: 0.62, g: 0.64, b: 0.68, a: 1}

@@ -1,0 +1,112 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1001 &497039180493034852
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 867109096770320385, guid: b6b44b7ae4c777643bf914eb58a63134, type: 3}
+      propertyPath: data
+      value: 
+      objectReference: {fileID: 11400000, guid: ce43b2edf4c713b4b84a17a7f3a6859a, type: 2}
+    - target: {fileID: 867109096770320385, guid: b6b44b7ae4c777643bf914eb58a63134, type: 3}
+      propertyPath: maxHealth
+      value: 200
+      objectReference: {fileID: 0}
+    - target: {fileID: 867109096770320385, guid: b6b44b7ae4c777643bf914eb58a63134, type: 3}
+      propertyPath: currentHealth
+      value: 200
+      objectReference: {fileID: 0}
+    - target: {fileID: 3571806324979164446, guid: b6b44b7ae4c777643bf914eb58a63134, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 10ace3d2248c58c4bb466e8cf6e9fb8f, type: 3}
+    - target: {fileID: 3759742687489679756, guid: b6b44b7ae4c777643bf914eb58a63134, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3759742687489679756, guid: b6b44b7ae4c777643bf914eb58a63134, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3759742687489679756, guid: b6b44b7ae4c777643bf914eb58a63134, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3759742687489679756, guid: b6b44b7ae4c777643bf914eb58a63134, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3759742687489679756, guid: b6b44b7ae4c777643bf914eb58a63134, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3759742687489679756, guid: b6b44b7ae4c777643bf914eb58a63134, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3759742687489679756, guid: b6b44b7ae4c777643bf914eb58a63134, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3759742687489679756, guid: b6b44b7ae4c777643bf914eb58a63134, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3759742687489679756, guid: b6b44b7ae4c777643bf914eb58a63134, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3759742687489679756, guid: b6b44b7ae4c777643bf914eb58a63134, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5058150033251958606, guid: b6b44b7ae4c777643bf914eb58a63134, type: 3}
+      propertyPath: m_Name
+      value: ForestBloodstoneOre
+      objectReference: {fileID: 0}
+    - target: {fileID: 6754853124740932822, guid: b6b44b7ae4c777643bf914eb58a63134, type: 3}
+      propertyPath: width
+      value: 3.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 6754853124740932822, guid: b6b44b7ae4c777643bf914eb58a63134, type: 3}
+      propertyPath: height
+      value: 2.6
+      objectReference: {fileID: 0}
+    - target: {fileID: 6754853124740932822, guid: b6b44b7ae4c777643bf914eb58a63134, type: 3}
+      propertyPath: footOffset.y
+      value: -0.08
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 5058150033251958606, guid: b6b44b7ae4c777643bf914eb58a63134, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1970689687010799102}
+  m_SourcePrefab: {fileID: 100100000, guid: b6b44b7ae4c777643bf914eb58a63134, type: 3}
+--- !u!1 &4672482584563935786 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5058150033251958606, guid: b6b44b7ae4c777643bf914eb58a63134, type: 3}
+  m_PrefabInstance: {fileID: 497039180493034852}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1970689687010799102
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4672482584563935786}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cb0e554126ccf9b4d9e7cd05f41f1295, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ShadowCaster
+  setting: {fileID: 11400000, guid: 8d5a7e0a7430e1847bb4c17cf63cfbf7, type: 2}
+  width: 4.6
+  height: 4.4
+  footOffset: {x: 0, y: -1.18, z: 0}
+  isStatic: 1

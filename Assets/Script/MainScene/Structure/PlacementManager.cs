@@ -20,6 +20,9 @@ public class PlacementManager : MonoBehaviour, ISaveParticipant
 
     private readonly List<StructureHealth> placed = new();
 
+    // 설치된 목록 (지도 표시용)
+    public IReadOnlyList<StructureHealth> Placed => placed;
+
     // 빌보드 스프라이트(미리보기 등)가 카메라를 향하는 회전
     public Quaternion BillboardRotation => Quaternion.Euler(0f, cameraYAngle, 0f);
 

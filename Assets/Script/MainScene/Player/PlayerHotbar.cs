@@ -44,6 +44,9 @@ public class PlayerHotbar : MonoBehaviour, ISaveable
         int number = Mathf.RoundToInt(value.Get<float>());
         if (number <= 0) return;
 
+        // 열린 인벤토리의 칸 위에서 누르면 선택 대신 그 칸의 아이템을 해당 핫바 칸으로 옮김
+        if (inventoryUI != null && inventoryUI.TryHotkeyMove(number - 1)) return;
+
         Select(number - 1);
     }
 
@@ -53,6 +56,8 @@ public class PlayerHotbar : MonoBehaviour, ISaveable
         float scroll = value.Get<float>();
         if (Mathf.Approximately(scroll, 0f)) return;
         if (inventoryUI != null && inventoryUI.IsOpen && inventoryUI.IsOverInventoryArea(pointerScreenPos)) return;
+        // 전체 지도가 열려 있으면 휠은 지도 확대·축소에 씀
+        if (WorldMapUI.IsOpen) return;
 
         Select(SelectedIndex + (scroll < 0f ? 1 : -1));
     }
