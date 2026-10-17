@@ -25531,8 +25531,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::MonsterSpawner
   player: {fileID: 1515454775}
   chunkStreamer: {fileID: 838106083}
+  dayNightCycle: {fileID: 365404932}
   gameSetting: {fileID: 11400000, guid: a03fdec881da037409576a8a9e0579c7, type: 2}
   maxSpawnAttempts: 10
+  maxPackMemberAttempts: 4
   obstacleLayer:
     serializedVersion: 2
     m_Bits: 0

@@ -45,6 +45,10 @@ public class MonsterAI : MonoBehaviour, IStunnable
     private Vector3? wanderTarget; // Nullable
     private float wanderCooldownTime;
 
+    // 배회 방향을 플레이어 쪽으로 기울이는 대상과 기우는 정도 (MonsterSpawner가 만든 몬스터만 설정)
+    private Transform driftTarget;
+    private MonsterSpawner driftSource;
+
     protected Vector3 cameraRight;
     protected Vector3 cameraForwardFlat;
 
@@ -265,6 +269,7 @@ public class MonsterAI : MonoBehaviour, IStunnable
         {
             Vector3 randomOffset = Random.insideUnitSphere * data.wanderRange;
             randomOffset.y = 0;
+            if (driftSource != null && driftTarget != null) randomOffset = DriftTowardPlayer(randomOffset);
             wanderTarget = transform.position + randomOffset;
         }
 
@@ -275,13 +280,34 @@ public class MonsterAI : MonoBehaviour, IStunnable
         {
             wanderTarget = null;
             rb.linearVelocity = Vector3.zero;
-            wanderCooldownTime = Mathf.Max(0f, data.wanderCooldown + Random.Range(-0.5f, 0.5f));
+            float cooldownScale = driftSource != null ? driftSource.WanderCooldownScale : 1f;
+            wanderCooldownTime = Mathf.Max(0f, (data.wanderCooldown + Random.Range(-0.5f, 0.5f)) * cooldownScale);
             return;
         }
 
         Vector3 wanderDirection = wanderDistance.normalized;
         rb.linearVelocity = wanderDirection * data.moveSpeed * MoveScale;
         transform.rotation = Quaternion.LookRotation(wanderDirection);
+    }
+
+    // 스포너가 관리하는 몬스터만 호출 (문지기·보스처럼 다른 경로로 만든 몬스터는 무작위 배회 유지)
+    public void EnablePlayerDrift(Transform player, MonsterSpawner source)
+    {
+        driftTarget = player;
+        driftSource = source;
+    }
+
+    // 무작위 방향을 플레이어 쪽으로 기울이고, 너무 짧게 움직이지 않도록 거리는 배회 범위의 절반 이상
+    private Vector3 DriftTowardPlayer(Vector3 randomOffset)
+    {
+        Vector3 toPlayer = driftTarget.position - transform.position;
+        toPlayer.y = 0f;
+        if (toPlayer.sqrMagnitude < 0.01f) return randomOffset;
+
+        Vector3 randomDirection = randomOffset.sqrMagnitude > 0.0001f ? randomOffset.normalized : toPlayer.normalized;
+        Vector3 direction = Vector3.Slerp(randomDirection, toPlayer.normalized, driftSource.PlayerDrift);
+        direction.y = 0f;
+        return direction.normalized * Random.Range(data.wanderRange * 0.5f, data.wanderRange);
     }
 
     protected virtual void Chase()

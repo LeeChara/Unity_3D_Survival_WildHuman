@@ -21,11 +21,23 @@ MonoBehaviour:
     sprintDecayMultiplier: 1.5
     starveInterval: 2
     starveDamage: 1
+    regenThreshold: 0.9
+    regenInterval: 2
+    regenAmount: 1
   spawn:
-    spawnInterval: 3
-    maxActiveMonsters: 20
-    minSpawnDistance: 75
-    maxSpawnDistance: 200
+    spawnInterval: 2
+    nightSpawnInterval: 1
+    maxActiveMonsters: 40
+    nightMaxActiveMonsters: 70
+    minSpawnDistance: 60
+    maxSpawnDistance: 150
+    packSize: {x: 1, y: 3}
+    nightPackSize: {x: 2, y: 4}
+    packRadius: 6
+    playerDrift: 0.35
+    nightPlayerDrift: 0.7
+    wanderCooldownScale: 1
+    nightWanderCooldownScale: 0.5
   item:
     groundLifetime: 600
     pickupDelay: 0.5
@@ -34,3 +46,8 @@ MonoBehaviour:
     popDuration: 0.4
     throwDistance: 4
     throwPickupDelay: 2
+  death:
+    respawnDelay: 5
+    dropItemsOnDeath: 1
+  save:
+    autosaveInterval: 300

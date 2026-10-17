@@ -5,12 +5,15 @@ using UnityEngine;
 // 스폰 지점의 바이옴 monsterSpawnTable 가중치에 따라 몬스터 종류를 결정
 // 청크 로드 범위 밖으로 벗어난 몬스터는 제거
 // 저장 시에는 지금 살아 있는 몬스터만 기록 (멀어져 제거된 몬스터는 남지 않음)
+// 한 번에 여러 마리(무리)를 스폰하고, 밤에는 더 자주·더 많이 스폰 (NightFactor로 보간)
+// 스포너가 관리하는 몬스터는 배회할 때 플레이어 쪽으로 기움 (문지기·보스 등 다른 경로로 만든 몬스터는 제외)
 public class MonsterSpawner : MonoBehaviour, ISaveParticipant
 {
     private const string SaveKey = "monsters";
 
     [SerializeField] private Transform player;
     [SerializeField] private ChunkStreamer chunkStreamer;
+    [SerializeField] private DayNightCycle dayNightCycle;
 
     [Header("스폰")]
     // 스폰 주기·최대 수·거리 규칙
@@ -18,6 +21,8 @@ public class MonsterSpawner : MonoBehaviour, ISaveParticipant
 
     // 유효한 스폰 지점을 찾기 위한 최대 시도 횟수
     [SerializeField] private int maxSpawnAttempts = 10;
+    // 무리의 각 개체가 첫 개체 주변에서 자리를 찾는 최대 시도 횟수
+    [SerializeField] private int maxPackMemberAttempts = 4;
 
     [Header("스폰 지점 검사")]
     // 이 레이어와 겹치는 지점에는 스폰하지 않음 (Nothing이면 검사 생략)
@@ -37,10 +42,19 @@ public class MonsterSpawner : MonoBehaviour, ISaveParticipant
     private float spawnTimer;
     private float despawnTimer;
 
+    private float NightFactor => dayNightCycle != null ? dayNightCycle.NightFactor : 0f;
+
+    // 배회 방향이 플레이어 쪽으로 기우는 정도 (MonsterAI가 배회 목적지를 고를 때 읽음)
+    public float PlayerDrift => Mathf.Lerp(Rule.playerDrift, Rule.nightPlayerDrift, NightFactor);
+    public float WanderCooldownScale => Mathf.Lerp(Rule.wanderCooldownScale, Rule.nightWanderCooldownScale, NightFactor);
+
+    private float SpawnInterval => Mathf.Lerp(Rule.spawnInterval, Rule.nightSpawnInterval, NightFactor);
+    private int MaxActiveMonsters => Mathf.RoundToInt(Mathf.Lerp(Rule.maxActiveMonsters, Rule.nightMaxActiveMonsters, NightFactor));
+
     private void Update()
     {
         spawnTimer += Time.deltaTime;
-        if (spawnTimer >= Rule.spawnInterval)
+        if (spawnTimer >= SpawnInterval)
         {
             spawnTimer = 0f;
             TrySpawn();
@@ -56,9 +70,39 @@ public class MonsterSpawner : MonoBehaviour, ISaveParticipant
 
     private void TrySpawn()
     {
-        if (activeMonsters.Count >= Rule.maxActiveMonsters) return;
-        if (!TryFindSpawnPoint(out Vector3 position, out BiomeData biome)) return;
+        int remaining = MaxActiveMonsters - activeMonsters.Count;
+        if (remaining <= 0) return;
+        if (!TryFindSpawnPoint(out Vector3 center, out BiomeData centerBiome)) return;
 
+        int count = Mathf.Min(PickPackSize(), remaining);
+        SpawnAt(center, centerBiome);
+
+        // 나머지 개체는 첫 개체 주변에서 자리를 찾음 (각 자리의 바이옴 표를 따름)
+        for (int i = 1; i < count; i++)
+        {
+            for (int attempt = 0; attempt < maxPackMemberAttempts; attempt++)
+            {
+                Vector2 offset = Random.insideUnitCircle * Rule.packRadius;
+                Vector3 position = center + new Vector3(offset.x, 0f, offset.y);
+                if (!IsValidSpawnPoint(position, out BiomeData biome)) continue;
+
+                SpawnAt(position, biome);
+                break;
+            }
+        }
+    }
+
+    // 낮/밤 범위를 보간한 뒤 그 안에서 무작위
+    private int PickPackSize()
+    {
+        float t = NightFactor;
+        int min = Mathf.RoundToInt(Mathf.Lerp(Rule.packSize.x, Rule.nightPackSize.x, t));
+        int max = Mathf.RoundToInt(Mathf.Lerp(Rule.packSize.y, Rule.nightPackSize.y, t));
+        return Mathf.Max(1, Random.Range(min, Mathf.Max(min, max) + 1));
+    }
+
+    private void SpawnAt(Vector3 position, BiomeData biome)
+    {
         MonsterAI prefab = PickMonster(biome.monsterSpawnTable);
         if (prefab == null) return;
 
@@ -69,6 +113,7 @@ public class MonsterSpawner : MonoBehaviour, ISaveParticipant
     private void Register(MonsterAI monster)
     {
         activeMonsters.Add(monster);
+        monster.EnablePlayerDrift(player, this);
 
         // 사망 시 MonsterHealth가 직접 Destroy하므로 목록에서만 제거
         if (monster.TryGetComponent(out Health health))
@@ -115,25 +160,32 @@ public class MonsterSpawner : MonoBehaviour, ISaveParticipant
             position = player.position + new Vector3(Mathf.Cos(angle), 0f, Mathf.Sin(angle)) * distance; 
             position.y = 0f;
 
-            Vector2Int coord = chunkStreamer.WorldToChunkCoord(position);
-            if (!chunkStreamer.IsChunkActive(coord)) continue;
-            // 경계 밖 청크도 화면에는 보이지만 스폰하지 않음
-            if (WorldState.Instance != null && !WorldState.Instance.IsInside(coord)) continue;
-
-            biome = chunkStreamer.GetBiome(coord);
-            if (biome == null || biome.monsterSpawnTable == null || biome.monsterSpawnTable.Length == 0) continue;
-
-            if (obstacleLayer != 0 &&
-                Physics.CheckSphere(position + Vector3.up * spawnClearance, spawnClearance, obstacleLayer)) continue;
-            // 용암 호수 같은 위험 지형 안에는 스폰하지 않음
-            if (HazardQuery.IsInside(position, hazardLayers)) continue;
-
-            return true;
+            if (IsValidSpawnPoint(position, out biome)) return true;
         }
 
         position = default;
         biome = null;
         return false;
+    }
+
+    private bool IsValidSpawnPoint(Vector3 position, out BiomeData biome)
+    {
+        biome = null;
+
+        Vector2Int coord = chunkStreamer.WorldToChunkCoord(position);
+        if (!chunkStreamer.IsChunkActive(coord)) return false;
+        // 경계 밖 청크도 화면에는 보이지만 스폰하지 않음
+        if (WorldState.Instance != null && !WorldState.Instance.IsInside(coord)) return false;
+
+        biome = chunkStreamer.GetBiome(coord);
+        if (biome == null || biome.monsterSpawnTable == null || biome.monsterSpawnTable.Length == 0) return false;
+
+        if (obstacleLayer != 0 &&
+            Physics.CheckSphere(position + Vector3.up * spawnClearance, spawnClearance, obstacleLayer)) return false;
+        // 용암 호수 같은 위험 지형 안에는 스폰하지 않음
+        if (HazardQuery.IsInside(position, hazardLayers)) return false;
+
+        return true;
     }
 
     // 가중치 기반 랜덤 선택

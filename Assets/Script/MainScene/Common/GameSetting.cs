@@ -43,13 +43,38 @@ public class HungerRule
     public float regenAmount = 1f;
 }
 
+// 낮/밤 값이 따로 있는 항목은 NightFactor(0~1)로 두 값 사이를 보간
 [Serializable]
 public class SpawnRule
 {
-    public float spawnInterval = 3f;
-    public int maxActiveMonsters = 20;
-    public float minSpawnDistance = 150f;
-    public float maxSpawnDistance = 250f;
+    [Tooltip("낮 스폰 주기(초)")]
+    public float spawnInterval = 2f;
+    [Tooltip("밤 스폰 주기(초)")]
+    public float nightSpawnInterval = 1f;
+    [Tooltip("낮 최대 몬스터 수")]
+    public int maxActiveMonsters = 40;
+    [Tooltip("밤 최대 몬스터 수")]
+    public int nightMaxActiveMonsters = 70;
+    public float minSpawnDistance = 60f;
+    public float maxSpawnDistance = 150f;
+
+    [Header("무리")]
+    [Tooltip("낮에 한 번에 스폰되는 수 (x=최소, y=최대)")]
+    public Vector2Int packSize = new(1, 3);
+    [Tooltip("밤에 한 번에 스폰되는 수 (x=최소, y=최대)")]
+    public Vector2Int nightPackSize = new(2, 4);
+    [Tooltip("무리가 첫 개체 주변에 흩어지는 반경")]
+    public float packRadius = 6f;
+
+    [Header("플레이어 쏠림 (스포너가 만든 몬스터만)")]
+    [Tooltip("낮에 배회 방향이 플레이어 쪽으로 기우는 정도 (0=무작위, 1=곧장)")]
+    [Range(0f, 1f)] public float playerDrift = 0.35f;
+    [Tooltip("밤에 배회 방향이 플레이어 쪽으로 기우는 정도 (0=무작위, 1=곧장)")]
+    [Range(0f, 1f)] public float nightPlayerDrift = 0.7f;
+    [Tooltip("낮 배회 대기 시간 배율")]
+    public float wanderCooldownScale = 1f;
+    [Tooltip("밤 배회 대기 시간 배율")]
+    public float nightWanderCooldownScale = 0.5f;
 }
 
 [Serializable]
