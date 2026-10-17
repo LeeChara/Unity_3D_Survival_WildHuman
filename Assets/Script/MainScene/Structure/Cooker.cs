@@ -53,6 +53,7 @@ public class Cooker : MonoBehaviour, IInteractable, ISaveable
             done++;
             remaining = pending > 0 ? recipe.seconds : 0f;
             Refresh();
+            Sfx.Play(SfxSetting.Instance?.cookDone, transform.position);
             return;
         }
         timerFill.fillAmount = 1f - remaining / recipe.seconds;
@@ -79,6 +80,7 @@ public class Cooker : MonoBehaviour, IInteractable, ISaveable
                 recipe = found;
                 if (pending == 0) remaining = found.seconds;
                 pending++;
+                Sfx.Play(SfxSetting.Instance?.cookAdd, transform.position);
                 break;
 
             case CookerAction.TakeBack:

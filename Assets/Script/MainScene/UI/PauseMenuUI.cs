@@ -79,6 +79,7 @@ public class PauseMenuUI : MonoBehaviour
         if (IsPaused == paused) return;
 
         IsPaused = paused;
+        Sfx.PlayUI(paused ? SfxSetting.Instance?.uiOpen : SfxSetting.Instance?.uiClose);
         if (!paused) settingsUI.Close();
         panel.SetActive(paused);
         if (paused) Select(resumeButton);

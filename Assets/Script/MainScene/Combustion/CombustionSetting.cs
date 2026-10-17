@@ -32,6 +32,8 @@ public class CombustionSetting : ScriptableObject
     [Header("표시")]
     [Tooltip("불타는 대상을 덮는 불꽃·빛 이펙트 (모든 가연물 공용, 바닥 아이템이 탈 때도 잠깐 씀)")]
     public BurnEffect burnEffect;
+    [Tooltip("타던 불이 꺼질 때(시간이 다 됨, 젖음) 피어오르는 연기 파티클 (쓰러지면 재생하지 않음)")]
+    public EffectData extinguishEffect;
 
     [Header("형태 변환")]
     [Tooltip("연소 중에 쓰러진 대상의 드랍을 바꾸는 표 (모닥불 굽기 레시피와 같음)")]

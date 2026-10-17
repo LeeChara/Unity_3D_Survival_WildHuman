@@ -67,6 +67,7 @@ public class BossNest : MonoBehaviour, ISaveable
         bossAlive = true;
         savedHealth = 0f;
         SpawnBoss();
+        if (BossData != null) Sfx.Play(BossData.summonCue, transform.position);
         return true;
     }
 

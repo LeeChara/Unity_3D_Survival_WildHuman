@@ -20,6 +20,8 @@ MonoBehaviour:
   cooldown: 0
   weight: 0
   invulnerable: 1
+  windupCue: {fileID: 11400000, guid: 2d064e99b50707f498a6d298926281e1, type: 2}
+  attackCue: {fileID: 11400000, guid: 00b1574c20f834e47b9745f9558a65b8, type: 2}
   windup: 0.6
   shape:
     kind: 0
@@ -37,4 +39,5 @@ MonoBehaviour:
     element: 0
     strike: 0
     isWeapon: 0
+    environmental: 0
   duration: 1.2

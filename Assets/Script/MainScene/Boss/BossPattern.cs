@@ -25,6 +25,12 @@ public abstract class BossPattern : ScriptableObject
     [Tooltip("실행 중 피해를 받지 않음 (예: 포효)")]
     public bool invulnerable;
 
+    [Header("효과음 (패턴마다 나는 시점은 각 패턴의 설명 참고)")]
+    [Tooltip("예고 동작을 시작할 때")]
+    public SfxCue windupCue;
+    [Tooltip("공격하는 순간")]
+    public SfxCue attackCue;
+
     public bool IsUsableInPhase(int phase) => phase >= 2 ? usableInPhase2 : usableInPhase1;
 
     // 거리 외에 추가 조건이 필요하면 재정의

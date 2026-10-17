@@ -47,3 +47,13 @@ MonoBehaviour:
   knockbackResistance: 0
   superArmorWhileAttacking: 0
   dropTable: {fileID: 11400000, guid: a7d47715cf4921c499ecb46a9b774f42, type: 2}
+  detectCue: {fileID: 0}
+  windupCue: {fileID: 11400000, guid: 672f332d35405ba49ae2a76073826323, type: 2}
+  attackCue: {fileID: 11400000, guid: eea4b859c08d9414eb352cb923ff2303, type: 2}
+  attackLoopCue: {fileID: 11400000, guid: abfe15d813ce83f42a1b175cf64a278b, type: 2}
+  hurtCue: {fileID: 11400000, guid: 1ccc0668900e05a45995f719937a7a1e, type: 2}
+  deathCue: {fileID: 0}
+  roarCue: {fileID: 11400000, guid: 32a0ac875f739854895b2f3850f3445d, type: 2}
+  callCue: {fileID: 11400000, guid: 82600b55520c23f4682c9c0270d38118, type: 2}
+  callInterval: {x: 10, y: 25}
+  sfxPitch: 1

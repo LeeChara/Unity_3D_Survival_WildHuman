@@ -68,6 +68,7 @@ public class CreateWorldUI : MonoBehaviour
             mapSize = config.mapSizes[mapSizeSelector.Index].id,
             difficulty = config.difficulties[difficultySelector.Index].id,
         };
+        Sfx.PlayUI(SfxSetting.Instance?.worldCreate);
         Created?.Invoke(UniqueName(nameInput.text), settings);
     }
 

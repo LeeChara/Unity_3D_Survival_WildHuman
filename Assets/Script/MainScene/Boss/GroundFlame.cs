@@ -21,6 +21,7 @@ public class GroundFlame : MonoBehaviour
     private Color baseColor;
 
     public FireHazard Hazard => hazard;
+    public bool HasLight => fireLight != null && fireLight.gameObject.activeSelf;
 
     // lifetime: 0이면 끌 때까지 계속 탐. owner: 피해를 주지 않는 대상
     public static GroundFlame Spawn(GroundFlame prefab, Vector3 position, float lifetime, Transform owner, bool withLight)
@@ -63,5 +64,6 @@ public class GroundFlame : MonoBehaviour
         // FireHazard는 컴포넌트를 꺼도 트리거 메시지를 받으므로 오브젝트째 끔
         if (hazard != null) hazard.gameObject.SetActive(false);
         if (fireLight != null) fireLight.gameObject.SetActive(false);
+        if (TryGetComponent(out SfxLoop loop)) loop.Stop();
     }
 }

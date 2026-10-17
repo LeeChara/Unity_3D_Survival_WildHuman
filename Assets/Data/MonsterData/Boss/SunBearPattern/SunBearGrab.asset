@@ -20,6 +20,8 @@ MonoBehaviour:
   cooldown: 10
   weight: 0.7
   invulnerable: 0
+  windupCue: {fileID: 11400000, guid: de9f88f2bbc2fdb4d8007e269ac6887e, type: 2}
+  attackCue: {fileID: 11400000, guid: 547a2b65a15a6c74ba14e5fcf78f7488, type: 2}
   windup: 0.8
   shape:
     kind: 1
@@ -42,5 +44,7 @@ MonoBehaviour:
     strike: 0
     isWeapon: 0
     environmental: 0
+  throwCue: {fileID: 11400000, guid: ca698217ffda14d47828bd3c6e3171a3, type: 2}
+  missCue: {fileID: 11400000, guid: 50d6e71c4f9ed9542ae4d577b125a70a, type: 2}
   recover: 0.8
   missRecover: 1.2

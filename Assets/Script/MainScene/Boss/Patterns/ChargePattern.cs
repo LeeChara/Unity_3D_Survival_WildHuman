@@ -30,6 +30,12 @@ public class ChargePattern : BossPattern
     [Tooltip("불길이 타는 시간 (초)")]
     [Min(0.1f)] public float trailLifetime = 6f;
 
+    [Header("효과음 (예고할 때 windupCue, 달리기 시작할 때 attackCue)")]
+    [Tooltip("달리는 동안 반복 (발굽)")]
+    public SfxCue runLoopCue;
+    [Tooltip("무언가에 부딪혀 멈출 때")]
+    public SfxCue crashCue;
+
     [Tooltip("돌진이 끝난 뒤 후딜 (초)")]
     [Min(0f)] public float recover = 1.2f;
 
@@ -48,10 +54,13 @@ public class ChargePattern : BossPattern
         Vector3 start = boss.transform.position;
 
         boss.PlayMotion("ChargeWindup", BossMotion.Windup);
+        boss.PlaySfx(windupCue);
         AttackIndicator indicator = boss.ShowIndicator(shape, start, forward, windup);
         yield return new WaitForSeconds(windup);
 
         boss.PlayMotion("Charge", BossMotion.Attack);
+        boss.PlaySfx(attackCue);
+        boss.StartLoopSfx(runLoopCue);
 
         // 부딪힌 물체는 물리 이벤트에서 받아 다음 프레임에 처리
         Collider blockedBy = null;
@@ -76,6 +85,7 @@ public class ChargePattern : BossPattern
         AttackShape body = AttackShape.Circle(hitRadius);
         float travelled = 0f;
         float crashStun = 0f;
+        bool blocked = false;
         Vector3 lastTrail = boss.transform.position;
         boss.Collided += OnCollided;
 
@@ -96,13 +106,18 @@ public class ChargePattern : BossPattern
             if (blockedBy != null)
             {
                 ChargeBlocker blocker = blockedBy.GetComponentInParent<ChargeBlocker>();
-                if (blocker == null) break;
+                if (blocker == null)
+                {
+                    blocked = true;
+                    break;
+                }
                 if (smashed.Add(blocker))
                 {
                     blocker.OnCharged(boss.transform.position);
                     if (blocker.Stops)
                     {
                         crashStun = blocker.StunDuration;
+                        blocked = true;
                         break;
                     }
                 }
@@ -115,6 +130,8 @@ public class ChargePattern : BossPattern
         }
 
         boss.Collided -= OnCollided;
+        boss.StopLoopSfx();
+        if (blocked) boss.PlaySfx(crashCue);
 
         boss.Stop();
         boss.ReleaseIndicator(indicator);

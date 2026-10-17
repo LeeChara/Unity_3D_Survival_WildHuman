@@ -45,8 +45,8 @@ public class EarthquakeEvent : MonoBehaviour, ISaveParticipant
     [SerializeField] private AudioSource audioSource;
     [Tooltip("비워두면 소리 없이 진행")]
     [SerializeField] private AudioClip sound;
-    [Tooltip("자원이 솟아오를 때 그 자리에 만들 이펙트 (비워두면 생성하지 않음, 제거는 이펙트 프리팹이 담당)")]
-    [SerializeField] private GameObject spawnEffectPrefab;
+    [Tooltip("자원이 솟아오를 때 그 자리에 뿌리는 흙먼지 파티클 (비워두면 재생하지 않음)")]
+    [SerializeField] private EffectData spawnEffect;
     [Tooltip("플레이어에서 이 거리 안에서 솟아오를 때만 이펙트를 만듦")]
     [SerializeField, Min(0f)] private float effectDistance = 60f;
     [Tooltip("이펙트를 자원 위치에서 카메라 쪽으로 당겨 생성하는 거리")]
@@ -142,7 +142,7 @@ public class EarthquakeEvent : MonoBehaviour, ISaveParticipant
 
     private void SpawnEffect(Vector3 position)
     {
-        if (spawnEffectPrefab == null) return;
+        if (spawnEffect == null) return;
 
         Vector3 offset = player.position - position;
         offset.y = 0f;
@@ -157,7 +157,7 @@ public class EarthquakeEvent : MonoBehaviour, ISaveParticipant
             position += toCamera.normalized * effectForwardOffset;
         }
 
-        Instantiate(spawnEffectPrefab, position, Quaternion.identity);
+        Effects.Play(spawnEffect, position);
     }
 
     // 반경 안에 있는 지진 테이블 자원 수 (청크 데이터 기준이라 로드되지 않은 곳도 셈)

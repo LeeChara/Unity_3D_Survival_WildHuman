@@ -18,6 +18,14 @@ public class BiomeData : ScriptableObject
     [Tooltip("지도·미니맵에 칠할 색")]
     public Color mapColor = new Color(0.4f, 0.55f, 0.3f);
 
+    [Header("효과음")]
+    [Tooltip("이 바이옴 땅을 걸을 때 (비워두면 공용 발소리)")]
+    public SfxCue footstepCue;
+
+    [Header("파티클")]
+    [Tooltip("이 바이옴 땅을 걸을 때 발밑에 이는 먼지 (비워두면 없음, 예: 사막 모래, 설원 눈가루)")]
+    public EffectData footstepEffect;
+
     [Header("바이옴 판정 임계값")]
     [Range(0f, 1f)] public float minThreshold;
     [Range(0f, 1f)] public float maxThreshold;

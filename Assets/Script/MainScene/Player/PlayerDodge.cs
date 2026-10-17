@@ -19,6 +19,9 @@ public class PlayerDodge : MonoBehaviour
     private float lastDodgeTime = -999f; // 시작 시 바로 사용 가능하도록 충분히 작은 값
     private PlayerHunger playerHunger;
 
+    // 구르기를 시작한 시점을 효과음 등 외부 시스템에 알림
+    public event System.Action Dodged;
+
     private void Awake()
     {
         rb = GetComponent<Rigidbody>();
@@ -97,5 +100,6 @@ public class PlayerDodge : MonoBehaviour
         playerState.SetState(PlayerActionState.Dodge);
         animator.SetBool(IsDodgingHash, true);
         animator.SetTrigger("Dodge");
+        Dodged?.Invoke();
     }
 }

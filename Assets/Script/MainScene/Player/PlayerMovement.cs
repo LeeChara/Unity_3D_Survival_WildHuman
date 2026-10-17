@@ -15,6 +15,7 @@ public class PlayerMovement : MonoBehaviour
     private bool isSprintPressed;
     private PlayerHunger playerHunger;
     private WaterWader waterWader;
+    private Knockback knockback;
 
     // 실제로 달리고 있는지 여부 (달리기 입력 + 이동 중 + 굶주림 아님)
     public bool IsSprinting { get; private set; }
@@ -46,6 +47,7 @@ public class PlayerMovement : MonoBehaviour
         rb = GetComponent<Rigidbody>();
         playerHunger = GetComponent<PlayerHunger>();
         waterWader = GetComponent<WaterWader>();
+        knockback = GetComponent<Knockback>();
         // 구르기는 빙판에서도 그대로 (구르기가 끝난 뒤 남은 속도로 미끄러짐)
         if (TryGetComponent(out IceSlider iceSlider)) iceSlider.Bypass = () => playerState.CurrentState == PlayerActionState.Dodge;
 
@@ -60,8 +62,12 @@ public class PlayerMovement : MonoBehaviour
         if (playerState.CurrentState != PlayerActionState.Normal)
         {
             IsSprinting = false;
-            // 기절·잡힘 중에는 제자리에 멈춤 (몸체 마찰이 0이라 넉백 후 남은 속도로 미끄러지지 않도록)
-            if (playerState.CurrentState == PlayerActionState.Stunned || playerState.CurrentState == PlayerActionState.Grabbed)
+            // 기절·잡힘·사망 중에는 제자리에 멈춤 (몸체 마찰이 0이라 넉백이나 다른 오브젝트에 밀린 속도로 미끄러지지 않도록)
+            // 사망 중에는 죽을 때 받은 넉백이 끝날 때까지는 그대로 둠
+            bool isDead = playerState.CurrentState == PlayerActionState.Dead;
+            bool holdStill = playerState.CurrentState == PlayerActionState.Stunned || playerState.CurrentState == PlayerActionState.Grabbed
+                || (isDead && (knockback == null || !knockback.IsActive));
+            if (holdStill)
             {
                 if (!rb.isKinematic)
                 {

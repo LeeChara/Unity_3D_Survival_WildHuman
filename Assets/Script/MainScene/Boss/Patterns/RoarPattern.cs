@@ -29,10 +29,12 @@ public class RoarPattern : BossPattern
         Vector3 origin = boss.transform.position;
 
         boss.PlayMotion("RoarWindup", BossMotion.Windup);
+        boss.PlaySfx(windupCue);
         AttackIndicator indicator = boss.ShowIndicator(shape, origin, forward, windup);
         yield return new WaitForSeconds(windup);
 
         boss.PlayMotion("Roar", BossMotion.Attack);
+        boss.PlaySfx(attackCue);
         boss.Strike(shape, origin, forward, attack);
         boss.ReleaseIndicator(indicator);
         if (CameraShake.Instance != null) CameraShake.Instance.Shake(0.35f, duration);

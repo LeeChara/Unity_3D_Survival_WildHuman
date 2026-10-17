@@ -49,5 +49,6 @@ public class SaveIndicatorUI : MonoBehaviour
     private void OnSaveFinished()
     {
         isSaving = false;
+        Sfx.PlayUI(SfxSetting.Instance?.saveDone);
     }
 }

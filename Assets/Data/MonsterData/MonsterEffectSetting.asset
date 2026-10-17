@@ -13,3 +13,6 @@ MonoBehaviour:
   m_Name: MonsterEffectSetting
   m_EditorClassIdentifier: Assembly-CSharp::MonsterEffectSetting
   emoteDuration: 1
+  corpseDuration: 1
+  deathEffect: {fileID: 11400000, guid: 2fabada4a9683054a9c5d6fb1a0d82b5, type: 2}
+  hitEffect: {fileID: 11400000, guid: 7f450d646528d764183b254c9141e579, type: 2}

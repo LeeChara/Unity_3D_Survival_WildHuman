@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 27d60fd8339e91e49a8e1d5959b9bc71, type: 3}
+  m_Name: Stoneotter_roar
+  m_EditorClassIdentifier: Assembly-CSharp::SfxCue
+  description: "\uB3CC\uBA69\uC774\uC218\uB2EC: \uACF5\uACA9 \uD3EC\uD6A8"
+  clips:
+  - {fileID: 8300000, guid: 3d40b0744c170aa4c8cf21c9ad42de13, type: 3}
+  - {fileID: 8300000, guid: f8c0ee6698876064c8af6256f94caa2e, type: 3}
+  volume: 1
+  pitchRange: {x: 0.95, y: 1.05}
+  minInterval: 0.03
+  maxVoices: 4

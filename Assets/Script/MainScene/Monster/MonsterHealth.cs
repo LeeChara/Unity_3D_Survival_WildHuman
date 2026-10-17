@@ -28,6 +28,7 @@ public class MonsterHealth : Health
         rb = GetComponent<Rigidbody>();
         knockback = GetComponent<Knockback>();
         ai = GetComponent<MonsterAI>();
+        Hit += OnHit;
     }
 
     private void OnEnable()
@@ -46,6 +47,14 @@ public class MonsterHealth : Health
 
         corpseTimer -= Time.deltaTime;
         if (corpseTimer <= 0f) Vanish();
+    }
+
+    // 피해 없는 속성 공격이나 면역 중(땅속 등)에는 타격 마크를 띄우지 않음
+    private void OnHit(AttackData attack)
+    {
+        if (attack.IsHarmless || IsInvulnerable) return;
+
+        Effects.PlayOn(setting.hitEffect, transform);
     }
 
     protected override void Die()
@@ -70,17 +79,10 @@ public class MonsterHealth : Health
     {
         isCorpse = false;
 
-        SpawnDeathEffect();
+        // 시체가 사라지기 전에 그림 범위를 재야 하므로 Destroy보다 먼저 재생
+        Effects.PlayOn(setting.deathEffect, transform);
         Vanished?.Invoke();
 
         Destroy(gameObject);
-    }
-
-    // 이펙트는 시체와 함께 파괴되지 않도록 부모 없이 생성 (이펙트 자체 제거는 이펙트 프리팹이 담당)
-    private void SpawnDeathEffect()
-    {
-        if (setting.deathEffectPrefab == null) return;
-
-        Instantiate(setting.deathEffectPrefab, transform.position, Quaternion.identity);
     }
 }

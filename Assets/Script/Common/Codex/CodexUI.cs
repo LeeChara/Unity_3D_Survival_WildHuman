@@ -112,6 +112,7 @@ public class CodexUI : MonoBehaviour
     {
         selected = entry;
         lastSelected[entry.category] = entry;
+        Sfx.PlayUI(SfxSetting.Instance?.pageFlip);
 
         foreach (CodexEntrySlot slot in slots)
         {

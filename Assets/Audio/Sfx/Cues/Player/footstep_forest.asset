@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 27d60fd8339e91e49a8e1d5959b9bc71, type: 3}
+  m_Name: footstep_forest
+  m_EditorClassIdentifier: Assembly-CSharp::SfxCue
+  description: "\uBC1C\uC18C\uB9AC: \uC232"
+  clips:
+  - {fileID: 8300000, guid: c8509c3a3f8303a45955bf563d4fee42, type: 3}
+  - {fileID: 8300000, guid: 2fec398ee23539447bf190d52c0a54e6, type: 3}
+  - {fileID: 8300000, guid: 3a2efa4f585840d4f89ae47c1effd004, type: 3}
+  - {fileID: 8300000, guid: 455b8af8dd016804a8e96ee5399be321, type: 3}
+  volume: 1
+  pitchRange: {x: 0.95, y: 1.05}
+  minInterval: 0.03
+  maxVoices: 4

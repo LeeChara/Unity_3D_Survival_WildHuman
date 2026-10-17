@@ -92,6 +92,9 @@ MonoBehaviour:
   fireLight: {fileID: 4747940770855423959}
   lightRadiusPerWidth: 1.5
   minLightRadius: 2.5
+  maxLightRadius: 6
+  emberEffect: {fileID: 11400000, guid: 8bb28a6ed204cb449a80940cb0f7a4ba, type: 2}
+  emberInterval: 0.4
   burstDuration: 0.6
 --- !u!1 &218600603693717398
 GameObject:

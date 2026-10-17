@@ -12,6 +12,10 @@ public class MonsterEffectSetting : ScriptableObject
     [Header("사망")]
     [Tooltip("사망 후 시체가 남아 있는 시간")]
     public float corpseDuration = 1f;
-    [Tooltip("시체가 사라질 때 생성할 이펙트 (비워두면 생성하지 않음)")]
-    public GameObject deathEffectPrefab;
+    [Tooltip("시체가 사라질 때 뿌리는 파티클 (비워두면 재생하지 않음)")]
+    public EffectData deathEffect;
+
+    [Header("피격")]
+    [Tooltip("공격받을 때 뿌리는 파티클 (비워두면 재생하지 않음)")]
+    public EffectData hitEffect;
 }

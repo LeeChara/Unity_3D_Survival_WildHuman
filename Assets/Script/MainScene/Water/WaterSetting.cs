@@ -34,6 +34,8 @@ public class WaterSetting : ScriptableObject
     public Color wetTint = new Color(0.72f, 0.76f, 0.85f);
     [Tooltip("젖은 동안 떨어지는 물방울")]
     public Sprite dropSprite;
-    [Tooltip("젖은 물체에 불이 닿아 마를 때 피어오르는 김")]
-    public Sprite steamSprite;
+    [Tooltip("젖은 물체에 불이 닿아 마를 때 피어오르는 김 파티클")]
+    public EffectData steamEffect;
+    [Tooltip("물을 끼얹었을 때 튀는 물방울 파티클")]
+    public EffectData splashEffect;
 }

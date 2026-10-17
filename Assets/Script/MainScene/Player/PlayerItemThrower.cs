@@ -8,6 +8,7 @@ public class PlayerItemThrower : MonoBehaviour
         if (item == null || count <= 0) return;
 
         ItemDropper.Instance.Throw(item, count, transform.position, ComputeThrowDirection(pointerScreenPos));
+        Sfx.Play(SfxSetting.Instance?.throwItem, transform.position);
     }
 
     // 커서 아래 땅(플레이어 높이의 수평면) 지점을 향하는 수평 방향 (PlayerAttack의 공격 방향과 같은 방식)

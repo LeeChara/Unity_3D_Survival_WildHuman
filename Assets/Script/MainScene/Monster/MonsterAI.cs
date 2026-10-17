@@ -64,6 +64,7 @@ public class MonsterAI : MonoBehaviour, IStunnable
         rb = GetComponent<Rigidbody>();
         health = GetComponent<Health>();
         health.Died += OnDied;
+        health.Damaged += OnDamaged;
         if (hitbox != null) hitbox.SetActive(false);
 
         knockback = GetComponent<Knockback>();
@@ -96,13 +97,24 @@ public class MonsterAI : MonoBehaviour, IStunnable
 
     protected virtual void OnDestroy()
     {
-        if (health != null) health.Died -= OnDied;
+        if (health != null)
+        {
+            health.Died -= OnDied;
+            health.Damaged -= OnDamaged;
+        }
+    }
+
+    // 사망 소리는 OnDied에서
+    private void OnDamaged()
+    {
+        if (!health.IsDead) PlaySfx(data.HurtCue);
     }
 
     // 몬스터의 행동 기반은 목표물과의 거리
     // 따라서 목표물 갱신을 먼저 진행
     protected virtual void Update()
     {
+        UpdateCallSfx();
         UpdateTarget();
 
         // 넉백 중에는 Knockback이 속도를 제어하므로 상태머신 정지
@@ -193,6 +205,8 @@ public class MonsterAI : MonoBehaviour, IStunnable
         Collider[] hits = Physics.OverlapSphere(transform.position, data.chaseRange, playerLayer);
         foreach (Collider hit in hits)
         {
+            // 사망한 플레이어는 부활 전까지 시체로 남아 있으므로 탐지 단계에서 제외 (추격 포기 직후 다시 인식하지 않도록)
+            if (hit.TryGetComponent(out Health playerHealth) && playerHealth.IsDead) continue;
             if (CanTarget(hit.transform)) return hit.transform;
         }
         return null;
@@ -231,8 +245,20 @@ public class MonsterAI : MonoBehaviour, IStunnable
         target = detectedTarget;
         targetHealth = target.GetComponent<Health>();
         isTargetPlayer = (playerLayer.value & (1 << target.gameObject.layer)) != 0;
-        if (isTargetPlayer) PlayerDetected?.Invoke();
+        if (isTargetPlayer)
+        {
+            // 경계에서 인식·해제가 반복되거나 목표가 계속 바뀌어도 발견 소리는 가끔만
+            if (Time.time >= nextDetectSfx)
+            {
+                nextDetectSfx = Time.time + DetectSfxCooldown;
+                PlaySfx(data.DetectCue);
+            }
+            PlayerDetected?.Invoke();
+        }
     }
+
+    private const float DetectSfxCooldown = 6f;
+    private float nextDetectSfx;
 
     private void ClearTarget()
     {
@@ -486,6 +512,9 @@ public class MonsterAI : MonoBehaviour, IStunnable
 
         animator.speed = 0f;
         enabled = false;
+
+        SetAttackLoop(false);
+        PlaySfx(data.DeathCue);
     }
 
     // 행동 상태와 같은 애니메이터 상태로 바로 전환
@@ -493,6 +522,68 @@ public class MonsterAI : MonoBehaviour, IStunnable
     protected void PlayAnimation(State animState)
     {
         animator.CrossFadeInFixedTime(animationHashes[(int)animState], animationFade);
+        PlayStateSfx(animState);
+    }
+
+    // 행동 상태에 들어설 때의 효과음 (공격 소리를 공격 도중에 내는 몬스터는 재정의, 예: 돌을 던질 때마다)
+    protected virtual void PlayStateSfx(State animState)
+    {
+        SetAttackLoop(animState == State.Attack);
+        switch (animState)
+        {
+            case State.Windup:
+                PlaySfx(data.WindupCue);
+                break;
+            case State.Attack:
+                PlaySfx(data.AttackCue);
+                PlaySfx(data.RoarCue);
+                break;
+            case State.Stunned:
+                PlaySfx(SfxSetting.Instance?.monsterStun);
+                break;
+        }
+    }
+
+    // 이 몬스터 위치에서 데이터의 음 높이 배율로 재생 (변종은 원본과 다르게 들림)
+    protected void PlaySfx(SfxCue cue) => Sfx.Play(cue, transform.position, 1f, data.sfxPitch);
+
+    // 평소(배회·대기)에 가끔 울음소리. 첫 울음 시점은 몬스터마다 흩어 둠
+    private float callTimer = -1f;
+
+    protected void UpdateCallSfx()
+    {
+        SfxCue cue = data.CallCue;
+        if (cue == null) return;
+
+        if (callTimer < 0f) callTimer = Random.Range(0f, data.callInterval.y);
+        if (!CanCall)
+        {
+            // 싸움이 끝나자마자 울지 않도록 평소 상태가 된 뒤부터 다시 셈
+            callTimer = Mathf.Max(callTimer, data.callInterval.x * 0.5f);
+            return;
+        }
+
+        callTimer -= Time.deltaTime;
+        if (callTimer > 0f) return;
+        callTimer = Random.Range(data.callInterval.x, data.callInterval.y);
+        PlaySfx(cue);
+    }
+
+    protected virtual bool CanCall => state == State.Idle && target == null && !health.IsDead;
+
+    // 공격하는 동안 반복되는 소리 (데이터에 있을 때만, 다른 상태로 넘어가거나 쓰러지면 멈춤)
+    private SfxLoop attackLoop;
+
+    protected void SetAttackLoop(bool playing)
+    {
+        if (attackLoop == null)
+        {
+            SfxCue cue = data.AttackLoopCue;
+            if (!playing || cue == null) return;
+            attackLoop = SfxLoop.Ensure(gameObject, cue);
+        }
+        if (playing) attackLoop.Play();
+        else attackLoop.Stop();
     }
 
     // 애니메이터 상태 이름은 '컨트롤러 이름 + 행동 상태' (예: ShieldboarWindup), 없으면 행동 상태 이름 그대로

@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Newtonsoft.Json.Linq;
 using UnityEngine;
 
 // 일정 주기마다 플레이어 주변 로드된 청크에 몬스터 스폰을 시도
@@ -6,10 +7,13 @@ using UnityEngine;
 // 청크 로드 범위 밖으로 벗어난 몬스터는 제거
 // 저장 시에는 지금 살아 있는 몬스터만 기록 (멀어져 제거된 몬스터는 남지 않음)
 // 한 번에 여러 마리(무리)를 스폰하고, 밤에는 더 자주·더 많이 스폰 (NightFactor로 보간)
+// 스폰된 개체는 크기가 조금씩 다름 (sizeScaleRange, 저장 시 함께 기록)
 // 스포너가 관리하는 몬스터는 배회할 때 플레이어 쪽으로 기움 (문지기·보스 등 다른 경로로 만든 몬스터는 제외)
 public class MonsterSpawner : MonoBehaviour, ISaveParticipant
 {
     private const string SaveKey = "monsters";
+    // 개체 기록의 data에 크기 배율을 넣을 때 쓰는 키
+    private const string SizeScaleKey = "sizeScale";
 
     [SerializeField] private Transform player;
     [SerializeField] private ChunkStreamer chunkStreamer;
@@ -23,6 +27,8 @@ public class MonsterSpawner : MonoBehaviour, ISaveParticipant
     [SerializeField] private int maxSpawnAttempts = 10;
     // 무리의 각 개체가 첫 개체 주변에서 자리를 찾는 최대 시도 횟수
     [SerializeField] private int maxPackMemberAttempts = 4;
+    [Tooltip("스폰된 몬스터의 크기 배율 범위 (프리팹 크기 기준)")]
+    [SerializeField] private Vector2 sizeScaleRange = new(0.9f, 1.1f);
 
     [Header("스폰 지점 검사")]
     // 이 레이어와 겹치는 지점에는 스폰하지 않음 (Nothing이면 검사 생략)
@@ -37,6 +43,8 @@ public class MonsterSpawner : MonoBehaviour, ISaveParticipant
     private SpawnRule Rule => gameSetting.spawn;
 
     private readonly HashSet<MonsterAI> activeMonsters = new();
+    // 개체별 크기 배율 (저장 시 함께 기록해서 불러와도 크기가 유지되게)
+    private readonly Dictionary<MonsterAI, float> sizeScales = new();
     private readonly List<MonsterAI> despawnBuffer = new();
 
     private float spawnTimer;
@@ -107,19 +115,29 @@ public class MonsterSpawner : MonoBehaviour, ISaveParticipant
         if (prefab == null) return;
 
         MonsterAI monster = Instantiate(prefab, position, Quaternion.identity, transform);
-        Register(monster);
+        Register(monster, Random.Range(sizeScaleRange.x, sizeScaleRange.y));
     }
 
-    private void Register(MonsterAI monster)
+    private void Register(MonsterAI monster, float sizeScale)
     {
+        // 프리팹 루트 크기에 곱함 (루트 크기가 1이 아닌 프리팹도 있음)
+        monster.transform.localScale *= sizeScale;
+        sizeScales[monster] = sizeScale;
+
         activeMonsters.Add(monster);
         monster.EnablePlayerDrift(player, this);
 
         // 사망 시 MonsterHealth가 직접 Destroy하므로 목록에서만 제거
         if (monster.TryGetComponent(out Health health))
         {
-            health.Died += () => activeMonsters.Remove(monster);
+            health.Died += () => Unregister(monster);
         }
+    }
+
+    private void Unregister(MonsterAI monster)
+    {
+        activeMonsters.Remove(monster);
+        sizeScales.Remove(monster);
     }
 
     public void Capture(WorldSaveData data)
@@ -131,7 +149,9 @@ public class MonsterSpawner : MonoBehaviour, ISaveParticipant
             // 시체로 남아 있는 몬스터는 저장하지 않음
             if (monster.TryGetComponent(out Health health) && health.IsDead) continue;
 
-            records.Add(entity.Capture());
+            EntityRecord record = entity.Capture();
+            if (sizeScales.TryGetValue(monster, out float sizeScale)) record.data[SizeScaleKey] = sizeScale;
+            records.Add(record);
         }
         data.entities[SaveKey] = records;
     }
@@ -146,7 +166,9 @@ public class MonsterSpawner : MonoBehaviour, ISaveParticipant
             // Awake에서 최대 체력으로 초기화된 뒤 저장된 체력으로 덮어씀
             MonsterAI monster = Instantiate(monsterPrefab, record.Position(), Quaternion.identity, transform);
             monster.GetComponent<SaveableEntity>().LoadData(record);
-            Register(monster);
+            // 크기 기록이 없는 이전 세이브는 원래 크기로
+            float sizeScale = record.data.TryGetValue(SizeScaleKey, out JToken token) ? token.Value<float>() : 1f;
+            Register(monster, sizeScale);
         }
     }
 
@@ -231,7 +253,7 @@ public class MonsterSpawner : MonoBehaviour, ISaveParticipant
 
         foreach (var monster in despawnBuffer)
         {
-            activeMonsters.Remove(monster);
+            Unregister(monster);
             if (monster != null) Destroy(monster.gameObject);
         }
         despawnBuffer.Clear();

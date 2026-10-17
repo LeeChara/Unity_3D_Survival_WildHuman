@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 27d60fd8339e91e49a8e1d5959b9bc71, type: 3}
+  m_Name: hitStone
+  m_EditorClassIdentifier: Assembly-CSharp::SfxCue
+  description: "\uB3CC\xB7\uAD11\uC11D \uD0C0\uACA9 (\uACE1\uAD2D\uC774\uB85C \uCE90\uB294
+    \uC790\uC6D0)"
+  clips:
+  - {fileID: 8300000, guid: 9dbfaade40d54b54c87ad05b7f1f96d7, type: 3}
+  - {fileID: 8300000, guid: f18b8aabbbd4d0646a2cf0ca8bf082d6, type: 3}
+  - {fileID: 8300000, guid: 74dd5e938dce6b440a4d69e41efffe37, type: 3}
+  volume: 1
+  pitchRange: {x: 0.95, y: 1.05}
+  minInterval: 0.03
+  maxVoices: 4

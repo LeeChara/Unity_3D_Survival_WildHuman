@@ -53,6 +53,8 @@ public static class GameOptions
     public static bool ShowScreenEffects { get; private set; }
     // 비가 올 때 화면 빗줄기 (RainOverlayUI). 꺼도 비 오는 날의 어두워짐은 남음
     public static bool ShowRainEffect { get; private set; }
+    // 스프라이트 파티클 양 (0: 끄기, 1: 적게, 2: 보통). 파편·연기·불씨 등 (Effects)
+    public static int ParticleLevel { get; private set; }
 
     // 언어 코드 (Languages 중 하나)
     public static string Language { get; private set; }
@@ -99,6 +101,7 @@ public static class GameOptions
         ShowSwingEffect = GetBool("ShowSwingEffect", true);
         ShowScreenEffects = GetBool("ShowScreenEffects", true);
         ShowRainEffect = GetBool("ShowRainEffect", true);
+        ParticleLevel = Mathf.Clamp(PlayerPrefs.GetInt(Prefix + "ParticleLevel", 2), 0, 2);
 
         Language = PlayerPrefs.GetString(Prefix + "Language", Languages[0]);
         if (Array.IndexOf(Languages, Language) < 0) Language = Languages[0];
@@ -208,6 +211,13 @@ public static class GameOptions
     {
         ShowRainEffect = value;
         SetBool("ShowRainEffect", value);
+        Save();
+    }
+
+    public static void SetParticleLevel(int value)
+    {
+        ParticleLevel = Mathf.Clamp(value, 0, 2);
+        PlayerPrefs.SetInt(Prefix + "ParticleLevel", ParticleLevel);
         Save();
     }
 

@@ -49,6 +49,16 @@ MonoBehaviour:
   knockbackResistance: 0
   superArmorWhileAttacking: 0
   dropTable: {fileID: 11400000, guid: cb94b897e2f793a4f84d6552d4a4e84a, type: 2}
+  detectCue: {fileID: 0}
+  windupCue: {fileID: 11400000, guid: 82ec219ee6d683441ab7b0f8daa84b9b, type: 2}
+  attackCue: {fileID: 11400000, guid: ff37e0cb91809ad41b09b159306b326e, type: 2}
+  attackLoopCue: {fileID: 0}
+  hurtCue: {fileID: 11400000, guid: 1392ac19f12b6ba4eb4d02bea6fed8f8, type: 2}
+  deathCue: {fileID: 0}
+  roarCue: {fileID: 11400000, guid: 1d28a13b01e692349921487f31bec684, type: 2}
+  callCue: {fileID: 11400000, guid: a54f0cdb29fc7cb4dad0c55fa67a7a1c, type: 2}
+  callInterval: {x: 10, y: 25}
+  sfxPitch: 1
   windupMinRange: 7
   stonePrefab: {fileID: 166747625551737325, guid: f27478d3334a03a4f8e100a9c476a1d4, type: 3}
   projectile:

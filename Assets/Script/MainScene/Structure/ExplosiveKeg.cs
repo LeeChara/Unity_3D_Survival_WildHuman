@@ -33,6 +33,8 @@ public class ExplosiveKeg : MonoBehaviour, ISaveable, IFireReactive
     [SerializeField] private LayerMask targetLayers;
     [Tooltip("폭발 위치에 생성할 이펙트 (비우면 생략)")]
     [SerializeField] private GameObject explosionEffectPrefab;
+    [Tooltip("폭발할 때 뿌리는 파편·연기·불씨 파티클")]
+    [SerializeField] private EffectData explosionParticles;
 
     [Header("표시")]
     [Tooltip("타는 동안 켜지는 도화선 불꽃")]
@@ -126,6 +128,8 @@ public class ExplosiveKeg : MonoBehaviour, ISaveable, IFireReactive
 
         IsLit = false;
         spark.enabled = false;
+        SetFuseSound(false);
+        Sfx.Play(SfxSetting.Instance?.extinguish, transform.position);
         if (fuseLight != null) fuseLight.enabled = false;
         if (hitFlash != null) hitFlash.SetBaseColor(Color.white);
         if (dropOnDeath != null) dropOnDeath.SetDropTable(refundTable);
@@ -143,6 +147,7 @@ public class ExplosiveKeg : MonoBehaviour, ISaveable, IFireReactive
         }
 
         IsLit = true;
+        SetFuseSound(true);
         fuseLeft = fuse;
         fuseLength = fuse;
         elapsed = 0f;
@@ -154,6 +159,24 @@ public class ExplosiveKeg : MonoBehaviour, ISaveable, IFireReactive
             refundTable = dropOnDeath.DropTable;
             dropOnDeath.SetDropTable(null);
         }
+    }
+
+    // 도화선이 타는 동안 치직거리는 소리
+    private SfxLoop fuseLoop;
+
+    private void SetFuseSound(bool lit)
+    {
+        if (fuseLoop == null)
+        {
+            if (!lit || SfxSetting.Instance == null || SfxSetting.Instance.fuseLoop == null) return;
+            fuseLoop = SfxLoop.Ensure(gameObject, SfxSetting.Instance.fuseLoop);
+        }
+        if (lit)
+        {
+            Sfx.Play(SfxSetting.Instance?.ignite, transform.position, 0.6f);
+            fuseLoop.Play();
+        }
+        else fuseLoop.Stop();
     }
 
     // 도화선이 다 타서 Kill되었거나, 타는 중에 부서진 경우 그 자리에서 폭발
@@ -169,6 +192,9 @@ public class ExplosiveKeg : MonoBehaviour, ISaveable, IFireReactive
 
         Vector3 center = transform.position;
         if (explosionEffectPrefab != null) Instantiate(explosionEffectPrefab, center, Quaternion.identity);
+        Effects.Play(explosionParticles, center);
+        SetFuseSound(false);
+        Sfx.Play(SfxSetting.Instance?.explosion, center);
 
         int count = Physics.OverlapSphereNonAlloc(center, radius, overlapBuffer, targetLayers, QueryTriggerInteraction.Ignore);
         var hitTargets = new HashSet<Health>();

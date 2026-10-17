@@ -42,6 +42,11 @@ public class PlayerBucketSwing : MonoBehaviour
         swinging = bucket;
         slotIndex = hotbar.SelectedIndex;
         if (bucket.filled || TouchesWater()) result = bucket.counterpart;
+
+        if (result != null && SfxSetting.Instance != null)
+        {
+            Sfx.Play(bucket.filled ? SfxSetting.Instance.bucketPour : SfxSetting.Instance.bucketScoop, transform.position);
+        }
     }
 
     // 휘두르는 도중 칸을 옮겼으면 원래 칸에 그 양동이가 그대로 있을 때만 바꿈

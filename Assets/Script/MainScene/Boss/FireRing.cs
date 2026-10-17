@@ -51,6 +51,16 @@ public class FireRing : MonoBehaviour
         return fromCenter.magnitude < radius ? -fromCenter : fromCenter;
     }
 
+    // 빛을 켠 불길에서만 타는 소리를 반복 (불길이 많아 모두 틀면 너무 시끄러움)
+    public void SetLoopSfx(SfxCue cue)
+    {
+        if (cue == null) return;
+        foreach (GroundFlame flame in flames)
+        {
+            if (flame != null && flame.HasLight) SfxLoop.Ensure(flame.gameObject, cue).Play();
+        }
+    }
+
     // 모든 불길을 끄고 고리를 없앰
     public void Extinguish()
     {

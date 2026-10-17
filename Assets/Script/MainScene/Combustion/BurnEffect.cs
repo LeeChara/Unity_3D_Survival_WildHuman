@@ -32,6 +32,12 @@ public class BurnEffect : MonoBehaviour
     [SerializeField, Min(0f)] private float minLightRadius = 2.5f;
     [SerializeField, Min(0f)] private float maxLightRadius = 6f;
 
+    [Header("불씨")]
+    [Tooltip("타는 동안 위로 떠오르는 불씨 파티클 (비워두면 없음)")]
+    [SerializeField] private EffectData emberEffect;
+    [Tooltip("불씨를 뿌리는 간격 (초)")]
+    [SerializeField, Min(0.05f)] private float emberInterval = 0.4f;
+
     [Header("순간형")]
     [Tooltip("PlayBurst로 만들었을 때 사라지기까지의 시간 (초)")]
     [SerializeField, Min(0.05f)] private float burstDuration = 0.6f;
@@ -43,6 +49,9 @@ public class BurnEffect : MonoBehaviour
     private float burstLeft = -1f;
     private float baseLightRadius;
     private Color baseColor;
+    // 덮는 범위의 크기 (불씨를 뿌릴 범위, 위치는 이 이펙트의 발밑을 따라감)
+    private Vector3 coverSize;
+    private float emberTimer;
 
     private void Awake()
     {
@@ -63,6 +72,8 @@ public class BurnEffect : MonoBehaviour
             float t = elapsed + phases[i];
             if (frames != null && frames.Length > 0) flame.sprite = frames[Mathf.FloorToInt(t * frameRate) % frames.Length];
         }
+
+        UpdateEmbers();
 
         if (burstLeft < 0f) return;
 
@@ -114,8 +125,21 @@ public class BurnEffect : MonoBehaviour
         gameObject.SetActive(false);
     }
 
+    private void UpdateEmbers()
+    {
+        if (emberEffect == null) return;
+
+        emberTimer -= Time.deltaTime;
+        if (emberTimer > 0f) return;
+        emberTimer = emberInterval * Random.Range(0.7f, 1.3f);
+
+        var cover = new Bounds(transform.position + Vector3.up * (coverSize.y * 0.5f), coverSize);
+        Effects.Play(emberEffect, cover, transform.parent);
+    }
+
     private void Fit(Bounds cover, Transform target)
     {
+        coverSize = cover.size;
         // 화면 가로(카메라 오른쪽, 수평 45도) 방향으로 본 너비. 월드 축 상자를 그 축에 투영한 길이
         float width = (cover.size.x + cover.size.z) * Mathf.Sin(CameraYAngle * Mathf.Deg2Rad) * widthScale;
 

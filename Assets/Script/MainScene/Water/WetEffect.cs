@@ -3,8 +3,8 @@ using UnityEngine;
 using UnityEngine.Rendering;
 
 // 젖음 이펙트 (프리팹 없이 코드로 만들고 WaterSetting의 스프라이트를 씀)
-// - 지속형: 젖은 동안 대상 그림 범위 안에서 물방울이 떨어짐 (Wettable이 대상의 자식으로 한 번 만들고 켜고 끔)
-// - 순간형: 젖은 물체에 불이 닿아 마를 때 김이 피어오르고 사라짐 (PlaySteam)
+// 젖은 동안 대상 그림 범위 안에서 물방울이 떨어짐 (Wettable이 대상의 자식으로 한 번 만들고 켜고 끔)
+// 마를 때 피어오르는 김은 파티클(WaterSetting.steamEffect)로 재생
 // 불타는 이펙트(BurnEffect)와 같은 방식으로 화면 가로(카메라 오른쪽, 수평 45도) 평면에 그림
 public class WetEffect : MonoBehaviour
 {
@@ -18,12 +18,6 @@ public class WetEffect : MonoBehaviour
     private const float FallDistance = 0.55f;
     private const float MaxRespawnDelay = 0.8f;
     private static readonly Color DropColor = new Color(0.55f, 0.78f, 1f, 1f);
-
-    // 김
-    private const int SteamPuffs = 4;
-    private const float SteamDuration = 0.9f;
-    private const float SteamRise = 0.7f;
-    private static readonly Color SteamColor = new Color(0.92f, 0.92f, 0.92f, 0.8f);
 
     private class Particle
     {
@@ -43,7 +37,6 @@ public class WetEffect : MonoBehaviour
     private SortingGroup sortingGroup;
     private Sprite sprite;
     private Color baseColor;
-    private bool steam;
     // 덮는 범위 (화면 가로 너비, 높이)
     private float width;
     private float height;
@@ -73,17 +66,6 @@ public class WetEffect : MonoBehaviour
         WetEffect effect = Create("WetEffect", setting.dropSprite, DropColor, target);
         effect.gameObject.SetActive(false);
         return effect;
-    }
-
-    // 김이 잠깐 피어올랐다 사라지는 순간형 이펙트
-    public static void PlaySteam(WaterSetting setting, Bounds cover)
-    {
-        if (setting.steamSprite == null) return;
-
-        WetEffect effect = Create("Steam", setting.steamSprite, SteamColor, null);
-        effect.steam = true;
-        effect.Fit(cover, null);
-        for (int i = 0; i < SteamPuffs; i++) effect.SpawnSteam(effect.AddParticle(), i);
     }
 
     private static WetEffect Create(string name, Sprite sprite, Color color, Transform parent)
@@ -123,7 +105,6 @@ public class WetEffect : MonoBehaviour
     private void Update()
     {
         float dt = Time.deltaTime;
-        bool anyAlive = false;
 
         foreach (Particle p in particles)
         {
@@ -133,32 +114,18 @@ public class WetEffect : MonoBehaviour
             {
                 p.delay -= dt;
                 p.renderer.enabled = p.delay <= 0f;
-                anyAlive = true;
                 continue;
             }
 
             p.age += dt;
             float t = Mathf.Clamp01(p.age / p.life);
 
-            if (steam)
-            {
-                p.renderer.transform.localPosition = new Vector3(p.start.x, p.start.y + SteamRise * t, 0f);
-                float scale = Mathf.Lerp(1f, 1.8f, t);
-                p.renderer.transform.localScale = new Vector3(scale, scale, 1f);
-                SetAlpha(p, 1f - t);
-                if (t < 1f) anyAlive = true;
-                continue;
-            }
-
             float y = p.start.y - FallSpeed * p.age;
             p.renderer.transform.localPosition = new Vector3(p.start.x, y, 0f);
             // 끝으로 갈수록 흐려짐
             SetAlpha(p, t < 0.6f ? 1f : 1f - (t - 0.6f) / 0.4f);
             if (t >= 1f || y <= 0f) SpawnDrop(p, Random.value * MaxRespawnDelay);
-            anyAlive = true;
         }
-
-        if (steam && !anyAlive) Destroy(gameObject);
     }
 
     private Particle AddParticle()
@@ -183,16 +150,6 @@ public class WetEffect : MonoBehaviour
         drop.renderer.enabled = delay <= 0f;
         drop.renderer.transform.localPosition = drop.start;
         SetAlpha(drop, 1f);
-    }
-
-    private void SpawnSteam(Particle puff, int index)
-    {
-        puff.start = new Vector2(Random.Range(-0.35f, 0.35f) * width, Random.Range(0.3f, 0.7f) * height);
-        puff.age = 0f;
-        puff.life = SteamDuration * Random.Range(0.8f, 1.1f);
-        puff.delay = index * 0.08f;
-        puff.renderer.enabled = puff.delay <= 0f;
-        puff.renderer.transform.localPosition = puff.start;
     }
 
     private void SetAlpha(Particle p, float alpha)

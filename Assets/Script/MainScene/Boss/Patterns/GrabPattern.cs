@@ -24,6 +24,11 @@ public class GrabPattern : BossPattern
     [Header("2페이즈 던지기")]
     public AttackData throwAttack = new AttackData { damage = 15, knockbackDistance = 8f, impactStun = 0.8f };
 
+    [Header("효과음 (손을 들 때 windupCue, 붙잡을 때 attackCue)")]
+    public SfxCue throwCue;
+    [Tooltip("놓쳤을 때 헛손질")]
+    public SfxCue missCue;
+
     [Header("후딜")]
     [Tooltip("내려놓거나 던진 뒤 (초)")]
     [Min(0f)] public float recover = 0.8f;
@@ -44,6 +49,7 @@ public class GrabPattern : BossPattern
         Vector3 origin = boss.transform.position;
 
         boss.PlayMotion("GrabWindup", BossMotion.Windup);
+        boss.PlaySfx(windupCue);
         AttackIndicator indicator = boss.ShowIndicator(shape, origin, forward, windup);
         yield return new WaitForSeconds(windup);
 
@@ -52,11 +58,13 @@ public class GrabPattern : BossPattern
         if (grabbed == null)
         {
             boss.PlayMotion("GrabMiss", BossMotion.Recover);
+            boss.PlaySfx(missCue);
             yield return new WaitForSeconds(missRecover);
             yield break;
         }
 
         boss.PlayMotion("GrabHold", BossMotion.Attack);
+        boss.PlaySfx(attackCue);
         Health victim = (grabbed as Component).GetComponent<Health>();
         Vector3 holdPoint = boss.transform.position + forward * holdDistance;
         float elapsed = 0f;
@@ -79,6 +87,7 @@ public class GrabPattern : BossPattern
         if (boss.Phase >= 2 && victim != null && !victim.IsDead)
         {
             boss.PlayMotion("GrabThrow", BossMotion.Attack);
+            boss.PlaySfx(throwCue);
             victim.TakeHit(boss.ApplyModifiers(throwAttack));
             if (victim.TryGetComponent(out Knockback knockback))
                 knockback.Apply(forward, throwAttack.knockbackDistance, throwAttack.impactStun);

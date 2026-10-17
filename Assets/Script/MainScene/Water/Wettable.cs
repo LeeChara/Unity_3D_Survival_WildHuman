@@ -82,7 +82,13 @@ public class Wettable : MonoBehaviour, ISaveable
 
     private void OnHit(AttackData attack)
     {
-        if (attack.element == ElementType.Water) Soak();
+        // 물을 끼얹었을 때만 첨벙 (비·물웅덩이처럼 계속 적시는 것은 소리 없음)
+        if (attack.element == ElementType.Water)
+        {
+            Sfx.Play(SfxSetting.Instance?.splash, transform.position);
+            Effects.PlayOn(setting.splashEffect, transform);
+            Soak();
+        }
         // 가연물·화약통은 불이 닿을 때 스스로 TryDry로 판단 (붙을지 마를지)
         else if (attack.element == ElementType.Fire && combustible == null && keg == null) TryDry();
     }
@@ -94,6 +100,7 @@ public class Wettable : MonoBehaviour, ISaveable
     {
         if (health.IsDead || seconds <= 0f) return;
 
+        // 불이 꺼지는 소리는 각자 냄 (Combustible·ExplosiveKeg)
         if (combustible != null) combustible.Extinguish();
         if (keg != null) keg.Defuse();
 
@@ -107,7 +114,8 @@ public class Wettable : MonoBehaviour, ISaveable
         if (!host.Remove(setting.wet)) return false;
 
         SetShown(false);
-        if (BurnEffect.TryMeasure(transform, null, null, out Bounds cover)) WetEffect.PlaySteam(setting, cover);
+        Sfx.Play(SfxSetting.Instance?.extinguish, transform.position, 0.6f);
+        Effects.PlayOn(setting.steamEffect, transform);
         return true;
     }
 

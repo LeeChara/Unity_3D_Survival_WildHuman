@@ -24,7 +24,9 @@ MonoBehaviour:
   requiredTier: 0
   reduceWeaponDamage: 1
   dropTable: {fileID: 11400000, guid: 01be538e1ee639b40b1963a81423c925, type: 2}
-  destroyEffectPrefab: {fileID: 0}
+  hitEffect: {fileID: 11400000, guid: 10a6580b6b9433444bdff55d22126427, type: 2}
+  destroyEffect: {fileID: 11400000, guid: 8daad67b621e7cf4aa91aae10d46491e, type: 2}
+  effectColor: {r: 0.6, g: 0.42, b: 0.28, a: 1}
   growInto: {fileID: 0}
   growTime: 300
   leaveBehind: {fileID: 6855047938053804099, guid: 7be2b2200ec14234bbc2a334aa73969d, type: 3}

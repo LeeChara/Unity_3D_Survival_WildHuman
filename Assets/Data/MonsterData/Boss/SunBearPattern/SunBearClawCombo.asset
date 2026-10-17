@@ -20,6 +20,8 @@ MonoBehaviour:
   cooldown: 0
   weight: 3
   invulnerable: 0
+  windupCue: {fileID: 11400000, guid: c68473d70ec4c8941919cbc77e701d4c, type: 2}
+  attackCue: {fileID: 11400000, guid: ac77b6b451917a340a1b26b7c7495131, type: 2}
   strikes:
   - motion: ClawLeft
     shape:
@@ -87,4 +89,5 @@ MonoBehaviour:
       isWeapon: 0
       environmental: 0
     phase2Damage: 55
+  finisherCue: {fileID: 11400000, guid: 45a540c0866578147ba08cf2dde74797, type: 2}
   recover: 1

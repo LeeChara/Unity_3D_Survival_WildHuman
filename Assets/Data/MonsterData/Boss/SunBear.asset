@@ -41,12 +41,26 @@ MonoBehaviour:
     element: 0
     strike: 0
     isWeapon: 0
+    environmental: 0
   recoverDuration: 1
   knockbackResistance: 1
   superArmorWhileAttacking: 0
   dropTable: {fileID: 0}
+  detectCue: {fileID: 11400000, guid: 2d8fa1261ee1db64aaf629f5122394b2, type: 2}
+  windupCue: {fileID: 0}
+  attackCue: {fileID: 0}
+  attackLoopCue: {fileID: 0}
+  hurtCue: {fileID: 11400000, guid: c3fa307c59fdd074a8ac32949dbf432e, type: 2}
+  deathCue: {fileID: 11400000, guid: a1502100ecad79543979810cbb02a9da, type: 2}
+  roarCue: {fileID: 0}
+  callCue: {fileID: 11400000, guid: 617b44a7982811442bd02601f6abbefc, type: 2}
+  callInterval: {x: 10, y: 25}
+  sfxPitch: 1
   phase2HealthRatio: 0.3
   patternGap: 0.5
+  leashRadius: 30
+  regenPerSecond: 0.05
+  homeWanderRadius: 8
   patterns:
   - {fileID: 11400000, guid: 71bcf1c5e4282494aa3d60c88aa73d12, type: 2}
   - {fileID: 11400000, guid: 5a41b566216c612488f35cb731b65dd9, type: 2}
@@ -62,6 +76,9 @@ MonoBehaviour:
   fireRingSpacing: 2
   fireRingLightEvery: 4
   fireRingKnockback: 3
+  phaseCue: {fileID: 11400000, guid: afe303d1c28ee5f49a562bb496bb622a, type: 2}
+  fireRingLoopCue: {fileID: 11400000, guid: 1fce4ef78657d1c4da5353404a050c1a, type: 2}
+  summonCue: {fileID: 11400000, guid: 6252ba4ae9b3e6a4abc6a2fda7310ecd, type: 2}
   nightMoveScale: 0.85
   nightGapScale: 1.5
   nightDamageScale: 0.85

@@ -21,6 +21,8 @@ MonoBehaviour:
   tilingScale: 5
   blendRange: 1
   mapColor: {r: 0.29901966, g: 0.25606617, b: 0.24644615, a: 1}
+  footstepCue: {fileID: 11400000, guid: f4cab0b21bd577e469ee7b015b475ae7, type: 2}
+  footstepEffect: {fileID: 11400000, guid: 582419bbb5ffdf441b962c436c6ce76b, type: 2}
   minThreshold: 0.63
   maxThreshold: 1
   propSpawnTable:

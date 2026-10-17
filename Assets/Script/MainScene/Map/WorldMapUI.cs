@@ -32,6 +32,7 @@ public class WorldMapUI : MonoBehaviour, IScrollHandler, IDragHandler
         MapSystem map = MapSystem.Instance;
         if (open && map == null) return;
 
+        if (open != IsOpen) Sfx.PlayUI(open ? SfxSetting.Instance?.mapOpen : SfxSetting.Instance?.uiClose);
         panel.SetActive(open);
         IsOpen = open;
         if (!open) return;

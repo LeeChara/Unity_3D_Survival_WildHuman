@@ -20,6 +20,7 @@ public class StorageChest : MonoBehaviour, IInteractable, ISaveable, ISlotContai
     private ItemStack[] slots;
     private Combustible combustible;
     private Sprite closedSprite;
+    private bool isOpen;
 
     private void Awake()
     {
@@ -38,6 +39,10 @@ public class StorageChest : MonoBehaviour, IInteractable, ISaveable, ISlotContai
     // ChestUI가 창을 열고 닫을 때 호출
     public void SetOpen(bool open)
     {
+        // 이미 열린 상자를 다시 열면 소리를 내지 않음
+        if (open != isOpen && SfxSetting.Instance != null) Sfx.Play(open ? SfxSetting.Instance.chestOpen : SfxSetting.Instance.chestClose, transform.position);
+        isOpen = open;
+
         if (spriteRenderer == null || openSprite == null) return;
         spriteRenderer.sprite = open ? openSprite : closedSprite;
     }

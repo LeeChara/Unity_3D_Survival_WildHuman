@@ -20,6 +20,8 @@ public class Smelter : MonoBehaviour, IInteractable, ISaveable, ISlotContainer
     [SerializeField] private GameObject timerRoot;
     [Tooltip("진행도만큼 채워지는 이미지 (Filled, Radial 360)")]
     [SerializeField] private Image timerFill;
+    [Tooltip("재련하는 동안만 켜지는 굴뚝 연기 (비워두면 없음)")]
+    [SerializeField] private LoopingEffect workEffect;
 
     public SmeltingBook Book => smeltingBook;
     public int InputSlots => inputSlots;
@@ -53,6 +55,8 @@ public class Smelter : MonoBehaviour, IInteractable, ISaveable, ISlotContainer
     private void Update()
     {
         if (dirty) FindRecipe();
+        UpdateWorkSound();
+        if (workEffect != null && workEffect.enabled != (Current != null)) workEffect.enabled = Current != null;
         if (Current == null) return;
 
         elapsed += Time.deltaTime;
@@ -129,6 +133,23 @@ public class Smelter : MonoBehaviour, IInteractable, ISaveable, ISlotContainer
 
         // 다음 프레임에 남은 재료로 다시 레시피를 찾음
         dirty = true;
+        Sfx.Play(SfxSetting.Instance?.smeltDone, transform.position);
+    }
+
+    // 재련하는 동안만 가동 소리
+    private SfxLoop workLoop;
+
+    private void UpdateWorkSound()
+    {
+        bool working = Current != null;
+        if (workLoop == null)
+        {
+            if (!working || SfxSetting.Instance == null || SfxSetting.Instance.smeltLoop == null) return;
+            workLoop = SfxLoop.Ensure(gameObject, SfxSetting.Instance.smeltLoop);
+        }
+        if (working == workLoop.IsPlaying) return;
+        if (working) workLoop.Play();
+        else workLoop.Stop();
     }
 
     private bool HasIngredients(SmeltingRecipe recipe)

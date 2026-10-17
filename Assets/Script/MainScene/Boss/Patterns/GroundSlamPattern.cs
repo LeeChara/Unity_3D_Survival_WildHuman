@@ -18,6 +18,9 @@ public class GroundSlamPattern : BossPattern
     [Min(0f)] public float followUpWindup = 0.6f;
     public AttackData followUpAttack = new AttackData { damage = 20, knockbackDistance = 3f };
 
+    [Tooltip("2페이즈 후속타 효과음 (손을 들 때 windupCue, 찍을 때 attackCue)")]
+    public SfxCue followUpCue;
+
     [Tooltip("마지막 공격 뒤 후딜 (초)")]
     [Min(0f)] public float recover = 1.2f;
 
@@ -35,10 +38,12 @@ public class GroundSlamPattern : BossPattern
         Vector3 origin = boss.transform.position;
 
         boss.PlayMotion("SlamWindup", BossMotion.Windup);
+        boss.PlaySfx(windupCue);
         AttackIndicator indicator = boss.ShowIndicator(shape, origin, forward, windup);
         yield return new WaitForSeconds(windup);
 
         boss.PlayMotion("Slam", BossMotion.Attack);
+        boss.PlaySfx(attackCue);
         boss.Strike(shape, origin, forward, attack);
         boss.ReleaseIndicator(indicator);
         if (CameraShake.Instance != null) CameraShake.Instance.Shake(0.3f, 0.25f);
@@ -49,6 +54,7 @@ public class GroundSlamPattern : BossPattern
             yield return new WaitForSeconds(followUpWindup);
 
             boss.Strike(followUpShape, origin, forward, followUpAttack);
+            boss.PlaySfx(followUpCue);
             boss.ReleaseIndicator(followUp);
             if (CameraShake.Instance != null) CameraShake.Instance.Shake(0.2f, 0.2f);
         }

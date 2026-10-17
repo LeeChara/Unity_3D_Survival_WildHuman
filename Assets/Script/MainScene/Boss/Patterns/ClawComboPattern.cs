@@ -34,6 +34,9 @@ public class ClawComboPattern : BossPattern
             attack = new AttackData { damage = 18, knockbackDistance = 2.5f }, phase2Damage = 22 },
     };
 
+    [Tooltip("마지막 타격 효과음 (나머지 타격은 attackCue, 타격마다 손을 들 때 windupCue)")]
+    public SfxCue finisherCue;
+
     [Tooltip("마지막 타격 뒤 후딜 (초)")]
     [Min(0f)] public float recover = 1f;
 
@@ -46,10 +49,13 @@ public class ClawComboPattern : BossPattern
 
     public override IEnumerator Run(BossAI boss)
     {
-        foreach (Strike strike in strikes)
+        for (int i = 0; i < strikes.Length; i++)
         {
+            Strike strike = strikes[i];
+            bool last = i == strikes.Length - 1;
             Vector3 forward = boss.AimAtTarget();
             boss.PlayMotion(strike.motion + "Windup", BossMotion.Windup);
+            boss.PlaySfx(windupCue);
 
             // 범위는 내딛은 뒤의 위치 기준 (표시와 판정이 같은 자리)
             Vector3 origin = boss.transform.position + forward * strike.step;
@@ -57,6 +63,7 @@ public class ClawComboPattern : BossPattern
             yield return new WaitForSeconds(strike.windup);
 
             boss.PlayMotion(strike.motion, BossMotion.Attack);
+            boss.PlaySfx(last ? SfxCue.Or(finisherCue, attackCue) : attackCue);
             if (strike.step > 0f) boss.Body.MovePosition(boss.Body.position + forward * strike.step);
 
             AttackData attack = strike.attack;

@@ -20,6 +20,8 @@ MonoBehaviour:
   cooldown: 5
   weight: 2
   invulnerable: 0
+  windupCue: {fileID: 11400000, guid: 40fcdd78b47ed5e47a51dad72cd70ef2, type: 2}
+  attackCue: {fileID: 11400000, guid: cdf26d5f884985144a08f22b74b96a7b, type: 2}
   windup: 1
   shape:
     kind: 3
@@ -45,4 +47,6 @@ MonoBehaviour:
     m_Bits: 3328
   trailSpacing: 1.5
   trailLifetime: 6
+  runLoopCue: {fileID: 11400000, guid: 321008eebf566224fb2684a8491d863c, type: 2}
+  crashCue: {fileID: 11400000, guid: e8236bbadd2524a4c9759bec057dff94, type: 2}
   recover: 1.2

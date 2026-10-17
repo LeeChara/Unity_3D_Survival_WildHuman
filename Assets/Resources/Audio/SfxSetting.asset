@@ -1,0 +1,91 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 92bb4d5c434b27642ba126b689cd7c1a, type: 3}
+  m_Name: SfxSetting
+  m_EditorClassIdentifier: Assembly-CSharp::SfxSetting
+  footstep: {fileID: 11400000, guid: be1d88d89c0b8234c8fb07cd9d01aee2, type: 2}
+  footstepWater: {fileID: 11400000, guid: f75bf7bb469c1a34d9f7af65c924b598, type: 2}
+  footstepIce: {fileID: 11400000, guid: bc20bd16dba1a0040a91a786bb5aa7a3, type: 2}
+  footstepStride: 1.1
+  swing: {fileID: 11400000, guid: a7372637acf506f4f92ecf238d1680bf, type: 2}
+  swingHeavy: {fileID: 11400000, guid: a649a4a4df3b5f14eb73720af010b993, type: 2}
+  dodge: {fileID: 11400000, guid: 5caf69370e03fc3439e9a3c3a202891d, type: 2}
+  playerHurt: {fileID: 11400000, guid: 53b79f80844a0e440a5321c05778e8d8, type: 2}
+  playerDeath: {fileID: 11400000, guid: 9cc3d0b651d9b6744baf0444a0a11b0e, type: 2}
+  respawn: {fileID: 11400000, guid: ba7748c1f4046dd449e99a42f3fe459f, type: 2}
+  playerStun: {fileID: 11400000, guid: 00420844210140243b0a1b6034b94258, type: 2}
+  eat: {fileID: 11400000, guid: b9077f16c2e68eb42b98549c493cb084, type: 2}
+  pickup: {fileID: 11400000, guid: d4ee4cba25b2ada41bbf344fd616f8ef, type: 2}
+  throwItem: {fileID: 11400000, guid: fe5c939816e49314facf2191055af1cc, type: 2}
+  place: {fileID: 11400000, guid: 3fd59668fa2784c4ab6bf424b11080f9, type: 2}
+  bucketScoop: {fileID: 11400000, guid: 456318a53e4fad146bda5f9a6374c089, type: 2}
+  bucketPour: {fileID: 11400000, guid: 4018ec16cd56f7741a7063683d823416, type: 2}
+  equipOn: {fileID: 11400000, guid: d4f89fbe2c6358748b6cb103235da28f, type: 2}
+  equipOff: {fileID: 11400000, guid: 1ba76aac136c1e246867bab966d901e6, type: 2}
+  hotbarSelect: {fileID: 11400000, guid: a368ac1758e14db4d91d11952192037e, type: 2}
+  hungerWarning: {fileID: 11400000, guid: 0e168d8d759d3a148892139fd73c6206, type: 2}
+  hungerWarningRatio: 0.2
+  heartbeat: {fileID: 11400000, guid: 6bf32f3784d3809499926bc8979333e7, type: 2}
+  heartbeatRatio: 0.25
+  heartbeatInterval: 0.9
+  hitWood: {fileID: 11400000, guid: ab603084a6a4c764cb13b155e61ed442, type: 2}
+  breakWood: {fileID: 11400000, guid: 5b9a5f1e2b978eb429c2c532d6619447, type: 2}
+  hitStone: {fileID: 11400000, guid: 5f35229e80c68c14596d5ff0cdfb09c7, type: 2}
+  breakStone: {fileID: 11400000, guid: 62a37771660629a4aa5052c4078f110d, type: 2}
+  hitPlant: {fileID: 11400000, guid: 0e6bea11782a7ed4eb5a06cab55fb715, type: 2}
+  breakPlant: {fileID: 11400000, guid: 418968376d86e0645b1dc702612446c2, type: 2}
+  hitBlocked: {fileID: 11400000, guid: aa94f542d12d9734eabbbad27baa4b1f, type: 2}
+  hitStructure: {fileID: 11400000, guid: 4ea6e27ad9751b547936c4e2208ebadb, type: 2}
+  breakStructure: {fileID: 11400000, guid: e397335006d455646b9a3245b2127092, type: 2}
+  prick: {fileID: 11400000, guid: 27890eba556bfcb49a48083bd1fa8529, type: 2}
+  monsterHurt: {fileID: 11400000, guid: 1a88e8af69af20d429dfaa251bbb9ebc, type: 2}
+  monsterDeath: {fileID: 11400000, guid: cc649a4f07070c84680658318bcabf4f, type: 2}
+  monsterDetect: {fileID: 11400000, guid: 10fa2bd97522a644580b33a57f115fee, type: 2}
+  monsterWindup: {fileID: 11400000, guid: 98333e03fc9574a438f90300a4425288, type: 2}
+  monsterAttack: {fileID: 11400000, guid: da5590aac1146cd40b9bece66799a7ee, type: 2}
+  monsterStun: {fileID: 11400000, guid: c60007cbe2c8cff47a5a94060bd29714, type: 2}
+  ignite: {fileID: 11400000, guid: 2d315c92ff661c543b597e8e57294bf8, type: 2}
+  burnLoop: {fileID: 11400000, guid: 4a78b30d32573a949aa325c6a5be6614, type: 2}
+  extinguish: {fileID: 11400000, guid: e7381c28158b20b408516cedbeda826a, type: 2}
+  splash: {fileID: 11400000, guid: b141d349e4f112148aa4e3562056c00f, type: 2}
+  fuseLoop: {fileID: 11400000, guid: 29a0b69c7cd0e8c4f9d0b9b578e12906, type: 2}
+  explosion: {fileID: 11400000, guid: 43692b1cb74e11c42bab1e182cd2206a, type: 2}
+  craft: {fileID: 11400000, guid: 31331e4045ce0a74a92ef67a0a64b3f7, type: 2}
+  cookAdd: {fileID: 11400000, guid: 689ad1939c208374cbde84920d65dda3, type: 2}
+  cookDone: {fileID: 11400000, guid: f2250a58102b8c24a9dc9111bb355041, type: 2}
+  smeltLoop: {fileID: 11400000, guid: ccb718f00d1e4cb478c9c273a680a853, type: 2}
+  smeltDone: {fileID: 11400000, guid: bc8321a9faf316941abeb4b22b56d93c, type: 2}
+  chestOpen: {fileID: 11400000, guid: ffc428801ce8ef04db99c10457e01f5c, type: 2}
+  chestClose: {fileID: 11400000, guid: 24510ac2a944fa7438df71a6f1bef9c6, type: 2}
+  uiClick: {fileID: 11400000, guid: 3543ab6ae13dea144ad4078932aec2eb, type: 2}
+  uiHover: {fileID: 11400000, guid: 5386648a7a90be64c86fc522b4da5426, type: 2}
+  uiDeny: {fileID: 11400000, guid: 729d017b9655ec14e9131c71a2b6908f, type: 2}
+  uiOpen: {fileID: 11400000, guid: ef73439c70e111b41bcc5dc960b35b20, type: 2}
+  uiClose: {fileID: 11400000, guid: fd45aedcc65d01544bdba2ba694cb8eb, type: 2}
+  slotPick: {fileID: 11400000, guid: 847acdcd959b7464e8767a2b29d4034a, type: 2}
+  slotDrop: {fileID: 11400000, guid: c6d09d05944667745a1134af914f0f4e, type: 2}
+  mapOpen: {fileID: 11400000, guid: dcbbbe5c57e9ad64aa4f97d1e054d61d, type: 2}
+  pageFlip: {fileID: 11400000, guid: f3046bb9a9d704b4dadf0ad8c11cc7ea, type: 2}
+  saveDone: {fileID: 11400000, guid: 789a0dc46f0070d448e5a1fef3d71613, type: 2}
+  worldCreate: {fileID: 11400000, guid: bca89744a6acb8b4bac5a83db65d2371, type: 2}
+  menuPoke: {fileID: 11400000, guid: 8301271c1960bcd419a61cf4b7e11ad1, type: 2}
+  menuBreak: {fileID: 11400000, guid: 4fc0e3465acbabd44bdda2d691c14a43, type: 2}
+  dawn: {fileID: 11400000, guid: 23ca2b44304d3644290826444342aa45, type: 2}
+  dusk: {fileID: 11400000, guid: 26277f4b30df5884f861a6db5a424175, type: 2}
+  thunder: {fileID: 11400000, guid: 6dd057a72ce0e1f4db2d5bb24eca183a, type: 2}
+  thunderRainFactor: 0.7
+  thunderInterval: {x: 25, y: 70}
+  ambientDay: {fileID: 11400000, guid: 0396e97bc74a7d54ab4d34848072f20f, type: 2}
+  ambientNight: {fileID: 11400000, guid: ef34781363de134418612a801b11abe8, type: 2}
+  ambientVolume: 0.35
+  campfireLoop: {fileID: 11400000, guid: cec4e67dfe7bba349a90b0487f842ed6, type: 2}
+  lavaLoop: {fileID: 11400000, guid: b28343d3849d30845b75509b1277e769, type: 2}

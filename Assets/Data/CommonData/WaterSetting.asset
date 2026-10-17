@@ -25,4 +25,5 @@ MonoBehaviour:
   iceAcceleration: 4
   wetTint: {r: 0.72, g: 0.76, b: 0.85, a: 1}
   dropSprite: {fileID: 21300000, guid: eaf5d2c1fd78160458dfa2c4205664f9, type: 3}
-  steamSprite: {fileID: 21300000, guid: 87d348a6254f75641b89ab96e8301c36, type: 3}
+  steamEffect: {fileID: 11400000, guid: e22d224c76dff874ab6a64db13fae7ac, type: 2}
+  splashEffect: {fileID: 11400000, guid: 76b0f86e7a3f0e649bfb8e6592a3840b, type: 2}

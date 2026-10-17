@@ -82,6 +82,7 @@ public class Combustible : MonoBehaviour, ISaveable, IFireReactive
     private void Update()
     {
         bool burning = IsBurning;
+        if (shownBurning && !burning) PlayExtinguish();
         if (burning != shownBurning) SetShown(burning);
         if (!burning) return;
 
@@ -112,7 +113,17 @@ public class Combustible : MonoBehaviour, ISaveable, IFireReactive
     // 불을 끔 (예: 타는 중에 젖음)
     public void Extinguish()
     {
-        if (host.Remove(burn)) SetShown(false);
+        if (!host.Remove(burn)) return;
+
+        PlayExtinguish();
+        SetShown(false);
+    }
+
+    private void PlayExtinguish()
+    {
+        if (health.IsDead) return;
+        Effects.PlayOn(setting.extinguishEffect, transform);
+        Sfx.Play(SfxSetting.Instance?.extinguish, transform.position);
     }
 
     // 남은 시간을 지정해서 붙임 (저장된 상태 복원용)
@@ -136,11 +147,27 @@ public class Combustible : MonoBehaviour, ISaveable, IFireReactive
 
     private void SetShown(bool burning)
     {
+        if (burning && !shownBurning) Sfx.Play(SfxSetting.Instance?.ignite, transform.position);
+        SetBurnSound(burning);
         shownBurning = burning;
         if (fireSource != null) fireSource.enabled = burning;
         SetEffectVisible(burning);
         // 쓰러진 뒤에는 HitFlash가 사망 색을 유지하므로 그을림 색을 건드리지 않음
         if (!burning && !charred && hitFlash != null && !health.IsDead) hitFlash.SetBaseColor(Color.white);
+    }
+
+    // 타는 동안 반복되는 소리 (처음 탈 때 붙이고 켜고 끔)
+    private SfxLoop burnLoop;
+
+    private void SetBurnSound(bool burning)
+    {
+        if (burnLoop == null)
+        {
+            if (!burning || SfxSetting.Instance == null || SfxSetting.Instance.burnLoop == null) return;
+            burnLoop = SfxLoop.Ensure(gameObject, SfxSetting.Instance.burnLoop);
+        }
+        if (burning) burnLoop.Play();
+        else burnLoop.Stop();
     }
 
     // 불꽃 이펙트는 처음 탈 때 한 번 만들어 자식으로 두고 켜고 끔

@@ -46577,7 +46577,7 @@ MonoBehaviour:
   feltDistance: 200
   audioSource: {fileID: 1888682276}
   sound: {fileID: 0}
-  spawnEffectPrefab: {fileID: 0}
+  spawnEffect: {fileID: 11400000, guid: 5d63be09fd50a454d9f34c160659b920, type: 2}
   effectDistance: 60
   effectForwardOffset: 0.6
 --- !u!82 &1888682276

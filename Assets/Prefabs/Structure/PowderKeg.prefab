@@ -185,14 +185,18 @@ MonoBehaviour:
   blast:
     damage: 40
     knockbackDistance: 3
+    impactStun: 0
     toolType: 2
     toolTier: 4
     element: 1
     strike: 0
+    isWeapon: 0
+    environmental: 0
   targetLayers:
     serializedVersion: 2
     m_Bits: 1472
   explosionEffectPrefab: {fileID: 5276443595587706041, guid: 442f4a6da53f6e14fad8b3985bada0a6, type: 3}
+  explosionParticles: {fileID: 11400000, guid: a431eb517c459a84fbf009a4ccfc027c, type: 2}
   spark: {fileID: 3749902227295016742}
   sparkFrames:
   - {fileID: -62902793, guid: 07853e3bc1123cc46b5345dd858d3704, type: 3}

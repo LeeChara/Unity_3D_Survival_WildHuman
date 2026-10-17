@@ -71,6 +71,8 @@ MonoBehaviour:
   targetLayers:
     serializedVersion: 2
     m_Bits: 192
+  knockbackDistance: 0
+  Owner: {fileID: 0}
 --- !u!1 &1727470311522946942
 GameObject:
   m_ObjectHideFlags: 0
@@ -93,6 +95,8 @@ GameObject:
   - component: {fileID: 3293621871656106487}
   - component: {fileID: 2842046498291437596}
   - component: {fileID: 3251064436778173694}
+  - component: {fileID: 2601694864460437887}
+  - component: {fileID: 4105311642018105035}
   m_Layer: 10
   m_Name: Campfire
   m_TagString: Untagged
@@ -293,6 +297,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::FireSource
   setting: {fileID: 11400000, guid: 077688a177b6c3c408c8b8fafd961038, type: 2}
   body: []
+  ignoreLayers:
+    serializedVersion: 2
+    m_Bits: 0
 --- !u!114 &2842046498291437596
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -322,6 +329,37 @@ MonoBehaviour:
   setting: {fileID: 11400000, guid: b75368e149c56444db0a699f03b0dcff, type: 2}
   duration: 0
   hitFlash: {fileID: 0}
+--- !u!114 &2601694864460437887
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1727470311522946942}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3e116263a4ef8ab43943ea409be23886, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SfxLoop
+  cue: {fileID: 11400000, guid: cec4e67dfe7bba349a90b0487f842ed6, type: 2}
+  playOnEnable: 1
+  fadeTime: 0.25
+--- !u!114 &4105311642018105035
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1727470311522946942}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 772006b1da9302b44841e7774644ddc0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::LoopingEffect
+  effect: {fileID: 11400000, guid: 3fa9ead561f9cdd409a8e71e9dd9ead8, type: 2}
+  interval: 0.35
+  point: {fileID: 0}
+  activeWhen: {fileID: 3293621871656106487}
 --- !u!1 &1821372604469262021
 GameObject:
   m_ObjectHideFlags: 0

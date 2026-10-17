@@ -22,6 +22,14 @@ public class StructureHealth : Health
         Init(sourceItem.maxHealth);
 
         if (TryGetComponent(out ItemDropOnDeath dropOnDeath)) dropOnDeath.SetDropTable(sourceItem.dropTable);
+        Hit += OnHit;
+    }
+
+    // 피해 없는 속성 공격(물 뿌리기 등)은 소리 없음 (파괴되는 공격은 Die에서)
+    private void OnHit(AttackData attack)
+    {
+        if (attack.IsHarmless || IsDead || IsInvulnerable) return;
+        Sfx.Play(SfxSetting.Instance?.hitStructure, transform.position);
     }
 
     protected override int CalculateDamage(AttackData attack)
@@ -31,6 +39,7 @@ public class StructureHealth : Health
 
     protected override void Die()
     {
+        Sfx.Play(SfxSetting.Instance?.breakStructure, transform.position);
         // 아이템 반환은 Died를 구독하는 ItemDropOnDeath가 처리
         base.Die();
         Destroyed?.Invoke(this);

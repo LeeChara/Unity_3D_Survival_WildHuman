@@ -2,7 +2,7 @@ using System;
 using UnityEngine;
 
 // 채집 가능한 자원(Prop)의 체력
-// 수치(체력, 도구 배율, 드랍, 파괴 이펙트)는 PropData에서 읽음
+// 수치(체력, 도구 배율, 드랍, 피격·파괴 이펙트)는 PropData에서 읽음
 // 풀링되는 오브젝트라 재사용될 때마다 체력을 다시 채움
 public class PropHealth : Health
 {
@@ -33,6 +33,7 @@ public class PropHealth : Health
 
         dropOnDeath = GetComponent<ItemDropOnDeath>();
         combustible = GetComponent<Combustible>();
+        Hit += OnHit;
     }
 
     private void OnEnable()
@@ -57,20 +58,24 @@ public class PropHealth : Health
         return damage;
     }
 
+    // 피해 없는 속성 공격(물 뿌리기 등)은 파편을 튀기지 않음
+    private void OnHit(AttackData attack)
+    {
+        if (attack.IsHarmless || IsDead) return;
+
+        Effects.PlayOn(data.hitEffect, transform, data.effectColor);
+        // 도구 티어가 모자라 깎이지 않으면 튕겨 나는 소리
+        SfxCue cue = CanHarvest(attack.toolType, attack.toolTier) ? data.HitCue : SfxSetting.Instance?.hitBlocked;
+        Sfx.Play(cue, transform.position);
+    }
+
     protected override void Die()
     {
-        SpawnDestroyEffect();
+        Effects.PlayOn(data.destroyEffect, transform, data.effectColor);
+        Sfx.Play(data.BreakCue, transform.position);
 
         // 아이템 드랍은 Died를 구독하는 ItemDropOnDeath가 처리
         base.Die();
         Depleted?.Invoke(this);
-    }
-
-    // 이펙트는 풀 반환과 함께 비활성화되지 않도록 부모 없이 생성 (이펙트 자체 제거는 이펙트 프리팹이 담당)
-    private void SpawnDestroyEffect()
-    {
-        if (data.destroyEffectPrefab == null) return;
-
-        Instantiate(data.destroyEffectPrefab, transform.position, Quaternion.identity);
     }
 }

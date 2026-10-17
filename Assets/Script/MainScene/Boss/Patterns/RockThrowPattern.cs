@@ -25,6 +25,9 @@ public class RockThrowPattern : BossPattern
     [Tooltip("동시에 남아 있을 수 있는 바위 수")]
     [Min(1)] public int maxRocks = 3;
 
+    [Tooltip("바위가 떨어질 때 효과음 (뽑을 때 windupCue, 던질 때 attackCue)")]
+    public SfxCue landCue;
+
     [Tooltip("던진 뒤 후딜 (초)")]
     [Min(0f)] public float recover = 0.8f;
 
@@ -46,9 +49,11 @@ public class RockThrowPattern : BossPattern
 
         AttackIndicator indicator = boss.ShowIndicator(landShape, landing, forward, pull + flightTime);
         boss.PlayMotion("RockPull", BossMotion.Windup);
+        boss.PlaySfx(windupCue);
         yield return new WaitForSeconds(pull);
 
         boss.PlayMotion("RockThrow", BossMotion.Attack);
+        boss.PlaySfx(attackCue);
         Vector3 start = boss.transform.position;
         start.y = 0f;
         Transform rock = CreateFlyingRock(start);
@@ -66,6 +71,7 @@ public class RockThrowPattern : BossPattern
 
         if (rock != null) Destroy(rock.gameObject);
         boss.Strike(landShape, landing, forward, attack);
+        boss.PlaySfx(landCue, landing);
         boss.ReleaseIndicator(indicator);
         if (rockPrefab != null) BossRock.Spawn(rockPrefab, landing, maxRocks);
         if (CameraShake.Instance != null) CameraShake.Instance.Shake(0.25f, 0.2f);

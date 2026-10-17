@@ -56,10 +56,12 @@ public class MenuInteractable : MonoBehaviour, IPointerClickHandler
         hits++;
         if (hits >= maxHits)
         {
+            Sfx.PlayUI(SfxSetting.Instance?.menuBreak);
             Restart(BreakRoutine());
             return;
         }
 
+        Sfx.PlayUI(SfxSetting.Instance?.menuPoke);
         Restart(ReactRoutine());
         if (wanderer != null) wanderer.Startle(eventData.position);
     }

@@ -19,6 +19,9 @@ public class LeapPattern : BossPattern
     public AttackShape landShape = AttackShape.Circle(4f);
     public AttackData attack = new AttackData { damage = 25, knockbackDistance = 4f, impactStun = 0.8f };
 
+    [Tooltip("뛰어오를 때 효과음 (웅크릴 때 windupCue, 착지할 때 attackCue)")]
+    public SfxCue jumpCue;
+
     [Tooltip("착지 후 후딜 (초)")]
     [Min(0f)] public float recover = 1f;
 
@@ -43,9 +46,11 @@ public class LeapPattern : BossPattern
         // 웅크리는 동안부터 착지까지 범위가 차오름
         AttackIndicator indicator = boss.ShowIndicator(landShape, landing, forward, crouch + airTime);
         boss.PlayMotion("LeapWindup", BossMotion.Windup);
+        boss.PlaySfx(windupCue);
         yield return new WaitForSeconds(crouch);
 
         boss.PlayMotion("Leap", BossMotion.Move);
+        boss.PlaySfx(jumpCue);
         boss.Body.isKinematic = true;
         Transform visual = boss.VisualRoot;
         Vector3 visualBase = visual != null ? visual.localPosition : Vector3.zero;
@@ -64,6 +69,7 @@ public class LeapPattern : BossPattern
 
         boss.ResetPose();
         boss.PlayMotion("LeapLand", BossMotion.Attack);
+        boss.PlaySfx(attackCue, landing);
         boss.Strike(landShape, landing, forward, attack);
         boss.ReleaseIndicator(indicator);
         if (CameraShake.Instance != null) CameraShake.Instance.Shake(0.3f, 0.25f);

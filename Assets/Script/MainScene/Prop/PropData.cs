@@ -18,8 +18,31 @@ public class PropData : ScriptableObject
     public bool reduceWeaponDamage = true;
     [Tooltip("파괴될 때 떨어뜨릴 아이템")]
     public DropTable dropTable;
-    [Tooltip("파괴될 때 생성할 이펙트 (비워두면 생성하지 않음)")]
-    public GameObject destroyEffectPrefab;
+    [Header("이펙트 (비워두면 재생하지 않음)")]
+    [Tooltip("공격받을 때마다 뿌리는 파티클 (예: 나무 조각, 돌 파편)")]
+    public EffectData hitEffect;
+    [Tooltip("파괴될 때 뿌리는 파티클")]
+    public EffectData destroyEffect;
+    [Tooltip("파티클에 곱할 색 (공용 파편 그림을 자원 색으로 물들임)")]
+    public Color effectColor = Color.white;
+
+    [Header("효과음 (비워두면 약한 도구로 구분: 도끼 = 나무, 곡괭이 = 돌, 그 외 = 풀)")]
+    public SfxCue hitCue;
+    public SfxCue breakCue;
+
+    public SfxCue HitCue => SfxCue.Or(hitCue, SfxSetting.Instance == null ? null : toolWeakness.tool switch
+    {
+        ToolType.Axe => SfxSetting.Instance.hitWood,
+        ToolType.Pickaxe => SfxSetting.Instance.hitStone,
+        _ => SfxSetting.Instance.hitPlant,
+    });
+
+    public SfxCue BreakCue => SfxCue.Or(breakCue, SfxSetting.Instance == null ? null : toolWeakness.tool switch
+    {
+        ToolType.Axe => SfxSetting.Instance.breakWood,
+        ToolType.Pickaxe => SfxSetting.Instance.breakStone,
+        _ => SfxSetting.Instance.breakPlant,
+    });
 
     // 아래 프리팹들은 모두 자원 프리팹 (PropHealth가 있어야 함). 시간은 월드 시간(초) 기준이라 청크가 언로드돼도 흐름
     [Header("재생")]

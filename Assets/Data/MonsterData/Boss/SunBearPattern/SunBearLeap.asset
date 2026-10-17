@@ -20,6 +20,8 @@ MonoBehaviour:
   cooldown: 6
   weight: 3
   invulnerable: 0
+  windupCue: {fileID: 11400000, guid: 5e9e5ee430a97ae4990def25af5770fb, type: 2}
+  attackCue: {fileID: 11400000, guid: ba7ad3db6d579eb45bf1d6aa6a2b8ade, type: 2}
   crouch: 0.6
   airTime: 0.7
   height: 3
@@ -41,4 +43,5 @@ MonoBehaviour:
     strike: 0
     isWeapon: 0
     environmental: 0
+  jumpCue: {fileID: 11400000, guid: 645281c97d2a7884babb684f72b4eee4, type: 2}
   recover: 1

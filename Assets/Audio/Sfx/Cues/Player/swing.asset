@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 27d60fd8339e91e49a8e1d5959b9bc71, type: 3}
+  m_Name: swing
+  m_EditorClassIdentifier: Assembly-CSharp::SfxCue
+  description: "\uD718\uB450\uB974\uAE30"
+  clips:
+  - {fileID: 8300000, guid: d01dbde6a86c6fd48be053565de86c95, type: 3}
+  - {fileID: 8300000, guid: 0035e0f5f74d7284c97dc756e01cd75c, type: 3}
+  - {fileID: 8300000, guid: ee9edf976700e0446b0c435a50a905d4, type: 3}
+  volume: 1
+  pitchRange: {x: 0.95, y: 1.05}
+  minInterval: 0.03
+  maxVoices: 4

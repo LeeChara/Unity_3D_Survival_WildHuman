@@ -109,6 +109,13 @@ public class StoneotterAI : MonsterAI
         transform.rotation = Quaternion.LookRotation(targetDirection);
     }
 
+    // 공격 소리는 돌을 던질 때마다 (ThrowStone), 공격을 시작할 때는 포효만
+    protected override void PlayStateSfx(State animState)
+    {
+        if (animState == State.Attack) PlaySfx(data.RoarCue);
+        else base.PlayStateSfx(animState);
+    }
+
     private void ThrowStone()
     {
         Vector3 spawnPosition = throwPoint != null ? throwPoint.position : transform.position;
@@ -117,6 +124,7 @@ public class StoneotterAI : MonsterAI
         Vector3 throwDirection = target.position - spawnPosition;
         throwDirection.y = 0f;
 
+        Sfx.Play(data.AttackCue, spawnPosition, 1f, data.sfxPitch);
         Projectile projectile = Instantiate(otterData.stonePrefab, spawnPosition, Quaternion.identity);
         projectile.Init(throwDirection, otterData.stoneSpeed, otterData.projectile, stoneTargetLayer);
     }

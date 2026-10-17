@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 27d60fd8339e91e49a8e1d5959b9bc71, type: 3}
+  m_Name: footstepWater
+  m_EditorClassIdentifier: Assembly-CSharp::SfxCue
+  description: "\uBC1C\uC18C\uB9AC: \uBB3C \uC704"
+  clips:
+  - {fileID: 8300000, guid: 1414f275af0784e40b05c055b4a9db83, type: 3}
+  - {fileID: 8300000, guid: cc19ed1546d61dc4197ef70e500a6f59, type: 3}
+  - {fileID: 8300000, guid: d1eccfa50b765384dad8cfa3ca821c3c, type: 3}
+  - {fileID: 8300000, guid: 10a99f7812ebc3e4795c927866cbdc4a, type: 3}
+  volume: 1
+  pitchRange: {x: 0.95, y: 1.05}
+  minInterval: 0.03
+  maxVoices: 4

@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 27d60fd8339e91e49a8e1d5959b9bc71, type: 3}
+  m_Name: Wingsquirrel_call
+  m_EditorClassIdentifier: Assembly-CSharp::SfxCue
+  description: "\uB0A0\uAC1C\uB2E4\uB78C\uC950: \uC6B8\uC74C (\uC7AC\uC798)"
+  clips:
+  - {fileID: 8300000, guid: 59c34ba62c0bdc74f8a5438ca777412e, type: 3}
+  - {fileID: 8300000, guid: 7f8d927ab7d0ad54d87729a9da60bec5, type: 3}
+  - {fileID: 8300000, guid: ca24dae9eb3ca214b93ff4a46884f557, type: 3}
+  volume: 1
+  pitchRange: {x: 0.95, y: 1.05}
+  minInterval: 0.03
+  maxVoices: 4

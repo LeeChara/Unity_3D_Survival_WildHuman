@@ -126,6 +126,7 @@ public class InventoryUI : MonoBehaviour, IScrollHandler
             hovered = null;
         }
 
+        if (open != IsOpen) Sfx.PlayUI(open ? SfxSetting.Instance?.uiOpen : SfxSetting.Instance?.uiClose);
         IsOpen = open;
         panel.SetActive(open);
         foreach (var slot in slotUIs)
@@ -210,6 +211,7 @@ public class InventoryUI : MonoBehaviour, IScrollHandler
         {
             SlotTransfer.Move(dragContainer, dragFrom, slot.Container, slot.Index, dragAmount);
         }
+        Sfx.PlayUI(SfxSetting.Instance?.slotDrop);
         CancelDrag();
     }
 
@@ -233,6 +235,7 @@ public class InventoryUI : MonoBehaviour, IScrollHandler
         previewRect.sizeDelta = ((RectTransform)slot.transform).rect.size;
         previewRect.position = position;
         dragPreview.gameObject.SetActive(true);
+        Sfx.PlayUI(SfxSetting.Instance?.slotPick);
 
         // 들고 있는 동안에는 툴팁을 숨기고, 끝나면 그때 커서 아래 칸의 툴팁이 다시 보임
         if (ItemTooltipUI.Instance != null) ItemTooltipUI.Instance.SetSuppressed(true);
@@ -269,6 +272,7 @@ public class InventoryUI : MonoBehaviour, IScrollHandler
         {
             SlotTransfer.Move(container, index, inventory, hotbarIndex, stack.count);
         }
+        Sfx.PlayUI(SfxSetting.Instance?.slotDrop);
         return true;
     }
 
@@ -284,6 +288,7 @@ public class InventoryUI : MonoBehaviour, IScrollHandler
         if (dragFrom < 0 || heldByClick || slot.Container == null) return;
         droppedOnSlot = true;
         SlotTransfer.Move(dragContainer, dragFrom, slot.Container, slot.Index, dragAmount);
+        Sfx.PlayUI(SfxSetting.Instance?.slotDrop);
     }
 
     // 칸에 놓이지 않았을 때: 인벤토리 영역 안이면 취소, 밖이면 들고 있던 만큼 던짐
@@ -313,6 +318,7 @@ public class InventoryUI : MonoBehaviour, IScrollHandler
     {
         if (!IsOpen || dragFrom >= 0 || slot.Container == null) return;
 
+        Sfx.PlayUI(SfxSetting.Instance?.slotDrop);
         int hotbarEnd = Mathf.Min(Inventory.SlotsPerRow, inventory.SlotCount);
         if (slot.Container != (ISlotContainer)inventory)
         {

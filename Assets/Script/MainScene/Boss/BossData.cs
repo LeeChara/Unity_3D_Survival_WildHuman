@@ -39,6 +39,14 @@ public class BossData : MonsterData
     [Tooltip("불의 고리에 닿았을 때 밀려나는 거리 (m)")]
     [Min(0f)] public float fireRingKnockback = 3f;
 
+    [Header("효과음 (피격·사망·발견은 위의 몬스터 효과음 칸, 패턴 소리는 각 패턴 에셋)")]
+    [Tooltip("2페이즈가 되어 몸과 불의 고리에 불이 붙을 때")]
+    public SfxCue phaseCue;
+    [Tooltip("불의 고리가 타는 소리 (빛을 켠 불길에서만 반복)")]
+    public SfxCue fireRingLoopCue;
+    [Tooltip("제단에 공물을 바쳐 보스를 다시 부를 때")]
+    public SfxCue summonCue;
+
     [Header("낮/밤")]
     [Tooltip("밤에 이동 속도 배율")]
     [Min(0f)] public float nightMoveScale = 0.85f;

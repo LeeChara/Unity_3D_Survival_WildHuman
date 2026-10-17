@@ -181,7 +181,8 @@ public class CodexDetailBuilder
                 ? $"{ToolName(prop.toolWeakness.tool)} 티어 {prop.requiredTier} 이상"
                 : "제한 없음"),
         };
-        if (ShowDevInfo && prop.destroyEffectPrefab != null) stats.Add(("파괴 이펙트", prop.destroyEffectPrefab.name));
+        if (ShowDevInfo && prop.hitEffect != null) stats.Add(("피격 이펙트", prop.hitEffect.name));
+        if (ShowDevInfo && prop.destroyEffect != null) stats.Add(("파괴 이펙트", prop.destroyEffect.name));
         view.Section("정보");
         view.Text(Stats(stats));
 

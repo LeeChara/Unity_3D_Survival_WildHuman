@@ -185,6 +185,7 @@ public class BossAI : MonsterAI
     protected override void Update()
     {
         UpdateFlames();
+        UpdateCallSfx();
 
         UpdateTarget();
 
@@ -312,6 +313,7 @@ public class BossAI : MonsterAI
         ReleaseIndicators();
         ReleaseGrab();
         ResetPose();
+        StopLoopSfx();
         // 끊긴 코루틴은 finally가 실행되지 않으므로 패턴이 구독한 충돌 알림을 여기서 정리
         Collided = null;
         Stop();
@@ -383,10 +385,12 @@ public class BossAI : MonsterAI
         if (Boss.roarPattern != null) queuedPattern = Boss.roarPattern;
 
         // 둥지 외곽에 불의 고리 (입구는 비워 둠)
+        Sfx.Play(Boss.phaseCue, transform.position);
         if (Boss.groundFlame != null && fireRing == null)
         {
             fireRing = FireRing.Spawn(Boss.groundFlame, Home, Boss.fireRingRadius, HomeEntrance, Boss.fireRingGap,
                 Boss.fireRingSpacing, Boss.fireRingLightEvery, Boss.fireRingKnockback, transform);
+            fireRing.SetLoopSfx(Boss.fireRingLoopCue);
         }
     }
 
@@ -579,6 +583,37 @@ public class BossAI : MonsterAI
 
         grabbed.Release();
         grabbed = null;
+    }
+
+    // 패턴의 효과음 (보스 위치 또는 지정한 위치)
+    public void PlaySfx(SfxCue cue) => Sfx.Play(cue, transform.position);
+
+    public void PlaySfx(SfxCue cue, Vector3 position) => Sfx.Play(cue, position);
+
+    // 패턴 도중 반복되는 소리 (예: 돌진 발굽). 패턴이 끝나거나 끊기면 자동으로 멈춤
+    private SfxLoop patternLoop;
+
+    public void StartLoopSfx(SfxCue cue)
+    {
+        StopLoopSfx();
+        if (cue == null) return;
+        patternLoop = SfxLoop.Ensure(gameObject, cue);
+        patternLoop.Play();
+    }
+
+    public void StopLoopSfx()
+    {
+        if (patternLoop != null) patternLoop.Stop();
+        patternLoop = null;
+    }
+
+    // 싸우지 않을 때만 둥지에서 으르렁
+    protected override bool CanCall => !IsEngaged && CurrentPattern == null && base.CanCall;
+
+    // 공격 준비·공격 소리는 패턴이 직접 냄 (기본 행동 모션으로 대신 재생될 때 일반 몬스터 소리가 겹치지 않도록)
+    protected override void PlayStateSfx(State animState)
+    {
+        if (animState == State.Stunned) base.PlayStateSfx(animState);
     }
 
     // 도약 등으로 바꾼 몸 상태를 되돌림

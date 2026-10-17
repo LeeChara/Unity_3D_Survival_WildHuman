@@ -20,6 +20,8 @@ MonoBehaviour:
   cooldown: 7
   weight: 2
   invulnerable: 0
+  windupCue: {fileID: 11400000, guid: 05f79a0a6f5b39d41a0db3bc7e68889e, type: 2}
+  attackCue: {fileID: 11400000, guid: 75ea388e64ad43248b9ea20499862a7f, type: 2}
   pull: 1
   flightTime: 0.8
   height: 5
@@ -43,4 +45,5 @@ MonoBehaviour:
     environmental: 0
   rockPrefab: {fileID: 6621876431101705771, guid: e011e3f0d8887814c8895b00e8c84887, type: 3}
   maxRocks: 3
+  landCue: {fileID: 11400000, guid: be07a34a481759d4f99441f997ecafe2, type: 2}
   recover: 0.8

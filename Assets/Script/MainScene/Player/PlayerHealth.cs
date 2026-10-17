@@ -5,6 +5,7 @@ using UnityEngine.InputSystem;
 
 // 사망 시 시체로 멈춘 뒤 일정 시간이 지나면 시작 위치에서 부활 (월드는 유지)
 // 붉은색 유지는 HitFlash, 공격 취소는 PlayerAttack, 허기 정지는 PlayerHunger가 Died 이벤트·IsDead로 각자 처리
+// 시체가 밀려 미끄러지지 않도록 멈추는 처리는 PlayerMovement가 Dead 상태로 담당
 public class PlayerHealth : Health
 {
     [Tooltip("부활 시간·사망 시 아이템 드랍 여부 (난이도별로 다른 에셋 사용)")]
@@ -18,7 +19,7 @@ public class PlayerHealth : Health
     private DeathRule Rule => gameSetting.death;
 
     private Rigidbody rb;
-    private Knockback knockback;
+    private ItemCollector itemCollector;
     private PlayerInput playerInput;
     private PlayerHunger hunger;
     private PlayerEquipment equipment;
@@ -36,7 +37,7 @@ public class PlayerHealth : Health
     {
         base.Awake();
         rb = GetComponent<Rigidbody>();
-        knockback = GetComponent<Knockback>();
+        itemCollector = GetComponent<ItemCollector>();
         playerInput = GetComponent<PlayerInput>();
         hunger = GetComponent<PlayerHunger>();
         equipment = GetComponent<PlayerEquipment>();
@@ -83,16 +84,6 @@ public class PlayerHealth : Health
         return base.Save();
     }
 
-    private void OnEnable()
-    {
-        if (knockback != null) knockback.Ended += OnKnockbackEnded;
-    }
-
-    private void OnDisable()
-    {
-        if (knockback != null) knockback.Ended -= OnKnockbackEnded;
-    }
-
     private void Update()
     {
         if (!IsDead) return;
@@ -109,6 +100,8 @@ public class PlayerHealth : Health
         // 이동·공격·핫바·인벤토리 등 모든 조작 차단
         if (playerInput != null) playerInput.DeactivateInput();
         if (inventoryUI != null) inventoryUI.SetOpen(false);
+        // 시체가 아이템을 줍지 않도록 수집기를 끔 (끌어가던 아이템도 놓아줌)
+        if (itemCollector != null) itemCollector.enabled = false;
 
         StopHorizontal();
         animator.SetBool("IsMoving", false);
@@ -134,12 +127,7 @@ public class PlayerHealth : Health
         animator.speed = 1f;
         playerState.Revive();
         if (playerInput != null) playerInput.ActivateInput();
-    }
-
-    // 넉백은 종료 시 속도를 이동 로직에 넘기는데, 사망 중에는 이동 로직이 멈춰 있으므로 미끄러지지 않도록 수평 속도 제거
-    private void OnKnockbackEnded()
-    {
-        if (IsDead) StopHorizontal();
+        if (itemCollector != null) itemCollector.enabled = true;
     }
 
     private void StopHorizontal()

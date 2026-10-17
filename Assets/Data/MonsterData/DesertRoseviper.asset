@@ -49,5 +49,15 @@ MonoBehaviour:
   knockbackResistance: 0
   superArmorWhileAttacking: 1
   dropTable: {fileID: 11400000, guid: 1b0fffb99a958144eb828ed7af4a1c7b, type: 2}
+  detectCue: {fileID: 0}
+  windupCue: {fileID: 0}
+  attackCue: {fileID: 0}
+  attackLoopCue: {fileID: 0}
+  hurtCue: {fileID: 0}
+  deathCue: {fileID: 0}
+  roarCue: {fileID: 0}
+  callCue: {fileID: 0}
+  callInterval: {x: 10, y: 25}
+  sfxPitch: 1.08
   attackHitDuration: 1
   retreatSpeed: 16.5

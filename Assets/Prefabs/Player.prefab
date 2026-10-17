@@ -144,6 +144,7 @@ GameObject:
   - component: {fileID: 3088046948984962030}
   - component: {fileID: 9042166541969861635}
   - component: {fileID: 7580494285560551218}
+  - component: {fileID: 4103519418138041565}
   m_Layer: 7
   m_Name: Player
   m_TagString: Untagged
@@ -560,15 +561,7 @@ MonoBehaviour:
   - {fileID: 3800492974980948731}
   - {fileID: 6416501376188652739}
   - {fileID: 2133943241525837881}
-  sparkleSprite: {fileID: 358576951, guid: 07853e3bc1123cc46b5345dd858d3704, type: 3}
-  sparkleRoot: {fileID: 2624626846796614799}
-  sparkleCount: 4
-  spawnCenter: {x: 0, y: 0}
-  spawnArea: {x: 0.4, y: 0.4}
-  sparkleScale: 0.5
-  sparkleDuration: 0.5
-  sparkleInterval: 0.08
-  riseDistance: 0.1
+  sparkleEffect: {fileID: 11400000, guid: b731783c3933c9e4db9cb90de444dd06, type: 2}
 --- !u!114 &4599729644261060645
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -904,6 +897,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 59274964778e9254fb145b96d91735a0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerEquipment
+--- !u!114 &4103519418138041565
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 956602779991621677}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 88d905d6f882fee409cc11b90bf1024c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerParticles
+  stride: 1.1
+  waterStepEffect: {fileID: 11400000, guid: 902d398acbcc6ca49a913d57d6e6a09a, type: 2}
+  iceStepEffect: {fileID: 11400000, guid: 31476dbe5530d1b47acdedbf9d88b491, type: 2}
+  waterEnterEffect: {fileID: 11400000, guid: bcf73dbba07071e45bf92232ca47f9b4, type: 2}
+  pickupEffect: {fileID: 11400000, guid: fb6d26e2d30f29349b2736eaf34a593e, type: 2}
 --- !u!1 &2027391798678248913
 GameObject:
   m_ObjectHideFlags: 0

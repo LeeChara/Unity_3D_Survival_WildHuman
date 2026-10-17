@@ -68,6 +68,7 @@ public class ThornHazard : MonoBehaviour
 
             nextHitAt[target] = now + interval;
             target.TakeHit(new AttackData { damage = damage, environmental = true });
+            Sfx.Play(SfxSetting.Instance?.prick, target.transform.position);
             if (target.TryGetComponent(out Knockback knockback)) knockback.Apply(target.transform.position - transform.position, knockbackDistance);
         }
     }
