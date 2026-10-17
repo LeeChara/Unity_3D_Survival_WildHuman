@@ -67,6 +67,8 @@ public class MonsterAI : MonoBehaviour, IStunnable
 
         knockback = GetComponent<Knockback>();
         waterWader = GetComponent<WaterWader>();
+        // 공격 돌진은 빙판에서도 그대로 (돌진이 끝난 뒤 남은 속도로 미끄러짐)
+        if (TryGetComponent(out IceSlider iceSlider)) iceSlider.Bypass = () => state == State.Attack;
         if (knockback != null)
         {
             knockback.IsImmune = IsSuperArmor;
@@ -486,9 +488,13 @@ public class MonsterAI : MonoBehaviour, IStunnable
     }
 
     // 애니메이터 상태 이름은 '컨트롤러 이름 + 행동 상태' (예: ShieldboarWindup), 없으면 행동 상태 이름 그대로
+    // 변종이 쓰는 오버라이드 컨트롤러는 상태 머신이 원본 것이므로 원본 컨트롤러 이름을 씀
     private void CacheAnimationHashes()
     {
-        string prefix = animator.runtimeAnimatorController != null ? animator.runtimeAnimatorController.name : "";
+        RuntimeAnimatorController controller = animator.runtimeAnimatorController;
+        if (controller is AnimatorOverrideController overrideController && overrideController.runtimeAnimatorController != null)
+            controller = overrideController.runtimeAnimatorController;
+        string prefix = controller != null ? controller.name : "";
         State[] states = (State[])Enum.GetValues(typeof(State));
         animationHashes = new int[states.Length];
 

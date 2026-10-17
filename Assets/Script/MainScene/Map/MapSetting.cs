@@ -11,6 +11,7 @@ public class MapSetting : ScriptableObject
     [Min(0f)] public float biomeBlend = 20f;
     public Color waterColor = new Color(0.25f, 0.45f, 0.75f);
     public Color lavaColor = new Color(0.9f, 0.35f, 0.1f);
+    public Color iceColor = new Color(0.72f, 0.86f, 0.95f);
     [Tooltip("지도 뒤 배경 (맵 경계 밖)")]
     public Color outsideColor = new Color(0.08f, 0.08f, 0.1f);
 

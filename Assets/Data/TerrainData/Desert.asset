@@ -27,8 +27,8 @@ MonoBehaviour:
   maxThreshold: 0.63
   propSpawnTable:
   - propPrefab: {fileID: 6061255373339793757, guid: bca5fcccbc03e6f4f8dfd8201d07e36c, type: 3}
-    minCount: 6
-    maxCount: 12
+    minCount: 8
+    maxCount: 15
     countWeights: []
     minSpacing: 4
     clusterRadius: 0

@@ -23,6 +23,12 @@ public class WaterSetting : ScriptableObject
     [Tooltip("물 호수 트리거 레이어 (발밑이 물 칸인지 확인)")]
     public LayerMask waterLayers;
 
+    [Header("빙판")]
+    [Tooltip("빙판 호수 트리거 레이어 (발밑이 빙판 칸인지 확인)")]
+    public LayerMask iceLayers;
+    [Tooltip("빙판 위에서 속도가 바뀌는 빠르기 (m/s², 작을수록 오래 미끄러짐)")]
+    [Min(0.1f)] public float iceAcceleration = 4f;
+
     [Header("표시")]
     [Tooltip("젖은 동안 그림에 곱하는 색 (조금 어둡게)")]
     public Color wetTint = new Color(0.72f, 0.76f, 0.85f);

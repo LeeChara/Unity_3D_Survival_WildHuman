@@ -468,6 +468,7 @@ MonoBehaviour:
     toolTier: 0
     element: 0
     strike: 0
+    isWeapon: 0
 --- !u!1 &2415495034327808268
 GameObject:
   m_ObjectHideFlags: 0
@@ -1639,6 +1640,8 @@ GameObject:
   - component: {fileID: 4284635527705369958}
   - component: {fileID: 8105434005250605665}
   - component: {fileID: 3578238302133487958}
+  - component: {fileID: 3660816412962954252}
+  - component: {fileID: 2474885823540158491}
   m_Layer: 6
   m_Name: Stoneotter
   m_TagString: Untagged
@@ -2027,6 +2030,36 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::WaterWader
   setting: {fileID: 11400000, guid: b75368e149c56444db0a699f03b0dcff, type: 2}
+--- !u!114 &3660816412962954252
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7304474180741421677}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 272f1e27d799bbc409fb67e25a8efc6d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::IceSlider
+  setting: {fileID: 11400000, guid: b75368e149c56444db0a699f03b0dcff, type: 2}
+--- !u!114 &2474885823540158491
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7304474180741421677}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f900b9ae4944ffb45a1096129d27767c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Footprinter
+  sprite: {fileID: 21300000, guid: 6a4b4eded1628514cacff0ff4a9e6e92, type: 3}
+  scale: 0.9
+  stride: 0.6
+  sideOffset: 0.15
+  mirrorAlternate: 0
 --- !u!1 &7496706528041794792
 GameObject:
   m_ObjectHideFlags: 0

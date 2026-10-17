@@ -62,6 +62,13 @@ public class ShadowCaster : MonoBehaviour
         }
     }
 
+    // 위치마다 모양이 달라지는 물체(선인장)가 조립된 뒤 높이를 맞춤
+    public void SetHeight(float value)
+    {
+        height = Mathf.Max(0f, value);
+        if (shadow != null) UpdateShadow();
+    }
+
     // 정지 오브젝트는 해가 한 단계 바뀌었거나 위치가 바뀐 경우만 (풀에서 꺼내 옮긴 자원 등)
     public void Refresh(bool sunStepped)
     {

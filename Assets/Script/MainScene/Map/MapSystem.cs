@@ -193,7 +193,7 @@ public class MapSystem : MonoBehaviour, ISaveParticipant
 
                 var center = new Vector3(chunk.px[i], 0f, chunk.pz[i]);
                 float bound = lake.Layout(center, blobs, out _);
-                Color32 color = lake is LavaLake ? setting.lavaColor : setting.waterColor;
+                Color32 color = lake is LavaLake ? setting.lavaColor : lake is IceLake ? setting.iceColor : setting.waterColor;
 
                 int x0 = Mathf.Max(0, Mathf.FloorToInt((center.x - bound - Bounds.xMin) / mpp));
                 int x1 = Mathf.Min(width - 1, Mathf.CeilToInt((center.x + bound - Bounds.xMin) / mpp));

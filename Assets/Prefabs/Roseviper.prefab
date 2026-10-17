@@ -30,6 +30,8 @@ GameObject:
   - component: {fileID: 3434764022818068000}
   - component: {fileID: 9138128935252453729}
   - component: {fileID: 6725858201938960778}
+  - component: {fileID: 3405988038586561326}
+  - component: {fileID: 2437580074467022938}
   m_Layer: 6
   m_Name: Roseviper
   m_TagString: Untagged
@@ -404,6 +406,36 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::WaterWader
   setting: {fileID: 11400000, guid: b75368e149c56444db0a699f03b0dcff, type: 2}
+--- !u!114 &3405988038586561326
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3698754605101644}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 272f1e27d799bbc409fb67e25a8efc6d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::IceSlider
+  setting: {fileID: 11400000, guid: b75368e149c56444db0a699f03b0dcff, type: 2}
+--- !u!114 &2437580074467022938
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3698754605101644}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f900b9ae4944ffb45a1096129d27767c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Footprinter
+  sprite: {fileID: 21300000, guid: e94e0ee748e761e4bb10332a4f43fc4f, type: 3}
+  scale: 1
+  stride: 1.5
+  sideOffset: 0
+  mirrorAlternate: 0
 --- !u!1 &1151314534724133345
 GameObject:
   m_ObjectHideFlags: 0
@@ -949,6 +981,7 @@ MonoBehaviour:
     toolTier: 0
     element: 0
     strike: 0
+    isWeapon: 0
 --- !u!1 &3997864156695220494
 GameObject:
   m_ObjectHideFlags: 0

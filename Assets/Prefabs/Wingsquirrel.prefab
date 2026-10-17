@@ -121,6 +121,8 @@ GameObject:
   - component: {fileID: 316235187751151978}
   - component: {fileID: 7582540983591694916}
   - component: {fileID: 9151158542766226144}
+  - component: {fileID: 6874682791684672035}
+  - component: {fileID: 2353987022984692294}
   m_Layer: 6
   m_Name: Wingsquirrel
   m_TagString: Untagged
@@ -501,6 +503,36 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::WaterWader
   setting: {fileID: 11400000, guid: b75368e149c56444db0a699f03b0dcff, type: 2}
+--- !u!114 &6874682791684672035
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 48305459567241423}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 272f1e27d799bbc409fb67e25a8efc6d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::IceSlider
+  setting: {fileID: 11400000, guid: b75368e149c56444db0a699f03b0dcff, type: 2}
+--- !u!114 &2353987022984692294
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 48305459567241423}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f900b9ae4944ffb45a1096129d27767c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Footprinter
+  sprite: {fileID: 21300000, guid: 6a4b4eded1628514cacff0ff4a9e6e92, type: 3}
+  scale: 0.6
+  stride: 0.45
+  sideOffset: 0.1
+  mirrorAlternate: 0
 --- !u!1 &313815749097548721
 GameObject:
   m_ObjectHideFlags: 0
@@ -1555,6 +1587,7 @@ MonoBehaviour:
     toolTier: 0
     element: 0
     strike: 0
+    isWeapon: 0
 --- !u!1 &7304506979596487671
 GameObject:
   m_ObjectHideFlags: 0

@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f79af688b016a0349a5988251493a4a9, type: 3}
+  m_Name: SnowIceStep
+  m_EditorClassIdentifier: Assembly-CSharp::LavaStep
+  key: 
+  biomeStep: {fileID: 11400000, guid: ee22d2c4376c7ab4195e1ed507c105c7, type: 2}
+  biome: {fileID: 11400000, guid: de70995c3d76c41469ddc8e6249f9337, type: 2}
+  gap: 6
+  giantPrefab: {fileID: 6690835866377860320, guid: 791bb191c87a851428d4622946b4222f, type: 3}
+  giantChance: 0.18
+  mediumPrefab: {fileID: 9067793305000838372, guid: 6fcb986a2312c30498b073705bba5f96, type: 3}
+  mediumChance: 0.2
+  smallPrefab: {fileID: 4326471235559621947, guid: f0cc5a4101d7a86499ec77995009e9dc, type: 3}
+  smallCount: {x: 0, y: 2}
+  placementAttempts: 10

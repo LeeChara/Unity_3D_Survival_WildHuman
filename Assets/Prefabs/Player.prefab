@@ -141,6 +141,8 @@ GameObject:
   - component: {fileID: 3944938606397056227}
   - component: {fileID: 1128364054616790143}
   - component: {fileID: 4117846275009401372}
+  - component: {fileID: 3088046948984962030}
+  - component: {fileID: 9042166541969861635}
   m_Layer: 7
   m_Name: Player
   m_TagString: Untagged
@@ -380,6 +382,7 @@ MonoBehaviour:
   playerFacing: {fileID: 3201412052657367465}
   attackPivot: {fileID: 9200000000000002222}
   hotbar: {fileID: 5485155978177760989}
+  inventoryUI: {fileID: 0}
   bareHandDamage: 5
   setting: {fileID: 11400000, guid: 8c27a9d0fd2c17f40bca2efabb119b4d, type: 2}
   inputBuffer: {fileID: 80440029918507675}
@@ -850,6 +853,36 @@ MonoBehaviour:
   inventory: {fileID: 2004002038596902290}
   hitbox: {fileID: 2205031760763008646}
   waterSetting: {fileID: 11400000, guid: b75368e149c56444db0a699f03b0dcff, type: 2}
+--- !u!114 &3088046948984962030
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 956602779991621677}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 272f1e27d799bbc409fb67e25a8efc6d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::IceSlider
+  setting: {fileID: 11400000, guid: b75368e149c56444db0a699f03b0dcff, type: 2}
+--- !u!114 &9042166541969861635
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 956602779991621677}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f900b9ae4944ffb45a1096129d27767c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Footprinter
+  sprite: {fileID: 21300000, guid: ab841dfa3034d914e8a1f8c7d0f1010a, type: 3}
+  scale: 1
+  stride: 0.7
+  sideOffset: 0.18
+  mirrorAlternate: 1
 --- !u!1 &2027391798678248913
 GameObject:
   m_ObjectHideFlags: 0
@@ -1108,6 +1141,7 @@ MonoBehaviour:
     toolTier: 0
     element: 0
     strike: 0
+    isWeapon: 0
 --- !u!1 &4765726116046431758
 GameObject:
   m_ObjectHideFlags: 0

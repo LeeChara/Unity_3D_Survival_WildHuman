@@ -46,6 +46,8 @@ public class PlayerMovement : MonoBehaviour
         rb = GetComponent<Rigidbody>();
         playerHunger = GetComponent<PlayerHunger>();
         waterWader = GetComponent<WaterWader>();
+        // 구르기는 빙판에서도 그대로 (구르기가 끝난 뒤 남은 속도로 미끄러짐)
+        if (TryGetComponent(out IceSlider iceSlider)) iceSlider.Bypass = () => playerState.CurrentState == PlayerActionState.Dodge;
 
         cameraRotation = Quaternion.Euler(0, cameraYAngle, 0);
         cameraRight = cameraRotation * Vector3.right;
